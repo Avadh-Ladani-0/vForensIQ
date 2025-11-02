@@ -1,0 +1,7 @@
+ex.ipynb
+ex.py
+__pycache__/
+.ipynb_checkpoints/
+.vscode/
+.venv/
+ranking
