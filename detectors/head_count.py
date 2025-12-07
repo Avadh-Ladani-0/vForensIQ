@@ -1,0 +1,3 @@
+from detectors.head_count.headcount_detector import HeadCountDetector, run_headcount_thread
+
+run_headcount_thread()
