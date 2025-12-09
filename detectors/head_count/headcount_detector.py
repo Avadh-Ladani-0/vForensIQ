@@ -14,7 +14,7 @@ class HeadCountDetector:
     def __init__(self, 
                  model_path="yolov8n.pt",
                  camera_id="CAM_01",
-                 area_spot="Entrance Gate",
+                 area_spot="Train Station Entrance",
                  log_path="logs/headcount_events.jsonl"):
 
         self.model = YOLO(model_path)
@@ -44,7 +44,7 @@ class HeadCountDetector:
 
     def process_frame(self, frame):
         """Runs YOLO on a single frame and returns headcount."""
-        results = self.model(frame, conf=0.45)[0]
+        results = self.model(frame, conf=0.15)[0]
 
         person_boxes = [
             box for box in results.boxes
@@ -95,12 +95,13 @@ class HeadCountDetector:
 # THREAD STARTER FUNCTION (to be called from main program)
 # --------------------------------------------------------
 
-def run_headcount_thread(video_path="Data\entry_exit\train_station.mp4",
-                         model_path="yolov8n.pt",
+def run_headcount_thread(video_path="Data/entry_exit/train_station.mp4",
+                         model_path="yolov8s.pt",
                          camera_id="CAM_01",
-                         area_spot="Entrance Gate",
+                         area_spot="train_station_entrance",
                          log_path="logs/headcount_events.jsonl",
-                         show_live=False):
+                         show_live=False,
+                         daemon=False):
 
     detector = HeadCountDetector(
         model_path=model_path,
@@ -112,7 +113,10 @@ def run_headcount_thread(video_path="Data\entry_exit\train_station.mp4",
     thread = threading.Thread(
         target=detector.run,
         args=(video_path, show_live),
-        daemon=True
+        daemon=daemon
     )
     thread.start()
     return thread
+
+
+thread=run_headcount_thread() 
