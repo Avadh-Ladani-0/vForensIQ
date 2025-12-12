@@ -9,7 +9,7 @@ vForensIQ is an intelligent surveillance analytics system that combines **Comput
 
 The following diagram illustrates the end-to-end system architecture of vForensIQ, showing how CCTV streams are processed using CV models, converted into structured event logs, and analyzed by an LLM to generate actionable insights.
 
-![System Architecture Overview](Report/Screenshot 2025-12-11 090202.png)
+![System Architecture Overview](Report/system_architecture.png)
 
 ---
 
