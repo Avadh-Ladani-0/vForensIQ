@@ -1,3 +1,4 @@
+.gitignore
 ex.ipynb
 ex.py
 .env
@@ -7,3 +8,10 @@ __pycache__/
 .venv/
 ranking
 Data/
+# Microsoft Office temporary/lock files
+~$*.pptx
+~$*.docx
+~$*.xlsx
+~$*.ppt
+~$*.doc
+~$*.xls

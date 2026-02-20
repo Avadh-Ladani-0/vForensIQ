@@ -23,6 +23,7 @@ JSON_LOG_PATH = "logs/entry_exit_fire.json"
 def load_logs(path):
     with open(path, "r") as f:
         logs = json.load(f)
+        
     df = pd.DataFrame(logs)
     df["timestamp"] = pd.to_datetime(df["timestamp"])
     return df
@@ -73,7 +74,7 @@ Local computed results from the logs:
 Explain the findings clearly and meaningfully.
 """
     response = openai.chat.completions.create(
-        model="gpt-4o-mini",
+        model="gpt-3.5-turbo",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.2
     )
