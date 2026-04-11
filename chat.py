@@ -1,104 +1,81 @@
+import argparse
 import json
-import openai
-import pandas as pd
-from datetime import datetime
-from dotenv import load_dotenv
-import os
+import sys
+from pathlib import Path
+from typing import Any
 
-# -----------------------------
-# CONFIG
-# -----------------------------
-load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
-JSON_LOG_PATH = "logs//entry_exit_fire.json"
+_PKG_ROOT = Path(__file__).resolve().parent
+if str(_PKG_ROOT) not in sys.path:
+    sys.path.insert(0, str(_PKG_ROOT))
+
+from nl_sql import run_nl_sql_pipeline
+from nl_sql.common import PIPELINE_LOG_PATH
 
 
-# -----------------------------
-# LOAD LOGS INTO DATAFRAME
-# -----------------------------
-def load_logs(path):
-    with open(path, "r") as f:
-        logs = json.load(f)
-    df = pd.DataFrame(logs)
-    df["timestamp"] = pd.to_datetime(df["timestamp"])
-    return df
+def _print_envelope(label: str, envelope: dict[str, Any]) -> None:
+    print(f"\n========== {label} ==========")
+    print(f"Provider: {envelope.get('provider', 'unknown')}")
+    print(f"Model: {envelope.get('provider_model', 'unknown')}")
+    print(f"Duration: {envelope.get('duration_ms', 0)} ms")
+    print(f"Event context: {', '.join(envelope.get('event_context', [])) or 'N/A'}")
+    print(f"Context source: {envelope.get('event_context_source', 'N/A')}")
+    print("\nAnswer:")
+    print(envelope.get("answer_text") or envelope.get("summary_text", "No answer"))
+
+    processed_rows = envelope.get("processed_rows", [])
+    if processed_rows:
+        print(f"\nProcessed evidence rows: {len(processed_rows)}")
+        print(json.dumps(processed_rows[:5], indent=2))
+
+    citations = envelope.get("citation_queries", [])
+    if citations:
+        print("\nSQL citations:")
+        for citation in citations:
+            print(f"- [{citation.get('id')}] {citation.get('purpose')}")
+            print(citation.get("sql", ""))
+            print("")
+
+    print("\nEvent chunk stats:")
+    print(json.dumps(envelope.get("event_chunk_stats", {}), indent=2))
+
+    errors = envelope.get("errors", [])
+    if errors:
+        print("\nErrors:")
+        for err in errors:
+            print(f"- {err}")
 
 
-# -----------------------------
-# PROCESS QUERY LOCALLY
-# -----------------------------
-def process_query_locally(df, user_query):
-    """
-    Decide what the user wants by analyzing keywords.
-    Perform the statistics in Python.
-    """
-    user_query = user_query.lower()
+def run_cli(chunk_size: int) -> None:
+    print("vForensIQ Event-Context NL->SQL CLI")
+    print("Primary source: Data/Augmented_Data/out/data.csv")
+    print(f"Pipeline log: {PIPELINE_LOG_PATH}")
+    print("Provider: openai")
+    question = input("\nEnter your question:\n> ").strip()
+    if not question:
+        print("No question provided.")
+        return
 
-    result = {}
-
-    # Ask about gates with highest car_exit frequency
-    if "car exit" in user_query or ("car" in user_query and "exit" in user_query):
-        f = df[df["event_type"] == "car_exit"]
-        grouped = f.groupby("camera_location").size().sort_values(ascending=False)
-
-        result["computed_output"] = grouped.head(3).to_dict()
-        result["explanation_type"] = "car_exit_frequency"
-        return result
-
-    # If no keyword matched — fallback to summary
-    result["computed_output"] = df.head(30).to_dict(orient="records")
-    result["explanation_type"] = "fallback"
-    return result
-
-
-# -----------------------------
-# ASK OPENAI WITH SMALL SUMMARY
-# -----------------------------
-def ask_openai(user_query, local_result):
-    compact_summary = str(local_result["computed_output"])[:3000]
-
-    prompt = f"""
-You are a CCTV forensic analysis assistant.
-
-User question:
-{user_query}
-
-Local computed results from the logs:
-{compact_summary}
-
-Explain the findings clearly and meaningfully.
-    """
-
-    response = openai.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.2
+    result = run_nl_sql_pipeline(
+        question=question,
+        provider_mode="openai",
+        compare=False,
+        chunk_size=chunk_size,
     )
 
-    # FIXED: correct content extraction
-    return response.choices[0].message.content
+    _print_envelope("OpenAI Result", result.get("result", {}))
 
 
-
-# -----------------------------
-# MAIN
-# -----------------------------
-def run_query():
-    df = load_logs(JSON_LOG_PATH)
-
-    print("\nEnter your question:")
-    user_query = input("> ")
-
-    print("\nAnalyzing logs locally…")
-    local_result = process_query_locally(df, user_query)
-
-    print("\nContacting OpenAI for explanation…")
-    answer = ask_openai(user_query, local_result)
-
-    print("\n---------------- ANSWER ----------------")
-    print(answer)
-    print("----------------------------------------")
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="vForensIQ NL->SQL CLI")
+    parser.add_argument(
+        "--chunk-size",
+        type=int,
+        default=5000,
+        help="Rows per chunk for event-context summarization",
+    )
+    return parser.parse_args()
 
 
 if __name__ == "__main__":
-    run_query()
+    args = parse_args()
+    run_cli(chunk_size=args.chunk_size)

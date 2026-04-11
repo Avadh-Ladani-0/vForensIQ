@@ -1,181 +1,126 @@
-import streamlit as st
 import json
+import sys
+from pathlib import Path
+
 import pandas as pd
-from datetime import datetime
-import openai
-from dotenv import load_dotenv
-import os
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-import tempfile
+import streamlit as st
 
-# ----------------------------------------------------
-# CONFIG
-# ----------------------------------------------------
-load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
-JSON_LOG_PATH = "logs/entry_exit_fire.json"
+_PKG_ROOT = Path(__file__).resolve().parent
+if str(_PKG_ROOT) not in sys.path:
+    sys.path.insert(0, str(_PKG_ROOT))
 
-# ----------------------------------------------------
-# LOAD LOGS
-# ----------------------------------------------------
-@st.cache_data
-def load_logs(path):
-    with open(path, "r") as f:
-        logs = json.load(f)
-        
-    df = pd.DataFrame(logs)
-    df["timestamp"] = pd.to_datetime(df["timestamp"])
-    return df
-
-# ----------------------------------------------------
-# LOCAL QUERY PROCESSING
-# ----------------------------------------------------
-def process_query_locally(df, user_query):
-    user_query = user_query.lower()
-    result = {}
-
-    # Car exit frequency
-    if "car exit" in user_query or ("car" in user_query and "exit" in user_query):
-        f = df[df["event_type"] == "car_exit"]
-        grouped = f.groupby("camera_location").size().sort_values(ascending=False)
-
-        top3 = grouped.head(3)
-        filtered_df = pd.DataFrame({
-            "camera_location": top3.index,
-            "count": top3.values
-        })
-
-        result["computed_output"] = filtered_df
-        result["filter_applied"] = "Top 3 gates with highest car exits"
-        return result
-
-    # Fallback: show first 30 rows
-    result["computed_output"] = df.head(30)
-    result["filter_applied"] = "Fallback: first 30 rows"
-    return result
+from nl_sql import CANONICAL_SOURCE_CSV, run_nl_sql_pipeline
+from nl_sql.common import PIPELINE_LOG_PATH
 
 
-# ----------------------------------------------------
-# OPENAI CALL
-# ----------------------------------------------------
-def ask_openai(user_query, local_result):
-    compact_summary = str(local_result["computed_output"].to_dict(orient="records"))[:3000]
+@st.cache_data(show_spinner=False)
+def load_primary_preview(path: str, rows: int = 200) -> pd.DataFrame:
+    frame = pd.read_csv(path, nrows=rows)
+    if "timestamp" in frame.columns:
+        frame["timestamp_utc"] = pd.to_datetime(frame["timestamp"], unit="s", utc=True, errors="coerce")
+    return frame
 
-    prompt = f"""
-You are a CCTV forensic analysis assistant.
 
-User question:
-{user_query}
-
-Local computed results from the logs:
-{compact_summary}
-
-Explain the findings clearly and meaningfully.
-"""
-    response = openai.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.2
+def render_envelope(title: str, envelope: dict) -> None:
+    st.subheader(title)
+    provider_model = envelope.get("provider_model", "unknown")
+    st.markdown(
+        f"Provider: `{envelope.get('provider', 'unknown')}` | Model: `{provider_model}` | Duration: `{envelope.get('duration_ms', 0)} ms`"
     )
-    return response.choices[0].message.content
+    query_plan = envelope.get("query_plan", {})
+    time_range = query_plan.get("time_range", {})
+    st.markdown(
+        f"UTC Window: `{time_range.get('start_utc', 'N/A')}` to `{time_range.get('end_utc', 'N/A')}`"
+    )
+
+    event_context = envelope.get("event_context", [])
+    source = envelope.get("event_context_source", "unknown")
+    context_display = ", ".join(event_context) if event_context else "N/A"
+    st.markdown(f"Detected Event Context: `{context_display}` (source: `{source}`)")
+
+    errors = envelope.get("errors", [])
+    if errors:
+        st.warning("\n".join(str(err) for err in errors))
+
+    st.markdown("Answer")
+    st.write(envelope.get("answer_text") or envelope.get("summary_text", "_No answer available._"))
+
+    processed_rows = envelope.get("processed_rows", [])
+    if processed_rows:
+        processed_df = pd.DataFrame(processed_rows)
+        st.markdown("Processed Evidence Data")
+        st.dataframe(processed_df, use_container_width=True)
+        st.download_button(
+            label=f"Download {title} Processed Data (CSV)",
+            data=processed_df.to_csv(index=False),
+            file_name=f"{title.lower().replace(' ', '_')}_processed.csv",
+            mime="text/csv",
+        )
+        st.download_button(
+            label=f"Download {title} Processed Data (JSON)",
+            data=json.dumps(processed_rows, indent=2),
+            file_name=f"{title.lower().replace(' ', '_')}_processed.json",
+            mime="application/json",
+        )
+
+    citations = envelope.get("citation_queries", [])
+    if citations:
+        st.markdown("SQL Citations")
+        for item in citations:
+            st.markdown(f"**{item.get('id', 'citation')}** - {item.get('purpose', '')}")
+            st.code(item.get("sql", ""), language="sql")
+
+    with st.expander("Technical Details"):
+        st.markdown("Event Chunk Stats")
+        st.json(envelope.get("event_chunk_stats", {}))
+        st.markdown("QueryPlan")
+        st.json(query_plan)
+        sql_text = envelope.get("executed_sql") or query_plan.get("sql", "")
+        st.markdown("Executed SQL")
+        st.code(sql_text, language="sql")
+        sections = envelope.get("summary_sections", {})
+        if sections:
+            st.markdown("Per-Event Sections")
+            for event_name, section in sections.items():
+                st.markdown(f"**{event_name}**")
+                st.markdown(section)
 
 
-# ----------------------------------------------------
-# PDF REPORT GENERATOR
-# ----------------------------------------------------
-def generate_pdf(user_query, computation_desc, df):
-    temp = tempfile.NamedTemporaryFile(delete=False, suffix=".pdf")
-    c = canvas.Canvas(temp.name, pagesize=letter)
-    
-    c.setFont("Helvetica", 12)
-    y = 750
+st.set_page_config(page_title="vForensIQ NL->SQL Engine", layout="wide")
+st.title("vForensIQ - Event-Context NL->SQL Engine")
+st.caption(f"Primary source: `{CANONICAL_SOURCE_CSV}`")
+st.caption(f"Pipeline log: `{PIPELINE_LOG_PATH}`")
 
-    c.drawString(30, y, "vForensIQ - CCTV Forensic Report")
-    y -= 30
-    c.drawString(30, y, f"Query: {user_query}")
-    y -= 20
-    c.drawString(30, y, f"Computation Applied: {computation_desc}")
-    y -= 30
+with st.sidebar:
+    st.header("Settings")
+    provider_mode = "openai"
+    st.text_input("Provider Mode", value="openai", disabled=True)
+    chunk_size = st.slider("Chunk Size", min_value=500, max_value=20000, value=5000, step=500)
 
-    c.drawString(30, y, "Results (Top rows):")
-    y -= 20
-
-    for idx, row in df.head(10).iterrows():
-        text = str(row.to_dict())
-        c.drawString(30, y, text[:100])
-        y -= 20
-        if y < 50:
-            c.showPage()
-            y = 750
-
-    c.save()
-    return temp.name
-
-
-# ----------------------------------------------------
-# STREAMLIT UI
-# ----------------------------------------------------
-st.set_page_config(page_title="vForensIQ Log Query Engine", layout="wide")
-
-st.title("🔍 vForensIQ — CCTV Log Query Engine")
-
-st.sidebar.header("⚙️ Settings")
-log_file_path = st.sidebar.text_input("Log File Path:", JSON_LOG_PATH)
-
-# Load logs
-df = load_logs(log_file_path)
-
-st.subheader("📄 Log Preview (auto-updates after query)")
-table_placeholder = st.empty()
-table_placeholder.dataframe(df.head(50), use_container_width=True)
+with st.expander("Primary Source Preview (Optional)"):
+    preview = load_primary_preview(str(CANONICAL_SOURCE_CSV))
+    st.dataframe(preview, use_container_width=True)
 
 st.markdown("---")
-
-st.subheader("💬 Ask a Question")
-user_query = st.text_input(
-    "Example: Show me the top 3 gates with highest car exit frequency"
+st.subheader("Ask a Question")
+question = st.text_area(
+    "Natural language query",
+    placeholder="Example: Which cameras had highest detector latency yesterday between 6pm and 11pm?",
+    height=100,
 )
 
 if st.button("Run Query"):
-    if user_query.strip() == "":
+    if not question.strip():
         st.warning("Please enter a question.")
     else:
-        with st.spinner("Analyzing logs locally..."):
-            local_result = process_query_locally(df, user_query)
-            filtered_df = local_result["computed_output"]
-
-        st.success("Local computation applied!")
-
-        # 🔥 UPDATE EXISTING TABLE (no new table)
-        table_placeholder.dataframe(filtered_df, use_container_width=True)
-
-        with st.spinner("Contacting OpenAI for explanation..."):
-            answer = ask_openai(user_query, local_result)
-
-        st.subheader("🤖 LLM Explanation")
-        st.write(answer)
-
-        st.markdown("---")
-
-        # JSON report download
-        st.download_button(
-            label="📥 Download JSON Report",
-            data=filtered_df.to_json(orient="records", indent=2),
-            file_name="cctv_query_report.json",
-            mime="application/json"
-        )
-
-        # PDF report download
-        pdf_path = generate_pdf(
-            user_query,
-            local_result["filter_applied"],
-            filtered_df
-        )
-        with open(pdf_path, "rb") as f:
-            st.download_button(
-                label="📄 Download PDF Report",
-                data=f,
-                file_name="cctv_forensic_report.pdf",
-                mime="application/pdf"
+        with st.spinner("Running NL->SQL pipeline..."):
+            result = run_nl_sql_pipeline(
+                question=question.strip(),
+                provider_mode="openai",
+                compare=False,
+                chunk_size=chunk_size,
             )
+
+        st.success("Query complete.")
+        st.markdown(f"Total rows scanned during chunked summarization: `{result.get('result', {}).get('total_rows_scanned', 0)}`")
+        render_envelope("OpenAI Result", result.get("result", {}))
