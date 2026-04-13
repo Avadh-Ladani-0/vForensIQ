@@ -1,0 +1,1 @@
+- [LaTeX report file structure](project_report_structure.md) — File layout, chapter locations, current Implementation.tex section map, citations added so far.

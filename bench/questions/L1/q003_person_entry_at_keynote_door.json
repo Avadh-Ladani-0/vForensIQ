@@ -1,0 +1,12 @@
+{
+  "question_id": "L1_q003_person_entry_at_keynote_door",
+  "level": "L1",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many person_entry events were recorded at KeynoteHall_DoorA on 2025-12-08 (UTC)?",
+  "gold": {
+    "type": "sql",
+    "sql": "SELECT COUNT(*) AS count FROM events WHERE event_type = 'person_entry' AND camera_location = 'KeynoteHall_DoorA' AND timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'",
+    "scoring": "exact_numeric"
+  },
+  "metadata": { "note": "Keynote hall entry with peak attendance hours." }
+}

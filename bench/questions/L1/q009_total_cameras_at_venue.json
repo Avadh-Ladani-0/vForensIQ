@@ -1,0 +1,12 @@
+{
+  "question_id": "L1_q009_total_cameras_at_venue",
+  "level": "L1",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many cameras are deployed at this venue?",
+  "gold": {
+    "type": "sql",
+    "sql": "SELECT COUNT(DISTINCT camera_id) FROM events WHERE timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'",
+    "scoring": "exact_numeric"
+  },
+  "metadata": { "abstract": true, "tests": "informal venue-wide query, expects DISTINCT count of camera_id" }
+}

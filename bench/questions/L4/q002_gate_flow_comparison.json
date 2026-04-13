@@ -1,0 +1,16 @@
+{
+  "question_id": "L4_q002_gate_flow_comparison",
+  "level": "L4",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "On 2025-12-08 (UTC), which gate had higher total person flow (person_entry + person_exit combined) — Gate_MainEntrance or Gate_ParkingLot? State which gate and their approximate totals.",
+  "gold": {
+    "type": "structured_facts",
+    "facts": {
+      "higher_flow_gate": "Gate_MainEntrance",
+      "gate_mainentrance_flow_approx": { "value": 2900, "tolerance": 400 },
+      "gate_parkinglot_flow_approx":   { "value": 620,  "tolerance": 150 }
+    },
+    "scoring": "structured_facts"
+  },
+  "metadata": { "note": "Scenario configures MainEntrance person traffic far higher than ParkingLot (200+600/h peaks vs 120-150/h)." }
+}

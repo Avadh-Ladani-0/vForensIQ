@@ -1,0 +1,12 @@
+{
+  "question_id": "L2_q008_lunch_crowd_food_court",
+  "level": "L2",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How busy was the food court during lunch hours on average?",
+  "gold": {
+    "type": "sql",
+    "sql": "SELECT ROUND(AVG(head_count), 2) FROM events WHERE event_type='crowd' AND camera_location LIKE '%FoodCourt%' AND timestamp_utc >= '2025-12-08T12:00:00Z' AND timestamp_utc < '2025-12-08T14:00:00Z'",
+    "scoring": "numeric_tolerance_1pct"
+  },
+  "metadata": { "abstract": true, "tests": "busy -> AVG head_count, food court -> FoodCourt, lunch hours -> 12:00-14:00" }
+}

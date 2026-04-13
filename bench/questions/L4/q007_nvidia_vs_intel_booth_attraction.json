@@ -1,0 +1,15 @@
+{
+  "question_id": "L4_q007_nvidia_vs_intel_booth_attraction",
+  "level": "L4",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which demo booth attracted bigger crowds — NVIDIA or Intel? Roughly how much more popular was the winner?",
+  "gold": {
+    "type": "structured_facts",
+    "facts": {
+      "winner": "NVIDIA",
+      "intel_mentioned": "Intel"
+    },
+    "scoring": "structured_facts"
+  },
+  "metadata": { "abstract": true, "tests": "demo booth -> DemoBooth_*, attracted crowds -> AVG head_count, ratio comparison" }
+}

@@ -1,0 +1,15 @@
+{
+  "question_id": "L4_q001_compare_booths",
+  "level": "L4",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "On 2025-12-08 (UTC), compare the crowd activity at DemoBooth_NVIDIA versus DemoBooth_Intel. Which booth was busier, and approximately what was the ratio of their average head_counts?",
+  "gold": {
+    "type": "structured_facts",
+    "facts": {
+      "busier_booth": "DemoBooth_NVIDIA",
+      "average_headcount_ratio_nvidia_over_intel": { "value": 1.4, "tolerance": 0.4 }
+    },
+    "scoring": "structured_facts"
+  },
+  "metadata": { "note": "Comparative L4. Scenario configures NVIDIA peaks higher than Intel (60/45/70 vs 40/30/42)." }
+}

@@ -1,0 +1,15 @@
+{
+  "question_id": "L4_q008_keynote_attendance_dropoff",
+  "level": "L4",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Did the keynote stage attendance drop off later in the day, or stay similar across the morning and afternoon keynotes?",
+  "gold": {
+    "type": "structured_facts",
+    "facts": {
+      "trend_keyword_a": "morning",
+      "trend_keyword_b": "afternoon"
+    },
+    "scoring": "structured_facts"
+  },
+  "metadata": { "abstract": true, "tests": "keynote stage -> KeynoteHall_Stage, morning/afternoon comparison, slight downward trend (450 -> 400)" }
+}

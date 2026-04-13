@@ -1,0 +1,12 @@
+{
+  "question_id": "L1_q006_active_cameras_during_keynote",
+  "level": "L1",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many distinct cameras produced at least one event between 09:00 and 10:00 UTC on 2025-12-08 (the morning keynote hour)?",
+  "gold": {
+    "type": "sql",
+    "sql": "SELECT COUNT(DISTINCT camera_id) AS active_cams FROM events WHERE timestamp_utc >= '2025-12-08T09:00:00Z' AND timestamp_utc < '2025-12-08T10:00:00Z'",
+    "scoring": "exact_numeric"
+  },
+  "metadata": { "note": "Tests COUNT(DISTINCT camera_id) restricted to a one-hour window." }
+}

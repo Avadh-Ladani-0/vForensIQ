@@ -1,0 +1,19 @@
+{
+  "question_id": "L5_q008_what_should_change",
+  "level": "L5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Looking at how this conference day played out, what could be improved next time — staffing, layout, scheduling? Give me your top recommendations grounded in what the data shows.",
+  "gold": {
+    "type": "rubric_coverage",
+    "rubric": [
+      "Lunch-hour congestion at the food court suggests adding capacity or staggered breaks",
+      "Concentrated rush hours at the main entrance suggest staggered start times or additional lanes",
+      "Significant peak/baseline contrast at keynote stage suggests dedicated crowd-flow planning around keynote times",
+      "Lower-attended demo booths could be relocated or merged to balance traffic"
+    ],
+    "coverage_threshold": 0.4,
+    "grounding_required": true,
+    "scoring": "rubric_coverage"
+  },
+  "metadata": { "abstract": true, "tests": "forward-looking recommendation L5 — requires inferring problems from patterns and proposing fixes" }
+}

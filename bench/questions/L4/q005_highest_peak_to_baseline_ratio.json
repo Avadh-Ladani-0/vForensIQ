@@ -1,0 +1,14 @@
+{
+  "question_id": "L4_q005_highest_peak_to_baseline_ratio",
+  "level": "L4",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Across all crowd-mode cameras (ExpoFloor_MainAisle, DemoBooth_NVIDIA, DemoBooth_Intel, KeynoteHall_Stage, FoodCourt_North) on 2025-12-08 (UTC), which location showed the most extreme peak-to-baseline contrast — meaning the largest ratio of its peak head_count to its overnight quiet-hour average head_count? Identify the camera_location and explain the ratio order of magnitude.",
+  "gold": {
+    "type": "structured_facts",
+    "facts": {
+      "most_extreme_location": "KeynoteHall_Stage"
+    },
+    "scoring": "structured_facts"
+  },
+  "metadata": { "note": "KeynoteHall_Stage has baseline ~2 and peak ~450 (ratio ~225x). NVIDIA peak/baseline ~23x. ExpoFloor ~45x. FoodCourt ~24x. KeynoteHall wins decisively." }
+}

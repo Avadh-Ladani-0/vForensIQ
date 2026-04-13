@@ -1,0 +1,19 @@
+{
+  "question_id": "L5_q007_security_team_handoff",
+  "level": "L5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "If you were running security here, what would you tell your team based on the day's activity? Where should we keep the most eyes, and when do we need extra hands?",
+  "gold": {
+    "type": "rubric_coverage",
+    "rubric": [
+      "Main entrance is the highest-traffic location and needs constant attention",
+      "Crowd-management focus on keynote area during keynote hours",
+      "Extra coverage needed during morning arrival window and evening departure window",
+      "Demo booth area requires monitoring during expo hours when crowds gather"
+    ],
+    "coverage_threshold": 0.5,
+    "grounding_required": true,
+    "scoring": "rubric_coverage"
+  },
+  "metadata": { "abstract": true, "tests": "operational/persona-driven L5 — security perspective forces LLM to interpret data through a role lens" }
+}

@@ -1,0 +1,12 @@
+{
+  "question_id": "L2_q002_avg_headcount_foodcourt_lunch",
+  "level": "L2",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What was the average head_count at FoodCourt_North during lunch hours 12:00 to 14:00 UTC on 2025-12-08?",
+  "gold": {
+    "type": "sql",
+    "sql": "SELECT ROUND(AVG(head_count), 2) AS avg_hc FROM events WHERE event_type = 'crowd' AND camera_location = 'FoodCourt_North' AND timestamp_utc >= '2025-12-08T12:00:00Z' AND timestamp_utc < '2025-12-08T14:00:00Z'",
+    "scoring": "numeric_tolerance_1pct"
+  },
+  "metadata": { "note": "AVG with a 2-hour window filter, food-court lunch peak." }
+}

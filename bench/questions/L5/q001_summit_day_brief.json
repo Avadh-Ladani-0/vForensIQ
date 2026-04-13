@@ -1,0 +1,20 @@
+{
+  "question_id": "L5_q001_summit_day_brief",
+  "level": "L5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a security and operations brief for the AI Hardware Summit on 2025-12-08 (UTC). Cover: the busiest traffic windows at the main gates, keynote hall attendance peaks, lunchtime dynamics at the food court, and how the demo booths (NVIDIA and Intel) compared in crowd activity. Keep it to 5 bullet points.",
+  "gold": {
+    "type": "rubric_coverage",
+    "rubric": [
+      "Gate_MainEntrance shows morning person-entry peak around 08-10 UTC",
+      "Gate_MainEntrance shows evening person-exit peak around 17-19 UTC",
+      "KeynoteHall_Stage crowd peaks during keynote hours (09-10 UTC and 14-15 UTC)",
+      "FoodCourt_North crowd peaks during lunch hours (12-14 UTC)",
+      "DemoBooth_NVIDIA had higher crowd activity than DemoBooth_Intel"
+    ],
+    "coverage_threshold": 0.6,
+    "grounding_required": true,
+    "scoring": "rubric_coverage"
+  },
+  "metadata": { "note": "Multi-aspect narrative brief drawing on all configured peak patterns." }
+}

@@ -1,0 +1,12 @@
+{
+  "question_id": "L3_q008_event_volume_by_hour",
+  "level": "L3",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How does activity change throughout the day across the whole venue? Show the total number of events per hour.",
+  "gold": {
+    "type": "sql",
+    "sql": "SELECT strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour_utc, COUNT(*) AS total_events FROM events WHERE timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z' GROUP BY hour_utc ORDER BY hour_utc",
+    "scoring": "set_match_with_tolerance"
+  },
+  "metadata": { "abstract": true, "tests": "venue-wide activity over time -> hourly COUNT(*) of all events" }
+}

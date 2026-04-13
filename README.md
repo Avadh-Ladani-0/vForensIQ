@@ -3,110 +3,111 @@ Smart Video Footage Analysis with Computer Vision and LLM
 
 vForensIQ is an intelligent surveillance analytics system that combines **Computer Vision (CV)** for CCTV event detection with **Large Language Models (LLMs)** for reasoning, querying, and insight generation over structured surveillance logs.
 
+CV event detection is a proof-of-concept supporting the LLM layer; the research contribution is the LLM-based querying system (B1 NL→SQL and B2 Graph-RAG).
+
 ---
 
-## Demo
+## Architecture
 
 ![System Architecture Overview](Report/system_architecture.png)
 
----
-
-## LLM Reasoning
-
-The LLM layer acts as the core intelligence of the system. It translates human natural-language queries into structured database operations, performs temporal and spatial reasoning over historical logs, and generates meaningful summaries and forensic insights.
-
-![LLM Reasoning](Report/RAG_working.png)
+Four modules:
+1. **CCTV nodes** running CV event detection → publish events via MQTT.
+2. **Central SQL logbase** (`runtime/vforensiq_logbase.db`) — MQTT subscriber writes events; simulator writes directly.
+3. **LLM analytics** — two approaches run side-by-side and compared (B1 NL→SQL, B2 Graph-RAG).
+4. **Evaluation harness** — L1–L5 bench scoring.
 
 ---
 
-## NL->SQL Engine (Event-Context Aware)
+## Data & message contract
 
-The repository now includes an event-context NL->SQL pipeline powered by the canonical source:
+See [`docs/contracts.md`](docs/contracts.md) for the authoritative event JSON schema, MQTT transport, simulator output contract, and SQL logbase schema.
 
-- `Data/Augmented_Data/out/data.csv`
+Event vocabulary (frozen, 5 values): `person_entry`, `person_exit`, `car_entry`, `car_exit`, `crowd`.
 
-Key behavior:
+---
 
-- Natural language -> QueryPlan -> SQL (read-only)
-- SQLite execution with hourly rollup support
-- Chunked summarization partitioned by `captured_event`
-- Separate per-event summaries (no mixed-event narrative unless user asks to compare)
-- Answer-first output in normal language
-- Downloadable processed evidence tables (CSV/JSON)
-- SQL citation list for both primary and post-processing queries
-- Provider mode: `openai` only
+## Scenario-driven simulator
 
-### Models and Logging
-
-- OpenAI SQL model: `OPENAI_SQL_MODEL` (default: `gpt-3.5-turbo`, set to any higher model as needed)
-- Pipeline log file: `logs/nl_sql_pipeline.log`
-- Audit log file: `logs/query_audit.jsonl`
-
-### Run Streamlit UI
+`simulator/` generates per-second event data directly into the SQL logbase. Scenarios are JSON configs defining cameras, traffic patterns, and peak-hour multipliers.
 
 ```bash
-streamlit run app.py
+python -m simulator base_quiet_day          # 1-day minimal scenario
+python -m simulator ai_hw_summit_day1       # themed: AI Hardware Summit 2025
 ```
 
-### Run CLI
+Writes to `runtime/vforensiq_logbase.db`; also emits `simulator/out/<scenario>/ground_truth.json` for the eval harness.
+
+---
+
+## B1 — NL→SQL approach (Sprint 1)
+
+Two-step pipeline in [`llm_sql/b1_service.py`](llm_sql/b1_service.py):
+
+1. LLM #1 generates one SELECT against the `events` table (schema described in the system prompt).
+2. SQL is validated (SELECT/WITH only, no mutations) and executed. On `OperationalError`, one-shot repair asks the LLM for a corrected query.
+3. LLM #2 synthesizes a concise plain-language answer from the rows.
+
+Both `gpt-4o-mini` and `gpt-4o` are evaluated at every level.
+
+---
+
+## B2 — Graph-RAG (Sprints 3–4)
+
+Neo4j-backed. Three sub-variants compared: NL→Cypher, community-summary retrieval (Microsoft GraphRAG-style), hybrid. Details frozen in project memory.
+
+---
+
+## L1–L5 evaluation harness
 
 ```bash
-python chat.py
+# full matrix (b1_sql only for now; RAG lands Sprint 3+)
+python -m bench.run_eval --approach b1_sql --model all --level all
+
+# L1 only, both models
+python -m bench.run_eval --approach b1_sql --model all --level L1
 ```
 
-### Tests
+Results land under `bench/results/<run_id>/`:
+- `manifest.json` — run metadata
+- `comparison.csv` — one row per cell
+- `by_config/<approach>__<model>/<level>/<question_id>.json` — per-cell envelopes
 
-```bash
-python -m unittest discover -s tests -p "test_event_context_pipeline.py"
+Scorers:
+- L1: `exact_numeric` (deterministic)
+- L2: `numeric_tolerance_1pct` (deterministic, ±1%)
+- L3: `set_match_with_tolerance` (deterministic, set equality + per-value tolerance)
+- L4: `structured_facts` (deterministic, fact-by-fact match with tolerances)
+- L5: `rubric_coverage` (LLM-as-judge using gpt-4o; coverage fraction vs threshold)
+
+---
+
+## Environment
+
+- Python 3.10+ with `openai`, `python-dotenv`. (Legacy prototype dependencies: `pandas`, `streamlit`, `reportlab` — only used by `app2.py`.)
+- `.env` at repo root with `OPENAI_API_KEY=...`
+- Pipeline log: `logs/llm_sql_pipeline.log`
+- Audit log: `logs/query_audit.jsonl` (legacy path; will migrate in Sprint 2)
+
+---
+
+## Repo layout
+
+```
+docs/             # contracts.md (event schema, MQTT, SQL), mosquitto.conf
+simulator/        # scenario generator + base_quiet_day / ai_hw_summit_day1 scenarios
+logbase/          # MQTT subscriber (lands Sprint 3)
+llm_sql/          # B1 NL->SQL (b1_service.py + logging/common utilities)
+llm_rag/          # B2 graph RAG (lands Sprint 3-4)
+bench/            # run_eval.py + questions/{L1,L2,L3,L4,L5}/*.json
+tools/            # replay publisher, admin scripts (lands Sprint 3)
+detectors/        # CV detectors (PoC, retarget Sprint 3)
 ```
 
-```mermaid
-%%{init: {"flowchart": {"curve": "linear", "nodeSpacing": 35, "rankSpacing": 35}}}%%
-flowchart LR
+---
 
-subgraph OFFLINE["OFFLINE: transforms -> embeddings -> indexes"]
-direction LR
+## Legacy UI
 
-RAW[(Event rows\ncam_id, location_tag, timestamp\ncaptured_event, person_count, confidence, ...)]
-EPW[(Episode windows\n30-120s buckets\nepisode_id + episode_text)]
+The original Streamlit prototype (`app.py`, `chat.py`, `sql_pipeline.py`) was removed at end of Sprint 1 along with the legacy `llm_sql/{service,planner,aggregation,event_context,summarizer,db}.py` modules. A new UI fronting `llm_sql.b1_service` will land in a later sprint.
 
-NR["Deterministic narrative renderer\nEvent row -> narrative string"]
-HS["Hierarchical summaries\nEpisodes -> higher-level summaries\nOptional"]
-
-EMB["Embedding strategy\nBGE-M3 dense 1024d\nOptional sparse vectors\nStore embedding_version metadata\nmodel_name, model_version, dim, normalization"]
-
-MIL[(Milvus vector store\nDense vectors + scalar filters\ncam_id/location_tag/timestamp/confidence)]
-SRCH[(OpenSearch or Elasticsearch\nSparse retrieval: BM25 or neural sparse\nHybrid query support)]
-
-RAW --> NR --> EMB --> MIL
-EPW --> HS --> EMB
-EPW --> SRCH
-HS --> SRCH
-
-end
-
-subgraph ONLINE["ONLINE: router -> hybrid retrieve -> rerank -> grounded answer"]
-direction LR
-
-Q["User question q"]
-ROUTER["Router\nChoose rag_semantic"]
-
-HYB["Hybrid candidate retrieval\nDense top-k + Sparse top-k\nApply metadata/scalar filters"]
-
-RERANK{"Rerank optional\nCross-encoder or LLM scoring"}
-
-TOP["Top evidence snippets\nInclude episode_id or event_id\nInclude time bounds, cam_id, location_tag"]
-
-PROMPT["RAG summarizer prompt\nUse ONLY evidence blocks\nIf insufficient: say what is missing\nSuggest a narrower query"]
-
-OUT["Structured answer JSON\nanswer_text\ntime_bounds: start_utc, end_utc\nkey_findings: finding, supporting_event_ids, confidence\nevidence: event_id, timestamp, cam_id, location_tag\ncaveats"]
-
-Q --> ROUTER --> HYB
-MIL --> HYB
-SRCH --> HYB
-HYB --> RERANK
-RERANK --> TOP
-TOP --> PROMPT --> OUT
-
-end
-```
+`app2.py` (an older single-file Streamlit prototype that predates the event-context pipeline) is self-contained and still works against `Data/Augmented_Data/out/data.csv` if pandas/streamlit are installed.

@@ -1,0 +1,33 @@
+{
+  "scenario_name": "base_quiet_day",
+  "scenario_version": 1,
+  "seed": 42,
+  "window_utc": {
+    "start": "2025-12-01T00:00:00Z",
+    "end":   "2025-12-02T00:00:00Z"
+  },
+  "cameras": [
+    {
+      "camera_id": "CAM_01",
+      "camera_location": "Gate_01",
+      "mode": "entry_exit",
+      "traffic": {
+        "person_rate_per_hour": { "default": 30, "peak_hours": { "08-10": 200, "17-19": 180 } },
+        "car_rate_per_hour":    { "default": 10, "peak_hours": { "08-10": 80 } },
+        "exit_ratio": 0.5,
+        "confidence_range": [0.82, 0.98]
+      }
+    },
+    {
+      "camera_id": "CAM_02",
+      "camera_location": "Platform_1",
+      "mode": "crowd",
+      "traffic": {
+        "head_count_baseline": 5,
+        "peak_hours": { "08-10": 40, "18-20": 35 },
+        "noise_stddev": 2,
+        "confidence_range": [0.80, 0.95]
+      }
+    }
+  ]
+}

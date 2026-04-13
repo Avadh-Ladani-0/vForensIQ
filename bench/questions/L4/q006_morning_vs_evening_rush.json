@@ -1,0 +1,16 @@
+{
+  "question_id": "L4_q006_morning_vs_evening_rush",
+  "level": "L4",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Was the morning rush bigger than the evening rush at the main entrance, in terms of how many people came and went?",
+  "gold": {
+    "type": "structured_facts",
+    "facts": {
+      "bigger_rush": "morning",
+      "morning_total_approx": { "value": 1200, "tolerance": 250 },
+      "evening_total_approx": { "value": 1000, "tolerance": 250 }
+    },
+    "scoring": "structured_facts"
+  },
+  "metadata": { "abstract": true, "tests": "morning rush=08-10, evening rush=17-19, main entrance, person flow" }
+}

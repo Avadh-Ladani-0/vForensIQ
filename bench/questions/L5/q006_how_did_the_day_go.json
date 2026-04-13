@@ -1,0 +1,20 @@
+{
+  "question_id": "L5_q006_how_did_the_day_go",
+  "level": "L5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Tell me how the day went at the conference — what stood out, when were the big moments, and what does the activity tell us?",
+  "gold": {
+    "type": "rubric_coverage",
+    "rubric": [
+      "Significant person traffic at the main entrance, especially in the morning and evening",
+      "Keynote sessions drew large crowds at the keynote stage area",
+      "Demo booths (especially NVIDIA) had notable crowd activity during expo hours",
+      "Food court was busiest around lunchtime",
+      "Overnight hours were quiet across the venue"
+    ],
+    "coverage_threshold": 0.4,
+    "grounding_required": true,
+    "scoring": "rubric_coverage"
+  },
+  "metadata": { "abstract": true, "tests": "fully open-ended; LLM must pick what to summarize from the data" }
+}

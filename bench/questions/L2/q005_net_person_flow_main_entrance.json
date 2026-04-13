@@ -1,0 +1,12 @@
+{
+  "question_id": "L2_q005_net_person_flow_main_entrance",
+  "level": "L2",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What was the net person flow (person_entry events minus person_exit events) at Gate_MainEntrance on 2025-12-08 (UTC)?",
+  "gold": {
+    "type": "sql",
+    "sql": "SELECT (SUM(CASE WHEN event_type='person_entry' THEN 1 ELSE 0 END) - SUM(CASE WHEN event_type='person_exit' THEN 1 ELSE 0 END)) AS net_flow FROM events WHERE camera_location='Gate_MainEntrance' AND event_type IN ('person_entry','person_exit') AND timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'",
+    "scoring": "numeric_tolerance_1pct"
+  },
+  "metadata": { "note": "Conditional aggregation (CASE WHEN) for net flow. Should be small absolute number since exit_ratio is configured at 0.45 (slight inflow bias)." }
+}

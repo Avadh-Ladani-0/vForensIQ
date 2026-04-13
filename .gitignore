@@ -9,6 +9,8 @@ __pycache__/
 ranking
 Data/
 runtime/
+simulator/out/
+bench/results/
 logs/query_audit.jsonl
 logs/*.log
 # Microsoft Office temporary/lock files

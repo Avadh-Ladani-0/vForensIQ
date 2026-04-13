@@ -1,0 +1,19 @@
+{
+  "question_id": "L5_q004_security_attention_report",
+  "level": "L5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Produce a security-attention report for 2025-12-08 (UTC) at the AI Hardware Summit. Identify the locations and time windows that warrant the most security focus based on volume of activity. Specifically highlight (1) the gate that handles the largest volume of person traffic, (2) the gate with the most car traffic, and (3) the public area with the highest crowd density spikes. Quantify each with approximate numbers and times.",
+  "gold": {
+    "type": "rubric_coverage",
+    "rubric": [
+      "Gate_MainEntrance handles the largest person traffic volume",
+      "Gate_ParkingLot handles the most car traffic",
+      "KeynoteHall_Stage shows the highest crowd density spikes (head_counts in the hundreds)",
+      "Peak hours for these hotspots fall within the working-day window (08:00-19:00 UTC)"
+    ],
+    "coverage_threshold": 0.5,
+    "grounding_required": true,
+    "scoring": "rubric_coverage"
+  },
+  "metadata": { "note": "Cross-camera, cross-event-type security narrative requiring synthesis of person/car/crowd findings." }
+}

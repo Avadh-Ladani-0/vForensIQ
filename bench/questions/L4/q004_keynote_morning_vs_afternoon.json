@@ -1,0 +1,16 @@
+{
+  "question_id": "L4_q004_keynote_morning_vs_afternoon",
+  "level": "L4",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Compare the average head_count at KeynoteHall_Stage between the morning keynote window 09:00-10:00 UTC and the afternoon keynote window 14:00-15:00 UTC on 2025-12-08. Which keynote had higher attendance and what were the approximate average head_counts?",
+  "gold": {
+    "type": "structured_facts",
+    "facts": {
+      "higher_attendance_window": "morning",
+      "morning_keynote_avg_approx": { "value": 450, "tolerance": 80 },
+      "afternoon_keynote_avg_approx": { "value": 400, "tolerance": 80 }
+    },
+    "scoring": "structured_facts"
+  },
+  "metadata": { "note": "Scenario configures KeynoteHall_Stage peaks: 09-10 -> 450, 14-15 -> 400. Morning higher." }
+}
