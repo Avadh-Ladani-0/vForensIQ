@@ -24,7 +24,7 @@ RESULTS_DIR = _PKG_DIR / "results"
 
 ALL_LEVELS = ["L1", "L2", "L3", "L4", "L5"]
 ALL_APPROACHES = ["b1_sql", "b2_rag_cypher", "b2_rag_community", "b2_rag_hybrid"]
-ALL_MODELS = ["gpt-4o-mini", "gpt-4o"]
+ALL_MODELS = ["gpt-5-mini", "gpt-5"]
 
 
 def utc_now_iso_z() -> str:
@@ -35,34 +35,36 @@ def utc_now_iso_z() -> str:
 # Approach invokers (stubs for Sprint 0 — real impls land in Sprints 1-4)
 # ===========================================================================
 
+def _build_session_context(question: dict[str, Any]) -> dict[str, Any] | None:
+    scenario_name = question.get("scenario")
+    if not scenario_name:
+        return None
+    scenarios_dir = _REPO_ROOT / "simulator" / "scenarios"
+    path = scenarios_dir / f"{scenario_name}.json"
+    if not path.exists():
+        return None
+    data = json.loads(path.read_text(encoding="utf-8"))
+    return {"scenario_label": scenario_name, "scenario_window": data.get("window_utc")}
+
+
 def invoke_b1_sql(question: dict[str, Any], model: str) -> dict[str, Any]:
     from llm_sql.b1_service import answer_question
-    # Look up the scenario's window so abstract questions ("today", "the day")
-    # have the same session context a real UI would inject.
-    scenario_name = question.get("scenario")
-    scenarios_dir = _REPO_ROOT / "simulator" / "scenarios"
-    context: dict[str, Any] | None = None
-    if scenario_name:
-        scenario_path = scenarios_dir / f"{scenario_name}.json"
-        if scenario_path.exists():
-            data = json.loads(scenario_path.read_text(encoding="utf-8"))
-            context = {
-                "scenario_label": scenario_name,
-                "scenario_window": data.get("window_utc"),
-            }
-    return answer_question(question["question_text"], model, context=context)
+    return answer_question(question["question_text"], model, context=_build_session_context(question))
 
 
 def invoke_b2_rag_cypher(question: dict[str, Any], model: str) -> dict[str, Any]:
-    raise NotImplementedError("B2 graph-RAG (Cypher) lands in Sprint 3")
+    from llm_rag.cypher_service import answer_question
+    return answer_question(question["question_text"], model, context=_build_session_context(question))
 
 
 def invoke_b2_rag_community(question: dict[str, Any], model: str) -> dict[str, Any]:
-    raise NotImplementedError("B2 graph-RAG (community summaries) lands in Sprint 4")
+    from llm_rag.community_service import answer_question
+    return answer_question(question["question_text"], model, context=_build_session_context(question))
 
 
 def invoke_b2_rag_hybrid(question: dict[str, Any], model: str) -> dict[str, Any]:
-    raise NotImplementedError("B2 graph-RAG (hybrid) lands in Sprint 4")
+    from llm_rag.hybrid_service import answer_question
+    return answer_question(question["question_text"], model, context=_build_session_context(question))
 
 
 INVOKERS: dict[str, Callable[[dict[str, Any], str], dict[str, Any]]] = {
@@ -216,7 +218,7 @@ def score_rubric_coverage(answer_text: str, gold: Any) -> tuple[Optional[bool], 
     """L5 scorer. LLM-as-judge evaluates whether each rubric item is covered.
 
     Gold is {"rubric": [strings], "threshold": 0.0..1.0, optional "grounding_required": bool}.
-    Uses gpt-4o for the judge call (single call; JSON response covering all rubric items).
+    Uses gpt-5 for the judge call (single call; JSON response covering all rubric items).
     Passes iff (covered_count / total) >= threshold.
     """
     if not isinstance(gold, dict) or "rubric" not in gold:
@@ -249,8 +251,8 @@ def score_rubric_coverage(answer_text: str, gold: Any) -> tuple[Optional[bool], 
         client = _get_client()
         resp = _chat_with_retry(
             client,
-            model="gpt-4o",
-            temperature=0,
+            model="gpt-5",
+             
             response_format={"type": "json_object"},
             messages=[
                 {"role": "system", "content": judge_system},

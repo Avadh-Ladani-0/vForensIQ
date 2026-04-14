@@ -166,7 +166,7 @@ def generate_sql(question_text: str, model: str, client: OpenAI) -> tuple[str, d
     resp = _chat_with_retry(
         client,
         model=model,
-        temperature=0,
+         
         messages=[
             {"role": "system", "content": SCHEMA_PROMPT},
             {"role": "user", "content": question_text},
@@ -214,7 +214,7 @@ def synthesize_answer(
     resp = _chat_with_retry(
         client,
         model=model,
-        temperature=0,
+         
         messages=[
             {"role": "system", "content": ANSWER_SYNTH_PROMPT},
             {"role": "user", "content": user_content},
@@ -248,7 +248,7 @@ def repair_sql(
     resp = _chat_with_retry(
         client,
         model=model,
-        temperature=0,
+         
         messages=[
             {"role": "system", "content": SCHEMA_PROMPT},
             {"role": "user", "content": repair_user},
