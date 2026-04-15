@@ -1,0 +1,20 @@
+{
+  "question_id": "L5_q010_temporal_flow_narrative",
+  "level": "L5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Describe the flow of people through the venue on 2025-12-08 — how did the crowd move from gates to the expo floor to the keynote hall to the food court throughout the day? Paint a picture of the temporal flow using the data.",
+  "gold": {
+    "type": "rubric_coverage",
+    "rubric": [
+      "Morning arrivals concentrated at Gate_MainEntrance and Gate_ParkingLot around 08-10 UTC",
+      "Crowd builds on the ExpoFloor and DemoBooths during mid-morning 10-12 UTC",
+      "Keynote sessions draw large crowds to KeynoteHall_Stage at 09-10 and 14-15 UTC",
+      "FoodCourt peaks during lunch 12-14 UTC",
+      "Evening departures at gates 17-19 UTC"
+    ],
+    "coverage_threshold": 0.4,
+    "grounding_required": true,
+    "scoring": "rubric_coverage"
+  },
+  "metadata": { "abstract": true, "graph_native": true, "tests": "temporal flow narrative — graph traversal from gates → expo → keynote → food → exit" }
+}

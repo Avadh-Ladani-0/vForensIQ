@@ -1,0 +1,14 @@
+{
+  "question_id": "L1_q013_total_car_entries",
+  "level": "L1",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "In total, how many cars entered the venue today across all gates?",
+  "gold": {
+    "type": "sql",
+    "sql": "SELECT COUNT(*) FROM events WHERE event_type='car_entry' AND timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'",
+    "scoring": "exact_numeric"
+  },
+  "metadata": {
+    "abstract": true
+  }
+}

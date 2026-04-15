@@ -1,0 +1,19 @@
+{
+  "question_id": "L5_q013_end_of_day_evacuation",
+  "level": "L5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How did the end-of-day evacuation go? Describe the departure pattern from 17:00 onwards — which areas emptied first, how the gates handled the outflow, and whether the departure was orderly or had bottleneck moments.",
+  "gold": {
+    "type": "rubric_coverage",
+    "rubric": [
+      "Gate_MainEntrance saw heavy person_exit traffic in the 17:00-19:00 window",
+      "Gate_ParkingLot had car_exit spikes during the same evening window",
+      "Crowd levels at ExpoFloor and DemoBooths dropped as people left",
+      "The departure was spread over 2+ hours rather than a sudden rush"
+    ],
+    "coverage_threshold": 0.5,
+    "grounding_required": true,
+    "scoring": "rubric_coverage"
+  },
+  "metadata": { "abstract": true, "graph_native": true, "tests": "temporal flow narrative — end-of-day pattern across gates + crowd cameras" }
+}

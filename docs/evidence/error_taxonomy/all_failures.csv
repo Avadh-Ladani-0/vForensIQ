@@ -1,0 +1,307 @@
+run,approach,model,level,question_id,passed,root_cause,detail
+gpt4o_prefix,b1_sql,gpt-4o,L2,L2_q006_busiest_moment_nvidia,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=86.0 got=8.0)
+gpt4o_prefix,b1_sql,gpt-4o,L2,L2_q008_lunch_crowd_food_court,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=120.01 got=62.83)
+gpt4o_prefix,b1_sql,gpt-4o,L3,L3_q008_event_volume_by_hour,False,SET_MATCH_KEYS_MISSING,"missing_keys=['04', '06', '07', '10', '11'] missing_numbers=[18358.0, 19003.0, 1"
+gpt4o_prefix,b1_sql,gpt-4o,L5,L5_q003_staffing_brief,False,RUBRIC_COVERAGE_LOW (1/5=0.20),coverage=1/5=0.20 (threshold=0.5)
+gpt4o_prefix,b1_sql,gpt-4o,L5,L5_q006_how_did_the_day_go,False,RUBRIC_COVERAGE_LOW (1/5=0.20),coverage=1/5=0.20 (threshold=0.4)
+gpt4o_prefix,b1_sql,gpt-4o,L5,L5_q008_what_should_change,False,RUBRIC_COVERAGE_LOW (0/4=0.00),coverage=0/4=0.00 (threshold=0.4)
+gpt4o_prefix,b1_sql,gpt-4o-mini,L4,L4_q002_gate_flow_comparison,False,FACT_NUMERIC_MISMATCH,missing=['gate_parkinglot_flow_approx=620.0+-150.0_no_match (numbers_seen=[2883.
+gpt4o_prefix,b1_sql,gpt-4o-mini,L4,L4_q006_morning_vs_evening_rush,False,FACT_NUMERIC_MISMATCH,"missing=['evening_total_approx=1000.0+-250.0_no_match (numbers_seen=[1408.0, 147"
+gpt4o_prefix,b1_sql,gpt-4o-mini,L5,L5_q002_nvidia_booth_timeline,False,RUBRIC_COVERAGE_LOW (0/5=0.00),coverage=0/5=0.00 (threshold=0.6)
+gpt4o_prefix,b1_sql,gpt-4o-mini,L5,L5_q005_keynote_hall_lifecycle,,VALIDATION_ERROR,error
+gpt4o_prefix,b1_sql,gpt-4o-mini,L5,L5_q006_how_did_the_day_go,False,RUBRIC_COVERAGE_LOW (0/5=0.00),coverage=0/5=0.00 (threshold=0.4)
+gpt4o_prefix,b1_sql,gpt-4o-mini,L5,L5_q007_security_team_handoff,False,RUBRIC_COVERAGE_LOW (1/4=0.25),coverage=1/4=0.25 (threshold=0.5)
+gpt4o_prefix,b2_rag_community,gpt-4o,L1,L1_q001_car_entry_count_at_gate01,False,UNKNOWN_FAIL (expected=223.0 got=1.0),expected=223.0 got=1.0
+gpt4o_prefix,b2_rag_community,gpt-4o,L1,L1_q002_car_entry_count_at_parkinglot,False,UNKNOWN_FAIL (expected=381.0 got=8.0),expected=381.0 got=8.0
+gpt4o_prefix,b2_rag_community,gpt-4o,L1,L1_q003_person_entry_at_keynote_door,False,UNKNOWN_FAIL (expected=782.0 got=8.0),expected=782.0 got=8.0
+gpt4o_prefix,b2_rag_community,gpt-4o,L1,L1_q004_total_events_in_summit_day,False,UNKNOWN_FAIL (expected=437940.0 got=8.0),expected=437940.0 got=8.0
+gpt4o_prefix,b2_rag_community,gpt-4o,L1,L1_q005_distinct_object_ids_at_main_entrance,False,UNKNOWN_FAIL (expected=2951.0 got=8.0),expected=2951.0 got=8.0
+gpt4o_prefix,b2_rag_community,gpt-4o,L1,L1_q007_cars_into_parking_lot,False,UNKNOWN_FAIL (expected=381.0 got=8.0),expected=381.0 got=8.0
+gpt4o_prefix,b2_rag_community,gpt-4o,L1,L1_q008_people_through_main_gate,False,UNKNOWN_FAIL (expected=2883.0 got=8.0),expected=2883.0 got=8.0
+gpt4o_prefix,b2_rag_community,gpt-4o,L1,L1_q009_total_cameras_at_venue,False,UNKNOWN_FAIL (expected=8.0 got=7.0),expected=8.0 got=7.0
+gpt4o_prefix,b2_rag_community,gpt-4o,L2,L2_q001_peak_headcount_nvidia_booth,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=86.0 got=8.0)
+gpt4o_prefix,b2_rag_community,gpt-4o,L2,L2_q002_avg_headcount_foodcourt_lunch,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=120.01 got=8.0)
+gpt4o_prefix,b2_rag_community,gpt-4o,L2,L2_q003_avg_confidence_all_events,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=0.9 got=8.0)
+gpt4o_prefix,b2_rag_community,gpt-4o,L2,L2_q004_low_confidence_events_count,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=8.0)
+gpt4o_prefix,b2_rag_community,gpt-4o,L2,L2_q005_net_person_flow_main_entrance,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=179.0 got=8.0)
+gpt4o_prefix,b2_rag_community,gpt-4o,L2,L2_q006_busiest_moment_nvidia,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=86.0 got=8.0)
+gpt4o_prefix,b2_rag_community,gpt-4o,L2,L2_q007_low_confidence_detections,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=85.0)
+gpt4o_prefix,b2_rag_community,gpt-4o,L2,L2_q008_lunch_crowd_food_court,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=120.01 got=8.0)
+gpt4o_prefix,b2_rag_community,gpt-4o,L3,L3_q001_peak_per_booth,False,SET_MATCH_VALUES_WRONG,"missing_numbers=[53.0, 86.0]"
+gpt4o_prefix,b2_rag_community,gpt-4o,L3,L3_q002_event_counts_by_type,False,SET_MATCH_KEYS_MISSING,"missing_keys=['car_entry', 'car_exit', 'crowd', 'person_entry', 'person_exit'] m"
+gpt4o_prefix,b2_rag_community,gpt-4o,L3,L3_q003_hourly_person_entry_main_entrance,False,SET_MATCH_KEYS_MISSING,"missing_keys=['03', '04', '06', '07', '10'] missing_numbers=[13.0, 18.0, 15.0, 1"
+gpt4o_prefix,b2_rag_community,gpt-4o,L3,L3_q004_avg_headcount_per_crowd_camera,False,SET_MATCH_KEYS_MISSING,"missing_keys=['DemoBooth_Intel', 'DemoBooth_NVIDIA', 'ExpoFloor_MainAisle', 'Foo"
+gpt4o_prefix,b2_rag_community,gpt-4o,L3,L3_q005_top3_hours_by_crowd_activity,False,SET_MATCH_KEYS_MISSING,"missing_keys=['16', '14', '09'] missing_numbers=[2365493.0, 2059433.0, 1685871.0"
+gpt4o_prefix,b2_rag_community,gpt-4o,L3,L3_q006_arrival_pattern_main_gate,False,SET_MATCH_KEYS_MISSING,"missing_keys=['01', '03', '04', '06', '07'] missing_numbers=[13.0, 18.0, 12.0, 1"
+gpt4o_prefix,b2_rag_community,gpt-4o,L3,L3_q007_crowd_hotspots,False,SET_MATCH_VALUES_WRONG,"missing_numbers=[57.4, 49.36, 23.07, 15.52, 10.65]"
+gpt4o_prefix,b2_rag_community,gpt-4o,L3,L3_q008_event_volume_by_hour,False,SET_MATCH_KEYS_MISSING,"missing_keys=['03', '04', '06', '07', '10'] missing_numbers=[18040.0, 18039.0, 1"
+gpt4o_prefix,b2_rag_community,gpt-4o,L4,L4_q001_compare_booths,False,FACT_NUMERIC_MISMATCH,missing=['average_headcount_ratio_nvidia_over_intel=1.4+-0.4_no_match (numbers_s
+gpt4o_prefix,b2_rag_community,gpt-4o,L4,L4_q002_gate_flow_comparison,False,FACT_NUMERIC_MISMATCH,missing=['gate_mainentrance_flow_approx=2900.0+-400.0_no_match (numbers_seen=[8.
+gpt4o_prefix,b2_rag_community,gpt-4o,L4,L4_q003_morning_vs_evening_main_entrance,False,FACT_NUMERIC_MISMATCH,"missing=['morning_total_approx=1200.0+-250.0_no_match (numbers_seen=[8.0, 2025.0"
+gpt4o_prefix,b2_rag_community,gpt-4o,L4,L4_q004_keynote_morning_vs_afternoon,False,FACT_NUMERIC_MISMATCH,"missing=['morning_keynote_avg_approx=450.0+-80.0_no_match (numbers_seen=[8.0, 20"
+gpt4o_prefix,b2_rag_community,gpt-4o,L4,L4_q006_morning_vs_evening_rush,False,FACT_NUMERIC_MISMATCH,"missing=['morning_total_approx=1200.0+-250.0_no_match (numbers_seen=[8.0, 2025.0"
+gpt4o_prefix,b2_rag_community,gpt-4o,L5,L5_q001_summit_day_brief,False,RUBRIC_COVERAGE_LOW (0/5=0.00),coverage=0/5=0.00 (threshold=0.6)
+gpt4o_prefix,b2_rag_community,gpt-4o,L5,L5_q002_nvidia_booth_timeline,False,RUBRIC_COVERAGE_LOW (0/5=0.00),coverage=0/5=0.00 (threshold=0.6)
+gpt4o_prefix,b2_rag_community,gpt-4o,L5,L5_q003_staffing_brief,False,RUBRIC_COVERAGE_LOW (0/5=0.00),coverage=0/5=0.00 (threshold=0.5)
+gpt4o_prefix,b2_rag_community,gpt-4o,L5,L5_q006_how_did_the_day_go,False,RUBRIC_COVERAGE_LOW (1/5=0.20),coverage=1/5=0.20 (threshold=0.4)
+gpt4o_prefix,b2_rag_community,gpt-4o,L5,L5_q007_security_team_handoff,False,RUBRIC_COVERAGE_LOW (0/4=0.00),coverage=0/4=0.00 (threshold=0.5)
+gpt4o_prefix,b2_rag_community,gpt-4o,L5,L5_q008_what_should_change,False,RUBRIC_COVERAGE_LOW (0/4=0.00),coverage=0/4=0.00 (threshold=0.4)
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L1,L1_q001_car_entry_count_at_gate01,False,UNKNOWN_FAIL (expected=223.0 got=1.0),expected=223.0 got=1.0
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L1,L1_q002_car_entry_count_at_parkinglot,False,UNKNOWN_FAIL (expected=381.0 got=8.0),expected=381.0 got=8.0
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L1,L1_q003_person_entry_at_keynote_door,False,UNKNOWN_FAIL (expected=782.0 got=8.0),expected=782.0 got=8.0
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L1,L1_q004_total_events_in_summit_day,False,UNKNOWN_FAIL (expected=437940.0 got=8.0),expected=437940.0 got=8.0
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L1,L1_q005_distinct_object_ids_at_main_entrance,False,UNKNOWN_FAIL (expected=2951.0 got=8.0),expected=2951.0 got=8.0
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L1,L1_q007_cars_into_parking_lot,False,UNKNOWN_FAIL (expected=381.0 got=8.0),expected=381.0 got=8.0
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L1,L1_q008_people_through_main_gate,False,UNKNOWN_FAIL (expected=2883.0 got=1.0),expected=2883.0 got=1.0
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L1,L1_q009_total_cameras_at_venue,False,UNKNOWN_FAIL (expected=8.0 got=5.0),expected=8.0 got=5.0
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L2,L2_q001_peak_headcount_nvidia_booth,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=86.0 got=8.0)
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L2,L2_q002_avg_headcount_foodcourt_lunch,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=120.01 got=8.0)
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L2,L2_q003_avg_confidence_all_events,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=0.9 got=8.0)
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L2,L2_q004_low_confidence_events_count,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=8.0)
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L2,L2_q005_net_person_flow_main_entrance,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=179.0 got=8.0)
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L2,L2_q006_busiest_moment_nvidia,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=86.0 got=500.0)
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L2,L2_q007_low_confidence_detections,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=85.0)
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L2,L2_q008_lunch_crowd_food_court,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=120.01 got=8.0)
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L3,L3_q001_peak_per_booth,False,SET_MATCH_VALUES_WRONG,"missing_numbers=[53.0, 86.0]"
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L3,L3_q002_event_counts_by_type,False,SET_MATCH_KEYS_MISSING,"missing_keys=['car_entry', 'car_exit', 'crowd', 'person_entry', 'person_exit'] m"
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L3,L3_q003_hourly_person_entry_main_entrance,False,SET_MATCH_KEYS_MISSING,"missing_keys=['03', '04', '06', '09', '10'] missing_numbers=[13.0, 18.0, 12.0, 1"
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L3,L3_q004_avg_headcount_per_crowd_camera,False,SET_MATCH_VALUES_WRONG,"missing_numbers=[10.65, 15.52, 49.36, 23.07, 57.4]"
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L3,L3_q005_top3_hours_by_crowd_activity,False,SET_MATCH_KEYS_MISSING,"missing_keys=['14'] missing_numbers=[2365493.0, 2059433.0, 1685871.0]"
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L3,L3_q006_arrival_pattern_main_gate,False,SET_MATCH_KEYS_MISSING,"missing_keys=['03', '04', '06', '10', '12'] missing_numbers=[13.0, 18.0, 12.0, 1"
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L3,L3_q007_crowd_hotspots,False,SET_MATCH_KEYS_MISSING,"missing_keys=['KeynoteHall_Stage'] missing_numbers=[57.4, 49.36, 23.07, 15.52, 1"
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L3,L3_q008_event_volume_by_hour,False,SET_MATCH_KEYS_MISSING,"missing_keys=['03', '06', '12', '13', '14'] missing_numbers=[18040.0, 18039.0, 1"
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L4,L4_q001_compare_booths,False,FACT_NUMERIC_MISMATCH,missing=['average_headcount_ratio_nvidia_over_intel=1.4+-0.4_no_match (numbers_s
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L4,L4_q002_gate_flow_comparison,False,FACT_NUMERIC_MISMATCH,missing=['gate_mainentrance_flow_approx=2900.0+-400.0_no_match (numbers_seen=[8.
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L4,L4_q003_morning_vs_evening_main_entrance,False,FACT_NUMERIC_MISMATCH,"missing=['morning_total_approx=1200.0+-250.0_no_match (numbers_seen=[8.0, 2025.0"
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L4,L4_q005_highest_peak_to_baseline_ratio,False,FACT_NOT_MENTIONED,"missing=[""most_extreme_location='KeynoteHall_Stage'_not_mentioned""]"
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L4,L4_q006_morning_vs_evening_rush,False,FACT_NUMERIC_MISMATCH,"missing=['morning_total_approx=1200.0+-250.0_no_match (numbers_seen=[1.0, 2025.0"
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L5,L5_q001_summit_day_brief,False,RUBRIC_COVERAGE_LOW (1/5=0.20),coverage=1/5=0.20 (threshold=0.6)
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L5,L5_q002_nvidia_booth_timeline,False,RUBRIC_COVERAGE_LOW (1/5=0.20),coverage=1/5=0.20 (threshold=0.6)
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L5,L5_q004_security_attention_report,False,RUBRIC_COVERAGE_LOW (1/4=0.25),coverage=1/4=0.25 (threshold=0.5)
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L5,L5_q005_keynote_hall_lifecycle,False,RUBRIC_COVERAGE_LOW (1/4=0.25),coverage=1/4=0.25 (threshold=0.5)
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L5,L5_q006_how_did_the_day_go,False,RUBRIC_COVERAGE_LOW (0/5=0.00),coverage=0/5=0.00 (threshold=0.4)
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L5,L5_q007_security_team_handoff,False,RUBRIC_COVERAGE_LOW (1/4=0.25),coverage=1/4=0.25 (threshold=0.5)
+gpt4o_prefix,b2_rag_community,gpt-4o-mini,L5,L5_q008_what_should_change,False,RUBRIC_COVERAGE_LOW (1/4=0.25),coverage=1/4=0.25 (threshold=0.4)
+gpt4o_prefix,b2_rag_cypher,gpt-4o,L1,L1_q001_car_entry_count_at_gate01,False,UNKNOWN_FAIL (expected=223.0 got=0.0),expected=223.0 got=0.0
+gpt4o_prefix,b2_rag_cypher,gpt-4o,L1,L1_q004_total_events_in_summit_day,False,UNKNOWN_FAIL (expected=437940.0 got=5940.0),expected=437940.0 got=5940.0
+gpt4o_prefix,b2_rag_cypher,gpt-4o,L1,L1_q006_active_cameras_during_keynote,False,UNKNOWN_FAIL (expected=8.0 got=3.0),expected=8.0 got=3.0
+gpt4o_prefix,b2_rag_cypher,gpt-4o,L1,L1_q007_cars_into_parking_lot,False,UNKNOWN_FAIL (expected=381.0 got=0.0),expected=381.0 got=0.0
+gpt4o_prefix,b2_rag_cypher,gpt-4o,L2,L2_q003_avg_confidence_all_events,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=0.9 got=0.91)
+gpt4o_prefix,b2_rag_cypher,gpt-4o,L2,L2_q004_low_confidence_events_count,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=231.0)
+gpt4o_prefix,b2_rag_cypher,gpt-4o,L2,L2_q006_busiest_moment_nvidia,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=86.0 got=8.0)
+gpt4o_prefix,b2_rag_cypher,gpt-4o,L2,L2_q007_low_confidence_detections,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=231.0)
+gpt4o_prefix,b2_rag_cypher,gpt-4o,L2,L2_q008_lunch_crowd_food_court,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=120.01 got=8.0)
+gpt4o_prefix,b2_rag_cypher,gpt-4o,L3,L3_q002_event_counts_by_type,False,SET_MATCH_KEYS_MISSING,missing_keys=['crowd'] missing_numbers=[432000.0]
+gpt4o_prefix,b2_rag_cypher,gpt-4o,L3,L3_q005_top3_hours_by_crowd_activity,False,SET_MATCH_VALUES_WRONG,"missing_numbers=[2365493.0, 2059433.0, 1685871.0]"
+gpt4o_prefix,b2_rag_cypher,gpt-4o,L3,L3_q006_arrival_pattern_main_gate,False,SET_MATCH_KEYS_MISSING,"missing_keys=['10', '13', '14', '16', '19'] missing_numbers=[13.0, 15.0, 10.0, 7"
+gpt4o_prefix,b2_rag_cypher,gpt-4o,L3,L3_q008_event_volume_by_hour,False,SET_MATCH_KEYS_MISSING,"missing_keys=['11', '13', '14', '16', '18'] missing_numbers=[18040.0, 18039.0, 1"
+gpt4o_prefix,b2_rag_cypher,gpt-4o,L5,L5_q003_staffing_brief,False,RUBRIC_COVERAGE_LOW (2/5=0.40),coverage=2/5=0.40 (threshold=0.5)
+gpt4o_prefix,b2_rag_cypher,gpt-4o,L5,L5_q005_keynote_hall_lifecycle,False,RUBRIC_COVERAGE_LOW (1/4=0.25),coverage=1/4=0.25 (threshold=0.5)
+gpt4o_prefix,b2_rag_cypher,gpt-4o,L5,L5_q007_security_team_handoff,False,RUBRIC_COVERAGE_LOW (1/4=0.25),coverage=1/4=0.25 (threshold=0.5)
+gpt4o_prefix,b2_rag_cypher,gpt-4o,L5,L5_q008_what_should_change,False,RUBRIC_COVERAGE_LOW (1/4=0.25),coverage=1/4=0.25 (threshold=0.4)
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L1,L1_q001_car_entry_count_at_gate01,False,UNKNOWN_FAIL (expected=223.0 got=0.0),expected=223.0 got=0.0
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L1,L1_q004_total_events_in_summit_day,False,UNKNOWN_FAIL (expected=437940.0 got=5940.0),expected=437940.0 got=5940.0
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L1,L1_q006_active_cameras_during_keynote,,CYPHER_SYNTAX_ERROR,error
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L1,L1_q007_cars_into_parking_lot,False,UNKNOWN_FAIL (expected=381.0 got=0.0),expected=381.0 got=0.0
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L1,L1_q008_people_through_main_gate,False,UNKNOWN_FAIL (expected=2883.0 got=0.0),expected=2883.0 got=0.0
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L2,L2_q003_avg_confidence_all_events,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=0.9 got=0.91)
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L2,L2_q004_low_confidence_events_count,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=231.0)
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L2,L2_q006_busiest_moment_nvidia,False,NUMBER_EXTRACTION_FAIL,no_number_in_answer
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L2,L2_q007_low_confidence_detections,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=5940.0)
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L2,L2_q008_lunch_crowd_food_court,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=120.01 got=8.0)
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L3,L3_q002_event_counts_by_type,,CYPHER_SYNTAX_ERROR,error
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L3,L3_q005_top3_hours_by_crowd_activity,False,SET_MATCH_VALUES_WRONG,"missing_numbers=[2365493.0, 2059433.0, 1685871.0]"
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L3,L3_q006_arrival_pattern_main_gate,False,SET_MATCH_KEYS_MISSING,"missing_keys=['01', '03', '04', '06', '07'] missing_numbers=[13.0, 18.0, 12.0, 1"
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L3,L3_q008_event_volume_by_hour,False,SET_MATCH_KEYS_MISSING,"missing_keys=['04', '06', '07', '10', '11'] missing_numbers=[18040.0, 18039.0, 1"
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L4,L4_q002_gate_flow_comparison,False,FACT_NUMERIC_MISMATCH,missing=['gate_parkinglot_flow_approx=620.0+-150.0_no_match (numbers_seen=[2883.
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L4,L4_q006_morning_vs_evening_rush,False,FACT_NUMERIC_MISMATCH,"missing=['morning_total_approx=1200.0+-250.0_no_match (numbers_seen=[8.0, 2025.0"
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L5,L5_q001_summit_day_brief,,CYPHER_SYNTAX_ERROR,error
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L5,L5_q002_nvidia_booth_timeline,,VALIDATION_ERROR,error
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L5,L5_q003_staffing_brief,,CYPHER_SYNTAX_ERROR,error
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L5,L5_q004_security_attention_report,,CYPHER_SYNTAX_ERROR,error
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L5,L5_q005_keynote_hall_lifecycle,,CYPHER_SYNTAX_ERROR,error
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L5,L5_q006_how_did_the_day_go,,CYPHER_SYNTAX_ERROR,error
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L5,L5_q007_security_team_handoff,,CYPHER_SYNTAX_ERROR,error
+gpt4o_prefix,b2_rag_cypher,gpt-4o-mini,L5,L5_q008_what_should_change,,CYPHER_SYNTAX_ERROR,error
+gpt4o_prefix,b2_rag_hybrid,gpt-4o,L1,L1_q001_car_entry_count_at_gate01,False,UNKNOWN_FAIL (expected=223.0 got=1.0),expected=223.0 got=1.0
+gpt4o_prefix,b2_rag_hybrid,gpt-4o,L1,L1_q002_car_entry_count_at_parkinglot,False,UNKNOWN_FAIL (expected=381.0 got=8.0),expected=381.0 got=8.0
+gpt4o_prefix,b2_rag_hybrid,gpt-4o,L1,L1_q003_person_entry_at_keynote_door,False,UNKNOWN_FAIL (expected=782.0 got=8.0),expected=782.0 got=8.0
+gpt4o_prefix,b2_rag_hybrid,gpt-4o,L1,L1_q004_total_events_in_summit_day,False,UNKNOWN_FAIL (expected=437940.0 got=5940.0),expected=437940.0 got=5940.0
+gpt4o_prefix,b2_rag_hybrid,gpt-4o,L1,L1_q005_distinct_object_ids_at_main_entrance,False,UNKNOWN_FAIL (expected=2951.0 got=8.0),expected=2951.0 got=8.0
+gpt4o_prefix,b2_rag_hybrid,gpt-4o,L1,L1_q007_cars_into_parking_lot,False,UNKNOWN_FAIL (expected=381.0 got=8.0),expected=381.0 got=8.0
+gpt4o_prefix,b2_rag_hybrid,gpt-4o,L2,L2_q001_peak_headcount_nvidia_booth,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=86.0 got=8.0)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o,L2,L2_q002_avg_headcount_foodcourt_lunch,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=120.01 got=8.0)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o,L2,L2_q003_avg_confidence_all_events,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=0.9 got=8.0)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o,L2,L2_q004_low_confidence_events_count,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=8.0)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o,L2,L2_q007_low_confidence_detections,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=5940.0)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o,L2,L2_q008_lunch_crowd_food_court,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=120.01 got=500.0)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o,L3,L3_q002_event_counts_by_type,False,SET_MATCH_KEYS_MISSING,"missing_keys=['car_entry', 'car_exit', 'crowd', 'person_entry', 'person_exit'] m"
+gpt4o_prefix,b2_rag_hybrid,gpt-4o,L3,L3_q005_top3_hours_by_crowd_activity,False,SET_MATCH_VALUES_WRONG,"missing_numbers=[2365493.0, 2059433.0, 1685871.0]"
+gpt4o_prefix,b2_rag_hybrid,gpt-4o,L3,L3_q006_arrival_pattern_main_gate,False,SET_MATCH_KEYS_MISSING,"missing_keys=['06', '09', '11', '12', '13'] missing_numbers=[13.0, 18.0, 12.0, 1"
+gpt4o_prefix,b2_rag_hybrid,gpt-4o,L3,L3_q008_event_volume_by_hour,False,SET_MATCH_KEYS_MISSING,"missing_keys=['14', '16', '19', '20', '21'] missing_numbers=[18040.0, 18039.0, 1"
+gpt4o_prefix,b2_rag_hybrid,gpt-4o,L4,L4_q006_morning_vs_evening_rush,False,FACT_NUMERIC_MISMATCH,"missing=['morning_total_approx=1200.0+-250.0_no_match (numbers_seen=[286.0, 92.0"
+gpt4o_prefix,b2_rag_hybrid,gpt-4o,L5,L5_q003_staffing_brief,False,RUBRIC_COVERAGE_LOW (1/5=0.20),coverage=1/5=0.20 (threshold=0.5)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o,L5,L5_q005_keynote_hall_lifecycle,False,CYPHER_SYNTAX_ERROR,coverage=1/4=0.25 (threshold=0.5)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o,L5,L5_q006_how_did_the_day_go,False,RUBRIC_COVERAGE_LOW (1/5=0.20),coverage=1/5=0.20 (threshold=0.4)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L1,L1_q001_car_entry_count_at_gate01,False,UNKNOWN_FAIL (expected=223.0 got=0.0),expected=223.0 got=0.0
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L1,L1_q002_car_entry_count_at_parkinglot,False,UNKNOWN_FAIL (expected=381.0 got=8.0),expected=381.0 got=8.0
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L1,L1_q003_person_entry_at_keynote_door,False,UNKNOWN_FAIL (expected=782.0 got=8.0),expected=782.0 got=8.0
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L1,L1_q004_total_events_in_summit_day,False,UNKNOWN_FAIL (expected=437940.0 got=5940.0),expected=437940.0 got=5940.0
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L1,L1_q007_cars_into_parking_lot,False,UNKNOWN_FAIL (expected=381.0 got=0.0),expected=381.0 got=0.0
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L1,L1_q008_people_through_main_gate,False,UNKNOWN_FAIL (expected=2883.0 got=0.0),expected=2883.0 got=0.0
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L2,L2_q001_peak_headcount_nvidia_booth,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=86.0 got=8.0)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L2,L2_q002_avg_headcount_foodcourt_lunch,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=120.01 got=8.0)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L2,L2_q003_avg_confidence_all_events,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=0.9 got=0.91)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L2,L2_q004_low_confidence_events_count,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=8.0)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L2,L2_q006_busiest_moment_nvidia,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=86.0 got=500.0)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L2,L2_q007_low_confidence_detections,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=5940.0)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L2,L2_q008_lunch_crowd_food_court,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=120.01 got=500.0)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L3,L3_q002_event_counts_by_type,False,CYPHER_SYNTAX_ERROR,"missing_keys=['car_entry', 'car_exit', 'crowd', 'person_entry', 'person_exit'] m"
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L3,L3_q005_top3_hours_by_crowd_activity,False,SET_MATCH_VALUES_WRONG,"missing_numbers=[2365493.0, 2059433.0, 1685871.0]"
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L3,L3_q006_arrival_pattern_main_gate,False,SET_MATCH_KEYS_MISSING,"missing_keys=['06', '09', '11', '12', '13'] missing_numbers=[13.0, 18.0, 12.0, 1"
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L3,L3_q008_event_volume_by_hour,False,SET_MATCH_VALUES_WRONG,"missing_numbers=[18040.0, 18039.0, 18029.0, 18032.0, 18036.0]"
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L4,L4_q002_gate_flow_comparison,False,FACT_NUMERIC_MISMATCH,"missing=['gate_parkinglot_flow_approx=620.0+-150.0_no_match (numbers_seen=[8.0, "
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L4,L4_q006_morning_vs_evening_rush,False,FACT_NUMERIC_MISMATCH,"missing=['morning_total_approx=1200.0+-250.0_no_match (numbers_seen=[92.0, 107.0"
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L4,L4_q008_keynote_attendance_dropoff,False,FACT_NOT_MENTIONED,"missing=[""trend_keyword_a='morning'_not_mentioned"", ""trend_keyword_b='afternoon'"
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L5,L5_q001_summit_day_brief,False,CYPHER_SYNTAX_ERROR,coverage=0/5=0.00 (threshold=0.6)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L5,L5_q002_nvidia_booth_timeline,False,VALIDATION_ERROR,coverage=1/5=0.20 (threshold=0.6)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L5,L5_q003_staffing_brief,False,CYPHER_SYNTAX_ERROR,coverage=2/5=0.40 (threshold=0.5)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L5,L5_q004_security_attention_report,False,CYPHER_SYNTAX_ERROR,coverage=1/4=0.25 (threshold=0.5)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L5,L5_q006_how_did_the_day_go,False,CYPHER_SYNTAX_ERROR,coverage=1/5=0.20 (threshold=0.4)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L5,L5_q007_security_team_handoff,False,CYPHER_SYNTAX_ERROR,coverage=0/4=0.00 (threshold=0.5)
+gpt4o_prefix,b2_rag_hybrid,gpt-4o-mini,L5,L5_q008_what_should_change,False,CYPHER_SYNTAX_ERROR,coverage=1/4=0.25 (threshold=0.4)
+gpt5_postfix,b2_rag_community,gpt-5,L1,L1_q001_car_entry_count_at_gate01,False,UNKNOWN_FAIL (expected=223.0 got=7.0),expected=223.0 got=7.0
+gpt5_postfix,b2_rag_community,gpt-5,L1,L1_q002_car_entry_count_at_parkinglot,False,UNKNOWN_FAIL (expected=381.0 got=283.0),expected=381.0 got=283.0
+gpt5_postfix,b2_rag_community,gpt-5,L1,L1_q003_person_entry_at_keynote_door,False,UNKNOWN_FAIL (expected=782.0 got=1117.0),expected=782.0 got=1117.0
+gpt5_postfix,b2_rag_community,gpt-5,L1,L1_q004_total_events_in_summit_day,False,UNKNOWN_FAIL (expected=437940.0 got=449.0),expected=437940.0 got=449.0
+gpt5_postfix,b2_rag_community,gpt-5,L1,L1_q005_distinct_object_ids_at_main_entrance,False,UNKNOWN_FAIL (expected=2951.0 got=1775.0),expected=2951.0 got=1775.0
+gpt5_postfix,b2_rag_community,gpt-5,L1,L1_q006_active_cameras_during_keynote,False,UNKNOWN_FAIL (expected=8.0 got=26.0),expected=8.0 got=26.0
+gpt5_postfix,b2_rag_community,gpt-5,L1,L1_q007_cars_into_parking_lot,False,UNKNOWN_FAIL (expected=381.0 got=283.0),expected=381.0 got=283.0
+gpt5_postfix,b2_rag_community,gpt-5,L1,L1_q008_people_through_main_gate,False,UNKNOWN_FAIL (expected=2883.0 got=788.0),expected=2883.0 got=788.0
+gpt5_postfix,b2_rag_community,gpt-5,L1,L1_q009_total_cameras_at_venue,False,UNKNOWN_FAIL (expected=8.0 got=7.0),expected=8.0 got=7.0
+gpt5_postfix,b2_rag_community,gpt-5,L2,L2_q001_peak_headcount_nvidia_booth,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=86.0 got=500.0)
+gpt5_postfix,b2_rag_community,gpt-5,L2,L2_q002_avg_headcount_foodcourt_lunch,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=120.01 got=31.1974)
+gpt5_postfix,b2_rag_community,gpt-5,L2,L2_q003_avg_confidence_all_events,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=0.9 got=41.0)
+gpt5_postfix,b2_rag_community,gpt-5,L2,L2_q004_low_confidence_events_count,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=39.0)
+gpt5_postfix,b2_rag_community,gpt-5,L2,L2_q005_net_person_flow_main_entrance,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=179.0 got=788.0)
+gpt5_postfix,b2_rag_community,gpt-5,L2,L2_q006_busiest_moment_nvidia,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=86.0 got=500.0)
+gpt5_postfix,b2_rag_community,gpt-5,L2,L2_q007_low_confidence_detections,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=85.0)
+gpt5_postfix,b2_rag_community,gpt-5,L2,L2_q008_lunch_crowd_food_court,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=120.01 got=31.1974)
+gpt5_postfix,b2_rag_community,gpt-5,L3,L3_q001_peak_per_booth,False,SET_MATCH_VALUES_WRONG,"missing_numbers=[53.0, 86.0]"
+gpt5_postfix,b2_rag_community,gpt-5,L3,L3_q002_event_counts_by_type,False,SET_MATCH_KEYS_MISSING,"missing_keys=['crowd'] missing_numbers=[419.0, 427.0, 432000.0, 2601.0, 2493.0]"
+gpt5_postfix,b2_rag_community,gpt-5,L3,L3_q003_hourly_person_entry_main_entrance,False,SET_MATCH_KEYS_MISSING,"missing_keys=['03', '04', '06', '07', '09'] missing_numbers=[13.0, 18.0, 8.0, 8."
+gpt5_postfix,b2_rag_community,gpt-5,L3,L3_q004_avg_headcount_per_crowd_camera,False,SET_MATCH_VALUES_WRONG,"missing_numbers=[10.65, 15.52, 49.36, 57.4]"
+gpt5_postfix,b2_rag_community,gpt-5,L3,L3_q005_top3_hours_by_crowd_activity,False,SET_MATCH_KEYS_MISSING,"missing_keys=['16', '14'] missing_numbers=[2365493.0, 2059433.0, 1685871.0]"
+gpt5_postfix,b2_rag_community,gpt-5,L3,L3_q006_arrival_pattern_main_gate,False,SET_MATCH_KEYS_MISSING,"missing_keys=['06', '11', '13', '14', '15'] missing_numbers=[13.0, 18.0, 8.0, 8."
+gpt5_postfix,b2_rag_community,gpt-5,L3,L3_q007_crowd_hotspots,False,SET_MATCH_VALUES_WRONG,"missing_numbers=[57.4, 49.36, 15.52, 10.65]"
+gpt5_postfix,b2_rag_community,gpt-5,L3,L3_q008_event_volume_by_hour,False,SET_MATCH_KEYS_MISSING,"missing_keys=['10', '11', '13', '15', '16'] missing_numbers=[18040.0, 18039.0, 1"
+gpt5_postfix,b2_rag_community,gpt-5,L4,L4_q001_compare_booths,False,FACT_NUMERIC_MISMATCH,missing=['average_headcount_ratio_nvidia_over_intel=1.4+-0.4_no_match (numbers_s
+gpt5_postfix,b2_rag_community,gpt-5,L4,L4_q002_gate_flow_comparison,False,FACT_NUMERIC_MISMATCH,missing=['gate_mainentrance_flow_approx=2900.0+-400.0_no_match (numbers_seen=[15
+gpt5_postfix,b2_rag_community,gpt-5,L4,L4_q003_morning_vs_evening_main_entrance,False,FACT_NOT_MENTIONED,"missing=[""busier_window='08:00'_not_mentioned"", 'morning_total_approx=1200.0+-25"
+gpt5_postfix,b2_rag_community,gpt-5,L4,L4_q004_keynote_morning_vs_afternoon,False,FACT_NOT_MENTIONED,"missing=[""higher_attendance_window='morning'_not_mentioned"", 'afternoon_keynote_"
+gpt5_postfix,b2_rag_community,gpt-5,L4,L4_q006_morning_vs_evening_rush,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_community,gpt-5,L4,L4_q007_nvidia_vs_intel_booth_attraction,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_community,gpt-5,L4,L4_q008_keynote_attendance_dropoff,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_community,gpt-5,L5,L5_q001_summit_day_brief,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_community,gpt-5,L5,L5_q002_nvidia_booth_timeline,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_community,gpt-5,L5,L5_q003_staffing_brief,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_community,gpt-5,L5,L5_q004_security_attention_report,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_community,gpt-5,L5,L5_q005_keynote_hall_lifecycle,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_community,gpt-5,L5,L5_q006_how_did_the_day_go,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_community,gpt-5,L5,L5_q007_security_team_handoff,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_community,gpt-5,L5,L5_q008_what_should_change,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_community,gpt-5-mini,L1,L1_q001_car_entry_count_at_gate01,False,NUMBER_EXTRACTION_FAIL,no_number_in_answer
+gpt5_postfix,b2_rag_community,gpt-5-mini,L1,L1_q002_car_entry_count_at_parkinglot,False,UNKNOWN_FAIL (expected=381.0 got=283.0),expected=381.0 got=283.0
+gpt5_postfix,b2_rag_community,gpt-5-mini,L1,L1_q003_person_entry_at_keynote_door,False,UNKNOWN_FAIL (expected=782.0 got=1117.0),expected=782.0 got=1117.0
+gpt5_postfix,b2_rag_community,gpt-5-mini,L1,L1_q004_total_events_in_summit_day,False,UNKNOWN_FAIL (expected=437940.0 got=1529.0),expected=437940.0 got=1529.0
+gpt5_postfix,b2_rag_community,gpt-5-mini,L1,L1_q005_distinct_object_ids_at_main_entrance,False,UNKNOWN_FAIL (expected=2951.0 got=1775.0),expected=2951.0 got=1775.0
+gpt5_postfix,b2_rag_community,gpt-5-mini,L1,L1_q006_active_cameras_during_keynote,False,UNKNOWN_FAIL (expected=8.0 got=1529.0),expected=8.0 got=1529.0
+gpt5_postfix,b2_rag_community,gpt-5-mini,L1,L1_q007_cars_into_parking_lot,False,UNKNOWN_FAIL (expected=381.0 got=283.0),expected=381.0 got=283.0
+gpt5_postfix,b2_rag_community,gpt-5-mini,L1,L1_q008_people_through_main_gate,False,UNKNOWN_FAIL (expected=2883.0 got=788.0),expected=2883.0 got=788.0
+gpt5_postfix,b2_rag_community,gpt-5-mini,L1,L1_q009_total_cameras_at_venue,False,UNKNOWN_FAIL (expected=8.0 got=7.0),expected=8.0 got=7.0
+gpt5_postfix,b2_rag_community,gpt-5-mini,L2,L2_q001_peak_headcount_nvidia_booth,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=86.0 got=500.0)
+gpt5_postfix,b2_rag_community,gpt-5-mini,L2,L2_q002_avg_headcount_foodcourt_lunch,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=120.01 got=31.1974)
+gpt5_postfix,b2_rag_community,gpt-5-mini,L2,L2_q003_avg_confidence_all_events,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=0.9 got=39.0)
+gpt5_postfix,b2_rag_community,gpt-5-mini,L2,L2_q004_low_confidence_events_count,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=0.85)
+gpt5_postfix,b2_rag_community,gpt-5-mini,L2,L2_q005_net_person_flow_main_entrance,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=179.0 got=788.0)
+gpt5_postfix,b2_rag_community,gpt-5-mini,L2,L2_q006_busiest_moment_nvidia,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=86.0 got=500.0)
+gpt5_postfix,b2_rag_community,gpt-5-mini,L2,L2_q007_low_confidence_detections,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=85.0)
+gpt5_postfix,b2_rag_community,gpt-5-mini,L2,L2_q008_lunch_crowd_food_court,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=120.01 got=206.0)
+gpt5_postfix,b2_rag_community,gpt-5-mini,L3,L3_q001_peak_per_booth,False,SET_MATCH_VALUES_WRONG,"missing_numbers=[53.0, 86.0]"
+gpt5_postfix,b2_rag_community,gpt-5-mini,L3,L3_q002_event_counts_by_type,False,SET_MATCH_KEYS_MISSING,"missing_keys=['crowd'] missing_numbers=[419.0, 427.0, 432000.0, 2601.0, 2493.0]"
+gpt5_postfix,b2_rag_community,gpt-5-mini,L3,L3_q003_hourly_person_entry_main_entrance,False,SET_MATCH_KEYS_MISSING,"missing_keys=['06', '11', '13', '14', '15'] missing_numbers=[13.0, 18.0, 8.0, 8."
+gpt5_postfix,b2_rag_community,gpt-5-mini,L3,L3_q004_avg_headcount_per_crowd_camera,False,SET_MATCH_VALUES_WRONG,"missing_numbers=[15.52, 49.36]"
+gpt5_postfix,b2_rag_community,gpt-5-mini,L3,L3_q005_top3_hours_by_crowd_activity,False,SET_MATCH_VALUES_WRONG,"missing_numbers=[2365493.0, 2059433.0, 1685871.0]"
+gpt5_postfix,b2_rag_community,gpt-5-mini,L3,L3_q006_arrival_pattern_main_gate,False,SET_MATCH_KEYS_MISSING,"missing_keys=['14', '16', '19', '21', '23'] missing_numbers=[18.0, 7.0, 311.0, 3"
+gpt5_postfix,b2_rag_community,gpt-5-mini,L3,L3_q007_crowd_hotspots,False,SET_MATCH_VALUES_WRONG,"missing_numbers=[57.4, 49.36]"
+gpt5_postfix,b2_rag_community,gpt-5-mini,L3,L3_q008_event_volume_by_hour,False,SET_MATCH_KEYS_MISSING,"missing_keys=['10', '13', '14', '15', '19'] missing_numbers=[18040.0, 18039.0, 1"
+gpt5_postfix,b2_rag_community,gpt-5-mini,L4,L4_q001_compare_booths,False,FACT_NUMERIC_MISMATCH,missing=['average_headcount_ratio_nvidia_over_intel=1.4+-0.4_no_match (numbers_s
+gpt5_postfix,b2_rag_community,gpt-5-mini,L4,L4_q002_gate_flow_comparison,False,FACT_NUMERIC_MISMATCH,missing=['gate_mainentrance_flow_approx=2900.0+-400.0_no_match (numbers_seen=[78
+gpt5_postfix,b2_rag_community,gpt-5-mini,L4,L4_q003_morning_vs_evening_main_entrance,False,FACT_NUMERIC_MISMATCH,"missing=['morning_total_approx=1200.0+-250.0_no_match (numbers_seen=[1775.0, 788"
+gpt5_postfix,b2_rag_community,gpt-5-mini,L4,L4_q004_keynote_morning_vs_afternoon,False,FACT_NOT_MENTIONED,"missing=[""higher_attendance_window='morning'_not_mentioned"", 'afternoon_keynote_"
+gpt5_postfix,b2_rag_community,gpt-5-mini,L4,L4_q006_morning_vs_evening_rush,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_community,gpt-5-mini,L4,L4_q007_nvidia_vs_intel_booth_attraction,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_community,gpt-5-mini,L4,L4_q008_keynote_attendance_dropoff,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_community,gpt-5-mini,L5,L5_q001_summit_day_brief,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_community,gpt-5-mini,L5,L5_q002_nvidia_booth_timeline,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_community,gpt-5-mini,L5,L5_q003_staffing_brief,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_community,gpt-5-mini,L5,L5_q004_security_attention_report,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_community,gpt-5-mini,L5,L5_q005_keynote_hall_lifecycle,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_community,gpt-5-mini,L5,L5_q006_how_did_the_day_go,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_community,gpt-5-mini,L5,L5_q007_security_team_handoff,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_community,gpt-5-mini,L5,L5_q008_what_should_change,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_cypher,gpt-5,L1,L1_q001_car_entry_count_at_gate01,False,UNKNOWN_FAIL (expected=223.0 got=0.0),expected=223.0 got=0.0
+gpt5_postfix,b2_rag_cypher,gpt-5,L2,L2_q003_avg_confidence_all_events,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=0.9 got=0.91)
+gpt5_postfix,b2_rag_cypher,gpt-5,L2,L2_q004_low_confidence_events_count,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=231.0)
+gpt5_postfix,b2_rag_cypher,gpt-5,L2,L2_q007_low_confidence_detections,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=231.0)
+gpt5_postfix,b2_rag_cypher,gpt-5,L2,L2_q008_lunch_crowd_food_court,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=120.01 got=81.87)
+gpt5_postfix,b2_rag_cypher,gpt-5,L4,L4_q008_keynote_attendance_dropoff,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_cypher,gpt-5,L5,L5_q001_summit_day_brief,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_cypher,gpt-5,L5,L5_q002_nvidia_booth_timeline,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_cypher,gpt-5,L5,L5_q003_staffing_brief,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_cypher,gpt-5,L5,L5_q004_security_attention_report,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_cypher,gpt-5,L5,L5_q005_keynote_hall_lifecycle,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_cypher,gpt-5,L5,L5_q006_how_did_the_day_go,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_cypher,gpt-5,L5,L5_q007_security_team_handoff,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_cypher,gpt-5,L5,L5_q008_what_should_change,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_cypher,gpt-5-mini,L1,L1_q001_car_entry_count_at_gate01,False,UNKNOWN_FAIL (expected=223.0 got=0.0),expected=223.0 got=0.0
+gpt5_postfix,b2_rag_cypher,gpt-5-mini,L2,L2_q003_avg_confidence_all_events,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=0.9 got=0.91)
+gpt5_postfix,b2_rag_cypher,gpt-5-mini,L2,L2_q004_low_confidence_events_count,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=231.0)
+gpt5_postfix,b2_rag_cypher,gpt-5-mini,L2,L2_q007_low_confidence_detections,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=231.0)
+gpt5_postfix,b2_rag_cypher,gpt-5-mini,L3,L3_q005_top3_hours_by_crowd_activity,False,SET_MATCH_VALUES_WRONG,"missing_numbers=[2365493.0, 2059433.0, 1685871.0]"
+gpt5_postfix,b2_rag_cypher,gpt-5-mini,L4,L4_q008_keynote_attendance_dropoff,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_cypher,gpt-5-mini,L5,L5_q001_summit_day_brief,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_cypher,gpt-5-mini,L5,L5_q002_nvidia_booth_timeline,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_cypher,gpt-5-mini,L5,L5_q003_staffing_brief,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_cypher,gpt-5-mini,L5,L5_q004_security_attention_report,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_cypher,gpt-5-mini,L5,L5_q005_keynote_hall_lifecycle,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_cypher,gpt-5-mini,L5,L5_q006_how_did_the_day_go,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_cypher,gpt-5-mini,L5,L5_q007_security_team_handoff,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_cypher,gpt-5-mini,L5,L5_q008_what_should_change,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_hybrid,gpt-5,L1,L1_q001_car_entry_count_at_gate01,False,UNKNOWN_FAIL (expected=223.0 got=0.0),expected=223.0 got=0.0
+gpt5_postfix,b2_rag_hybrid,gpt-5,L2,L2_q003_avg_confidence_all_events,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=0.9 got=0.91)
+gpt5_postfix,b2_rag_hybrid,gpt-5,L2,L2_q004_low_confidence_events_count,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=231.0)
+gpt5_postfix,b2_rag_hybrid,gpt-5,L2,L2_q007_low_confidence_detections,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=231.0)
+gpt5_postfix,b2_rag_hybrid,gpt-5,L2,L2_q008_lunch_crowd_food_court,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=120.01 got=81.87)
+gpt5_postfix,b2_rag_hybrid,gpt-5,L4,L4_q008_keynote_attendance_dropoff,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_hybrid,gpt-5,L5,L5_q001_summit_day_brief,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_hybrid,gpt-5,L5,L5_q002_nvidia_booth_timeline,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_hybrid,gpt-5,L5,L5_q003_staffing_brief,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_hybrid,gpt-5,L5,L5_q004_security_attention_report,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_hybrid,gpt-5,L5,L5_q005_keynote_hall_lifecycle,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_hybrid,gpt-5,L5,L5_q006_how_did_the_day_go,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_hybrid,gpt-5,L5,L5_q007_security_team_handoff,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_hybrid,gpt-5-mini,L1,L1_q001_car_entry_count_at_gate01,False,UNKNOWN_FAIL (expected=223.0 got=0.0),expected=223.0 got=0.0
+gpt5_postfix,b2_rag_hybrid,gpt-5-mini,L2,L2_q003_avg_confidence_all_events,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=0.9 got=0.91)
+gpt5_postfix,b2_rag_hybrid,gpt-5-mini,L2,L2_q004_low_confidence_events_count,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=231.0)
+gpt5_postfix,b2_rag_hybrid,gpt-5-mini,L2,L2_q007_low_confidence_detections,False,NUMERIC_TOLERANCE_EXCEEDED,exceeds_1pct (expected=30467.0 got=231.0)
+gpt5_postfix,b2_rag_hybrid,gpt-5-mini,L3,L3_q005_top3_hours_by_crowd_activity,False,SET_MATCH_VALUES_WRONG,"missing_numbers=[2365493.0, 2059433.0, 1685871.0]"
+gpt5_postfix,b2_rag_hybrid,gpt-5-mini,L4,L4_q007_nvidia_vs_intel_booth_attraction,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_hybrid,gpt-5-mini,L4,L4_q008_keynote_attendance_dropoff,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_hybrid,gpt-5-mini,L5,L5_q001_summit_day_brief,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_hybrid,gpt-5-mini,L5,L5_q002_nvidia_booth_timeline,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_hybrid,gpt-5-mini,L5,L5_q003_staffing_brief,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_hybrid,gpt-5-mini,L5,L5_q004_security_attention_report,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_hybrid,gpt-5-mini,L5,L5_q005_keynote_hall_lifecycle,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_hybrid,gpt-5-mini,L5,L5_q006_how_did_the_day_go,,QUOTA_EXHAUSTION,error
+gpt5_postfix,b2_rag_hybrid,gpt-5-mini,L5,L5_q007_security_team_handoff,,QUOTA_EXHAUSTION,error

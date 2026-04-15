@@ -1,0 +1,15 @@
+{
+  "question_id": "L4_q013_food_court_vs_expo_lunch",
+  "level": "L4",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "During lunch hours (12-14), did the food court get more crowded than the expo floor, or did people stay at the booths? Compare the average crowd sizes.",
+  "gold": {
+    "type": "structured_facts",
+    "facts": {
+      "food_court_mentioned": "FoodCourt",
+      "expo_mentioned": "Expo"
+    },
+    "scoring": "structured_facts"
+  },
+  "metadata": { "abstract": true, "graph_native": true, "tests": "cross-location crowd comparison during a time window" }
+}

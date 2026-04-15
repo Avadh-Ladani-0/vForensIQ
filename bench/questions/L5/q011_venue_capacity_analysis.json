@@ -1,0 +1,19 @@
+{
+  "question_id": "L5_q011_venue_capacity_analysis",
+  "level": "L5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Based on the crowd data, which areas of the venue seem overcrowded and which seem underutilized? Give me a capacity assessment with recommendations.",
+  "gold": {
+    "type": "rubric_coverage",
+    "rubric": [
+      "KeynoteHall_Stage has the highest crowd peaks (500) suggesting potential overcrowding",
+      "ExpoFloor_MainAisle has sustained high crowd levels throughout the day",
+      "DemoBooth_Intel has lower crowds than NVIDIA — potentially underutilized",
+      "FoodCourt peaks sharply at lunch suggesting capacity bottleneck"
+    ],
+    "coverage_threshold": 0.5,
+    "grounding_required": true,
+    "scoring": "rubric_coverage"
+  },
+  "metadata": { "abstract": true, "graph_native": true, "tests": "comparative crowd analysis across all locations — community summaries provide structural overview" }
+}

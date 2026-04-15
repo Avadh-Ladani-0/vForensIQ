@@ -1,0 +1,19 @@
+{
+  "question_id": "L5_q012_incident_investigation",
+  "level": "L5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Something happened at the keynote hall around 9 AM — the crowd surged massively. Investigate: how many people were there, where did they come from (which gates saw entry spikes before 9 AM), and where did they go afterwards?",
+  "gold": {
+    "type": "rubric_coverage",
+    "rubric": [
+      "KeynoteHall_Stage had a crowd peak around 09:00 with head_count around 450-500",
+      "Gate_MainEntrance saw heavy person_entry traffic in the 08:00-09:00 window",
+      "KeynoteHall_DoorA had entry spikes aligned with the keynote start time",
+      "After the keynote, crowd dispersed to the ExpoFloor and DemoBooths"
+    ],
+    "coverage_threshold": 0.5,
+    "grounding_required": true,
+    "scoring": "rubric_coverage"
+  },
+  "metadata": { "abstract": true, "graph_native": true, "tests": "incident investigation — requires multi-hop: keynote crowd ← gate entries, keynote crowd → expo dispersal" }
+}

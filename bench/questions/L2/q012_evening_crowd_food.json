@@ -1,0 +1,14 @@
+{
+  "question_id": "L2_q012_evening_crowd_food",
+  "level": "L2",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How crowded was the food court during dinner time, say 5 PM to 7 PM?",
+  "gold": {
+    "type": "sql",
+    "sql": "SELECT ROUND(AVG(head_count),2) FROM events WHERE event_type='crowd' AND camera_location='FoodCourt_North' AND timestamp_utc >= '2025-12-08T17:00:00Z' AND timestamp_utc < '2025-12-08T19:00:00Z'",
+    "scoring": "numeric_tolerance_1pct"
+  },
+  "metadata": {
+    "abstract": true
+  }
+}

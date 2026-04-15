@@ -165,7 +165,7 @@ def _chat_with_retry(client: OpenAI, **kwargs: Any) -> Any:
 def generate_sql(question_text: str, model: str, client: OpenAI) -> tuple[str, dict[str, Any]]:
     resp = _chat_with_retry(
         client,
-        model=model,
+        model=model, temperature=0,
          
         messages=[
             {"role": "system", "content": SCHEMA_PROMPT},
@@ -247,7 +247,7 @@ def repair_sql(
     )
     resp = _chat_with_retry(
         client,
-        model=model,
+        model=model, temperature=0,
          
         messages=[
             {"role": "system", "content": SCHEMA_PROMPT},
@@ -321,6 +321,22 @@ def answer_question(
             llm_calls.append(usage_repair)
             sql = validate_sql(repaired_raw)
             columns, rows = execute_sql(sql, logbase_path)
+        # --- Dir 2: Execution Verifier ---
+        verification_warnings: list[str] = []
+        if not rows:
+            verification_warnings.append("EMPTY_RESULT: query returned 0 rows")
+        elif len(rows) == 1 and len(rows[0]) == 1:
+            val = rows[0][0]
+            if isinstance(val, (int, float)) and val == 0:
+                verification_warnings.append("ZERO_VALUE: single-value result is 0 — may indicate wrong filter")
+        # Comparison sanity: if question mentions two entities, check result has info on both
+        q_lower = question_text.lower()
+        comparison_words = ["compare", "versus", "vs", "bigger", "more than", "less than"]
+        if any(w in q_lower for w in comparison_words):
+            # Check that answer synthesis will have data for both sides
+            if len(rows) == 1:
+                verification_warnings.append("SINGLE_ROW_COMPARISON: comparative question but only 1 result row")
+
         answer_text, usage2 = synthesize_answer(question_text, sql, columns, rows, model, client)
         llm_calls.append(usage2)
     except Exception as exc:
@@ -333,6 +349,7 @@ def answer_question(
             "columns": columns,
             "rows": rows[:100],
             "total_rows": len(rows),
+            "verification_warnings": verification_warnings if 'verification_warnings' in dir() else [],
         },
         "citations": [
             {"type": "sql_query", "sql": sql, "row_count": len(rows)},

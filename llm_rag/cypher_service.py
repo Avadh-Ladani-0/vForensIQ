@@ -37,26 +37,65 @@ Graph schema (node labels and properties):
   (:Hour {hour_utc, date})                                -- hour_utc is 'YYYY-MM-DDTHH:00:00Z', date is 'YYYY-MM-DD'
   (:Event {event_id, event_type, timestamp_utc, confidence, object_id})
          -- One node per ENTRY/EXIT event only (NOT crowd)
+  (:CrowdEvent {event_id, timestamp_utc, camera_id, camera_location, head_count, confidence})
+         -- One node per SECOND per crowd camera. Use for exact counts and precise time lookups.
   (:CrowdHour {crowd_hour_id, camera_id, camera_location, hour_utc, avg_hc, peak_hc, event_count})
-         -- One node per camera-hour for crowd cameras (avg_hc, peak_hc, event_count aggregated from per-second crowd samples)
+         -- One node per camera per hour (pre-aggregated). Use for hourly patterns and daily overviews.
+  (:CrowdMinute {cm_id, camera_id, camera_location, minute_utc, avg_hc, peak_hc, event_count})
+         -- One node per camera per minute. Use for sub-hour precision.
+  (:CrowdDay {cd_id, camera_id, camera_location, date, avg_hc, peak_hc, event_count})
+         -- One node per camera per day. Use for multi-day trends.
 
 Relationships:
   (:Event)-[:DETECTED_BY]->(:Camera)
+  (:CrowdEvent)-[:DETECTED_BY]->(:Camera)
   (:Camera)-[:LOCATED_AT]->(:Location)
   (:Event)-[:OCCURRED_IN]->(:Hour)
   (:Event)-[:IS_TYPE]->(:EventType)
   (:CrowdHour)-[:AT_CAMERA]->(:Camera)
-  (:CrowdHour)-[:DURING]->(:Hour)
+  (:CrowdMinute)-[:AT_CAMERA]->(:Camera)
+  (:CrowdDay)-[:AT_CAMERA]->(:Camera)
 
 Critical semantics:
-- Entry/exit events are represented as :Event nodes with event_type in (person_entry, person_exit, car_entry, car_exit).
-- Crowd samples are aggregated to HOURLY :CrowdHour nodes (NOT per-event :Event nodes). Use avg_hc for average head_count, peak_hc for max. Each :CrowdHour has a property `event_count` = number of underlying 1 Hz crowd samples in that hour (usually 3600 for a full hour).
+- Entry/exit events: :Event nodes with event_type in (person_entry, person_exit, car_entry, car_exit).
+- Crowd data exists at FOUR granularities: :CrowdEvent (per-second), :CrowdMinute, :CrowdHour, :CrowdDay.
+- For COUNTING crowd events or getting TOTAL events, use :CrowdEvent (one node = one real event):
+    MATCH (ce:CrowdEvent) RETURN count(ce) AS crowd_count
+- For AVERAGES and PEAKS over hours, use :CrowdHour (faster, pre-aggregated):
+    MATCH (ch:CrowdHour) RETURN avg(ch.avg_hc)
+- For head_count at a specific second, use :CrowdEvent:
+    MATCH (ce:CrowdEvent {timestamp_utc: '2025-12-08T14:30:07Z'}) RETURN ce.head_count
+- To count ALL events (entry/exit + crowd combined):
+    MATCH (e:Event) WITH count(e) AS a MATCH (ce:CrowdEvent) WITH a, count(ce) AS b RETURN a + b
+- To count distinct ACTIVE cameras:
+    CALL { MATCH (e:Event)-[:DETECTED_BY]->(c:Camera) RETURN c.camera_id AS cid
+           UNION
+           MATCH (ce:CrowdEvent)-[:DETECTED_BY]->(c:Camera) RETURN c.camera_id AS cid }
+    RETURN count(DISTINCT cid)
 - To count entry/exit events: MATCH (e:Event {event_type: 'car_entry'})-[:DETECTED_BY]->(:Camera {camera_location: 'Gate_X'})
 - To get crowd statistics: MATCH (ch:CrowdHour {camera_location: 'DemoBooth_NVIDIA'})
 - Time filtering on :Event uses e.timestamp_utc (ISO-8601 Z, lexicographic order = chronological). Example:
     WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'
 - Time filtering on :CrowdHour uses ch.hour_utc:
     WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'
+
+HIERARCHICAL CROWD NODES (Dir 4 — multiple temporal granularities):
+
+The graph contains crowd data at THREE granularity levels:
+  (:CrowdMinute {cm_id, camera_id, camera_location, minute_utc, avg_hc, peak_hc, event_count})
+       -- One node per camera per minute. Use for sub-hour precision.
+       -- Time filter: cm.minute_utc >= '...' AND cm.minute_utc < '...'
+  (:CrowdHour {crowd_hour_id, camera_id, camera_location, hour_utc, avg_hc, peak_hc, event_count})
+       -- One node per camera per hour. Use for hourly breakdowns and daily patterns.
+  (:CrowdDay {cd_id, camera_id, camera_location, date, avg_hc, peak_hc, event_count})
+       -- One node per camera per day. Use for multi-day trends.
+
+All three connect to cameras via [:AT_CAMERA]->(:Camera).
+
+Choose the granularity that matches the question's temporal scope:
+  - "What happened at 14:30?" or "minute-by-minute" → use :CrowdMinute
+  - "hourly pattern" or "peak hour" or most queries → use :CrowdHour
+  - "daily trend" or "week overview" → use :CrowdDay
 
 CRUCIAL --- Including crowd events in totals and camera activity:
 
@@ -216,7 +255,7 @@ def _chat_with_retry(client: OpenAI, **kwargs: Any) -> Any:
 
 def generate_cypher(question: str, model: str, client: OpenAI) -> tuple[str, dict]:
     resp = _chat_with_retry(
-        client, model=model,  
+        client, model=model, temperature=0,
         messages=[
             {"role": "system", "content": SCHEMA_PROMPT},
             {"role": "user", "content": question},
@@ -239,7 +278,7 @@ def repair_cypher(question: str, bad: str, err: str, model: str, client: OpenAI)
         "Return a corrected read-only Cypher. Output only Cypher, no prose."
     )
     resp = _chat_with_retry(
-        client, model=model,  
+        client, model=model, temperature=0,
         messages=[
             {"role": "system", "content": SCHEMA_PROMPT},
             {"role": "user", "content": user},
@@ -288,7 +327,7 @@ def synthesize_answer(question: str, cypher: str, columns: list[str], rows: list
         f"Cypher executed:\n{cypher}\n\n" + "\n".join(lines)
     )
     resp = _chat_with_retry(
-        client, model=model,  
+        client, model=model,
         messages=[
             {"role": "system", "content": ANSWER_SYNTH_PROMPT},
             {"role": "user", "content": user},

@@ -1,0 +1,22 @@
+{
+  "question_id": "L5_q015_vip_experience_report",
+  "level": "L5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a report on the visitor experience at the demo booths today \u2014 were they well-attended, which one drew more interest, and how did the crowd flow between them and the rest of the venue?",
+  "gold": {
+    "type": "rubric_coverage",
+    "rubric": [
+      "NVIDIA booth drew larger crowds than Intel",
+      "Peak demo booth hours were during expo hours (10-12, 15-17)",
+      "Crowd at booths was lower than keynote and expo floor \u2014 booths are secondary attractions",
+      "There was flow between expo floor and demo booths during the day"
+    ],
+    "coverage_threshold": 0.5,
+    "grounding_required": true,
+    "scoring": "rubric_coverage"
+  },
+  "metadata": {
+    "abstract": true,
+    "graph_native": true
+  }
+}

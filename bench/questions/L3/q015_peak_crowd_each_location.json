@@ -1,0 +1,14 @@
+{
+  "question_id": "L3_q015_peak_crowd_each_location",
+  "level": "L3",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What was the peak crowd at each location across the venue?",
+  "gold": {
+    "type": "sql",
+    "sql": "SELECT camera_location, MAX(head_count) AS peak FROM events WHERE event_type='crowd' AND timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z' GROUP BY camera_location ORDER BY peak DESC",
+    "scoring": "set_match_with_tolerance"
+  },
+  "metadata": {
+    "abstract": true
+  }
+}

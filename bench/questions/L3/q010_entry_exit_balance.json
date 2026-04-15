@@ -1,0 +1,12 @@
+{
+  "question_id": "L3_q010_entry_exit_balance",
+  "level": "L3",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "For each gate, how many people came in versus how many went out during the day? I want to see if the numbers balance.",
+  "gold": {
+    "type": "sql",
+    "sql": "SELECT camera_location, SUM(CASE WHEN event_type IN ('person_entry','car_entry') THEN 1 ELSE 0 END) AS entries, SUM(CASE WHEN event_type IN ('person_exit','car_exit') THEN 1 ELSE 0 END) AS exits FROM events WHERE event_type IN ('person_entry','person_exit','car_entry','car_exit') AND timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z' GROUP BY camera_location ORDER BY camera_location",
+    "scoring": "set_match_with_tolerance"
+  },
+  "metadata": { "abstract": true, "graph_native": true, "tests": "entry/exit balance per gate — graph traverses Event→Camera→Location with event_type filtering" }
+}

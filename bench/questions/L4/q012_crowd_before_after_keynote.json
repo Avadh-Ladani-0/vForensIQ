@@ -1,0 +1,15 @@
+{
+  "question_id": "L4_q012_crowd_before_after_keynote",
+  "level": "L4",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Was the expo floor busier before the morning keynote or after it? Compare the average crowd at the expo floor during 07:00-09:00 versus 10:00-12:00.",
+  "gold": {
+    "type": "structured_facts",
+    "facts": {
+      "busier_window": "10:00",
+      "after_keynote_higher": "after"
+    },
+    "scoring": "structured_facts"
+  },
+  "metadata": { "abstract": true, "graph_native": true, "tests": "temporal comparison at a crowd location — CrowdHour/CrowdEvent graph nodes" }
+}

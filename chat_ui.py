@@ -37,7 +37,7 @@ with st.sidebar:
     }
     approach_key = approach_map[approach]
 
-    model = st.selectbox("Model", ["gpt-4o-mini", "gpt-4o", "gpt-5-mini", "gpt-5"], index=0)
+    model = st.selectbox("Model", ["gpt-4o-mini", "gpt-4o"], index=0)
 
     scenario = st.selectbox(
         "Scenario (session context)",

@@ -1,0 +1,14 @@
+{
+  "question_id": "L3_q014_all_gates_person_flow",
+  "level": "L3",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "For each gate location, give me the total number of people who entered and exited.",
+  "gold": {
+    "type": "sql",
+    "sql": "SELECT camera_location, event_type, COUNT(*) FROM events WHERE event_type IN ('person_entry','person_exit') AND timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z' GROUP BY camera_location, event_type ORDER BY camera_location, event_type",
+    "scoring": "set_match_with_tolerance"
+  },
+  "metadata": {
+    "abstract": true
+  }
+}

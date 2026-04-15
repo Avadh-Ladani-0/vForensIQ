@@ -1,0 +1,15 @@
+{
+  "question_id": "L4_q011_people_flow_gate_to_keynote",
+  "level": "L4",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Did people who came through the main entrance also show up at the keynote? How many people were tracked at both locations compared to just the main entrance?",
+  "gold": {
+    "type": "structured_facts",
+    "facts": {
+      "overlap_exists": "yes",
+      "main_entrance_mentioned": "Gate_MainEntrance"
+    },
+    "scoring": "structured_facts"
+  },
+  "metadata": { "abstract": true, "graph_native": true, "tests": "multi-hop: object_id traversal from gate events to keynote events" }
+}

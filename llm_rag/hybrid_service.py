@@ -82,7 +82,7 @@ def answer_question(
     question: str,
     model: str,
     context: Optional[dict] = None,
-    summary_model: str = "gpt-5-mini",
+    summary_model: str = "gpt-4o-mini",
     top_k_communities: int = 4,
 ) -> dict:
     t_start = time.time()
@@ -130,20 +130,44 @@ def answer_question(
         except Exception as e2:
             errors.append(f"community_stream: {type(e2).__name__}: {e2}")
 
-        # --- Synthesize combined answer ---
-        cypher_block = (
-            f"CYPHER EVIDENCE:\nColumns: {cypher_cols}\n"
-            f"Row count: {len(cypher_rows)}\n"
-            f"Rows (first 50): {cypher_rows[:50]}"
-        )
-        community_block = "COMMUNITY SUMMARIES:\n" + "\n\n".join(
-            f"[{r['community_id']}] {r['summary']}" for r in retrieved
-        )
+        # --- Dir 3: Weighted fusion with graceful degradation ---
+        cypher_available = bool(cypher_cols and cypher_rows)
+        community_available = bool(retrieved)
+
+        if cypher_available:
+            cypher_block = (
+                f"CYPHER EVIDENCE (PRECISE — prefer these numbers for factual claims):\n"
+                f"Columns: {cypher_cols}\n"
+                f"Row count: {len(cypher_rows)}\n"
+                f"Rows (first 50): {cypher_rows[:50]}"
+            )
+        else:
+            cypher_block = "CYPHER EVIDENCE: [unavailable — Cypher query failed; rely on community summaries below]"
+
+        if community_available:
+            community_block = "COMMUNITY SUMMARIES (CONTEXTUAL — use for narrative framing and breadth):\n" + "\n\n".join(
+                f"[{r['community_id']}] {r['summary']}" for r in retrieved
+            )
+        else:
+            community_block = "COMMUNITY SUMMARIES: [unavailable — retrieval failed; rely on Cypher evidence above]"
+
+        # Fusion weighting instruction based on what's available
+        if cypher_available and community_available:
+            fusion_note = "Both evidence streams are available. Use Cypher rows for exact numbers; use community summaries for context and narrative framing."
+        elif cypher_available:
+            fusion_note = "Only Cypher evidence is available. Base your answer entirely on the Cypher rows."
+        elif community_available:
+            fusion_note = "Only community summaries are available (Cypher failed). Base your answer on the summaries; note that exact numbers may be approximate."
+        else:
+            fusion_note = "Neither evidence stream produced results. State that you cannot answer based on available data."
+
         user_msg = (
-            f"User question:\n{question}\n\n{cypher_block}\n\n{community_block}"
+            f"User question:\n{question}\n\n"
+            f"FUSION NOTE: {fusion_note}\n\n"
+            f"{cypher_block}\n\n{community_block}"
         )
         resp = _chat_with_retry(
-            client, model=model,  
+            client, model=model,
             messages=[
                 {"role": "system", "content": HYBRID_SYNTH_PROMPT},
                 {"role": "user", "content": user_msg},

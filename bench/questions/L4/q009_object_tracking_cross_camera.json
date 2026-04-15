@@ -1,0 +1,12 @@
+{
+  "question_id": "L4_q009_object_tracking_cross_camera",
+  "level": "L4",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Were there any tracked objects (by object_id) that were detected at Gate_MainEntrance AND also at KeynoteHall_DoorA on 2025-12-08? If so, how many unique objects appeared at both locations?",
+  "gold": {
+    "type": "sql",
+    "sql": "SELECT COUNT(DISTINCT a.object_id) FROM events a JOIN events b ON a.object_id = b.object_id WHERE a.camera_location = 'Gate_MainEntrance' AND b.camera_location = 'KeynoteHall_DoorA' AND a.event_type IN ('person_entry','person_exit') AND b.event_type IN ('person_entry','person_exit') AND a.timestamp_utc >= '2025-12-08T00:00:00Z' AND a.timestamp_utc < '2025-12-09T00:00:00Z' AND b.timestamp_utc >= '2025-12-08T00:00:00Z' AND b.timestamp_utc < '2025-12-09T00:00:00Z'",
+    "scoring": "exact_numeric"
+  },
+  "metadata": { "abstract": false, "graph_native": true, "tests": "multi-hop: object traversal across cameras via DETECTED_BY relationships" }
+}

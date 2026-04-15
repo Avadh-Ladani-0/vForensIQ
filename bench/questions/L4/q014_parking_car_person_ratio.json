@@ -1,0 +1,14 @@
+{
+  "question_id": "L4_q014_parking_car_person_ratio",
+  "level": "L4",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "At the parking lot gate, what's the ratio of car traffic to pedestrian traffic? Are more cars coming through or more people walking?",
+  "gold": {
+    "type": "structured_facts",
+    "facts": {
+      "parking_lot_mentioned": "Parking"
+    },
+    "scoring": "structured_facts"
+  },
+  "metadata": { "abstract": true, "graph_native": true, "tests": "event-type comparison at a single location — different edge types from same Camera node" }
+}

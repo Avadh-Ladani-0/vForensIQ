@@ -1,0 +1,14 @@
+{
+  "question_id": "L4_q010_camera_correlation",
+  "level": "L4",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which two crowd camera locations had the most similar hourly activity patterns on 2025-12-08? Compare all pairs of crowd cameras by how closely their hourly average head_counts track each other.",
+  "gold": {
+    "type": "structured_facts",
+    "facts": {
+      "most_similar_pair_includes": "DemoBooth"
+    },
+    "scoring": "structured_facts"
+  },
+  "metadata": { "abstract": false, "graph_native": true, "tests": "cross-entity correlation — requires comparing subgraph patterns across multiple cameras" }
+}

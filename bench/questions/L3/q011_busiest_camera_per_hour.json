@@ -1,0 +1,12 @@
+{
+  "question_id": "L3_q011_busiest_camera_per_hour",
+  "level": "L3",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "For each hour of the day, which camera location had the highest crowd? Show me the winning location and its average crowd size for each hour.",
+  "gold": {
+    "type": "sql",
+    "sql": "WITH hourly AS (SELECT strftime('%H', timestamp_epoch_s, 'unixepoch') AS hr, camera_location, ROUND(AVG(head_count),1) AS avg_hc FROM events WHERE event_type='crowd' AND timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z' GROUP BY hr, camera_location), ranked AS (SELECT hr, camera_location, avg_hc, ROW_NUMBER() OVER (PARTITION BY hr ORDER BY avg_hc DESC) AS rn FROM hourly) SELECT hr, camera_location, avg_hc FROM ranked WHERE rn=1 ORDER BY hr",
+    "scoring": "set_match_with_tolerance"
+  },
+  "metadata": { "abstract": true, "graph_native": true, "tests": "per-hour winner — requires CrowdHour→Hour graph traversal with ranking" }
+}

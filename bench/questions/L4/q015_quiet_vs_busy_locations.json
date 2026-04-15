@@ -1,0 +1,17 @@
+{
+  "question_id": "L4_q015_quiet_vs_busy_locations",
+  "level": "L4",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which location was the quietest and which was the busiest in terms of average crowd? How big is the gap?",
+  "gold": {
+    "type": "structured_facts",
+    "facts": {
+      "busiest": "KeynoteHall_Stage",
+      "quietest": "DemoBooth_Intel"
+    },
+    "scoring": "structured_facts"
+  },
+  "metadata": {
+    "abstract": true
+  }
+}

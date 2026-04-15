@@ -23,8 +23,8 @@ QUESTIONS_DIR = _PKG_DIR / "questions"
 RESULTS_DIR = _PKG_DIR / "results"
 
 ALL_LEVELS = ["L1", "L2", "L3", "L4", "L5"]
-ALL_APPROACHES = ["b1_sql", "b2_rag_cypher", "b2_rag_community", "b2_rag_hybrid"]
-ALL_MODELS = ["gpt-5-mini", "gpt-5"]
+ALL_APPROACHES = ["b1_sql", "b2_rag_cypher", "b2_rag_community", "b2_rag_hybrid", "b3_aqr"]
+ALL_MODELS = ["gpt-4o-mini", "gpt-4o"]
 
 
 def utc_now_iso_z() -> str:
@@ -67,11 +67,17 @@ def invoke_b2_rag_hybrid(question: dict[str, Any], model: str) -> dict[str, Any]
     return answer_question(question["question_text"], model, context=_build_session_context(question))
 
 
+def invoke_b3_aqr(question: dict[str, Any], model: str) -> dict[str, Any]:
+    from llm_aqr.router import answer_question
+    return answer_question(question["question_text"], model, context=_build_session_context(question))
+
+
 INVOKERS: dict[str, Callable[[dict[str, Any], str], dict[str, Any]]] = {
     "b1_sql": invoke_b1_sql,
     "b2_rag_cypher": invoke_b2_rag_cypher,
     "b2_rag_community": invoke_b2_rag_community,
     "b2_rag_hybrid": invoke_b2_rag_hybrid,
+    "b3_aqr": invoke_b3_aqr,
 }
 
 
@@ -218,7 +224,7 @@ def score_rubric_coverage(answer_text: str, gold: Any) -> tuple[Optional[bool], 
     """L5 scorer. LLM-as-judge evaluates whether each rubric item is covered.
 
     Gold is {"rubric": [strings], "threshold": 0.0..1.0, optional "grounding_required": bool}.
-    Uses gpt-5 for the judge call (single call; JSON response covering all rubric items).
+    Uses gpt-4o for the judge call (single call; JSON response covering all rubric items).
     Passes iff (covered_count / total) >= threshold.
     """
     if not isinstance(gold, dict) or "rubric" not in gold:
@@ -251,7 +257,7 @@ def score_rubric_coverage(answer_text: str, gold: Any) -> tuple[Optional[bool], 
         client = _get_client()
         resp = _chat_with_retry(
             client,
-            model="gpt-5",
+            model="gpt-4o", temperature=0,
              
             response_format={"type": "json_object"},
             messages=[

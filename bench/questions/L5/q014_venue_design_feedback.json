@@ -1,0 +1,22 @@
+{
+  "question_id": "L5_q014_venue_design_feedback",
+  "level": "L5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "If you were the venue designer looking at this data, what would you change about the layout? Which areas need more space, which need better flow, and where should food or rest areas be added?",
+  "gold": {
+    "type": "rubric_coverage",
+    "rubric": [
+      "KeynoteHall needs more capacity or overflow viewing",
+      "ExpoFloor has sustained high traffic \u2014 wider aisles or more space needed",
+      "FoodCourt peaks sharply at lunch \u2014 add satellite food stations",
+      "Gate areas could benefit from more entry lanes during morning rush"
+    ],
+    "coverage_threshold": 0.4,
+    "grounding_required": true,
+    "scoring": "rubric_coverage"
+  },
+  "metadata": {
+    "abstract": true,
+    "graph_native": true
+  }
+}

@@ -206,7 +206,7 @@ def _community_profile(nodes: list[str], attrs: dict[str, dict]) -> dict[str, An
 def _summarize_community(client: OpenAI, profile: dict, model: str) -> str:
     user = "Community profile (structured):\n" + json.dumps(profile, indent=2)
     resp = _chat_with_retry(
-        client, model=model,  
+        client, model=model, temperature=0,
         messages=[
             {"role": "system", "content": COMMUNITY_SUMMARY_PROMPT},
             {"role": "user", "content": user},
@@ -220,7 +220,7 @@ def _summarize_community(client: OpenAI, profile: dict, model: str) -> str:
 # ---------------------------------------------------------------------------
 
 def build_community_index(
-    model_for_summaries: str = "gpt-5-mini",
+    model_for_summaries: str = "gpt-4o-mini",
     force_rebuild: bool = False,
 ) -> dict:
     """Build the community summary index. Idempotent — reuses Chroma collection if present."""
@@ -301,7 +301,7 @@ def answer_question(
     question: str,
     model: str,
     context: Optional[dict] = None,
-    summary_model: str = "gpt-5-mini",
+    summary_model: str = "gpt-4o-mini",
     top_k: int = 6,
 ) -> dict:
     t_start = time.time()
@@ -340,7 +340,7 @@ def answer_question(
             f"Answer the user's question using ONLY the summaries above."
         )
         resp = _chat_with_retry(
-            llm, model=model,  
+            llm, model=model,
             messages=[
                 {"role": "system", "content": ANSWER_SYNTH_PROMPT},
                 {"role": "user", "content": user_msg},

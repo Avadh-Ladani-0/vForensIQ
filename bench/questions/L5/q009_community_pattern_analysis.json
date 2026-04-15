@@ -1,0 +1,18 @@
+{
+  "question_id": "L5_q009_community_pattern_analysis",
+  "level": "L5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Looking at the overall structure of activity on 2025-12-08, which groups of cameras and locations naturally cluster together based on their activity patterns? Describe 2-3 distinct activity clusters and what characterizes each one.",
+  "gold": {
+    "type": "rubric_coverage",
+    "rubric": [
+      "Gate cameras (MainEntrance, ParkingLot) form a cluster with entry/exit-dominated activity",
+      "Demo booth cameras (NVIDIA, Intel) form a cluster with similar crowd patterns",
+      "The keynote and expo areas show high-volume crowd activity distinct from gate traffic"
+    ],
+    "coverage_threshold": 0.5,
+    "grounding_required": true,
+    "scoring": "rubric_coverage"
+  },
+  "metadata": { "abstract": false, "graph_native": true, "tests": "community detection — requires graph structural analysis" }
+}
