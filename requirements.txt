@@ -1,3 +1,5 @@
+paho-mqtt==2.1.0
+lap==0.5.13
 absl-py==2.3.1
 certifi==2025.10.5
 charset-normalizer==3.4.4

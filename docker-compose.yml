@@ -13,5 +13,16 @@ services:
     volumes:
       - neo4j-data:/data
 
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    container_name: vforensiq-mosquitto
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./docs/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - mosquitto-data:/mosquitto/data
+    restart: unless-stopped
+
 volumes:
   neo4j-data:
+  mosquitto-data:

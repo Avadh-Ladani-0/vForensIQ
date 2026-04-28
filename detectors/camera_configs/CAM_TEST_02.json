@@ -1,0 +1,8 @@
+{
+  "camera_id": "CAM_TEST_02",
+  "camera_location": "ExpoFloor_Test",
+  "mode": "crowd",
+  "video_source": "Data/crowd/road.mp4",
+  "model_path": "yolov8n.pt",
+  "conf_threshold": 0.45
+}

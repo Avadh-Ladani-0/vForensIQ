@@ -1,0 +1,15 @@
+{
+  "camera_id": "CAM_TEST_01",
+  "camera_location": "Gate_TestEntrance",
+  "mode": "entry_exit",
+  "video_source": "Data/entry_exit/train_station.mp4",
+  "model_path": "yolov8n.pt",
+  "conf_threshold": 0.45,
+  "entry_line": {
+    "x1": 0,
+    "y1": 352,
+    "x2": 640,
+    "y2": 352
+  },
+  "entry_side_sign": -1
+}
