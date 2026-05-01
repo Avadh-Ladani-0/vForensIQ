@@ -1,4 +1,4 @@
-"""vForensIQ Chat UI — surveillance analytics powered by B1/B2/B3(AQR) LLM backends."""
+"""vInsightIQ Chat UI — surveillance analytics powered by B1/B2/B3(AQR) LLM backends."""
 from __future__ import annotations
 
 import json
@@ -15,7 +15,7 @@ if str(_ROOT) not in sys.path:
 # ---------------------------------------------------------------------------
 # Page config
 # ---------------------------------------------------------------------------
-st.set_page_config(page_title="vForensIQ Chat", page_icon="🔍", layout="wide")
+st.set_page_config(page_title="vInsightIQ Chat", page_icon="🔍", layout="wide")
 
 # ---------------------------------------------------------------------------
 # Example queries, organised by complexity level
@@ -181,7 +181,7 @@ def _routing_badge(result: dict) -> str:
 # ---------------------------------------------------------------------------
 # Main chat area
 # ---------------------------------------------------------------------------
-st.title("vForensIQ — CCTV Analytics Chat")
+st.title("vInsightIQ — CCTV Analytics Chat")
 st.caption(f"Approach: **{approach}** · Model: `{model}` · Scenario: `{scenario}`")
 
 if "messages" not in st.session_state:
