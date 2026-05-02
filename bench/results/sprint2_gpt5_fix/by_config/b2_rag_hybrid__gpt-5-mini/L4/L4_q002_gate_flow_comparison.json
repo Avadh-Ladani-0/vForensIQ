@@ -1,0 +1,112 @@
+{
+  "question_id": "L4_q002_gate_flow_comparison",
+  "level": "L4",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-5-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "On 2025-12-08 (UTC), which gate had higher total person flow (person_entry + person_exit combined) \u2014 Gate_MainEntrance or Gate_ParkingLot? State which gate and their approximate totals.",
+  "gold_value": {
+    "higher_flow_gate": "Gate_MainEntrance",
+    "gate_mainentrance_flow_approx": {
+      "value": 2900,
+      "tolerance": 400
+    },
+    "gate_parkinglot_flow_approx": {
+      "value": 620,
+      "tolerance": 150
+    }
+  },
+  "answer_text": "Gate_MainEntrance had the higher total person flow on 2025-12-08 (UTC): Gate_MainEntrance \u2248 2,883 persons vs Gate_ParkingLot \u2248 615 persons (difference 2,268).",
+  "structured_answer": {
+    "cypher_columns": [
+      "gate1",
+      "gate1_total",
+      "gate2",
+      "gate2_total",
+      "higher_gate",
+      "difference_in_count"
+    ],
+    "cypher_rows": [
+      [
+        "Gate_MainEntrance",
+        2883,
+        "Gate_ParkingLot",
+        615,
+        "Gate_MainEntrance",
+        2268
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_1",
+        "summary": "All events were recorded by CAM_02 at Gate_ParkingLot, covering activity from 2025-12-08T07:00:01Z to 2025-12-08T18:59:57Z with hourly aggregation reported for 07:00\u201317:00 UTC. Total volume was 1,529 events (node_count 1,532); person events dominated with 463 person_entry and 466 person_exit (929 total) versus 283 car_entry and 317 car_exit (600 total). Peak head_count is not available (null), and a peak events-per-hour value is not provided.",
+        "distance": 0.368045449256897
+      },
+      {
+        "community_id": "community_0",
+        "summary": "Cameras CAM_01 covered Gate_MainEntrance and Platform_1 from 2025-12-01T01:00:00Z to 2025-12-08T12:00:00Z (events recorded between 2025-12-01T01:04:10Z and 2025-12-08T12:59:57Z). Total volume was 1,775 events: person activity dominated (788 person_entry and 773 person_exit = 1,561 person events) versus 112 car_entry and 102 car_exit. Average head count (mean-of-means) was 10.42 with a peak head count of 47.0; node_count is 1,802 and average events/hour \u2248 9.9 (1775 events over ~179 hours); peak per-hour event count is not specified in the provided profile.",
+        "distance": 0.39156973361968994
+      },
+      {
+        "community_id": "community_13",
+        "summary": "Across the 17:00 UTC hour (events from 2025-12-01T17:00:17Z to 2025-12-01T17:59:36Z) on Platform_1, 194 events were recorded. Events were dominated by pedestrian movements: 92 person_entry and 89 person_exit (181 total), versus 5 car_entry and 8 car_exit. Average head count (mean-of-means) was 5.04 with a peak head_count of 13.0; peak event count for the hour was 194.",
+        "distance": 0.42711520195007324
+      },
+      {
+        "community_id": "community_7",
+        "summary": "All activity was recorded on Platform_1 between 2025-12-01T12:00:23Z and 2025-12-01T12:59:53Z (hour block 2025-12-01T12:00:00Z). There were 25 events in the hour, dominated by person movements (10 person_entry, 8 person_exit) versus 4 car_entry and 3 car_exit. Average head count (mean of means) was 4.96, peak head_count was 13.0, and node_count is 27.",
+        "distance": 0.44174057245254517
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n    AND c.camera_location = 'Gate_MainEntrance'\n    AND e.event_type IN ['person_entry','person_exit']\n  RETURN count(e) AS cnt_main\n}\nCALL {\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n    AND c.camera_location = 'Gate_ParkingLot'\n    AND e.event_type IN ['person_entry','person_exit']\n  RETURN count(e) AS cnt_parking\n}\nRETURN\n  'Gate_MainEntrance' AS gate1, cnt_main AS gate1_total,\n  'Gate_ParkingLot' AS gate2, cnt_parking AS gate2_total,\n  CASE\n    WHEN cnt_main > cnt_parking THEN 'Gate_MainEntrance'\n    WHEN cnt_parking > cnt_main THEN 'Gate_ParkingLot'\n    ELSE 'tie'\n  END AS higher_gate, \n  CASE\n    WHEN cnt_main > cnt_parking THEN cnt_main - cnt_parking\n    WHEN cnt_parking > cnt_main THEN cnt_parking - cnt_main\n    ELSE 0\n  END AS difference_in_count",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.368045449256897
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.39156973361968994
+    },
+    {
+      "type": "community",
+      "community_id": "community_13",
+      "distance": 0.42711520195007324
+    },
+    {
+      "type": "community",
+      "community_id": "community_7",
+      "distance": 0.44174057245254517
+    }
+  ],
+  "duration_ms": 23039,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 1898,
+      "completion_tokens": 1355
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 857,
+      "completion_tokens": 440
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_3_facts_satisfied"
+  }
+}

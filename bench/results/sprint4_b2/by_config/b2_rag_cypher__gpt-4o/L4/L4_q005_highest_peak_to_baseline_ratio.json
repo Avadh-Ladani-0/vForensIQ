@@ -1,0 +1,54 @@
+{
+  "question_id": "L4_q005_highest_peak_to_baseline_ratio",
+  "level": "L4",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Across all crowd-mode cameras (ExpoFloor_MainAisle, DemoBooth_NVIDIA, DemoBooth_Intel, KeynoteHall_Stage, FoodCourt_North) on 2025-12-08 (UTC), which location showed the most extreme peak-to-baseline contrast \u2014 meaning the largest ratio of its peak head_count to its overnight quiet-hour average head_count? Identify the camera_location and explain the ratio order of magnitude.",
+  "gold_value": {
+    "most_extreme_location": "KeynoteHall_Stage"
+  },
+  "answer_text": "The location with the most extreme peak-to-baseline contrast was the \"KeynoteHall_Stage\" camera. The peak head_count was approximately 8.71 times the overnight quiet-hour average head_count.",
+  "structured_answer": {
+    "columns": [
+      "location",
+      "ratio"
+    ],
+    "rows": [
+      [
+        "KeynoteHall_Stage",
+        8.711180800557516
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour)\n  WHERE ch.camera_location IN ['ExpoFloor_MainAisle', 'DemoBooth_NVIDIA', 'DemoBooth_Intel', 'KeynoteHall_Stage', 'FoodCourt_North']\n    AND ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.camera_location AS location, max(ch.peak_hc) AS peak_hc, avg(ch.avg_hc) AS avg_hc\n}\nRETURN location, peak_hc / avg_hc AS ratio\nORDER BY ratio DESC\nLIMIT 1",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 6450,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2583,
+      "completion_tokens": 148
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 421,
+      "completion_tokens": 41
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_1_facts_satisfied"
+  }
+}

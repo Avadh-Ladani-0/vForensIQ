@@ -1,0 +1,69 @@
+{
+  "question_id": "L4_q004_keynote_morning_vs_afternoon",
+  "level": "L4",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-5-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Compare the average head_count at KeynoteHall_Stage between the morning keynote window 09:00-10:00 UTC and the afternoon keynote window 14:00-15:00 UTC on 2025-12-08. Which keynote had higher attendance and what were the approximate average head_counts?",
+  "gold_value": {
+    "higher_attendance_window": "morning",
+    "morning_keynote_avg_approx": {
+      "value": 450,
+      "tolerance": 80
+    },
+    "afternoon_keynote_avg_approx": {
+      "value": 400,
+      "tolerance": 80
+    }
+  },
+  "answer_text": "The morning keynote had higher attendance: KeynoteHall_Stage (hour_utc 2025-12-08T09:00:00Z\u20132025-12-08T10:00:00Z) averaged 450.2 head_count, while the afternoon keynote (KeynoteHall_Stage, hour_utc 2025-12-08T14:00:00Z\u20132025-12-08T15:00:00Z) averaged 399.5.",
+  "structured_answer": {
+    "columns": [
+      "window",
+      "avg_head_count",
+      "is_highest"
+    ],
+    "rows": [
+      [
+        "afternoon_14-15",
+        399.5,
+        false
+      ],
+      [
+        "morning_09-10",
+        450.2,
+        true
+      ]
+    ],
+    "total_rows": 2
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour {camera_location: 'KeynoteHall_Stage'})\n  WHERE ch.hour_utc >= '2025-12-08T09:00:00Z' AND ch.hour_utc < '2025-12-08T10:00:00Z'\n  RETURN 'morning_09-10' AS window, sum(ch.avg_hc * ch.event_count) AS weighted_sum, sum(ch.event_count) AS total_samples\n  UNION ALL\n  MATCH (ch:CrowdHour {camera_location: 'KeynoteHall_Stage'})\n  WHERE ch.hour_utc >= '2025-12-08T14:00:00Z' AND ch.hour_utc < '2025-12-08T15:00:00Z'\n  RETURN 'afternoon_14-15' AS window, sum(ch.avg_hc * ch.event_count) AS weighted_sum, sum(ch.event_count) AS total_samples\n}\nWITH window, CASE WHEN total_samples > 0 THEN toFloat(weighted_sum)/total_samples ELSE NULL END AS avg_head_count\nWITH collect({window:window, avg:avg_head_count}) AS rows\nWITH rows, [r IN rows | r.avg] AS avgs\nWITH rows, reduce(maxv = -1.0, x IN avgs | CASE WHEN x IS NULL THEN maxv ELSE CASE WHEN x > maxv THEN x ELSE maxv END END) AS max_avg\nUNWIND rows AS r\nRETURN r.window AS window, CASE WHEN r.avg IS NULL THEN NULL ELSE round(r.avg*10.0)/10.0 END AS avg_head_count, CASE WHEN r.avg = max_avg THEN true ELSE false END AS is_highest\nORDER BY window",
+      "row_count": 2
+    }
+  ],
+  "duration_ms": 39569,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 1916,
+      "completion_tokens": 2357
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 631,
+      "completion_tokens": 815
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_3_facts_satisfied"
+  }
+}

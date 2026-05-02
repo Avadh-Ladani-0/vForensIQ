@@ -1,0 +1,186 @@
+{
+  "question_id": "L2_q001_peak_headcount_nvidia_booth",
+  "level": "L2",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What was the peak head_count observed at DemoBooth_NVIDIA on 2025-12-08 (UTC)?",
+  "gold_value": 86,
+  "answer_text": "The peak head count observed at DemoBooth_NVIDIA on December 8, 2025, was 86. This peak occurred at 16:00 UTC, reflecting a significant influx of visitors during that hour. Overall, the day saw a total of 449 events across various locations, indicating a busy environment.",
+  "structured_answer": {
+    "cypher_columns": [
+      "ch.hour_utc",
+      "ch.peak_hc"
+    ],
+    "cypher_rows": [
+      [
+        "2025-12-08T00:00:00Z",
+        16
+      ],
+      [
+        "2025-12-08T01:00:00Z",
+        15
+      ],
+      [
+        "2025-12-08T02:00:00Z",
+        18
+      ],
+      [
+        "2025-12-08T03:00:00Z",
+        16
+      ],
+      [
+        "2025-12-08T04:00:00Z",
+        16
+      ],
+      [
+        "2025-12-08T05:00:00Z",
+        16
+      ],
+      [
+        "2025-12-08T06:00:00Z",
+        17
+      ],
+      [
+        "2025-12-08T07:00:00Z",
+        18
+      ],
+      [
+        "2025-12-08T08:00:00Z",
+        18
+      ],
+      [
+        "2025-12-08T09:00:00Z",
+        19
+      ],
+      [
+        "2025-12-08T10:00:00Z",
+        75
+      ],
+      [
+        "2025-12-08T11:00:00Z",
+        74
+      ],
+      [
+        "2025-12-08T12:00:00Z",
+        18
+      ],
+      [
+        "2025-12-08T13:00:00Z",
+        59
+      ],
+      [
+        "2025-12-08T14:00:00Z",
+        20
+      ],
+      [
+        "2025-12-08T15:00:00Z",
+        82
+      ],
+      [
+        "2025-12-08T16:00:00Z",
+        86
+      ],
+      [
+        "2025-12-08T17:00:00Z",
+        21
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        17
+      ],
+      [
+        "2025-12-08T19:00:00Z",
+        17
+      ],
+      [
+        "2025-12-08T20:00:00Z",
+        19
+      ],
+      [
+        "2025-12-08T21:00:00Z",
+        17
+      ],
+      [
+        "2025-12-08T22:00:00Z",
+        18
+      ],
+      [
+        "2025-12-08T23:00:00Z",
+        19
+      ]
+    ],
+    "cypher_total_rows": 24,
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and a total of 588 node counts.",
+        "distance": 0.3703348636627197
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.49444711208343506
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity at Platform_1 from 02:00 to 02:55 UTC on December 1, 2025, recorded a total of 37 events, with person entries (16) and exits (14) dominating the activity. There were also 4 car entries and 3 car exits. The peak head count reached 13, with an average head count of 5.05 during this period.",
+        "distance": 0.4973416328430176
+      },
+      {
+        "community_id": "community_13",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 17:00 and 17:59 UTC recorded a total of 194 events. The dominant event types were person entries (92) and exits (89), with car entries (5) and exits (8) also noted. The peak head count reached 13 individuals, and the average head count was approximately 5.04.",
+        "distance": 0.504206657409668
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour)-[:AT_CAMERA]->(:Camera {camera_location: 'DemoBooth_NVIDIA'}) \nWHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z' \nRETURN ch.hour_utc, ch.peak_hc ORDER BY ch.hour_utc ASC",
+      "row_count": 24
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.3703348636627197
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.49444711208343506
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.4973416328430176
+    },
+    {
+      "type": "community",
+      "community_id": "community_13",
+      "distance": 0.504206657409668
+    }
+  ],
+  "duration_ms": 4513,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 983,
+      "completion_tokens": 87
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1070,
+      "completion_tokens": 64
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": false,
+    "detail": "exceeds_1pct (expected=86.0 got=8.0)"
+  }
+}

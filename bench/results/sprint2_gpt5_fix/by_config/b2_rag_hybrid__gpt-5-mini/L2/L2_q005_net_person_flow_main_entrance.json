@@ -1,0 +1,96 @@
+{
+  "question_id": "L2_q005_net_person_flow_main_entrance",
+  "level": "L2",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-5-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What was the net person flow (person_entry events minus person_exit events) at Gate_MainEntrance on 2025-12-08 (UTC)?",
+  "gold_value": 179,
+  "answer_text": "On 2025-12-08 (UTC) at Gate_MainEntrance the net person flow was 179 \u2014 calculated from 1,531 person_entry events minus 1,352 person_exit events.",
+  "structured_answer": {
+    "cypher_columns": [
+      "net_person_flow",
+      "entries",
+      "exits"
+    ],
+    "cypher_rows": [
+      [
+        179,
+        1531,
+        1352
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_0",
+        "summary": "Cameras CAM_01 covered Gate_MainEntrance and Platform_1 from 2025-12-01T01:00:00Z to 2025-12-08T12:00:00Z (events recorded between 2025-12-01T01:04:10Z and 2025-12-08T12:59:57Z). Total volume was 1,775 events: person activity dominated (788 person_entry and 773 person_exit = 1,561 person events) versus 112 car_entry and 102 car_exit. Average head count (mean-of-means) was 10.42 with a peak head count of 47.0; node_count is 1,802 and average events/hour \u2248 9.9 (1775 events over ~179 hours); peak per-hour event count is not specified in the provided profile.",
+        "distance": 0.3031187057495117
+      },
+      {
+        "community_id": "community_1",
+        "summary": "All events were recorded by CAM_02 at Gate_ParkingLot, covering activity from 2025-12-08T07:00:01Z to 2025-12-08T18:59:57Z with hourly aggregation reported for 07:00\u201317:00 UTC. Total volume was 1,529 events (node_count 1,532); person events dominated with 463 person_entry and 466 person_exit (929 total) versus 283 car_entry and 317 car_exit (600 total). Peak head_count is not available (null), and a peak events-per-hour value is not provided.",
+        "distance": 0.3315884470939636
+      },
+      {
+        "community_id": "community_7",
+        "summary": "All activity was recorded on Platform_1 between 2025-12-01T12:00:23Z and 2025-12-01T12:59:53Z (hour block 2025-12-01T12:00:00Z). There were 25 events in the hour, dominated by person movements (10 person_entry, 8 person_exit) versus 4 car_entry and 3 car_exit. Average head count (mean of means) was 4.96, peak head_count was 13.0, and node_count is 27.",
+        "distance": 0.33443373441696167
+      },
+      {
+        "community_id": "community_10",
+        "summary": "All activity was recorded on Platform_1 between 2025-12-01T02:00:27Z and 2025-12-01T02:55:55Z (hour window 2025-12-01T02:00:00Z UTC). Events were dominated by people movements (16 person_entry, 14 person_exit = 30 person events) with fewer vehicle movements (4 car_entry, 3 car_exit = 7 car events); total events = 37 and peak events per hour = 37. Peak head_count was 13, average head_count (mean of means) 5.05, node_count 39.",
+        "distance": 0.3387199640274048
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event)-[:DETECTED_BY]->(c:Camera {camera_location: 'Gate_MainEntrance'})\nWHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\nWITH COALESCE(sum(CASE WHEN e.event_type = 'person_entry' THEN 1 ELSE 0 END), 0) AS entries,\n     COALESCE(sum(CASE WHEN e.event_type = 'person_exit' THEN 1 ELSE 0 END), 0) AS exits\nRETURN entries - exits AS net_person_flow, entries, exits",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.3031187057495117
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.3315884470939636
+    },
+    {
+      "type": "community",
+      "community_id": "community_7",
+      "distance": 0.33443373441696167
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.3387199640274048
+    }
+  ],
+  "duration_ms": 15985,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 1884,
+      "completion_tokens": 723
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 830,
+      "completion_tokens": 242
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": true,
+    "detail": "within_1pct (expected=179.0 got=179.0)"
+  }
+}

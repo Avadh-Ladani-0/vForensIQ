@@ -1,0 +1,129 @@
+{
+  "question_id": "L2_q004_low_confidence_events_count",
+  "level": "L2",
+  "approach": "b2_rag_community",
+  "model": "gpt-5-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many events on 2025-12-08 (UTC) had a detection confidence below 0.85?",
+  "gold_value": 30467,
+  "answer_text": "I can\u2019t determine how many events on 2025-12-08 had detection confidence below 0.85 because none of the summaries report detection confidence. The summaries for 2025-12-08 show: 39 events between 2025-12-08T01:00:41Z and 2025-12-08T01:59:48Z (hour 01:00\u201301:59 UTC; node_count: 40; camera locations not specified), 40 events between 2025-12-08T05:00:59Z and 2025-12-08T05:59:16Z (hour 05:00\u201305:59 UTC; node_count: 41; camera locations not provided), and 744 events between 2025-12-08T18:00:01Z and 2025-12-08T18:59:57Z (hour 18:00\u201318:59 UTC; node_count: 745; no camera locations specified).",
+  "structured_answer": {
+    "retrieved_communities": [
+      {
+        "community_id": "community_3",
+        "summary": "Between 2025-12-08T01:00:41Z and 2025-12-08T01:59:48Z (hour 01:00\u201301:59 UTC) there were 39 events recorded across the monitored nodes (node_count: 40). Events were dominated by people: 23 person_entry and 11 person_exit (34 person events) versus 1 car_entry and 4 car_exit (5 vehicle events). Camera locations are not specified in the profile and peak_head_count is not provided; the peak hourly event count for the reported hour was 39.",
+        "distance": 0.5061485171318054,
+        "metadata": {
+          "camera_locations": "",
+          "node_count": 40,
+          "community_id": 3,
+          "total_events": 39
+        }
+      },
+      {
+        "community_id": "community_8",
+        "summary": "All activity was recorded on Platform_1 during the 00:00 UTC hour of 2025-12-01 (events between 2025-12-01T00:02:02Z and 2025-12-01T00:57:29Z). There were 36 events total: 24 person events (8 person_entry, 16 person_exit) and 12 car events (7 car_entry, 5 car_exit), with person movements dominating. Peak head count observed was 13.0, the average head_count mean-of-means was 5.02, and the peak hourly event count was 36; node_count reported as 38.",
+        "distance": 0.5221244692802429,
+        "metadata": {
+          "camera_locations": "Platform_1",
+          "community_id": 8,
+          "total_events": 36,
+          "node_count": 38
+        }
+      },
+      {
+        "community_id": "community_4",
+        "summary": "Camera locations were not provided in the input; node_count is 41. The events occurred between 2025-12-08T05:00:59Z and 2025-12-08T05:59:16Z (hour 2025-12-08T05:00:00Z) totaling 40 events. Person movement dominated: 22 person_entry and 14 person_exit (36 of 40 events, 90%), with 4 car_exit events. Peak head_count was not reported; peak event count for the hour was 40.",
+        "distance": 0.5250967741012573,
+        "metadata": {
+          "community_id": 4,
+          "total_events": 40,
+          "node_count": 41,
+          "camera_locations": ""
+        }
+      },
+      {
+        "community_id": "community_5",
+        "summary": "No camera locations were specified. Events occurred between 2025-12-08T18:00:01Z and 2025-12-08T18:59:57Z (within the 18:00 UTC hour). Person movements dominated (person_entry 300, person_exit 299) versus vehicle movements (car_entry 83, car_exit 62), totaling 744 events in the hour. Peak head_count is not available; peak event count for the hour = 744 and node_count = 745.",
+        "distance": 0.5283596515655518,
+        "metadata": {
+          "node_count": 745,
+          "total_events": 744,
+          "camera_locations": "",
+          "community_id": 5
+        }
+      },
+      {
+        "community_id": "community_14",
+        "summary": "All activity was recorded at Platform_1 between 2025-12-01T19:00:22Z and 2025-12-01T19:58:59Z (UTC). A total of 53 events were detected in that hour, dominated by person movements (21 person_entry, 20 person_exit) with car events less frequent (6 car_entry, 6 car_exit); peak event count for the hour was 53. Average head count (mean of means) was 34.98 and the peak head count observed was 42. Node count: 55.",
+        "distance": 0.5339052081108093,
+        "metadata": {
+          "total_events": 53,
+          "node_count": 55,
+          "camera_locations": "Platform_1",
+          "community_id": 14
+        }
+      },
+      {
+        "community_id": "community_13",
+        "summary": "Across the 17:00 UTC hour (events from 2025-12-01T17:00:17Z to 2025-12-01T17:59:36Z) on Platform_1, 194 events were recorded. Events were dominated by pedestrian movements: 92 person_entry and 89 person_exit (181 total), versus 5 car_entry and 8 car_exit. Average head count (mean-of-means) was 5.04 with a peak head_count of 13.0; peak event count for the hour was 194.",
+        "distance": 0.5486901998519897,
+        "metadata": {
+          "total_events": 194,
+          "node_count": 196,
+          "camera_locations": "Platform_1",
+          "community_id": 13
+        }
+      }
+    ],
+    "top_k": 6
+  },
+  "citations": [
+    {
+      "type": "community",
+      "community_id": "community_3",
+      "distance": 0.5061485171318054
+    },
+    {
+      "type": "community",
+      "community_id": "community_8",
+      "distance": 0.5221244692802429
+    },
+    {
+      "type": "community",
+      "community_id": "community_4",
+      "distance": 0.5250967741012573
+    },
+    {
+      "type": "community",
+      "community_id": "community_5",
+      "distance": 0.5283596515655518
+    },
+    {
+      "type": "community",
+      "community_id": "community_14",
+      "distance": 0.5339052081108093
+    },
+    {
+      "type": "community",
+      "community_id": "community_13",
+      "distance": 0.5486901998519897
+    }
+  ],
+  "duration_ms": 14213,
+  "llm_calls": [
+    {
+      "stage": "answer_synth",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 975,
+      "completion_tokens": 734
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": false,
+    "detail": "exceeds_1pct (expected=30467.0 got=0.85)"
+  }
+}

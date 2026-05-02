@@ -1,0 +1,245 @@
+{
+  "question_id": "L5_q005_keynote_hall_lifecycle",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Describe the full lifecycle of activity at the keynote hall on 2025-12-08 (UTC). Cover: (a) door entry patterns at KeynoteHall_DoorA throughout the day, (b) the in-hall crowd density at KeynoteHall_Stage during keynote sessions, and (c) how the post-keynote dispersal compares to pre-keynote build-up. Use specific hours and numbers from the data. 4-6 sentences.",
+  "gold_value": {
+    "rubric": [
+      "KeynoteHall_DoorA shows entry peaks aligned with keynote start times (around 08:00-10:00, 13:00-14:00, or 15:00-16:00 UTC)",
+      "KeynoteHall_Stage crowd peaks during the keynote sessions, reaching head_counts in the hundreds",
+      "Outside of keynote hours the in-hall head_count drops to a low baseline (single digits)",
+      "Pre-keynote door entry traffic precedes the in-hall crowd surge"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "On 2025-12-08 at KeynoteHall_DoorA, door entry activity peaked between 08:00 and 09:00 with 186 and 181 entries respectively, then dropped off significantly later in the day. During keynote sessions, the in-hall crowd density at KeynoteHall_Stage was high, averaging 450.19 people at 09:00, 399.51 at 14:00, and 379.46 at 16:00. The pre-keynote build-up saw 382 people entering before 10:00, while post-keynote dispersal was minimal with only 3 exits recorded after 17:00. This indicates a heavy attendance and interest during sessions, but a lack of immediate dispersal after the keynote events.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "entry_count"
+    ],
+    "rows": [
+      [
+        "00",
+        1
+      ],
+      [
+        "01",
+        3
+      ],
+      [
+        "02",
+        2
+      ],
+      [
+        "03",
+        1
+      ],
+      [
+        "04",
+        3
+      ],
+      [
+        "05",
+        5
+      ],
+      [
+        "08",
+        186
+      ],
+      [
+        "09",
+        181
+      ],
+      [
+        "10",
+        2
+      ],
+      [
+        "12",
+        1
+      ],
+      [
+        "13",
+        172
+      ],
+      [
+        "14",
+        1
+      ],
+      [
+        "15",
+        210
+      ],
+      [
+        "16",
+        2
+      ],
+      [
+        "17",
+        1
+      ],
+      [
+        "18",
+        1
+      ],
+      [
+        "19",
+        2
+      ],
+      [
+        "20",
+        1
+      ],
+      [
+        "21",
+        1
+      ],
+      [
+        "22",
+        1
+      ],
+      [
+        "23",
+        5
+      ],
+      [
+        "00",
+        6.969722222222222
+      ],
+      [
+        "01",
+        7.269166666666667
+      ],
+      [
+        "02",
+        7.120277777777778
+      ],
+      [
+        "03",
+        7.207777777777777
+      ],
+      [
+        "04",
+        7.010555555555555
+      ],
+      [
+        "05",
+        6.9255555555555555
+      ],
+      [
+        "06",
+        6.797777777777778
+      ],
+      [
+        "07",
+        7.1161111111111115
+      ],
+      [
+        "08",
+        6.976111111111111
+      ],
+      [
+        "09",
+        450.18638888888887
+      ],
+      [
+        "10",
+        7.025833333333333
+      ],
+      [
+        "11",
+        6.928888888888889
+      ],
+      [
+        "12",
+        7.1563888888888885
+      ],
+      [
+        "13",
+        7.074722222222222
+      ],
+      [
+        "14",
+        399.5133333333333
+      ],
+      [
+        "15",
+        7.225555555555555
+      ],
+      [
+        "16",
+        379.45916666666665
+      ],
+      [
+        "17",
+        6.9325
+      ],
+      [
+        "18",
+        6.833333333333333
+      ],
+      [
+        "19",
+        7.176388888888889
+      ],
+      [
+        "20",
+        7.085277777777778
+      ],
+      [
+        "21",
+        6.958888888888889
+      ],
+      [
+        "22",
+        7.251111111111111
+      ],
+      [
+        "23",
+        7.313611111111111
+      ],
+      [
+        "pre_keynote",
+        382
+      ],
+      [
+        "post_keynote",
+        3
+      ]
+    ],
+    "total_rows": 47,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH \nentry_patterns AS (\n    SELECT \n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        COUNT(*) AS entry_count\n    FROM \n        events\n    WHERE \n        camera_location = 'KeynoteHall_DoorA' \n        AND event_type = 'person_entry'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z' \n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        hour\n),\ncrowd_density AS (\n    SELECT \n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        AVG(head_count) AS avg_head_count\n    FROM \n        events\n    WHERE \n        camera_location = 'KeynoteHall_Stage' \n        AND event_type = 'crowd'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z' \n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        hour\n),\npre_post_keynote AS (\n    SELECT \n        'pre_keynote' AS period,\n        COUNT(*) AS person_count\n    FROM \n        events\n    WHERE \n        camera_location = 'KeynoteHall_DoorA' \n        AND event_type = 'person_entry'\n        AND strftime('%H', timestamp_epoch_s, 'unixepoch') < '10'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z' \n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n    UNION ALL\n    SELECT \n        'post_keynote' AS period,\n        COUNT(*) AS person_count\n    FROM \n        events\n    WHERE \n        camera_location = 'KeynoteHall_DoorA' \n        AND event_type = 'person_exit'\n        AND strftime('%H', timestamp_epoch_s, 'unixepoch') >= '17'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z' \n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n)\nSELECT * FROM entry_patterns\nUNION ALL\nSELECT * FROM crowd_density\nUNION ALL\nSELECT * FROM pre_post_keynote",
+      "row_count": 47
+    }
+  ],
+  "duration_ms": 10835,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 1027,
+      "completion_tokens": 494
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 1228,
+      "completion_tokens": 159
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=3/4=0.75 (threshold=0.5)"
+  }
+}

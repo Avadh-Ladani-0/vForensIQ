@@ -1,0 +1,62 @@
+{
+  "question_id": "L1_q005_distinct_object_ids_at_main_entrance",
+  "level": "L1",
+  "approach": "b3_aqr",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many distinct object_id values were tracked at Gate_MainEntrance across all entry/exit events on 2025-12-08 (UTC)?",
+  "gold_value": 2951,
+  "answer_text": "There were 2,951 distinct object_id values tracked at Gate_MainEntrance across all entry/exit events on 2025-12-08 (UTC).",
+  "structured_answer": {
+    "columns": [
+      "distinct_object_ids"
+    ],
+    "rows": [
+      [
+        2951
+      ]
+    ],
+    "total_rows": 1,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "SELECT COUNT(DISTINCT object_id) AS distinct_object_ids\nFROM events\nWHERE camera_location LIKE '%MainEntrance%'\n  AND event_type IN ('person_entry', 'person_exit', 'car_entry', 'car_exit')\n  AND timestamp_utc >= '2025-12-08T00:00:00Z'\n  AND timestamp_utc < '2025-12-09T00:00:00Z'",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 4230,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 963,
+      "completion_tokens": 91
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 283,
+      "completion_tokens": 32
+    }
+  ],
+  "errors": [],
+  "routing": {
+    "classified_level": "L1",
+    "routed_to": "b1_sql",
+    "routing_method": "llm_zero_shot",
+    "routing_duration_ms": 749,
+    "classifier_metadata": {
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 360,
+      "completion_tokens": 2
+    }
+  },
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": true,
+    "detail": "match"
+  }
+}

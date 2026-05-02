@@ -1,0 +1,89 @@
+{
+  "question_id": "L3_q004_avg_headcount_per_crowd_camera",
+  "level": "L3",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "For each crowd-mode camera_location on 2025-12-08 (UTC), report the average head_count over the full day.",
+  "gold_value": [
+    [
+      "DemoBooth_Intel",
+      10.65
+    ],
+    [
+      "DemoBooth_NVIDIA",
+      15.52
+    ],
+    [
+      "ExpoFloor_MainAisle",
+      49.36
+    ],
+    [
+      "FoodCourt_North",
+      23.07
+    ],
+    [
+      "KeynoteHall_Stage",
+      57.4
+    ]
+  ],
+  "answer_text": "On 2025-12-08, the average head counts for each crowd-mode camera location were as follows: ExpoFloor_MainAisle - 49.36, DemoBooth_NVIDIA - 15.52, DemoBooth_Intel - 10.65, KeynoteHall_Stage - 57.40, and FoodCourt_North - 23.07.",
+  "structured_answer": {
+    "columns": [
+      "c.camera_location",
+      "average_head_count"
+    ],
+    "rows": [
+      [
+        "ExpoFloor_MainAisle",
+        49.35666666666667
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        15.515000000000004
+      ],
+      [
+        "DemoBooth_Intel",
+        10.648333333333335
+      ],
+      [
+        "KeynoteHall_Stage",
+        57.397499999999994
+      ],
+      [
+        "FoodCourt_North",
+        23.06958333333333
+      ]
+    ],
+    "total_rows": 5
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera) \nWHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z' AND c.mode = 'crowd' \nRETURN c.camera_location, AVG(ch.avg_hc) AS average_head_count",
+      "row_count": 5
+    }
+  ],
+  "duration_ms": 3997,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 986,
+      "completion_tokens": 84
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 367,
+      "completion_tokens": 79
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": true,
+    "detail": "all_keys_and_values_matched (rows=5)"
+  }
+}

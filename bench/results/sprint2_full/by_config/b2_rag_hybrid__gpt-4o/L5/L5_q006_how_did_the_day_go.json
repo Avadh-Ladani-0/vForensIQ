@@ -1,0 +1,560 @@
+{
+  "question_id": "L5_q006_how_did_the_day_go",
+  "level": "L5",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Tell me how the day went at the conference \u2014 what stood out, when were the big moments, and what does the activity tell us?",
+  "gold_value": {
+    "rubric": [
+      "Significant person traffic at the main entrance, especially in the morning and evening",
+      "Keynote sessions drew large crowds at the keynote stage area",
+      "Demo booths (especially NVIDIA) had notable crowd activity during expo hours",
+      "Food court was busiest around lunchtime",
+      "Overnight hours were quiet across the venue"
+    ],
+    "threshold": 0.4
+  },
+  "answer_text": "The conference day was marked by significant activity, particularly at the Keynote Hall and Expo Floor. The Keynote Hall saw a substantial influx of attendees between 09:00 and 15:00 UTC, with 1,117 entries and 1,072 exits, indicating a high level of interest in the sessions held there. The Expo Floor experienced its busiest period around 10:00 to 11:00 UTC, with a peak head count of 209, suggesting a major event or presentation drew a large crowd. Overall, the day was characterized by dynamic movement and engagement, with the highest concentration of attendees during the morning and early afternoon sessions.",
+  "structured_answer": {
+    "cypher_columns": [
+      "type",
+      "location",
+      "event_type",
+      "event_count",
+      "hour",
+      "avg_head_count",
+      "peak_head_count"
+    ],
+    "cypher_rows": [
+      [
+        "entry_exit",
+        "Gate_01",
+        "car_entry",
+        38,
+        null,
+        null,
+        null
+      ],
+      [
+        "entry_exit",
+        "Gate_01",
+        "person_exit",
+        1352,
+        null,
+        null,
+        null
+      ],
+      [
+        "entry_exit",
+        "Gate_01",
+        "person_entry",
+        1531,
+        null,
+        null,
+        null
+      ],
+      [
+        "entry_exit",
+        "Gate_01",
+        "car_exit",
+        30,
+        null,
+        null,
+        null
+      ],
+      [
+        "entry_exit",
+        "Gate_MainEntrance",
+        "car_entry",
+        38,
+        null,
+        null,
+        null
+      ],
+      [
+        "entry_exit",
+        "Gate_MainEntrance",
+        "person_exit",
+        1352,
+        null,
+        null,
+        null
+      ],
+      [
+        "entry_exit",
+        "Gate_MainEntrance",
+        "person_entry",
+        1531,
+        null,
+        null,
+        null
+      ],
+      [
+        "entry_exit",
+        "Gate_MainEntrance",
+        "car_exit",
+        30,
+        null,
+        null,
+        null
+      ],
+      [
+        "entry_exit",
+        "Platform_1",
+        "car_entry",
+        381,
+        null,
+        null,
+        null
+      ],
+      [
+        "entry_exit",
+        "Platform_1",
+        "person_exit",
+        327,
+        null,
+        null,
+        null
+      ],
+      [
+        "entry_exit",
+        "Platform_1",
+        "person_entry",
+        288,
+        null,
+        null,
+        null
+      ],
+      [
+        "entry_exit",
+        "Platform_1",
+        "car_exit",
+        397,
+        null,
+        null,
+        null
+      ],
+      [
+        "entry_exit",
+        "Gate_ParkingLot",
+        "car_entry",
+        381,
+        null,
+        null,
+        null
+      ],
+      [
+        "entry_exit",
+        "Gate_ParkingLot",
+        "person_exit",
+        327,
+        null,
+        null,
+        null
+      ],
+      [
+        "entry_exit",
+        "Gate_ParkingLot",
+        "person_entry",
+        288,
+        null,
+        null,
+        null
+      ],
+      [
+        "entry_exit",
+        "Gate_ParkingLot",
+        "car_exit",
+        397,
+        null,
+        null,
+        null
+      ],
+      [
+        "entry_exit",
+        "KeynoteHall_DoorA",
+        "person_entry",
+        782,
+        null,
+        null,
+        null
+      ],
+      [
+        "entry_exit",
+        "KeynoteHall_DoorA",
+        "person_exit",
+        814,
+        null,
+        null,
+        null
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T02:00:00Z",
+        5.47,
+        31
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T17:00:00Z",
+        89.75,
+        119
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T19:00:00Z",
+        5.63,
+        29
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T07:00:00Z",
+        5.61,
+        29
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T00:00:00Z",
+        5.49,
+        31
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T15:00:00Z",
+        160.01,
+        187
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T16:00:00Z",
+        159.96,
+        191
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T01:00:00Z",
+        5.55,
+        31
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T05:00:00Z",
+        5.37,
+        34
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T21:00:00Z",
+        5.64,
+        35
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T04:00:00Z",
+        5.74,
+        43
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T12:00:00Z",
+        5.63,
+        33
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T06:00:00Z",
+        5.6,
+        32
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T22:00:00Z",
+        5.6,
+        31
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T08:00:00Z",
+        5.6,
+        34
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T09:00:00Z",
+        5.62,
+        30
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T03:00:00Z",
+        5.67,
+        39
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T14:00:00Z",
+        160.08,
+        185
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T23:00:00Z",
+        5.52,
+        33
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T10:00:00Z",
+        179.91,
+        209
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T13:00:00Z",
+        159.95,
+        189
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T11:00:00Z",
+        179.97,
+        208
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T18:00:00Z",
+        5.57,
+        35
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        null,
+        3600,
+        "2025-12-08T20:00:00Z",
+        5.62,
+        32
+      ],
+      [
+        "crowd",
+        "DemoBooth_NVIDIA",
+        null,
+        3600,
+        "2025-12-08T14:00:00Z",
+        3.49,
+        20
+      ],
+      [
+        "crowd",
+        "DemoBooth_NVIDIA",
+        null,
+        3600,
+        "2025-12-08T05:00:00Z",
+        3.6,
+        16
+      ],
+      [
+        "crowd",
+        "DemoBooth_NVIDIA",
+        null,
+        3600,
+        "2025-12-08T11:00:00Z",
+        60.2,
+        74
+      ],
+      [
+        "crowd",
+        "DemoBooth_NVIDIA",
+        null,
+        3600,
+        "2025-12-08T08:00:00Z",
+        3.55,
+        18
+      ],
+      [
+        "crowd",
+        "DemoBooth_NVIDIA",
+        null,
+        3600,
+        "2025-12-08T18:00:00Z",
+        3.54,
+        17
+      ],
+      [
+        "crowd",
+        "DemoBooth_NVIDIA",
+        null,
+        3600,
+        "2025-12-08T20:00:00Z",
+        3.56,
+        19
+      ],
+      [
+        "crowd",
+        "DemoBooth_NVIDIA",
+        null,
+        3600,
+        "2025-12-08T09:00:00Z",
+        3.51,
+        19
+      ],
+      [
+        "crowd",
+        "DemoBooth_NVIDIA",
+        null,
+        3600,
+        "2025-12-08T13:00:00Z",
+        45.04,
+        59
+      ]
+    ],
+    "cypher_total_rows": 138,
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and a total of 588 node counts.",
+        "distance": 0.6229447722434998
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.6849648952484131
+      },
+      {
+        "community_id": "community_16",
+        "summary": "The CCTV activity at Platform_1 from 08:00 to 08:59 on December 1, 2025, recorded a total of 286 events, with person entries (92) and exits (107) dominating the activity. Car entries (46) and exits (41) were also significant. The peak head count reached 47, and the average head count was approximately 40.02.",
+        "distance": 0.7188088893890381
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity at Platform_1 from 02:00 to 02:55 UTC on December 1, 2025, recorded a total of 37 events, with person entries (16) and exits (14) dominating the activity. There were also 4 car entries and 3 car exits. The peak head count reached 13, with an average head count of 5.05 during this period.",
+        "distance": 0.721294641494751
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\nWHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\nRETURN 'entry_exit' AS type, l.name AS location, e.event_type AS event_type, count(e) AS event_count, NULL AS hour, NULL AS avg_head_count, NULL AS peak_head_count\n\nUNION\n\nMATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera)-[:LOCATED_AT]->(l:Location)\nWHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\nRETURN 'crowd' AS type, l.name AS location, NULL AS event_type, ch.event_count AS event_count, ch.hour_utc AS hour, ch.avg_hc AS avg_head_count, ch.peak_hc AS peak_head_count",
+      "row_count": 138
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.6229447722434998
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.6849648952484131
+    },
+    {
+      "type": "community",
+      "community_id": "community_16",
+      "distance": 0.7188088893890381
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.721294641494751
+    }
+  ],
+  "duration_ms": 14023,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 987,
+      "completion_tokens": 212
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 1310,
+      "completion_tokens": 233
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 2368,
+      "completion_tokens": 131
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=1/5=0.20 (threshold=0.4)"
+  }
+}

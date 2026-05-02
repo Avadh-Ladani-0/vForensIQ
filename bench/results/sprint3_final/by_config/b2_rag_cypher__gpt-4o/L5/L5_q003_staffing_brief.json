@@ -1,0 +1,81 @@
+{
+  "question_id": "L5_q003_staffing_brief",
+  "level": "L5",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a staffing recommendation brief for the AI Hardware Summit on 2025-12-08 (UTC). Identify (a) the busiest hours of the day requiring extra staff at the gates and on the expo floor, and (b) the quiet hours where minimal coverage is sufficient. Cite specific hour ranges and supporting metrics. Keep it to 4-6 bullet points.",
+  "gold_value": {
+    "rubric": [
+      "Morning gate rush around 08:00-10:00 UTC needs extra staffing",
+      "Evening gate rush around 17:00-19:00 UTC needs extra staffing",
+      "Lunch hours 12:00-14:00 UTC are busy at FoodCourt and need extra coverage",
+      "Late-night and early-morning hours (roughly 22:00-06:00 UTC) are quiet and need minimal coverage",
+      "Keynote hours (09:00-10:00 and 14:00-15:00 UTC) require crowd management at KeynoteHall_Stage"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "- The busiest hours of the day are from 08:00 to 10:00 UTC, with peak events recorded at 08:00 UTC (19,292 events) and 09:00 UTC (19,003 events), indicating the need for extra staff at the gates.\n- Additional staffing should be considered from 17:00 to 18:00 UTC, as event counts remain high, with 18,807 events at 17:00 UTC and 18,792 events at 18:00 UTC, suggesting increased activity on the expo floor.\n- Moderate activity still occurs at 15:00 UTC (18,440 events) and 13:00 UTC (18,397 events), where normal staffing levels should suffice.\n- Based on available data, it appears that earlier hours are substantially busier compared to mid-day and late afternoon, implying a possible start period of heightened visitor entry.\n- Minimal staffing can be considered outside these peak periods, particularly before 08:00 UTC and potentially after 18:00 UTC, not covered by the peak data.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "total_events"
+    ],
+    "rows": [
+      [
+        "2025-12-08T08:00:00Z",
+        19292
+      ],
+      [
+        "2025-12-08T09:00:00Z",
+        19003
+      ],
+      [
+        "2025-12-08T17:00:00Z",
+        18807
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        18792
+      ],
+      [
+        "2025-12-08T15:00:00Z",
+        18440
+      ],
+      [
+        "2025-12-08T13:00:00Z",
+        18397
+      ]
+    ],
+    "total_rows": 6
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event)\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  WITH substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, count(*) AS n\n  RETURN hour, n\n  UNION ALL\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.hour_utc AS hour, ch.event_count AS n\n}\nRETURN hour, sum(n) AS total_events\nORDER BY total_events DESC, hour\nLIMIT 6",
+      "row_count": 6
+    }
+  ],
+  "duration_ms": 6765,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2206,
+      "completion_tokens": 180
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 542,
+      "completion_tokens": 218
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=2/5=0.40 (threshold=0.5)"
+  }
+}

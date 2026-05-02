@@ -1,0 +1,65 @@
+{
+  "question_id": "L3_q001_peak_per_booth",
+  "level": "L3",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "For each demo booth (DemoBooth_NVIDIA and DemoBooth_Intel), what was the peak head_count observed on 2025-12-08 (UTC)?",
+  "gold_value": [
+    [
+      "DemoBooth_Intel",
+      53
+    ],
+    [
+      "DemoBooth_NVIDIA",
+      86
+    ]
+  ],
+  "answer_text": "The peak head count observed on 2025-12-08 (UTC) at DemoBooth_Intel was 53, and at DemoBooth_NVIDIA, it was 86.",
+  "structured_answer": {
+    "columns": [
+      "demo_booth",
+      "peak_head_count"
+    ],
+    "rows": [
+      [
+        "DemoBooth_Intel",
+        53
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        86
+      ]
+    ],
+    "total_rows": 2
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour)\nWHERE ch.camera_location IN ['DemoBooth_NVIDIA', 'DemoBooth_Intel']\n  AND ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\nRETURN ch.camera_location AS demo_booth, max(ch.peak_hc) AS peak_head_count ORDER BY demo_booth",
+      "row_count": 2
+    }
+  ],
+  "duration_ms": 3787,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2167,
+      "completion_tokens": 95
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 323,
+      "completion_tokens": 39
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": true,
+    "detail": "all_keys_and_values_matched (rows=2)"
+  }
+}

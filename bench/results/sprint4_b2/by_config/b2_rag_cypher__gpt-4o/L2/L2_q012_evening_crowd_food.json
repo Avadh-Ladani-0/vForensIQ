@@ -1,0 +1,62 @@
+{
+  "question_id": "L2_q012_evening_crowd_food",
+  "level": "L2",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How crowded was the food court during dinner time, say 5 PM to 7 PM?",
+  "gold_value": 99.96,
+  "answer_text": "The food court had an average head count of 100.1 people at 5 PM and 99.83 people at 6 PM. The peak head count was 119 people at 5 PM and 121 people at 6 PM. Each hour had 3600 crowd samples collected.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "average_head_count",
+      "peak_head_count",
+      "crowd_samples"
+    ],
+    "rows": [
+      [
+        "2025-12-08T17:00:00Z",
+        100.1,
+        119,
+        3600
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        99.83,
+        121,
+        3600
+      ]
+    ],
+    "total_rows": 2
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour)\nWHERE ch.camera_location CONTAINS 'FoodCourt'\n  AND ch.hour_utc >= '2025-12-08T17:00:00Z' AND ch.hour_utc < '2025-12-08T19:00:00Z'\nRETURN ch.hour_utc AS hour, ch.avg_hc AS average_head_count, ch.peak_hc AS peak_head_count, ch.event_count AS crowd_samples\nORDER BY hour",
+      "row_count": 2
+    }
+  ],
+  "duration_ms": 5704,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2513,
+      "completion_tokens": 99
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 353,
+      "completion_tokens": 60
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": true,
+    "detail": "within_1pct (expected=99.96 got=100.1)"
+  }
+}

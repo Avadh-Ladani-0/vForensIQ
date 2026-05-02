@@ -1,0 +1,251 @@
+{
+  "question_id": "L5_q008_what_should_change",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Looking at how this conference day played out, what could be improved next time \u2014 staffing, layout, scheduling? Give me your top recommendations grounded in what the data shows.",
+  "gold_value": {
+    "rubric": [
+      "Lunch-hour congestion at the food court suggests adding capacity or staggered breaks",
+      "Concentrated rush hours at the main entrance suggest staggered start times or additional lanes",
+      "Significant peak/baseline contrast at keynote stage suggests dedicated crowd-flow planning around keynote times",
+      "Lower-attended demo booths could be relocated or merged to balance traffic"
+    ],
+    "threshold": 0.4
+  },
+  "answer_text": "To improve future conferences, consider increasing staffing at peak crowd locations like the Keynote Hall (4,959,052 total head count) and the Food Court (1,993,171 total head count). The high entry and exit traffic at the main entrance (2,951 events) suggests better management there. Additionally, the hourly crowd data indicates significant attendance spikes that should inform layout adjustments and scheduling.",
+  "structured_answer": {
+    "columns": [
+      "data_type",
+      "camera_location",
+      "total_head_count",
+      "crowd_events"
+    ],
+    "rows": [
+      [
+        "crowd",
+        "DemoBooth_Intel",
+        919999,
+        86400
+      ],
+      [
+        "crowd",
+        "DemoBooth_NVIDIA",
+        1340536,
+        86400
+      ],
+      [
+        "crowd",
+        "ExpoFloor_MainAisle",
+        4264407,
+        86400
+      ],
+      [
+        "crowd",
+        "FoodCourt_North",
+        1993171,
+        86400
+      ],
+      [
+        "crowd",
+        "KeynoteHall_Stage",
+        4959052,
+        86400
+      ],
+      [
+        "entry_exit",
+        "Gate_MainEntrance",
+        null,
+        2951
+      ],
+      [
+        "entry_exit",
+        "Gate_ParkingLot",
+        null,
+        1393
+      ],
+      [
+        "entry_exit",
+        "KeynoteHall_DoorA",
+        null,
+        1596
+      ],
+      [
+        "hourly_crowd",
+        null,
+        89818,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        91258,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        89885,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        91457,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        90884,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        89665,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        88782,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        90315,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        90537,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        1685871,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        1052949,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        1053716,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        502685,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        1303206,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        2059433,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        1025676,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        2365493,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        733005,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        428200,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        90518,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        91204,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        90262,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        91063,
+        null
+      ],
+      [
+        "hourly_crowd",
+        null,
+        91283,
+        null
+      ]
+    ],
+    "total_rows": 32,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH crowd_data AS (\n    SELECT \n        camera_location,\n        SUM(head_count) AS total_head_count,\n        COUNT(*) AS crowd_events\n    FROM events\n    WHERE event_type = 'crowd' \n    AND timestamp_utc >= '2025-12-08T00:00:00Z' \n    AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY camera_location\n),\nentry_exit_data AS (\n    SELECT \n        camera_location,\n        COUNT(*) AS entry_exit_events\n    FROM events\n    WHERE (event_type IN ('person_entry', 'person_exit', 'car_entry', 'car_exit'))\n    AND timestamp_utc >= '2025-12-08T00:00:00Z' \n    AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY camera_location\n),\nhourly_crowd AS (\n    SELECT \n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        SUM(head_count) AS total_head_count\n    FROM events\n    WHERE event_type = 'crowd' \n    AND timestamp_utc >= '2025-12-08T00:00:00Z' \n    AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY hour\n)\nSELECT \n    'crowd' AS data_type, \n    camera_location, \n    total_head_count, \n    crowd_events \nFROM crowd_data\nUNION ALL\nSELECT \n    'entry_exit' AS data_type, \n    camera_location, \n    NULL AS total_head_count, \n    entry_exit_events \nFROM entry_exit_data\nUNION ALL\nSELECT \n    'hourly_crowd' AS data_type, \n    NULL AS camera_location, \n    total_head_count, \n    NULL AS crowd_events \nFROM hourly_crowd",
+      "row_count": 32
+    }
+  ],
+  "duration_ms": 13126,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 968,
+      "completion_tokens": 403
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1159,
+      "completion_tokens": 80
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=2/4=0.50 (threshold=0.4)"
+  }
+}

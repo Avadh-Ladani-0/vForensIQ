@@ -1,0 +1,50 @@
+{
+  "question_id": "L1_q002_car_entry_count_at_parkinglot",
+  "level": "L1",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many car_entry events were recorded at Gate_ParkingLot on 2025-12-08 (UTC)?",
+  "gold_value": 381,
+  "answer_text": "There were 381 car_entry events recorded at Gate_ParkingLot on 2025-12-08 (UTC).",
+  "structured_answer": {
+    "columns": [
+      "car_entry_count"
+    ],
+    "rows": [
+      [
+        381
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "SELECT COUNT(*) AS car_entry_count\nFROM events\nWHERE event_type = 'car_entry'\n  AND camera_location LIKE '%Parking%'\n  AND timestamp_utc >= '2025-12-08T00:00:00Z'\n  AND timestamp_utc < '2025-12-09T00:00:00Z'",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 2353,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 957,
+      "completion_tokens": 73
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 258,
+      "completion_tokens": 24
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": true,
+    "detail": "match"
+  }
+}

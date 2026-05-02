@@ -1,0 +1,92 @@
+{
+  "question_id": "L1_q009_total_cameras_at_venue",
+  "level": "L1",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many cameras are deployed at this venue?",
+  "gold_value": 8,
+  "answer_text": "There are 8 cameras deployed at the venue. These cameras are strategically placed across various key locations, such as DemoBooth areas, the Expo Floor, the Food Court, and the Keynote Hall, to effectively monitor activities including a significant number of person entries and exits throughout event days.",
+  "structured_answer": {
+    "cypher_columns": [
+      "deployed_cameras"
+    ],
+    "cypher_rows": [
+      [
+        8
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and an average head count of approximately 31.2.",
+        "distance": 0.4203817844390869
+      },
+      {
+        "community_id": "community_0",
+        "summary": "The CCTV activity involves the camera locations at Gate_MainEntrance and Platform_1, covering the time range from December 1, 2025, at 01:00 UTC to December 8, 2025, at 12:59 UTC. The dominant event types are person entries (788) and exits (773), along with car entries (112) and exits (102). The total volume of events recorded is 1,775, with a peak head count of 47 and an average head count of approximately 10.42.",
+        "distance": 0.49786901473999023
+      },
+      {
+        "community_id": "community_5",
+        "summary": "The CCTV activity covers the time range from December 8, 2025, 18:00:01 to 18:59:57 UTC. The camera locations involved recorded a total of 744 events, with person entries (300) and exits (299) dominating the activity, alongside 83 car entries and 62 car exits. Notably, there were 745 nodes counted during this period, but peak head count and average head count data are not available.",
+        "distance": 0.5064756274223328
+      },
+      {
+        "community_id": "community_1",
+        "summary": "The CCTV activity at the Gate_ParkingLot camera from December 8, 2025, between 07:00 and 17:00 UTC recorded a total of 1,529 events. The dominant event types were person entries (463) and exits (466), along with car entries (283) and exits (317). Notably, the total volume of events reached 1,532, indicating a high level of activity during this time.",
+        "distance": 0.5234667062759399
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (c:Camera)\nRETURN count(DISTINCT c.camera_id) AS deployed_cameras",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.4203817844390869
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.49786901473999023
+    },
+    {
+      "type": "community",
+      "community_id": "community_5",
+      "distance": 0.5064756274223328
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.5234667062759399
+    }
+  ],
+  "duration_ms": 6150,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2141,
+      "completion_tokens": 19
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 702,
+      "completion_tokens": 58
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": true,
+    "detail": "match"
+  }
+}

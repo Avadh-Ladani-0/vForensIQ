@@ -1,0 +1,106 @@
+{
+  "question_id": "L4_q006_morning_vs_evening_rush",
+  "level": "L4",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Was the morning rush bigger than the evening rush at the main entrance, in terms of how many people came and went?",
+  "gold_value": {
+    "bigger_rush": "morning",
+    "morning_total_approx": {
+      "value": 1200,
+      "tolerance": 250
+    },
+    "evening_total_approx": {
+      "value": 1000,
+      "tolerance": 250
+    }
+  },
+  "answer_text": "The morning rush at the main entrance had a total of 1,277 events (25 at 06:00, 20 at 07:00, 599 at 08:00, 592 at 09:00, 20 at 10:00, and 21 at 11:00). The evening rush had a total of 1,091 events (506 at 17:00, 491 at 18:00, 18 at 19:00, 20 at 20:00, 21 at 21:00, and 15 at 22:00). Therefore, the morning rush was bigger than the evening rush.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "event_count"
+    ],
+    "rows": [
+      [
+        "06",
+        25
+      ],
+      [
+        "07",
+        20
+      ],
+      [
+        "08",
+        599
+      ],
+      [
+        "09",
+        592
+      ],
+      [
+        "10",
+        20
+      ],
+      [
+        "11",
+        21
+      ],
+      [
+        "17",
+        506
+      ],
+      [
+        "18",
+        491
+      ],
+      [
+        "19",
+        18
+      ],
+      [
+        "20",
+        20
+      ],
+      [
+        "21",
+        21
+      ],
+      [
+        "22",
+        15
+      ]
+    ],
+    "total_rows": 12
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event)-[:DETECTED_BY]->(:Camera {camera_location: 'Gate_MainEntrance'})\nWHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\nAND e.event_type IN ['person_entry', 'person_exit']\nWITH e, apoc.date.parse(e.timestamp_utc, 'ms', 'yyyy-MM-dd\\'T\\'HH:mm:ss\\'Z\\'') AS event_time\nWITH e, event_time, apoc.date.format(event_time, 'ms', 'HH') AS hour\nWHERE hour IN ['06', '07', '08', '09', '10', '11'] OR hour IN ['17', '18', '19', '20', '21', '22']\nRETURN hour, COUNT(e) AS event_count\nORDER BY hour",
+      "row_count": 12
+    }
+  ],
+  "duration_ms": 5120,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 983,
+      "completion_tokens": 187
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 463,
+      "completion_tokens": 138
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_3_facts_satisfied"
+  }
+}

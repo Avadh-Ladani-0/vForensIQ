@@ -1,0 +1,149 @@
+{
+  "question_id": "L3_q007_crowd_hotspots",
+  "level": "L3",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-5-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which areas of the venue had the most crowd activity? Rank them by their average crowd size.",
+  "gold_value": [
+    [
+      "KeynoteHall_Stage",
+      57.4
+    ],
+    [
+      "ExpoFloor_MainAisle",
+      49.36
+    ],
+    [
+      "FoodCourt_North",
+      23.07
+    ],
+    [
+      "DemoBooth_NVIDIA",
+      15.52
+    ],
+    [
+      "DemoBooth_Intel",
+      10.65
+    ]
+  ],
+  "answer_text": "Ranked by average crowd size (descending):\n1) KeynoteHall_Stage \u2014 57.3975\n2) ExpoFloor_MainAisle \u2014 49.35666666666667\n3) FoodCourt_North \u2014 23.069583333333334\n4) DemoBooth_NVIDIA \u2014 15.515\n5) DemoBooth_Intel \u2014 10.648333333333333\n\nCamera coverage indicates events were dominated by people (206 person_entry, 181 person_exit = 387 person events) across the dataset, with a peak head_count of 500.",
+  "structured_answer": {
+    "cypher_columns": [
+      "area",
+      "avg_crowd_size",
+      "hours",
+      "peak_hc",
+      "total_samples"
+    ],
+    "cypher_rows": [
+      [
+        "KeynoteHall_Stage",
+        57.3975,
+        24,
+        500,
+        86400
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        49.35666666666667,
+        24,
+        209,
+        86400
+      ],
+      [
+        "FoodCourt_North",
+        23.069583333333334,
+        24,
+        146,
+        86400
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        15.515,
+        24,
+        86,
+        86400
+      ],
+      [
+        "DemoBooth_Intel",
+        10.648333333333333,
+        24,
+        53,
+        86400
+      ]
+    ],
+    "cypher_total_rows": 5,
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "Cameras involved: DemoBooth_Intel (CAM_04), DemoBooth_NVIDIA (CAM_05), ExpoFloor_MainAisle (CAM_06), FoodCourt_North (CAM_07), KeynoteHall_Stage (CAM_08). Events are dominated by person movements (person_entry 206, person_exit 181, total 387) versus vehicle events (car_entry 29, car_exit 33). The dataset covers the UTC hour range 2025-12-08T00:00:00Z\u20132025-12-08T23:00:00Z with events from 2025-12-08T00:02:26Z to 2025-12-08T23:59:14Z; total events 449, peak head_count 500, average head_count (mean of means) \u2248 31.1974. Peak event count per hour is not provided in the supplied data.",
+        "distance": 0.5387791395187378
+      },
+      {
+        "community_id": "community_17",
+        "summary": "All activity was on Platform_1 between 2025-12-01T20:00:47Z and 2025-12-01T20:58:33Z (hour 2025-12-01T20:00:00Z UTC). There were 33 events total in that hour\u201421 person events (8 person_entry, 13 person_exit) and 12 car events (7 car_entry, 5 car_exit)\u2014so person movement dominated. Peak head_count was 13, the average head count (mean of means) was 5.05, and the peak (and total) event count for the hour was 33; node_count = 35.",
+        "distance": 0.557641863822937
+      },
+      {
+        "community_id": "community_11",
+        "summary": "All activity was recorded at Platform_1. Events were dominated by people (24 person_entry, 23 person_exit = 47 person events) versus 14 car events (9 car_entry, 5 car_exit). The events span 2025-12-01T16:01:45Z to 2025-12-01T16:59:32Z (hour 2025-12-01T16:00:00Z) with a total of 61 events (peak hourly event count 61). Mean head count was 5.03, peak head_count 12.0, and node_count reported as 63.",
+        "distance": 0.5622622966766357
+      },
+      {
+        "community_id": "community_6",
+        "summary": "All activity was on Platform_1 between 2025-12-01T11:01:47Z and 2025-12-01T11:59:48Z (hour window 2025-12-01T11:00:00Z UTC). There were 44 events total: 29 person events (12 person_entry, 17 person_exit) and 15 car events (9 car_entry, 6 car_exit), so person movements dominated. Peak head_count was 12.0, average head_count (mean of means) 5.05, and the hour\u2019s peak event count was 44; node_count = 46.",
+        "distance": 0.5728651285171509
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera)-[:LOCATED_AT]->(loc:Location)\nWHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\nWITH loc.name AS area,\n     sum(ch.avg_hc * ch.event_count) AS weighted_headcount,\n     sum(ch.event_count) AS total_samples,\n     count(ch) AS hours,\n     max(ch.peak_hc) AS peak_hc\nRETURN area,\n       CASE WHEN total_samples = 0 THEN 0.0 ELSE toFloat(weighted_headcount) / total_samples END AS avg_crowd_size,\n       hours,\n       peak_hc,\n       total_samples\nORDER BY avg_crowd_size DESC",
+      "row_count": 5
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.5387791395187378
+    },
+    {
+      "type": "community",
+      "community_id": "community_17",
+      "distance": 0.557641863822937
+    },
+    {
+      "type": "community",
+      "community_id": "community_11",
+      "distance": 0.5622622966766357
+    },
+    {
+      "type": "community",
+      "community_id": "community_6",
+      "distance": 0.5728651285171509
+    }
+  ],
+  "duration_ms": 30516,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 1873,
+      "completion_tokens": 1337
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 984,
+      "completion_tokens": 772
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": true,
+    "detail": "all_keys_and_values_matched (rows=5)"
+  }
+}

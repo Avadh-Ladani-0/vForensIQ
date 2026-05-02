@@ -1,0 +1,564 @@
+{
+  "question_id": "L5_q001_summit_day_brief",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a security and operations brief for the AI Hardware Summit on 2025-12-08 (UTC). Cover: the busiest traffic windows at the main gates, keynote hall attendance peaks, lunchtime dynamics at the food court, and how the demo booths (NVIDIA and Intel) compared in crowd activity. Keep it to 5 bullet points.",
+  "gold_value": {
+    "rubric": [
+      "Gate_MainEntrance shows morning person-entry peak around 08-10 UTC",
+      "Gate_MainEntrance shows evening person-exit peak around 17-19 UTC",
+      "KeynoteHall_Stage crowd peaks during keynote hours (09-10 UTC and 14-15 UTC)",
+      "FoodCourt_North crowd peaks during lunch hours (12-14 UTC)",
+      "DemoBooth_NVIDIA had higher crowd activity than DemoBooth_Intel"
+    ],
+    "threshold": 0.6
+  },
+  "answer_text": "- The busiest traffic windows at the main gates were from 08:00 to 09:00 with 607 and 601 entries respectively, and again from 17:00 to 18:00 with 517 and 498 entries.\n- Keynote hall attendance peaked at 09:00 with 500 attendees and had another significant peak at 14:00 with 452 attendees.\n- Lunchtime dynamics at the food court showed the highest activity at 12:00 with 146 people, followed by 13:00 with 139 people.\n- The NVIDIA demo booth experienced higher crowd activity compared to Intel, with peaks at 10:00 (50 people) and 16:00 (53 people), while Intel's highest was at 16:00 with 53 people.\n- Overall, NVIDIA had consistently higher attendance throughout the day compared to Intel, which had more sporadic peaks.",
+  "structured_answer": {
+    "columns": [
+      "category",
+      "hour",
+      "value"
+    ],
+    "rows": [
+      [
+        "Main Gate Traffic",
+        "00",
+        26
+      ],
+      [
+        "Main Gate Traffic",
+        "01",
+        27
+      ],
+      [
+        "Main Gate Traffic",
+        "02",
+        19
+      ],
+      [
+        "Main Gate Traffic",
+        "03",
+        20
+      ],
+      [
+        "Main Gate Traffic",
+        "04",
+        20
+      ],
+      [
+        "Main Gate Traffic",
+        "05",
+        29
+      ],
+      [
+        "Main Gate Traffic",
+        "06",
+        25
+      ],
+      [
+        "Main Gate Traffic",
+        "07",
+        23
+      ],
+      [
+        "Main Gate Traffic",
+        "08",
+        607
+      ],
+      [
+        "Main Gate Traffic",
+        "09",
+        601
+      ],
+      [
+        "Main Gate Traffic",
+        "10",
+        21
+      ],
+      [
+        "Main Gate Traffic",
+        "11",
+        22
+      ],
+      [
+        "Main Gate Traffic",
+        "12",
+        312
+      ],
+      [
+        "Main Gate Traffic",
+        "13",
+        30
+      ],
+      [
+        "Main Gate Traffic",
+        "14",
+        19
+      ],
+      [
+        "Main Gate Traffic",
+        "15",
+        20
+      ],
+      [
+        "Main Gate Traffic",
+        "16",
+        21
+      ],
+      [
+        "Main Gate Traffic",
+        "17",
+        517
+      ],
+      [
+        "Main Gate Traffic",
+        "18",
+        498
+      ],
+      [
+        "Main Gate Traffic",
+        "19",
+        19
+      ],
+      [
+        "Main Gate Traffic",
+        "20",
+        21
+      ],
+      [
+        "Main Gate Traffic",
+        "21",
+        22
+      ],
+      [
+        "Main Gate Traffic",
+        "22",
+        19
+      ],
+      [
+        "Main Gate Traffic",
+        "23",
+        13
+      ],
+      [
+        "Keynote Hall Attendance",
+        "00",
+        51
+      ],
+      [
+        "Keynote Hall Attendance",
+        "01",
+        52
+      ],
+      [
+        "Keynote Hall Attendance",
+        "02",
+        50
+      ],
+      [
+        "Keynote Hall Attendance",
+        "03",
+        59
+      ],
+      [
+        "Keynote Hall Attendance",
+        "04",
+        52
+      ],
+      [
+        "Keynote Hall Attendance",
+        "05",
+        51
+      ],
+      [
+        "Keynote Hall Attendance",
+        "06",
+        62
+      ],
+      [
+        "Keynote Hall Attendance",
+        "07",
+        74
+      ],
+      [
+        "Keynote Hall Attendance",
+        "08",
+        68
+      ],
+      [
+        "Keynote Hall Attendance",
+        "09",
+        500
+      ],
+      [
+        "Keynote Hall Attendance",
+        "10",
+        56
+      ],
+      [
+        "Keynote Hall Attendance",
+        "11",
+        55
+      ],
+      [
+        "Keynote Hall Attendance",
+        "12",
+        57
+      ],
+      [
+        "Keynote Hall Attendance",
+        "13",
+        54
+      ],
+      [
+        "Keynote Hall Attendance",
+        "14",
+        452
+      ],
+      [
+        "Keynote Hall Attendance",
+        "15",
+        53
+      ],
+      [
+        "Keynote Hall Attendance",
+        "16",
+        433
+      ],
+      [
+        "Keynote Hall Attendance",
+        "17",
+        51
+      ],
+      [
+        "Keynote Hall Attendance",
+        "18",
+        59
+      ],
+      [
+        "Keynote Hall Attendance",
+        "19",
+        55
+      ],
+      [
+        "Keynote Hall Attendance",
+        "20",
+        57
+      ],
+      [
+        "Keynote Hall Attendance",
+        "21",
+        50
+      ],
+      [
+        "Keynote Hall Attendance",
+        "22",
+        51
+      ],
+      [
+        "Keynote Hall Attendance",
+        "23",
+        57
+      ],
+      [
+        "Food Court Dynamics",
+        "00",
+        25
+      ],
+      [
+        "Food Court Dynamics",
+        "01",
+        26
+      ],
+      [
+        "Food Court Dynamics",
+        "02",
+        24
+      ],
+      [
+        "Food Court Dynamics",
+        "03",
+        26
+      ],
+      [
+        "Food Court Dynamics",
+        "04",
+        26
+      ],
+      [
+        "Food Court Dynamics",
+        "05",
+        24
+      ],
+      [
+        "Food Court Dynamics",
+        "06",
+        34
+      ],
+      [
+        "Food Court Dynamics",
+        "07",
+        27
+      ],
+      [
+        "Food Court Dynamics",
+        "08",
+        25
+      ],
+      [
+        "Food Court Dynamics",
+        "09",
+        25
+      ],
+      [
+        "Food Court Dynamics",
+        "10",
+        28
+      ],
+      [
+        "Food Court Dynamics",
+        "11",
+        27
+      ],
+      [
+        "Food Court Dynamics",
+        "12",
+        146
+      ],
+      [
+        "Food Court Dynamics",
+        "13",
+        139
+      ],
+      [
+        "Food Court Dynamics",
+        "14",
+        27
+      ],
+      [
+        "Food Court Dynamics",
+        "15",
+        27
+      ],
+      [
+        "Food Court Dynamics",
+        "16",
+        23
+      ],
+      [
+        "Food Court Dynamics",
+        "17",
+        119
+      ],
+      [
+        "Food Court Dynamics",
+        "18",
+        121
+      ],
+      [
+        "Food Court Dynamics",
+        "19",
+        25
+      ],
+      [
+        "Food Court Dynamics",
+        "20",
+        27
+      ],
+      [
+        "Food Court Dynamics",
+        "21",
+        24
+      ],
+      [
+        "Food Court Dynamics",
+        "22",
+        27
+      ],
+      [
+        "Food Court Dynamics",
+        "23",
+        24
+      ],
+      [
+        "Intel Booth",
+        "00",
+        14
+      ],
+      [
+        "Intel Booth",
+        "01",
+        14
+      ],
+      [
+        "Intel Booth",
+        "02",
+        14
+      ],
+      [
+        "Intel Booth",
+        "03",
+        14
+      ],
+      [
+        "Intel Booth",
+        "04",
+        13
+      ],
+      [
+        "Intel Booth",
+        "05",
+        15
+      ],
+      [
+        "Intel Booth",
+        "06",
+        13
+      ],
+      [
+        "Intel Booth",
+        "07",
+        14
+      ],
+      [
+        "Intel Booth",
+        "08",
+        13
+      ],
+      [
+        "Intel Booth",
+        "09",
+        14
+      ],
+      [
+        "Intel Booth",
+        "10",
+        50
+      ],
+      [
+        "Intel Booth",
+        "11",
+        51
+      ],
+      [
+        "Intel Booth",
+        "12",
+        14
+      ],
+      [
+        "Intel Booth",
+        "13",
+        40
+      ],
+      [
+        "Intel Booth",
+        "14",
+        14
+      ],
+      [
+        "Intel Booth",
+        "15",
+        51
+      ],
+      [
+        "Intel Booth",
+        "16",
+        53
+      ],
+      [
+        "Intel Booth",
+        "17",
+        14
+      ],
+      [
+        "Intel Booth",
+        "18",
+        15
+      ],
+      [
+        "Intel Booth",
+        "19",
+        13
+      ],
+      [
+        "Intel Booth",
+        "20",
+        15
+      ],
+      [
+        "Intel Booth",
+        "21",
+        13
+      ],
+      [
+        "Intel Booth",
+        "22",
+        13
+      ],
+      [
+        "Intel Booth",
+        "23",
+        13
+      ],
+      [
+        "NVIDIA Booth",
+        "00",
+        16
+      ],
+      [
+        "NVIDIA Booth",
+        "01",
+        15
+      ],
+      [
+        "NVIDIA Booth",
+        "02",
+        18
+      ],
+      [
+        "NVIDIA Booth",
+        "03",
+        16
+      ]
+    ],
+    "total_rows": 120
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH time_bounds AS (\n    SELECT \n        MIN(timestamp_epoch_s) AS min_time,\n        MAX(timestamp_epoch_s) AS max_time\n    FROM events\n    WHERE timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n),\nmain_gate_traffic AS (\n    SELECT \n        'Main Gate Traffic' AS category,\n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        COUNT(*) AS value\n    FROM events\n    WHERE camera_location LIKE '%MainEntrance%'\n      AND timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY hour\n),\nkeynote_hall_attendance AS (\n    SELECT \n        'Keynote Hall Attendance' AS category,\n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        MAX(head_count) AS value\n    FROM events\n    WHERE camera_location LIKE '%KeynoteHall%'\n      AND event_type = 'crowd'\n      AND timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY hour\n),\nfood_court_dynamics AS (\n    SELECT \n        'Food Court Dynamics' AS category,\n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        MAX(head_count) AS value\n    FROM events\n    WHERE camera_location LIKE '%FoodCourt%'\n      AND event_type = 'crowd'\n      AND timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY hour\n),\ndemo_booth_comparison AS (\n    SELECT \n        CASE \n            WHEN camera_location LIKE '%NVIDIA%' THEN 'NVIDIA Booth'\n            WHEN camera_location LIKE '%Intel%' THEN 'Intel Booth'\n        END AS category,\n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        MAX(head_count) AS value\n    FROM events\n    WHERE (camera_location LIKE '%NVIDIA%' OR camera_location LIKE '%Intel%')\n      AND event_type = 'crowd'\n      AND timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY category, hour\n)\nSELECT * FROM main_gate_traffic\nUNION ALL\nSELECT * FROM keynote_hall_attendance\nUNION ALL\nSELECT * FROM food_court_dynamics\nUNION ALL\nSELECT * FROM demo_booth_comparison",
+      "row_count": 120
+    }
+  ],
+  "duration_ms": 14145,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 1003,
+      "completion_tokens": 550
+    },
+    {
+      "stage": "sql_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 1606,
+      "completion_tokens": 601
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 2037,
+      "completion_tokens": 182
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=4/5=0.80 (threshold=0.6)"
+  }
+}

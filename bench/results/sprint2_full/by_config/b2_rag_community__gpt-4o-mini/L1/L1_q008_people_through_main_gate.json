@@ -1,0 +1,129 @@
+{
+  "question_id": "L1_q008_people_through_main_gate",
+  "level": "L1",
+  "approach": "b2_rag_community",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many people in total went through the main entrance gate, counting both people arriving and people leaving?",
+  "gold_value": 2883,
+  "answer_text": "During the time period from December 1, 2025, to December 8, 2025, the main entrance gate recorded a total of 788 person entries and 773 person exits. Therefore, the total number of people who went through the main entrance gate, counting both arrivals and departures, is 1,561 (788 + 773).",
+  "structured_answer": {
+    "retrieved_communities": [
+      {
+        "community_id": "community_0",
+        "summary": "The CCTV activity involves the camera locations at Gate_MainEntrance and Platform_1, covering the time range from December 1, 2025, at 01:00 UTC to December 8, 2025, at 12:59 UTC. The dominant event types are person entries (788) and exits (773), along with car entries (112) and exits (102). The total volume of events recorded is 1,775, with a peak head count of 47 and an average head count of approximately 10.42.",
+        "distance": 0.46724867820739746,
+        "metadata": {
+          "camera_locations": "Gate_MainEntrance,Platform_1",
+          "node_count": 1802,
+          "total_events": 1775,
+          "community_id": 0
+        }
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.47383809089660645,
+        "metadata": {
+          "node_count": 2213,
+          "camera_locations": "KeynoteHall_DoorA",
+          "total_events": 2209,
+          "community_id": 2
+        }
+      },
+      {
+        "community_id": "community_6",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 11:01:47 and 11:59:48, recorded a total of 44 events. The dominant event types were person exits (17) and person entries (12), with car entries (9) and exits (6) also noted. The peak head count reached 12, and the average head count was 5.05 during this period.",
+        "distance": 0.4822844862937927,
+        "metadata": {
+          "camera_locations": "Platform_1",
+          "node_count": 46,
+          "total_events": 44,
+          "community_id": 6
+        }
+      },
+      {
+        "community_id": "community_16",
+        "summary": "The CCTV activity at Platform_1 from 08:00 to 08:59 on December 1, 2025, recorded a total of 286 events, with person entries (92) and exits (107) dominating the activity. Car entries (46) and exits (41) were also significant. The peak head count reached 47, and the average head count was approximately 40.02.",
+        "distance": 0.48567235469818115,
+        "metadata": {
+          "community_id": 16,
+          "camera_locations": "Platform_1",
+          "node_count": 288,
+          "total_events": 286
+        }
+      },
+      {
+        "community_id": "community_8",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 00:02:02 and 00:57:29, recorded a total of 36 events. The dominant event types were person exits (16) and person entries (8), with car entries (7) and exits (5) also noted. The peak head count reached 13, and the average head count was 5.02 during this period.",
+        "distance": 0.4867423176765442,
+        "metadata": {
+          "camera_locations": "Platform_1",
+          "node_count": 38,
+          "total_events": 36,
+          "community_id": 8
+        }
+      },
+      {
+        "community_id": "community_15",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 07:03:55 and 07:59:26, recorded a total of 34 events. The dominant event types were person exits (16) and person entries (9), with car entries totaling 8 and car exits at 1. The peak head count reached 13, and the average head count was 5.03 during this period.",
+        "distance": 0.4887275695800781,
+        "metadata": {
+          "node_count": 36,
+          "total_events": 34,
+          "camera_locations": "Platform_1",
+          "community_id": 15
+        }
+      }
+    ],
+    "top_k": 6
+  },
+  "citations": [
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.46724867820739746
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.47383809089660645
+    },
+    {
+      "type": "community",
+      "community_id": "community_6",
+      "distance": 0.4822844862937927
+    },
+    {
+      "type": "community",
+      "community_id": "community_16",
+      "distance": 0.48567235469818115
+    },
+    {
+      "type": "community",
+      "community_id": "community_8",
+      "distance": 0.4867423176765442
+    },
+    {
+      "type": "community",
+      "community_id": "community_15",
+      "distance": 0.4887275695800781
+    }
+  ],
+  "duration_ms": 2465,
+  "llm_calls": [
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 808,
+      "completion_tokens": 72
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": false,
+    "detail": "expected=2883.0 got=1.0"
+  }
+}

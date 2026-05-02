@@ -1,0 +1,357 @@
+{
+  "question_id": "L3_q012_car_traffic_by_hour",
+  "level": "L3",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Break down the car traffic at the parking lot by hour \u2014 entries and exits separately.",
+  "gold_value": [
+    [
+      "00",
+      "car_exit",
+      4
+    ],
+    [
+      "01",
+      "car_exit",
+      4
+    ],
+    [
+      "02",
+      "car_entry",
+      1
+    ],
+    [
+      "02",
+      "car_exit",
+      2
+    ],
+    [
+      "03",
+      "car_entry",
+      2
+    ],
+    [
+      "03",
+      "car_exit",
+      4
+    ],
+    [
+      "04",
+      "car_entry",
+      4
+    ],
+    [
+      "04",
+      "car_exit",
+      1
+    ],
+    [
+      "05",
+      "car_exit",
+      3
+    ],
+    [
+      "06",
+      "car_entry",
+      4
+    ],
+    [
+      "06",
+      "car_exit",
+      1
+    ],
+    [
+      "07",
+      "car_entry",
+      107
+    ],
+    [
+      "07",
+      "car_exit",
+      97
+    ],
+    [
+      "08",
+      "car_entry",
+      82
+    ],
+    [
+      "08",
+      "car_exit",
+      115
+    ],
+    [
+      "09",
+      "car_entry",
+      1
+    ],
+    [
+      "09",
+      "car_exit",
+      2
+    ],
+    [
+      "10",
+      "car_entry",
+      1
+    ],
+    [
+      "10",
+      "car_exit",
+      2
+    ],
+    [
+      "11",
+      "car_entry",
+      1
+    ],
+    [
+      "11",
+      "car_exit",
+      1
+    ],
+    [
+      "12",
+      "car_exit",
+      1
+    ],
+    [
+      "13",
+      "car_entry",
+      4
+    ],
+    [
+      "14",
+      "car_entry",
+      1
+    ],
+    [
+      "15",
+      "car_entry",
+      3
+    ],
+    [
+      "16",
+      "car_entry",
+      2
+    ],
+    [
+      "16",
+      "car_exit",
+      1
+    ],
+    [
+      "17",
+      "car_entry",
+      78
+    ],
+    [
+      "17",
+      "car_exit",
+      85
+    ],
+    [
+      "18",
+      "car_entry",
+      86
+    ],
+    [
+      "18",
+      "car_exit",
+      71
+    ],
+    [
+      "19",
+      "car_exit",
+      1
+    ],
+    [
+      "20",
+      "car_entry",
+      2
+    ],
+    [
+      "20",
+      "car_exit",
+      1
+    ],
+    [
+      "21",
+      "car_entry",
+      1
+    ],
+    [
+      "21",
+      "car_exit",
+      1
+    ],
+    [
+      "23",
+      "car_entry",
+      1
+    ]
+  ],
+  "answer_text": "The breakdown by hour for car traffic at the parking lot on December 8, 2025, is as follows:\n\n- Midnight to 1 AM: 0 entries, 4 exits\n- 1 AM to 2 AM: 0 entries, 4 exits\n- 2 AM to 3 AM: 1 entry, 2 exits\n- 3 AM to 4 AM: 2 entries, 4 exits\n- 4 AM to 5 AM: 4 entries, 1 exit\n- 5 AM to 6 AM: 0 entries, 3 exits\n- 6 AM to 7 AM: 4 entries, 1 exit\n- 7 AM to 8 AM: 107 entries, 97 exits\n- 8 AM to 9 AM: 82 entries, 115 exits\n- 9 AM to 10 AM: 1 entry, 2 exits\n- 10 AM to 11 AM: 1 entry, 2 exits\n- 11 AM to noon: 1 entry, 1 exit\n- Noon to 1 PM: 0 entries, 1 exit\n- 1 PM to 2 PM: 4 entries, 0 exits\n- 2 PM to 3 PM: 1 entry, 0 exits\n- 3 PM to 4 PM: 3 entries, 0 exits\n- 4 PM to 5 PM: 2 entries, 1 exit\n- 5 PM to 6 PM: 78 entries, 85 exits\n- 6 PM to 7 PM: 86 entries, 71 exits\n- 7 PM to 8 PM: 0 entries, 1 exit\n- 8 PM to 9 PM: 2 entries, 1 exit\n- 9 PM to 10 PM: 1 entry, 1 exit\n- 11 PM to midnight: 1 entry, 0 exits\n\nNote: There were no events recorded between 10 PM and 11 PM.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "entry_count",
+      "exit_count"
+    ],
+    "rows": [
+      [
+        "00",
+        0,
+        4
+      ],
+      [
+        "01",
+        0,
+        4
+      ],
+      [
+        "02",
+        1,
+        2
+      ],
+      [
+        "03",
+        2,
+        4
+      ],
+      [
+        "04",
+        4,
+        1
+      ],
+      [
+        "05",
+        0,
+        3
+      ],
+      [
+        "06",
+        4,
+        1
+      ],
+      [
+        "07",
+        107,
+        97
+      ],
+      [
+        "08",
+        82,
+        115
+      ],
+      [
+        "09",
+        1,
+        2
+      ],
+      [
+        "10",
+        1,
+        2
+      ],
+      [
+        "11",
+        1,
+        1
+      ],
+      [
+        "12",
+        0,
+        1
+      ],
+      [
+        "13",
+        4,
+        0
+      ],
+      [
+        "14",
+        1,
+        0
+      ],
+      [
+        "15",
+        3,
+        0
+      ],
+      [
+        "16",
+        2,
+        1
+      ],
+      [
+        "17",
+        78,
+        85
+      ],
+      [
+        "18",
+        86,
+        71
+      ],
+      [
+        "19",
+        0,
+        1
+      ],
+      [
+        "20",
+        2,
+        1
+      ],
+      [
+        "21",
+        1,
+        1
+      ],
+      [
+        "23",
+        1,
+        0
+      ]
+    ],
+    "total_rows": 23,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH car_entries AS (\n    SELECT strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n           COUNT(*) AS entry_count\n    FROM events\n    WHERE event_type = 'car_entry'\n      AND camera_location LIKE '%Parking%'\n      AND timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY hour\n),\ncar_exits AS (\n    SELECT strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n           COUNT(*) AS exit_count\n    FROM events\n    WHERE event_type = 'car_exit'\n      AND camera_location LIKE '%Parking%'\n      AND timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY hour\n)\nSELECT e.hour, e.entry_count, COALESCE(x.exit_count, 0) AS exit_count\nFROM car_entries e\nLEFT JOIN car_exits x ON e.hour = x.hour\nUNION ALL\nSELECT x.hour, COALESCE(e.entry_count, 0) AS entry_count, x.exit_count\nFROM car_exits x\nLEFT JOIN car_entries e ON x.hour = e.hour\nWHERE e.hour IS NULL\nORDER BY 1",
+      "row_count": 23
+    }
+  ],
+  "duration_ms": 11159,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 951,
+      "completion_tokens": 340
+    },
+    {
+      "stage": "sql_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 1339,
+      "completion_tokens": 290
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 706,
+      "completion_tokens": 423
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": false,
+    "detail": "missing_keys=['car_exit', 'car_exit', 'car_entry', 'car_exit', 'car_entry']"
+  }
+}

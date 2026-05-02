@@ -1,0 +1,67 @@
+{
+  "question_id": "L4_q013_food_court_vs_expo_lunch",
+  "level": "L4",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "During lunch hours (12-14), did the food court get more crowded than the expo floor, or did people stay at the booths? Compare the average crowd sizes.",
+  "gold_value": {
+    "food_court_mentioned": "FoodCourt",
+    "expo_mentioned": "Expo"
+  },
+  "answer_text": "During lunch hours, the expo floor was more crowded than the food court. The average crowd size on the ExpoFloor_MainAisle was 108.55, while the FoodCourt_North had an average of 81.91. People at the booths experienced much smaller average crowd sizes, with DemoBooth_NVIDIA at 17.35 and DemoBooth_Intel at 12.18.",
+  "structured_answer": {
+    "columns": [
+      "location",
+      "avg_crowd_size"
+    ],
+    "rows": [
+      [
+        "ExpoFloor_MainAisle",
+        108.55333333333333
+      ],
+      [
+        "FoodCourt_North",
+        81.90666666666667
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        17.346666666666668
+      ],
+      [
+        "DemoBooth_Intel",
+        12.183333333333334
+      ]
+    ],
+    "total_rows": 4
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T12:00:00Z' AND ch.hour_utc < '2025-12-08T15:00:00Z'\n    AND (ch.camera_location CONTAINS 'FoodCourt' OR ch.camera_location CONTAINS 'ExpoFloor' OR ch.camera_location CONTAINS 'Booth')\n  RETURN ch.camera_location AS location, avg(ch.avg_hc) AS avg_crowd_size\n}\nRETURN location, avg_crowd_size ORDER BY avg_crowd_size DESC",
+      "row_count": 4
+    }
+  ],
+  "duration_ms": 3788,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2528,
+      "completion_tokens": 127
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 400,
+      "completion_tokens": 82
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_2_facts_satisfied"
+  }
+}

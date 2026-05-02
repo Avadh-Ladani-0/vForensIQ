@@ -1,0 +1,252 @@
+{
+  "question_id": "L3_q006_arrival_pattern_main_gate",
+  "level": "L3",
+  "approach": "b3_aqr",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Show me when people were arriving at the main entrance throughout the day, broken down hour by hour.",
+  "gold_value": [
+    [
+      "00",
+      13
+    ],
+    [
+      "01",
+      18
+    ],
+    [
+      "02",
+      8
+    ],
+    [
+      "03",
+      12
+    ],
+    [
+      "04",
+      8
+    ],
+    [
+      "05",
+      15
+    ],
+    [
+      "06",
+      10
+    ],
+    [
+      "07",
+      7
+    ],
+    [
+      "08",
+      311
+    ],
+    [
+      "09",
+      334
+    ],
+    [
+      "10",
+      9
+    ],
+    [
+      "11",
+      12
+    ],
+    [
+      "12",
+      154
+    ],
+    [
+      "13",
+      14
+    ],
+    [
+      "14",
+      8
+    ],
+    [
+      "15",
+      13
+    ],
+    [
+      "16",
+      12
+    ],
+    [
+      "17",
+      268
+    ],
+    [
+      "18",
+      255
+    ],
+    [
+      "19",
+      14
+    ],
+    [
+      "20",
+      12
+    ],
+    [
+      "21",
+      11
+    ],
+    [
+      "22",
+      7
+    ],
+    [
+      "23",
+      6
+    ]
+  ],
+  "answer_text": "Throughout December 8, 2025, the arrival of people at the main entrance was as follows:\n\n- 00:00: 17 arrivals\n- 01:00: 23 arrivals\n- 02:00: 14 arrivals\n- 03:00: 14 arrivals\n- 04:00: 12 arrivals\n- 05:00: 22 arrivals\n- 06:00: 14 arrivals\n- 07:00: 65 arrivals\n- 08:00: 548 arrivals\n- 09:00: 519 arrivals\n- 10:00: 14 arrivals\n- 11:00: 15 arrivals\n- 12:00: 159 arrivals\n- 13:00: 189 arrivals\n- 14:00: 14 arrivals\n- 15:00: 227 arrivals\n- 16:00: 16 arrivals\n- 17:00: 327 arrivals\n- 18:00: 316 arrivals\n- 19:00: 19 arrivals\n- 20:00: 16 arrivals\n- 21:00: 16 arrivals\n- 22:00: 12 arrivals\n- 23:00: 13 arrivals\n\nThe peak hour was 08:00, with 548 arrivals.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "count"
+    ],
+    "rows": [
+      [
+        "2025-12-08T00:00:00Z",
+        17
+      ],
+      [
+        "2025-12-08T01:00:00Z",
+        23
+      ],
+      [
+        "2025-12-08T02:00:00Z",
+        14
+      ],
+      [
+        "2025-12-08T03:00:00Z",
+        14
+      ],
+      [
+        "2025-12-08T04:00:00Z",
+        12
+      ],
+      [
+        "2025-12-08T05:00:00Z",
+        22
+      ],
+      [
+        "2025-12-08T06:00:00Z",
+        14
+      ],
+      [
+        "2025-12-08T07:00:00Z",
+        65
+      ],
+      [
+        "2025-12-08T08:00:00Z",
+        548
+      ],
+      [
+        "2025-12-08T09:00:00Z",
+        519
+      ],
+      [
+        "2025-12-08T10:00:00Z",
+        14
+      ],
+      [
+        "2025-12-08T11:00:00Z",
+        15
+      ],
+      [
+        "2025-12-08T12:00:00Z",
+        159
+      ],
+      [
+        "2025-12-08T13:00:00Z",
+        189
+      ],
+      [
+        "2025-12-08T14:00:00Z",
+        14
+      ],
+      [
+        "2025-12-08T15:00:00Z",
+        227
+      ],
+      [
+        "2025-12-08T16:00:00Z",
+        16
+      ],
+      [
+        "2025-12-08T17:00:00Z",
+        327
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        316
+      ],
+      [
+        "2025-12-08T19:00:00Z",
+        19
+      ],
+      [
+        "2025-12-08T20:00:00Z",
+        16
+      ],
+      [
+        "2025-12-08T21:00:00Z",
+        16
+      ],
+      [
+        "2025-12-08T22:00:00Z",
+        12
+      ],
+      [
+        "2025-12-08T23:00:00Z",
+        13
+      ]
+    ],
+    "total_rows": 24
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event) WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z' AND e.event_type = 'person_entry'\n  WITH substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, count(*) AS n\n  RETURN hour, n\n  UNION ALL\n  MATCH (ch:CrowdHour)-[:AT_CAMERA]->(:Camera {camera_location: 'Gate_MainEntrance'}) WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.hour_utc AS hour, sum(ch.event_count) AS n\n}\nRETURN hour, sum(n) AS count ORDER BY hour",
+      "row_count": 24
+    }
+  ],
+  "duration_ms": 12185,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2152,
+      "completion_tokens": 194
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 837,
+      "completion_tokens": 275
+    }
+  ],
+  "errors": [],
+  "routing": {
+    "classified_level": "L3",
+    "routed_to": "b2_rag_cypher",
+    "routing_method": "llm_zero_shot",
+    "routing_duration_ms": 1025,
+    "classifier_metadata": {
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 351,
+      "completion_tokens": 2
+    }
+  },
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": false,
+    "detail": "missing_numbers=[311.0, 334.0, 154.0, 268.0, 255.0]"
+  }
+}

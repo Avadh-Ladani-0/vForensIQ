@@ -1,0 +1,153 @@
+{
+  "question_id": "L5_q003_staffing_brief",
+  "level": "L5",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a staffing recommendation brief for the AI Hardware Summit on 2025-12-08 (UTC). Identify (a) the busiest hours of the day requiring extra staff at the gates and on the expo floor, and (b) the quiet hours where minimal coverage is sufficient. Cite specific hour ranges and supporting metrics. Keep it to 4-6 bullet points.",
+  "gold_value": {
+    "rubric": [
+      "Morning gate rush around 08:00-10:00 UTC needs extra staffing",
+      "Evening gate rush around 17:00-19:00 UTC needs extra staffing",
+      "Lunch hours 12:00-14:00 UTC are busy at FoodCourt and need extra coverage",
+      "Late-night and early-morning hours (roughly 22:00-06:00 UTC) are quiet and need minimal coverage",
+      "Keynote hours (09:00-10:00 and 14:00-15:00 UTC) require crowd management at KeynoteHall_Stage"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "- **Busiest Hours (Extra Staff Needed):**\n  - **08:00 - 09:59** UTC: Highest activity with 19,292 events at 08:00 and 19,003 at 09:00.\n  - **17:00 - 18:59** UTC: Significant foot traffic requiring additional staffing, with 18,807 events at 17:00 and 18,792 at 18:00.\n\n- **Moderate Busiest Hours (Consider Additional Staff):**\n  - **15:00 - 15:59** UTC: Notably busy with 18,440 events.\n  - **13:00 - 14:59** UTC: Elevated activity with 18,397 events at 13:00, tapering slightly at 14:00 with 18,031 events.\n\n- **Quietest Hours (Minimal Coverage Sufficient):**\n  - **22:00 - 23:59** UTC: Lowest events, 18,026 at 22:00, reducing to 18,022 at 23:00, indicating quieter periods.\n  - **02:00 - 04:59** UTC: Consistently low events, ranging from 18,029 to 18,036, suggesting minimal staffing needed.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "total_events"
+    ],
+    "rows": [
+      [
+        "2025-12-08T08:00:00Z",
+        19292
+      ],
+      [
+        "2025-12-08T09:00:00Z",
+        19003
+      ],
+      [
+        "2025-12-08T17:00:00Z",
+        18807
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        18792
+      ],
+      [
+        "2025-12-08T15:00:00Z",
+        18440
+      ],
+      [
+        "2025-12-08T13:00:00Z",
+        18397
+      ],
+      [
+        "2025-12-08T07:00:00Z",
+        18358
+      ],
+      [
+        "2025-12-08T12:00:00Z",
+        18323
+      ],
+      [
+        "2025-12-08T00:00:00Z",
+        18040
+      ],
+      [
+        "2025-12-08T05:00:00Z",
+        18040
+      ],
+      [
+        "2025-12-08T01:00:00Z",
+        18039
+      ],
+      [
+        "2025-12-08T06:00:00Z",
+        18037
+      ],
+      [
+        "2025-12-08T11:00:00Z",
+        18037
+      ],
+      [
+        "2025-12-08T04:00:00Z",
+        18036
+      ],
+      [
+        "2025-12-08T10:00:00Z",
+        18035
+      ],
+      [
+        "2025-12-08T20:00:00Z",
+        18033
+      ],
+      [
+        "2025-12-08T03:00:00Z",
+        18032
+      ],
+      [
+        "2025-12-08T16:00:00Z",
+        18032
+      ],
+      [
+        "2025-12-08T21:00:00Z",
+        18032
+      ],
+      [
+        "2025-12-08T14:00:00Z",
+        18031
+      ],
+      [
+        "2025-12-08T02:00:00Z",
+        18029
+      ],
+      [
+        "2025-12-08T19:00:00Z",
+        18027
+      ],
+      [
+        "2025-12-08T22:00:00Z",
+        18026
+      ],
+      [
+        "2025-12-08T23:00:00Z",
+        18022
+      ]
+    ],
+    "total_rows": 24
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event)\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  WITH substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, count(*) AS n\n  RETURN hour, n\n  UNION ALL\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.hour_utc AS hour, ch.event_count AS n\n}\nRETURN hour, sum(n) AS total_events\nORDER BY total_events DESC, hour ASC",
+      "row_count": 24
+    }
+  ],
+  "duration_ms": 7883,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2568,
+      "completion_tokens": 177
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 899,
+      "completion_tokens": 266
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=3/5=0.60 (threshold=0.5)"
+  }
+}

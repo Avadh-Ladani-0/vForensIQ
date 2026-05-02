@@ -1,0 +1,50 @@
+{
+  "question_id": "L1_q008_people_through_main_gate",
+  "level": "L1",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many people in total went through the main entrance gate, counting both people arriving and people leaving?",
+  "gold_value": 2883,
+  "answer_text": "There were 0 people in total who went through the main entrance gate, counting both arrivals and departures.",
+  "structured_answer": {
+    "columns": [
+      "total_people_through_main_entrance"
+    ],
+    "rows": [
+      [
+        0
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event)-[:DETECTED_BY]->(:Camera {camera_location: 'MainEntrance'}) \nWHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z' \nAND e.event_type IN ['person_entry', 'person_exit'] \nRETURN COUNT(e) AS total_people_through_main_entrance",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 3070,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 979,
+      "completion_tokens": 92
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 287,
+      "completion_tokens": 21
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": false,
+    "detail": "expected=2883.0 got=0.0"
+  }
+}

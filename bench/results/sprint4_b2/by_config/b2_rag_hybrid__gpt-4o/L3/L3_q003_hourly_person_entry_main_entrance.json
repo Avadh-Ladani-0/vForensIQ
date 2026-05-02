@@ -1,0 +1,283 @@
+{
+  "question_id": "L3_q003_hourly_person_entry_main_entrance",
+  "level": "L3",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Show the hour-by-hour person_entry count at Gate_MainEntrance on 2025-12-08 (UTC). List each UTC hour (00 through 23) with its count.",
+  "gold_value": [
+    [
+      "00",
+      13
+    ],
+    [
+      "01",
+      18
+    ],
+    [
+      "02",
+      8
+    ],
+    [
+      "03",
+      12
+    ],
+    [
+      "04",
+      8
+    ],
+    [
+      "05",
+      15
+    ],
+    [
+      "06",
+      10
+    ],
+    [
+      "07",
+      7
+    ],
+    [
+      "08",
+      311
+    ],
+    [
+      "09",
+      334
+    ],
+    [
+      "10",
+      9
+    ],
+    [
+      "11",
+      12
+    ],
+    [
+      "12",
+      154
+    ],
+    [
+      "13",
+      14
+    ],
+    [
+      "14",
+      8
+    ],
+    [
+      "15",
+      13
+    ],
+    [
+      "16",
+      12
+    ],
+    [
+      "17",
+      268
+    ],
+    [
+      "18",
+      255
+    ],
+    [
+      "19",
+      14
+    ],
+    [
+      "20",
+      12
+    ],
+    [
+      "21",
+      11
+    ],
+    [
+      "22",
+      7
+    ],
+    [
+      "23",
+      6
+    ]
+  ],
+  "answer_text": "Here is the hour-by-hour person entry count at Gate_MainEntrance on December 8, 2025 (UTC):\n\n- 00:00: 13\n- 01:00: 18\n- 02:00: 8\n- 03:00: 12\n- 04:00: 8\n- 05:00: 15\n- 06:00: 10\n- 07:00: 7\n- 08:00: 311\n- 09:00: 334\n- 10:00: 9\n- 11:00: 12\n- 12:00: 154\n- 13:00: 14\n- 14:00: 8\n- 15:00: 13\n- 16:00: 12\n- 17:00: 268\n- 18:00: 255\n- 19:00: 14\n- 20:00: 12\n- 21:00: 11\n- 22:00: 7\n- 23:00: 6\n\nThe morning hours between 08:00 and 09:59 saw particularly high foot traffic, consistent with significant entrance activity noted during that window.",
+  "structured_answer": {
+    "cypher_columns": [
+      "hour",
+      "count"
+    ],
+    "cypher_rows": [
+      [
+        "2025-12-08T00:00:00Z",
+        13
+      ],
+      [
+        "2025-12-08T01:00:00Z",
+        18
+      ],
+      [
+        "2025-12-08T02:00:00Z",
+        8
+      ],
+      [
+        "2025-12-08T03:00:00Z",
+        12
+      ],
+      [
+        "2025-12-08T04:00:00Z",
+        8
+      ],
+      [
+        "2025-12-08T05:00:00Z",
+        15
+      ],
+      [
+        "2025-12-08T06:00:00Z",
+        10
+      ],
+      [
+        "2025-12-08T07:00:00Z",
+        7
+      ],
+      [
+        "2025-12-08T08:00:00Z",
+        311
+      ],
+      [
+        "2025-12-08T09:00:00Z",
+        334
+      ],
+      [
+        "2025-12-08T10:00:00Z",
+        9
+      ],
+      [
+        "2025-12-08T11:00:00Z",
+        12
+      ],
+      [
+        "2025-12-08T12:00:00Z",
+        154
+      ],
+      [
+        "2025-12-08T13:00:00Z",
+        14
+      ],
+      [
+        "2025-12-08T14:00:00Z",
+        8
+      ],
+      [
+        "2025-12-08T15:00:00Z",
+        13
+      ],
+      [
+        "2025-12-08T16:00:00Z",
+        12
+      ],
+      [
+        "2025-12-08T17:00:00Z",
+        268
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        255
+      ],
+      [
+        "2025-12-08T19:00:00Z",
+        14
+      ],
+      [
+        "2025-12-08T20:00:00Z",
+        12
+      ],
+      [
+        "2025-12-08T21:00:00Z",
+        11
+      ],
+      [
+        "2025-12-08T22:00:00Z",
+        7
+      ],
+      [
+        "2025-12-08T23:00:00Z",
+        6
+      ]
+    ],
+    "cypher_total_rows": 24,
+    "retrieved_communities": [
+      {
+        "community_id": "community_0",
+        "summary": "The CCTV activity at the Gate_MainEntrance from December 8, 2025, between 08:00 and 12:59 UTC recorded a total of 930 events. The dominant event types were person entries (470) and exits (450), with car entries (8) and exits (2) also noted. The total volume of events indicates significant foot traffic, although peak head count and average head count data are not available.",
+        "distance": 0.3432807922363281
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, covered a time range from 08:00:13 to 15:59:56 UTC. The dominant event types were person entries (680) and exits (685), with a total of 1,376 events recorded. The peak event count per hour occurred during the observed period, contributing to a total of 1,379 node counts.",
+        "distance": 0.43032366037368774
+      },
+      {
+        "community_id": "community_1",
+        "summary": "The CCTV activity at the Gate_ParkingLot camera from December 8, 2025, between 07:00 and 18:59 UTC recorded a total of 1,540 events. The dominant event types were person entries (454) and exits (476), along with car entries (298) and exits (312). The total volume of events reached 1,543, with no peak head count reported.",
+        "distance": 0.43200331926345825
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity covers the location from 09:00 to 09:59 UTC on December 8, 2025. The dominant event types are person entries, with 437 recorded, and person exits, totaling 387. There were also 5 car entries and 4 car exits, contributing to a total of 833 events. Notably, the peak head count and average head count data are not available.",
+        "distance": 0.4335358738899231
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event {event_type: 'person_entry'})-[:DETECTED_BY]->(:Camera)-[:LOCATED_AT]->(:Location {name: 'Gate_MainEntrance'})\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  WITH substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, count(*) AS n\n  RETURN hour, n\n}\nRETURN hour, sum(n) AS count ORDER BY hour",
+      "row_count": 24
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.3432807922363281
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.43032366037368774
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.43200331926345825
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.4335358738899231
+    }
+  ],
+  "duration_ms": 8395,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2531,
+      "completion_tokens": 130
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 1086,
+      "completion_tokens": 269
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": true,
+    "detail": "all_keys_and_values_matched (rows=24)"
+  }
+}

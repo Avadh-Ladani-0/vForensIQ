@@ -1,0 +1,94 @@
+{
+  "question_id": "L1_q006_active_cameras_during_keynote",
+  "level": "L1",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many distinct cameras produced at least one event between 09:00 and 10:00 UTC on 2025-12-08 (the morning keynote hour)?",
+  "gold_value": 8,
+  "answer_text": "There are no distinct cameras that produced events between 09:00 and 10:00 UTC on December 8, 2025, as the Cypher evidence returned no results. However, community summaries indicate that multiple camera locations were active throughout the day, with a total of 449 events recorded, including significant activity at the Keynote Hall.",
+  "structured_answer": {
+    "cypher_columns": [],
+    "cypher_rows": [],
+    "cypher_total_rows": 0,
+    "retrieved_communities": [
+      {
+        "community_id": "community_4",
+        "summary": "The CCTV activity involves multiple camera locations with a total of 40 events recorded between 05:00:59 and 05:59:16 UTC on December 8, 2025. The dominant event types are person entries (22) and car exits (4). Notably, there were 14 person exits during this period, but no peak head count or average head count data is available.",
+        "distance": 0.36620545387268066
+      },
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and a total of 588 node counts.",
+        "distance": 0.378987193107605
+      },
+      {
+        "community_id": "community_5",
+        "summary": "The CCTV activity covers the time range from December 8, 2025, 18:00:01 to 18:59:57 UTC. The camera locations involved recorded a total of 744 events, with person entries (300) and exits (299) dominating the activity, alongside 83 car entries and 62 car exits. Notably, there were 745 nodes counted during this period.",
+        "distance": 0.39157241582870483
+      },
+      {
+        "community_id": "community_3",
+        "summary": "The CCTV activity covers the time range from 2025-12-08T01:00:41Z to 2025-12-08T01:59:48Z, with events recorded at unspecified camera locations. The dominant event types include person entries (23) and car exits (4), contributing to a total of 39 events. Notably, there were 1 car entry and 11 person exits during this period, with a total of 40 nodes monitored.",
+        "distance": 0.40671730041503906
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event)\nWHERE e.timestamp_utc >= '2025-12-08T09:00:00Z' AND e.timestamp_utc < '2025-12-08T10:00:00Z'\nRETURN COUNT(DISTINCT c) AS distinct_camera_count\nWITH e\nMATCH (e)-[:DETECTED_BY]->(c:Camera)",
+      "row_count": 0
+    },
+    {
+      "type": "community",
+      "community_id": "community_4",
+      "distance": 0.36620545387268066
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.378987193107605
+    },
+    {
+      "type": "community",
+      "community_id": "community_5",
+      "distance": 0.39157241582870483
+    },
+    {
+      "type": "community",
+      "community_id": "community_3",
+      "distance": 0.40671730041503906
+    }
+  ],
+  "duration_ms": 9011,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 993,
+      "completion_tokens": 69
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1197,
+      "completion_tokens": 77
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 632,
+      "completion_tokens": 70
+    }
+  ],
+  "errors": [
+    "cypher_stream: CypherSyntaxError: {neo4j_code: Neo.ClientError.Statement.SyntaxError} {message: Variable `c` not defined (line 3, column 23 (offset: 131))\n\"RETURN COUNT(DISTINCT c) AS distinct_camera_count\"\n                       ^} {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": true,
+    "detail": "match"
+  }
+}

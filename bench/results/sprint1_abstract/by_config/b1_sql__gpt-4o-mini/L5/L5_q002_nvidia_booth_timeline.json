@@ -1,0 +1,178 @@
+{
+  "question_id": "L5_q002_nvidia_booth_timeline",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Describe the full-day activity timeline at DemoBooth_NVIDIA on 2025-12-08 (UTC). Identify the busiest time windows, any lulls, and quantify the peak crowd sizes versus the baseline. Write 3-5 sentences.",
+  "gold_value": {
+    "rubric": [
+      "Morning peak between 10-12 UTC",
+      "Afternoon peak between 15-17 UTC",
+      "Lunch-hour dip (around 12-13 or 13-14 UTC)",
+      "Peak head_count values are substantially higher than baseline of ~3",
+      "Overnight / early-morning hours show baseline/quiet activity"
+    ],
+    "threshold": 0.6
+  },
+  "answer_text": "On December 8, 2025, at DemoBooth_NVIDIA, the peak crowd size occurred between 15:00 and 16:00 UTC, with 252,407 people recorded. The busiest hour overall was from 14:00 to 15:00 UTC, with 251,999 attendees. Notable lulls were observed during the early morning hours, particularly from 00:00 to 07:00 UTC, where crowd sizes ranged from 12,395 to 12,993.",
+  "structured_answer": {
+    "columns": [
+      "event_type",
+      "hour",
+      "metric"
+    ],
+    "rows": [
+      [
+        "crowd",
+        "00",
+        12493
+      ],
+      [
+        "crowd",
+        "01",
+        12706
+      ],
+      [
+        "crowd",
+        "02",
+        12644
+      ],
+      [
+        "crowd",
+        "03",
+        12675
+      ],
+      [
+        "crowd",
+        "04",
+        12916
+      ],
+      [
+        "crowd",
+        "05",
+        12971
+      ],
+      [
+        "crowd",
+        "06",
+        12449
+      ],
+      [
+        "crowd",
+        "07",
+        12395
+      ],
+      [
+        "crowd",
+        "08",
+        12787
+      ],
+      [
+        "crowd",
+        "09",
+        12651
+      ],
+      [
+        "crowd",
+        "10",
+        216035
+      ],
+      [
+        "crowd",
+        "11",
+        216711
+      ],
+      [
+        "crowd",
+        "12",
+        12652
+      ],
+      [
+        "crowd",
+        "13",
+        162130
+      ],
+      [
+        "crowd",
+        "14",
+        12576
+      ],
+      [
+        "crowd",
+        "15",
+        251999
+      ],
+      [
+        "crowd",
+        "16",
+        252407
+      ],
+      [
+        "crowd",
+        "17",
+        12803
+      ],
+      [
+        "crowd",
+        "18",
+        12746
+      ],
+      [
+        "crowd",
+        "19",
+        12313
+      ],
+      [
+        "crowd",
+        "20",
+        12829
+      ],
+      [
+        "crowd",
+        "21",
+        12763
+      ],
+      [
+        "crowd",
+        "22",
+        13304
+      ],
+      [
+        "crowd",
+        "23",
+        12581
+      ]
+    ],
+    "total_rows": 24
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH crowd_events AS (\n    SELECT strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n           SUM(head_count) AS total_head_count\n    FROM events\n    WHERE camera_location LIKE '%NVIDIA%' AND event_type = 'crowd'\n      AND timestamp_utc >= '2025-12-08T00:00:00Z' \n      AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY hour\n),\nentry_exit_events AS (\n    SELECT strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n           COUNT(*) AS total_events\n    FROM events\n    WHERE camera_location LIKE '%NVIDIA%' AND event_type IN ('person_entry', 'person_exit', 'car_entry', 'car_exit')\n      AND timestamp_utc >= '2025-12-08T00:00:00Z' \n      AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY hour\n)\nSELECT 'crowd' AS event_type, hour, total_head_count AS metric\nFROM crowd_events\nUNION ALL\nSELECT 'entry_exit' AS event_type, hour, total_events AS metric\nFROM entry_exit_events\nORDER BY hour",
+      "row_count": 24
+    }
+  ],
+  "duration_ms": 9316,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 887,
+      "completion_tokens": 265
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 770,
+      "completion_tokens": 105
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=3/5=0.60 (threshold=0.6)"
+  }
+}

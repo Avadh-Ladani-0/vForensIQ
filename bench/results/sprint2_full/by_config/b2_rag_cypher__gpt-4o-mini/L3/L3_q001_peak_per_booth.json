@@ -1,0 +1,65 @@
+{
+  "question_id": "L3_q001_peak_per_booth",
+  "level": "L3",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "For each demo booth (DemoBooth_NVIDIA and DemoBooth_Intel), what was the peak head_count observed on 2025-12-08 (UTC)?",
+  "gold_value": [
+    [
+      "DemoBooth_Intel",
+      53
+    ],
+    [
+      "DemoBooth_NVIDIA",
+      86
+    ]
+  ],
+  "answer_text": "The peak head count observed on 2025-12-08 (UTC) was 86 at DemoBooth_NVIDIA and 53 at DemoBooth_Intel.",
+  "structured_answer": {
+    "columns": [
+      "demo_booth",
+      "peak_head_count"
+    ],
+    "rows": [
+      [
+        "DemoBooth_NVIDIA",
+        86
+      ],
+      [
+        "DemoBooth_Intel",
+        53
+      ]
+    ],
+    "total_rows": 2
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera)-[:LOCATED_AT]->(:Location {name: 'DemoBooth_NVIDIA'}) \nWHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z' \nRETURN c.camera_location AS demo_booth, MAX(ch.peak_hc) AS peak_head_count\nUNION\nMATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera)-[:LOCATED_AT]->(:Location {name: 'DemoBooth_Intel'}) \nWHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z' \nRETURN c.camera_location AS demo_booth, MAX(ch.peak_hc) AS peak_head_count",
+      "row_count": 2
+    }
+  ],
+  "duration_ms": 4395,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 994,
+      "completion_tokens": 200
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 428,
+      "completion_tokens": 35
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": true,
+    "detail": "all_keys_and_values_matched (rows=2)"
+  }
+}

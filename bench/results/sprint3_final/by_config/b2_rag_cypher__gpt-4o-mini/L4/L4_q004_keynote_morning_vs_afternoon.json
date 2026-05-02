@@ -1,0 +1,64 @@
+{
+  "question_id": "L4_q004_keynote_morning_vs_afternoon",
+  "level": "L4",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Compare the average head_count at KeynoteHall_Stage between the morning keynote window 09:00-10:00 UTC and the afternoon keynote window 14:00-15:00 UTC on 2025-12-08. Which keynote had higher attendance and what were the approximate average head_counts?",
+  "gold_value": {
+    "higher_attendance_window": "morning",
+    "morning_keynote_avg_approx": {
+      "value": 450,
+      "tolerance": 80
+    },
+    "afternoon_keynote_avg_approx": {
+      "value": 400,
+      "tolerance": 80
+    }
+  },
+  "answer_text": "The morning keynote had higher attendance with an average head count of 450.19, compared to the afternoon keynote's average of 399.51.",
+  "structured_answer": {
+    "columns": [
+      "morning_avg_hc",
+      "afternoon_avg_hc",
+      "comparison"
+    ],
+    "rows": [
+      [
+        450.19,
+        399.51,
+        "Morning Keynote had higher attendance"
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour {camera_location: 'KeynoteHall_Stage'})\n  WHERE ch.hour_utc >= '2025-12-08T09:00:00Z' AND ch.hour_utc < '2025-12-08T10:00:00Z'\n  RETURN avg(ch.avg_hc) AS morning_avg_hc\n}\nCALL {\n  MATCH (ch:CrowdHour {camera_location: 'KeynoteHall_Stage'})\n  WHERE ch.hour_utc >= '2025-12-08T14:00:00Z' AND ch.hour_utc < '2025-12-08T15:00:00Z'\n  RETURN avg(ch.avg_hc) AS afternoon_avg_hc\n}\nRETURN morning_avg_hc, afternoon_avg_hc, \n       CASE \n         WHEN morning_avg_hc > afternoon_avg_hc THEN 'Morning Keynote had higher attendance'\n         WHEN afternoon_avg_hc > morning_avg_hc THEN 'Afternoon Keynote had higher attendance'\n         ELSE 'Both keynotes had equal attendance'\n       END AS comparison",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 5732,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2194,
+      "completion_tokens": 228
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 487,
+      "completion_tokens": 30
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_3_facts_satisfied"
+  }
+}

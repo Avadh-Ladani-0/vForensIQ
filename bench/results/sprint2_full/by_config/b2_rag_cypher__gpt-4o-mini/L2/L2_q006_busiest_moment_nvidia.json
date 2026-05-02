@@ -1,0 +1,44 @@
+{
+  "question_id": "L2_q006_busiest_moment_nvidia",
+  "level": "L2",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How packed did the NVIDIA booth get at its busiest moment?",
+  "gold_value": 86,
+  "answer_text": "There is no data available regarding the peak head count at the NVIDIA booth during the specified time.",
+  "structured_answer": {
+    "columns": [],
+    "rows": [],
+    "total_rows": 0
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour {camera_location: 'NVIDIA'}) \nWHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z' \nRETURN ch.peak_hc AS peak_head_count",
+      "row_count": 0
+    }
+  ],
+  "duration_ms": 2377,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 971,
+      "completion_tokens": 69
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 243,
+      "completion_tokens": 19
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": false,
+    "detail": "no_number_in_answer"
+  }
+}

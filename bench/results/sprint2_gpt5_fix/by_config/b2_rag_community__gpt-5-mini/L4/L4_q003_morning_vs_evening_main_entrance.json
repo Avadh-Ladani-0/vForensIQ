@@ -1,0 +1,139 @@
+{
+  "question_id": "L4_q003_morning_vs_evening_main_entrance",
+  "level": "L4",
+  "approach": "b2_rag_community",
+  "model": "gpt-5-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "On 2025-12-08 (UTC), compare the morning rush window (08:00-10:00) versus the evening rush window (17:00-19:00) at Gate_MainEntrance for total person flow (person_entry + person_exit). Which window was busier and approximately by how much?",
+  "gold_value": {
+    "busier_window": "08:00",
+    "morning_total_approx": {
+      "value": 1200,
+      "tolerance": 250
+    },
+    "evening_total_approx": {
+      "value": 1000,
+      "tolerance": 250
+    }
+  },
+  "answer_text": "I can\u2019t answer that comparison from the summaries provided: none give person counts for Gate_MainEntrance specifically broken down for 08:00\u201310:00 and 17:00\u201319:00 on 2025-12-08. Community_0 shows CAM_01 covered Gate_MainEntrance (events up to 2025-12-08T12:59:57Z) with a total of \"1,775 events\" including \"788 person_entry and 773 person_exit = 1,561 person events,\" but it does not provide the hourly (08:00\u201310:00 vs 17:00\u201319:00) split and does not include the 17:00\u201319:00 window. (Community_1 reports hourly activity for 07:00\u201317:00 on 2025-12-08 but at Gate_ParkingLot, not Gate_MainEntrance.)",
+  "structured_answer": {
+    "retrieved_communities": [
+      {
+        "community_id": "community_13",
+        "summary": "Across the 17:00 UTC hour (events from 2025-12-01T17:00:17Z to 2025-12-01T17:59:36Z) on Platform_1, 194 events were recorded. Events were dominated by pedestrian movements: 92 person_entry and 89 person_exit (181 total), versus 5 car_entry and 8 car_exit. Average head count (mean-of-means) was 5.04 with a peak head_count of 13.0; peak event count for the hour was 194.",
+        "distance": 0.37619835138320923,
+        "metadata": {
+          "community_id": 13,
+          "node_count": 196,
+          "camera_locations": "Platform_1",
+          "total_events": 194
+        }
+      },
+      {
+        "community_id": "community_0",
+        "summary": "Cameras CAM_01 covered Gate_MainEntrance and Platform_1 from 2025-12-01T01:00:00Z to 2025-12-08T12:00:00Z (events recorded between 2025-12-01T01:04:10Z and 2025-12-08T12:59:57Z). Total volume was 1,775 events: person activity dominated (788 person_entry and 773 person_exit = 1,561 person events) versus 112 car_entry and 102 car_exit. Average head count (mean-of-means) was 10.42 with a peak head count of 47.0; node_count is 1,802 and average events/hour \u2248 9.9 (1775 events over ~179 hours); peak per-hour event count is not specified in the provided profile.",
+        "distance": 0.3936040997505188,
+        "metadata": {
+          "community_id": 0,
+          "camera_locations": "Gate_MainEntrance,Platform_1",
+          "node_count": 1802,
+          "total_events": 1775
+        }
+      },
+      {
+        "community_id": "community_1",
+        "summary": "All events were recorded by CAM_02 at Gate_ParkingLot, covering activity from 2025-12-08T07:00:01Z to 2025-12-08T18:59:57Z with hourly aggregation reported for 07:00\u201317:00 UTC. Total volume was 1,529 events (node_count 1,532); person events dominated with 463 person_entry and 466 person_exit (929 total) versus 283 car_entry and 317 car_exit (600 total). Peak head_count is not available (null), and a peak events-per-hour value is not provided.",
+        "distance": 0.4174874424934387,
+        "metadata": {
+          "camera_locations": "Gate_ParkingLot",
+          "node_count": 1532,
+          "community_id": 1,
+          "total_events": 1529
+        }
+      },
+      {
+        "community_id": "community_10",
+        "summary": "All activity was recorded on Platform_1 between 2025-12-01T02:00:27Z and 2025-12-01T02:55:55Z (hour window 2025-12-01T02:00:00Z UTC). Events were dominated by people movements (16 person_entry, 14 person_exit = 30 person events) with fewer vehicle movements (4 car_entry, 3 car_exit = 7 car events); total events = 37 and peak events per hour = 37. Peak head_count was 13, average head_count (mean of means) 5.05, node_count 39.",
+        "distance": 0.4282008409500122,
+        "metadata": {
+          "total_events": 37,
+          "camera_locations": "Platform_1",
+          "node_count": 39,
+          "community_id": 10
+        }
+      },
+      {
+        "community_id": "community_14",
+        "summary": "All activity was recorded at Platform_1 between 2025-12-01T19:00:22Z and 2025-12-01T19:58:59Z (UTC). A total of 53 events were detected in that hour, dominated by person movements (21 person_entry, 20 person_exit) with car events less frequent (6 car_entry, 6 car_exit); peak event count for the hour was 53. Average head count (mean of means) was 34.98 and the peak head count observed was 42. Node count: 55.",
+        "distance": 0.43382513523101807,
+        "metadata": {
+          "node_count": 55,
+          "camera_locations": "Platform_1",
+          "total_events": 53,
+          "community_id": 14
+        }
+      },
+      {
+        "community_id": "community_7",
+        "summary": "All activity was recorded on Platform_1 between 2025-12-01T12:00:23Z and 2025-12-01T12:59:53Z (hour block 2025-12-01T12:00:00Z). There were 25 events in the hour, dominated by person movements (10 person_entry, 8 person_exit) versus 4 car_entry and 3 car_exit. Average head count (mean of means) was 4.96, peak head_count was 13.0, and node_count is 27.",
+        "distance": 0.43444305658340454,
+        "metadata": {
+          "community_id": 7,
+          "total_events": 25,
+          "camera_locations": "Platform_1",
+          "node_count": 27
+        }
+      }
+    ],
+    "top_k": 6
+  },
+  "citations": [
+    {
+      "type": "community",
+      "community_id": "community_13",
+      "distance": 0.37619835138320923
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.3936040997505188
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.4174874424934387
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.4282008409500122
+    },
+    {
+      "type": "community",
+      "community_id": "community_14",
+      "distance": 0.43382513523101807
+    },
+    {
+      "type": "community",
+      "community_id": "community_7",
+      "distance": 0.43444305658340454
+    }
+  ],
+  "duration_ms": 16180,
+  "llm_calls": [
+    {
+      "stage": "answer_synth",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 1095,
+      "completion_tokens": 1089
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": false,
+    "detail": "missing=['morning_total_approx=1200.0+-250.0_no_match (numbers_seen=[1775.0, 788.0, 773.0, 1561.0])']"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "question_id": "L3_q002_event_counts_by_type",
+  "level": "L3",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "For 2025-12-08 (UTC), how many events were recorded for each event_type? List every event_type with its count.",
+  "gold_value": [
+    [
+      "car_entry",
+      419
+    ],
+    [
+      "car_exit",
+      427
+    ],
+    [
+      "crowd",
+      432000
+    ],
+    [
+      "person_entry",
+      2601
+    ],
+    [
+      "person_exit",
+      2493
+    ]
+  ],
+  "answer_text": null,
+  "structured_answer": {
+    "columns": [],
+    "rows": [],
+    "total_rows": 0
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event)\nWHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\nRETURN e.event_type AS eventType, COUNT(e) AS count\nWITH eventType, count\nRETURN eventType, count",
+      "row_count": 0
+    }
+  ],
+  "duration_ms": 4027,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 988,
+      "completion_tokens": 67
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1259,
+      "completion_tokens": 73
+    }
+  ],
+  "errors": [
+    "CypherSyntaxError: {neo4j_code: Neo.ClientError.Statement.SyntaxError} {message: RETURN can only be used at the end of the query. (line 3, column 1 (offset: 109))\n\"RETURN e.event_type AS eventType, COUNT(e) AS count\"\n ^} {gql_status: 42001} {gql_status_description: error: syntax error or access rule violation - invalid syntax}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": null,
+    "detail": "error"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "question_id": "L5_q006_how_did_the_day_go",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Tell me how the day went at the conference \u2014 what stood out, when were the big moments, and what does the activity tell us?",
+  "gold_value": {
+    "rubric": [
+      "Significant person traffic at the main entrance, especially in the morning and evening",
+      "Keynote sessions drew large crowds at the keynote stage area",
+      "Demo booths (especially NVIDIA) had notable crowd activity during expo hours",
+      "Food court was busiest around lunchtime",
+      "Overnight hours were quiet across the venue"
+    ],
+    "threshold": 0.4
+  },
+  "answer_text": null,
+  "structured_answer": {
+    "columns": [],
+    "rows": [],
+    "total_rows": 0
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH event_times AS (\n    SELECT MIN(timestamp_epoch_s) AS min_time, MAX(timestamp_epoch_s) AS max_time FROM events\n),\nhourly_activity AS (\n    SELECT strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n           COUNT(*) AS event_count,\n           SUM(head_count) AS total_head_count\n    FROM events\n    WHERE timestamp_epoch_s >= (SELECT min_time FROM event_times) AND\n          timestamp_epoch_s < (SELECT max_time FROM event_times)\n    GROUP BY hour\n),\npeak_hours AS (\n    SELECT hour, event_count, total_head_count,\n           RANK() OVER (ORDER BY event_count DESC) AS event_rank,\n           RANK() OVER (ORDER BY total_head_count DESC) AS head_count_rank\n    FROM hourly_activity\n)\nSELECT hour, event_count, total_head_count FROM peak_hours WHERE event_rank = 1 OR head_count_rank = 1\nUNION ALL\nSELECT NULL AS hour, NULL AS event_count, NULL AS total_head_count\nFROM events\nWHERE timestamp_epoch_s >= (SELECT min_time FROM event_times) AND\n      timestamp_epoch_s < (SELECT max_time FROM event_times)\nORDER BY timestamp_epoch_s",
+      "row_count": 0
+    }
+  ],
+  "duration_ms": 8894,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 865,
+      "completion_tokens": 235
+    },
+    {
+      "stage": "sql_repair",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1154,
+      "completion_tokens": 244
+    }
+  ],
+  "errors": [
+    "OperationalError: 1st ORDER BY term does not match any column in the result set"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": null,
+    "detail": "error"
+  }
+}

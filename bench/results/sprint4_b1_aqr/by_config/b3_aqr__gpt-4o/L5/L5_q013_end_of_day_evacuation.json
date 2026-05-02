@@ -1,0 +1,195 @@
+{
+  "question_id": "L5_q013_end_of_day_evacuation",
+  "level": "L5",
+  "approach": "b3_aqr",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How did the end-of-day evacuation go? Describe the departure pattern from 17:00 onwards \u2014 which areas emptied first, how the gates handled the outflow, and whether the departure was orderly or had bottleneck moments.",
+  "gold_value": {
+    "rubric": [
+      "Gate_MainEntrance saw heavy person_exit traffic in the 17:00-19:00 window",
+      "Gate_ParkingLot had car_exit spikes during the same evening window",
+      "Crowd levels at ExpoFloor and DemoBooths dropped as people left",
+      "The departure was spread over 2+ hours rather than a sudden rush"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "The end-of-day evacuation on December 8, 2025, saw a substantial but orderly outflow of people primarily through the Gate_MainEntrance and the Gate_ParkingLot. Beginning at 17:00, these gates recorded significant exits with 243 and 153 people respectively, suggesting a synchronized usage pattern of the two primary gates. By 18:00, both gate exits remained high with similar numbers, while activity drastically reduced post-19:00, indicative of an effectively managed dispersal. A single exit occurred from KeynoteHall_DoorA at 18:00 and remained minimal in subsequent hours, which reduced potential internal congestion. This structured departure helped avoid any major bottlenecks, maintaining fluid movement through the gates. The community summaries support this assessment, indicating a well-distributed departure process without notable congestion peaks.",
+  "structured_answer": {
+    "cypher_columns": [
+      "hour",
+      "location",
+      "total_exits"
+    ],
+    "cypher_rows": [
+      [
+        "2025-12-08T17:00:00Z",
+        "Gate_MainEntrance",
+        243
+      ],
+      [
+        "2025-12-08T17:00:00Z",
+        "Gate_ParkingLot",
+        153
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        "Gate_MainEntrance",
+        239
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        "Gate_ParkingLot",
+        146
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        "KeynoteHall_DoorA",
+        1
+      ],
+      [
+        "2025-12-08T19:00:00Z",
+        "Gate_MainEntrance",
+        5
+      ],
+      [
+        "2025-12-08T19:00:00Z",
+        "Gate_ParkingLot",
+        3
+      ],
+      [
+        "2025-12-08T20:00:00Z",
+        "Gate_MainEntrance",
+        8
+      ],
+      [
+        "2025-12-08T20:00:00Z",
+        "Gate_ParkingLot",
+        6
+      ],
+      [
+        "2025-12-08T21:00:00Z",
+        "Gate_MainEntrance",
+        11
+      ],
+      [
+        "2025-12-08T21:00:00Z",
+        "Gate_ParkingLot",
+        3
+      ],
+      [
+        "2025-12-08T21:00:00Z",
+        "KeynoteHall_DoorA",
+        1
+      ],
+      [
+        "2025-12-08T22:00:00Z",
+        "Gate_MainEntrance",
+        12
+      ],
+      [
+        "2025-12-08T22:00:00Z",
+        "Gate_ParkingLot",
+        1
+      ],
+      [
+        "2025-12-08T22:00:00Z",
+        "KeynoteHall_DoorA",
+        1
+      ],
+      [
+        "2025-12-08T23:00:00Z",
+        "Gate_MainEntrance",
+        6
+      ],
+      [
+        "2025-12-08T23:00:00Z",
+        "Gate_ParkingLot",
+        1
+      ]
+    ],
+    "cypher_total_rows": 17,
+    "retrieved_communities": [
+      {
+        "community_id": "community_0",
+        "summary": "The CCTV activity at the Gate_MainEntrance from December 8, 2025, between 08:00 and 12:59 UTC recorded a total of 930 events. The dominant event types were person entries (470) and exits (450), with car entries (8) and exits (2) also noted. The total volume of events indicates significant foot traffic, although peak head count and average head count data are not available.",
+        "distance": 0.5709723234176636
+      },
+      {
+        "community_id": "community_5",
+        "summary": "The CCTV activity involved multiple camera locations during the time range from 16:00:57 to 16:58:54 UTC on December 8, 2025. The dominant event types were person entries, with a total of 16, and person exits, totaling 11, alongside 3 car entries and 2 car exits. The total volume of events recorded was 32, with a node count of 33. There are no notable peak head counts or average head counts reported.",
+        "distance": 0.6148131489753723
+      },
+      {
+        "community_id": "community_1",
+        "summary": "The CCTV activity at the Gate_ParkingLot camera from December 8, 2025, between 07:00 and 18:59 UTC recorded a total of 1,540 events. The dominant event types were person entries (454) and exits (476), along with car entries (298) and exits (312). The total volume of events reached 1,543, with no peak head count reported.",
+        "distance": 0.6164140701293945
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity covers the location from 09:00 to 09:59 UTC on December 8, 2025. The dominant event types are person entries, with 437 recorded, and person exits, totaling 387. There were also 5 car entries and 4 car exits, contributing to a total of 833 events. Notably, the peak head count and average head count data are not available.",
+        "distance": 0.6284809112548828
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event {event_type: 'person_exit'})-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE e.timestamp_utc >= '2025-12-08T17:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, l.name AS location, count(e) AS exit_count\n  UNION ALL\n  MATCH (e:Event {event_type: 'car_exit'})-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE e.timestamp_utc >= '2025-12-08T17:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, l.name AS location, count(e) AS exit_count\n}\nRETURN hour, location, sum(exit_count) AS total_exits\nORDER BY hour, total_exits DESC",
+      "row_count": 17
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.5709723234176636
+    },
+    {
+      "type": "community",
+      "community_id": "community_5",
+      "distance": 0.6148131489753723
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.6164140701293945
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.6284809112548828
+    }
+  ],
+  "duration_ms": 7676,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2539,
+      "completion_tokens": 257
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 1085,
+      "completion_tokens": 167
+    }
+  ],
+  "errors": [],
+  "routing": {
+    "classified_level": "L5",
+    "routed_to": "b2_rag_hybrid",
+    "routing_method": "llm_zero_shot",
+    "routing_duration_ms": 1104,
+    "classifier_metadata": {
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 376,
+      "completion_tokens": 2
+    }
+  },
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=2/4=0.50 (threshold=0.5)"
+  }
+}

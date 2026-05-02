@@ -1,0 +1,298 @@
+{
+  "question_id": "L5_q005_keynote_hall_lifecycle",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Describe the full lifecycle of activity at the keynote hall on 2025-12-08 (UTC). Cover: (a) door entry patterns at KeynoteHall_DoorA throughout the day, (b) the in-hall crowd density at KeynoteHall_Stage during keynote sessions, and (c) how the post-keynote dispersal compares to pre-keynote build-up. Use specific hours and numbers from the data. 4-6 sentences.",
+  "gold_value": {
+    "rubric": [
+      "KeynoteHall_DoorA shows entry peaks aligned with keynote start times (around 08:00-10:00, 13:00-14:00, or 15:00-16:00 UTC)",
+      "KeynoteHall_Stage crowd peaks during the keynote sessions, reaching head_counts in the hundreds",
+      "Outside of keynote hours the in-hall head_count drops to a low baseline (single digits)",
+      "Pre-keynote door entry traffic precedes the in-hall crowd surge"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "On December 8, 2025, at KeynoteHall_DoorA, there were notable door entry patterns, with 186 entries at 08:00 and 181 at 09:00, leading to a total of 360 entries before the keynote began. During the keynote sessions, crowd density peaked at 450.19 at 09:00 and remained high, with significant densities of 399.51 at 14:00 and 379.46 at 15:00. After the keynote, dispersal was marked by 43,199 events, compared to 36,000 events during the pre-keynote build-up, indicating a higher level of activity post-keynote.",
+  "structured_answer": {
+    "columns": [
+      "category",
+      "hour",
+      "entry_count"
+    ],
+    "rows": [
+      [
+        "door_entries",
+        "00",
+        1
+      ],
+      [
+        "door_entries",
+        "01",
+        3
+      ],
+      [
+        "door_entries",
+        "02",
+        2
+      ],
+      [
+        "door_entries",
+        "03",
+        1
+      ],
+      [
+        "door_entries",
+        "04",
+        3
+      ],
+      [
+        "door_entries",
+        "05",
+        5
+      ],
+      [
+        "door_entries",
+        "08",
+        186
+      ],
+      [
+        "door_entries",
+        "09",
+        181
+      ],
+      [
+        "door_entries",
+        "10",
+        2
+      ],
+      [
+        "door_entries",
+        "12",
+        1
+      ],
+      [
+        "door_entries",
+        "13",
+        172
+      ],
+      [
+        "door_entries",
+        "14",
+        1
+      ],
+      [
+        "door_entries",
+        "15",
+        210
+      ],
+      [
+        "door_entries",
+        "16",
+        2
+      ],
+      [
+        "door_entries",
+        "17",
+        1
+      ],
+      [
+        "door_entries",
+        "18",
+        1
+      ],
+      [
+        "door_entries",
+        "19",
+        2
+      ],
+      [
+        "door_entries",
+        "20",
+        1
+      ],
+      [
+        "door_entries",
+        "21",
+        1
+      ],
+      [
+        "door_entries",
+        "22",
+        1
+      ],
+      [
+        "door_entries",
+        "23",
+        5
+      ],
+      [
+        "crowd_density",
+        "00",
+        6.969722222222222
+      ],
+      [
+        "crowd_density",
+        "01",
+        7.269166666666667
+      ],
+      [
+        "crowd_density",
+        "02",
+        7.120277777777778
+      ],
+      [
+        "crowd_density",
+        "03",
+        7.207777777777777
+      ],
+      [
+        "crowd_density",
+        "04",
+        7.010555555555555
+      ],
+      [
+        "crowd_density",
+        "05",
+        6.9255555555555555
+      ],
+      [
+        "crowd_density",
+        "06",
+        6.797777777777778
+      ],
+      [
+        "crowd_density",
+        "07",
+        7.1161111111111115
+      ],
+      [
+        "crowd_density",
+        "08",
+        6.976111111111111
+      ],
+      [
+        "crowd_density",
+        "09",
+        450.18638888888887
+      ],
+      [
+        "crowd_density",
+        "10",
+        7.025833333333333
+      ],
+      [
+        "crowd_density",
+        "11",
+        6.928888888888889
+      ],
+      [
+        "crowd_density",
+        "12",
+        7.1563888888888885
+      ],
+      [
+        "crowd_density",
+        "13",
+        7.074722222222222
+      ],
+      [
+        "crowd_density",
+        "14",
+        399.5133333333333
+      ],
+      [
+        "crowd_density",
+        "15",
+        7.225555555555555
+      ],
+      [
+        "crowd_density",
+        "16",
+        379.45916666666665
+      ],
+      [
+        "crowd_density",
+        "17",
+        6.9325
+      ],
+      [
+        "crowd_density",
+        "18",
+        6.833333333333333
+      ],
+      [
+        "crowd_density",
+        "19",
+        7.176388888888889
+      ],
+      [
+        "crowd_density",
+        "20",
+        7.085277777777778
+      ],
+      [
+        "crowd_density",
+        "21",
+        6.958888888888889
+      ],
+      [
+        "crowd_density",
+        "22",
+        7.251111111111111
+      ],
+      [
+        "crowd_density",
+        "23",
+        7.313611111111111
+      ],
+      [
+        "pre_keynote",
+        null,
+        36000
+      ],
+      [
+        "post_keynote",
+        null,
+        43199
+      ]
+    ],
+    "total_rows": 47
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH door_entries AS (\n    SELECT strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n           COUNT(*) AS entry_count\n    FROM events\n    WHERE camera_location LIKE '%KeynoteHall_DoorA%'\n      AND event_type IN ('person_entry', 'car_entry')\n      AND timestamp_utc >= '2025-12-08T00:00:00Z' \n      AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY hour\n),\ncrowd_density AS (\n    SELECT strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n           AVG(head_count) AS avg_head_count\n    FROM events\n    WHERE camera_location LIKE '%KeynoteHall_Stage%'\n      AND event_type = 'crowd'\n      AND timestamp_utc >= '2025-12-08T00:00:00Z' \n      AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY hour\n),\npost_pre_keynote AS (\n    SELECT 'pre_keynote' AS period,\n           COUNT(*) AS event_count\n    FROM events\n    WHERE camera_location LIKE '%KeynoteHall_Stage%'\n      AND timestamp_utc < '2025-12-08T10:00:00Z' \n      AND timestamp_utc >= '2025-12-08T00:00:00Z'\n    UNION ALL\n    SELECT 'post_keynote' AS period,\n           COUNT(*) AS event_count\n    FROM events\n    WHERE camera_location LIKE '%KeynoteHall_Stage%'\n      AND timestamp_utc >= '2025-12-08T12:00:00Z' \n      AND timestamp_utc < '2025-12-08T23:59:59Z'\n)\nSELECT 'door_entries' AS category, hour, entry_count FROM door_entries\nUNION ALL\nSELECT 'crowd_density' AS category, hour, avg_head_count FROM crowd_density\nUNION ALL\nSELECT period AS category, NULL AS hour, event_count FROM post_pre_keynote",
+      "row_count": 47
+    }
+  ],
+  "duration_ms": 24687,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1027,
+      "completion_tokens": 429
+    },
+    {
+      "stage": "sql_repair",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1509,
+      "completion_tokens": 437
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1385,
+      "completion_tokens": 141
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=3/4=0.75 (threshold=0.5)"
+  }
+}

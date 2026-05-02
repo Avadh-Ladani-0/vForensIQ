@@ -1,0 +1,54 @@
+{
+  "question_id": "L4_q005_highest_peak_to_baseline_ratio",
+  "level": "L4",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Across all crowd-mode cameras (ExpoFloor_MainAisle, DemoBooth_NVIDIA, DemoBooth_Intel, KeynoteHall_Stage, FoodCourt_North) on 2025-12-08 (UTC), which location showed the most extreme peak-to-baseline contrast \u2014 meaning the largest ratio of its peak head_count to its overnight quiet-hour average head_count? Identify the camera_location and explain the ratio order of magnitude.",
+  "gold_value": {
+    "most_extreme_location": "KeynoteHall_Stage"
+  },
+  "answer_text": "The location with the most extreme peak-to-baseline contrast on 2025-12-08 was KeynoteHall_Stage, with a peak-to-baseline ratio of approximately 8.19.",
+  "structured_answer": {
+    "columns": [
+      "camera_location",
+      "peak_to_baseline_ratio"
+    ],
+    "rows": [
+      [
+        "KeynoteHall_Stage",
+        8.185601973177125
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH time_bounds AS (\n    SELECT \n        MIN(timestamp_epoch_s) AS min_time,\n        MAX(timestamp_epoch_s) AS max_time\n    FROM \n        events\n    WHERE \n        timestamp_utc >= '2025-12-08T00:00:00Z' AND \n        timestamp_utc < '2025-12-09T00:00:00Z'\n),\nhourly_head_counts AS (\n    SELECT\n        camera_location,\n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        MAX(head_count) AS peak_head_count,\n        AVG(CASE WHEN strftime('%H', timestamp_epoch_s, 'unixepoch') BETWEEN '00' AND '05' THEN head_count ELSE NULL END) AS overnight_avg_head_count\n    FROM\n        events\n    WHERE\n        event_type = 'crowd' AND\n        camera_location IN ('ExpoFloor_MainAisle', 'DemoBooth_NVIDIA', 'DemoBooth_Intel', 'KeynoteHall_Stage', 'FoodCourt_North') AND\n        timestamp_utc >= '2025-12-08T00:00:00Z' AND \n        timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY\n        camera_location, hour\n),\npeak_to_baseline_ratios AS (\n    SELECT\n        camera_location,\n        MAX(peak_head_count / overnight_avg_head_count) AS peak_to_baseline_ratio\n    FROM\n        hourly_head_counts\n    WHERE\n        overnight_avg_head_count > 0\n    GROUP BY\n        camera_location\n)\nSELECT\n    camera_location,\n    peak_to_baseline_ratio\nFROM\n    peak_to_baseline_ratios\nORDER BY\n    peak_to_baseline_ratio DESC\nLIMIT 1",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 5633,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 1023,
+      "completion_tokens": 373
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 647,
+      "completion_tokens": 40
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_1_facts_satisfied"
+  }
+}

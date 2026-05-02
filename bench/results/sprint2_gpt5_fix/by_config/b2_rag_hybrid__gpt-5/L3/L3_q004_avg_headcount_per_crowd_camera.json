@@ -1,0 +1,131 @@
+{
+  "question_id": "L3_q004_avg_headcount_per_crowd_camera",
+  "level": "L3",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "For each crowd-mode camera_location on 2025-12-08 (UTC), report the average head_count over the full day.",
+  "gold_value": [
+    [
+      "DemoBooth_Intel",
+      10.65
+    ],
+    [
+      "DemoBooth_NVIDIA",
+      15.52
+    ],
+    [
+      "ExpoFloor_MainAisle",
+      49.36
+    ],
+    [
+      "FoodCourt_North",
+      23.07
+    ],
+    [
+      "KeynoteHall_Stage",
+      57.4
+    ]
+  ],
+  "answer_text": "Average head_count on 2025-12-08 (UTC) by crowd-mode camera_location:\n- DemoBooth_Intel \u2014 10.648333333333333\n- DemoBooth_NVIDIA \u2014 15.515\n- ExpoFloor_MainAisle \u2014 49.35666666666667\n- FoodCourt_North \u2014 23.069583333333334\n- KeynoteHall_Stage \u2014 57.3975",
+  "structured_answer": {
+    "cypher_columns": [
+      "camera_location",
+      "avg_head_count"
+    ],
+    "cypher_rows": [
+      [
+        "DemoBooth_Intel",
+        10.648333333333333
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        15.515
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        49.35666666666667
+      ],
+      [
+        "FoodCourt_North",
+        23.069583333333334
+      ],
+      [
+        "KeynoteHall_Stage",
+        57.3975
+      ]
+    ],
+    "cypher_total_rows": 5,
+    "retrieved_communities": [
+      {
+        "community_id": "community_0",
+        "summary": "Cameras CAM_01 covered Gate_MainEntrance and Platform_1 from 2025-12-01T01:00:00Z to 2025-12-08T12:00:00Z (events recorded between 2025-12-01T01:04:10Z and 2025-12-08T12:59:57Z). Total volume was 1,775 events: person activity dominated (788 person_entry and 773 person_exit = 1,561 person events) versus 112 car_entry and 102 car_exit. Average head count (mean-of-means) was 10.42 with a peak head count of 47.0; node_count is 1,802 and average events/hour \u2248 9.9 (1775 events over ~179 hours); peak per-hour event count is not specified in the provided profile.",
+        "distance": 0.36374402046203613
+      },
+      {
+        "community_id": "community_5",
+        "summary": "No camera locations were specified. Events occurred between 2025-12-08T18:00:01Z and 2025-12-08T18:59:57Z (within the 18:00 UTC hour). Person movements dominated (person_entry 300, person_exit 299) versus vehicle movements (car_entry 83, car_exit 62), totaling 744 events in the hour. Peak head_count is not available; peak event count for the hour = 744 and node_count = 745.",
+        "distance": 0.3733298182487488
+      },
+      {
+        "community_id": "community_9",
+        "summary": "Cameras involved: DemoBooth_Intel (CAM_04), DemoBooth_NVIDIA (CAM_05), ExpoFloor_MainAisle (CAM_06), FoodCourt_North (CAM_07), KeynoteHall_Stage (CAM_08). Events are dominated by person movements (person_entry 206, person_exit 181, total 387) versus vehicle events (car_entry 29, car_exit 33). The dataset covers the UTC hour range 2025-12-08T00:00:00Z\u20132025-12-08T23:00:00Z with events from 2025-12-08T00:02:26Z to 2025-12-08T23:59:14Z; total events 449, peak head_count 500, average head_count (mean of means) \u2248 31.1974. Peak event count per hour is not provided in the supplied data.",
+        "distance": 0.3927200436592102
+      },
+      {
+        "community_id": "community_4",
+        "summary": "Camera locations were not provided in the input; node_count is 41. The events occurred between 2025-12-08T05:00:59Z and 2025-12-08T05:59:16Z (hour 2025-12-08T05:00:00Z) totaling 40 events. Person movement dominated: 22 person_entry and 14 person_exit (36 of 40 events, 90%), with 4 car_exit events. Peak head_count was not reported; peak event count for the hour was 40.",
+        "distance": 0.4041983485221863
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera)\nWHERE c.mode = 'crowd'\n  AND ch.hour_utc >= '2025-12-08T00:00:00Z'\n  AND ch.hour_utc < '2025-12-09T00:00:00Z'\nWITH c.camera_location AS camera_location,\n     sum(ch.avg_hc * ch.event_count) AS weighted_sum,\n     sum(ch.event_count) AS total_samples\nRETURN camera_location,\n       CASE WHEN total_samples > 0 THEN weighted_sum / total_samples ELSE null END AS avg_head_count\nORDER BY camera_location",
+      "row_count": 5
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.36374402046203613
+    },
+    {
+      "type": "community",
+      "community_id": "community_5",
+      "distance": 0.3733298182487488
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.3927200436592102
+    },
+    {
+      "type": "community",
+      "community_id": "community_4",
+      "distance": 0.4041983485221863
+    }
+  ],
+  "duration_ms": 36864,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5",
+      "prompt_tokens": 1881,
+      "completion_tokens": 1485
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-5",
+      "prompt_tokens": 922,
+      "completion_tokens": 677
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": true,
+    "detail": "all_keys_and_values_matched (rows=5)"
+  }
+}

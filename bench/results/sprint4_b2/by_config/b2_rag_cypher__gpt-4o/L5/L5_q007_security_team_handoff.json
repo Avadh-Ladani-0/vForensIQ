@@ -1,0 +1,54 @@
+{
+  "question_id": "L5_q007_security_team_handoff",
+  "level": "L5",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "If you were running security here, what would you tell your team based on the day's activity? Where should we keep the most eyes, and when do we need extra hands?",
+  "gold_value": {
+    "rubric": [
+      "Main entrance is the highest-traffic location and needs constant attention",
+      "Crowd-management focus on keynote area during keynote hours",
+      "Extra coverage needed during morning arrival window and evening departure window",
+      "Demo booth area requires monitoring during expo hours when crowds gather"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": null,
+  "structured_answer": {
+    "columns": [],
+    "rows": [],
+    "total_rows": 0
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event)\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  WITH substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, count(*) AS n\n  RETURN hour, n\n  UNION ALL\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.hour_utc AS hour, ch.event_count AS n\n}\nRETURN hour, sum(n) AS total_events\nORDER BY total_events DESC, hour ASC\n\nUNION ALL\n\nCALL {\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.camera_location AS location, avg(ch.avg_hc) AS avg_head_count, max(ch.peak_hc) AS peak_head_count\n}\nRETURN location, avg_head_count, peak_head_count\nORDER BY peak_head_count DESC, avg_head_count DESC, location ASC",
+      "row_count": 0
+    }
+  ],
+  "duration_ms": 7498,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2529,
+      "completion_tokens": 276
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 2917,
+      "completion_tokens": 293
+    }
+  ],
+  "errors": [
+    "CypherSyntaxError: {neo4j_code: Neo.ClientError.Statement.SyntaxError} {message: All sub queries in an UNION must have the same return column names (line 14, column 1 (offset: 461))\n\"UNION ALL\"\n ^} {gql_status: 42001} {gql_status_description: error: syntax error or access rule violation - invalid syntax}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": null,
+    "detail": "error"
+  }
+}

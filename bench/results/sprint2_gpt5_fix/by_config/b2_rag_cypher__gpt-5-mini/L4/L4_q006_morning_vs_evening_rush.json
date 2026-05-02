@@ -1,0 +1,87 @@
+{
+  "question_id": "L4_q006_morning_vs_evening_rush",
+  "level": "L4",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-5-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Was the morning rush bigger than the evening rush at the main entrance, in terms of how many people came and went?",
+  "gold_value": {
+    "bigger_rush": "morning",
+    "morning_total_approx": {
+      "value": 1200,
+      "tolerance": 250
+    },
+    "evening_total_approx": {
+      "value": 1000,
+      "tolerance": 250
+    }
+  },
+  "answer_text": "At MainEntrance between 2025-12-08T07:00:00Z and 2025-12-08T10:00:00Z there were 1211 total people (652 entry, 559 exit).  \nBetween 2025-12-08T16:00:00Z and 2025-12-08T19:00:00Z there were 1016 total people (535 entry, 481 exit), so the morning rush was bigger.",
+  "structured_answer": {
+    "columns": [
+      "period",
+      "total_for_period",
+      "breakdown"
+    ],
+    "rows": [
+      [
+        "evening",
+        1016,
+        [
+          {
+            "count": 535,
+            "direction": "entry"
+          },
+          {
+            "count": 481,
+            "direction": "exit"
+          }
+        ]
+      ],
+      [
+        "morning",
+        1211,
+        [
+          {
+            "count": 652,
+            "direction": "entry"
+          },
+          {
+            "count": 559,
+            "direction": "exit"
+          }
+        ]
+      ]
+    ],
+    "total_rows": 2
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)\n  WHERE c.camera_location CONTAINS 'MainEntrance'\n    AND e.event_type = 'person_entry'\n    AND e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n    AND e.timestamp_utc >= '2025-12-08T07:00:00Z' AND e.timestamp_utc < '2025-12-08T10:00:00Z'\n  RETURN 'morning' AS period, 'entry' AS direction, count(e) AS count\n  UNION ALL\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)\n  WHERE c.camera_location CONTAINS 'MainEntrance'\n    AND e.event_type = 'person_exit'\n    AND e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n    AND e.timestamp_utc >= '2025-12-08T07:00:00Z' AND e.timestamp_utc < '2025-12-08T10:00:00Z'\n  RETURN 'morning' AS period, 'exit' AS direction, count(e) AS count\n  UNION ALL\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)\n  WHERE c.camera_location CONTAINS 'MainEntrance'\n    AND e.event_type = 'person_entry'\n    AND e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n    AND e.timestamp_utc >= '2025-12-08T16:00:00Z' AND e.timestamp_utc < '2025-12-08T19:00:00Z'\n  RETURN 'evening' AS period, 'entry' AS direction, count(e) AS count\n  UNION ALL\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)\n  WHERE c.camera_location CONTAINS 'MainEntrance'\n    AND e.event_type = 'person_exit'\n    AND e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n    AND e.timestamp_utc >= '2025-12-08T16:00:00Z' AND e.timestamp_utc < '2025-12-08T19:00:00Z'\n  RETURN 'evening' AS period, 'exit' AS direction, count(e) AS count\n}\nWITH period, direction, count\nWITH period, collect({direction:direction, count:count}) AS breakdown, sum(count) AS total_for_period\nRETURN period, total_for_period, breakdown\nORDER BY period",
+      "row_count": 2
+    }
+  ],
+  "duration_ms": 60799,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 1878,
+      "completion_tokens": 3211
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 906,
+      "completion_tokens": 878
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_3_facts_satisfied"
+  }
+}

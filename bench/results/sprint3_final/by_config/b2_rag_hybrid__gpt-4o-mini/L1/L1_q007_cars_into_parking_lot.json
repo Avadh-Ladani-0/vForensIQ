@@ -1,0 +1,92 @@
+{
+  "question_id": "L1_q007_cars_into_parking_lot",
+  "level": "L1",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many cars came into the parking lot during the day?",
+  "gold_value": 381,
+  "answer_text": "There were 0 cars that came into the parking lot during the day. During this timeframe, CCTV data indicates a total of 1,529 recorded events, with a notable presence of 283 car entries, emphasizing high activity in the parking area despite the lack of new car entries.",
+  "structured_answer": {
+    "cypher_columns": [
+      "total_car_entries"
+    ],
+    "cypher_rows": [
+      [
+        0
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_1",
+        "summary": "The CCTV activity at the Gate_ParkingLot camera from December 8, 2025, between 07:00 and 17:00 UTC recorded a total of 1,529 events. The dominant event types were person entries (463) and exits (466), along with car entries (283) and exits (317). Notably, the total volume of events reached 1,532, indicating a high level of activity during this time.",
+        "distance": 0.41329169273376465
+      },
+      {
+        "community_id": "community_13",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, 17:00 to 17:59 UTC recorded a total of 194 events, with person entries (92) and exits (89) dominating the activity. The peak head count reached 13 individuals, while the peak event count per hour was 194. Additionally, there were 5 car entries and 8 car exits during this time.",
+        "distance": 0.5213277339935303
+      },
+      {
+        "community_id": "community_16",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 08:00:35 and 08:59:56, recorded a total of 286 events. The dominant event types were person entries (92) and exits (107), along with 46 car entries and 41 car exits. The peak head count reached 47, with an average head count of 40.02 during this hour.",
+        "distance": 0.5402194261550903
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity at Platform_1 from 02:00 to 02:55 UTC on December 1, 2025, recorded a total of 37 events, with person entries (16) and exits (14) dominating the activity. There were also 4 car entries and 3 car exits. The peak head count reached 13, with an average head count of 5.05 during this time.",
+        "distance": 0.5405325889587402
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event) \nWHERE e.event_type = 'car_entry' \nAND e.timestamp_utc >= '2025-12-08T00:00:00Z' \nAND e.timestamp_utc < '2025-12-09T00:00:00Z' \nAND e.object_id CONTAINS 'Parking' \nRETURN count(e) AS total_car_entries",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.41329169273376465
+    },
+    {
+      "type": "community",
+      "community_id": "community_13",
+      "distance": 0.5213277339935303
+    },
+    {
+      "type": "community",
+      "community_id": "community_16",
+      "distance": 0.5402194261550903
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.5405325889587402
+    }
+  ],
+  "duration_ms": 7064,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2144,
+      "completion_tokens": 80
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 634,
+      "completion_tokens": 57
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": false,
+    "detail": "expected=381.0 got=0.0"
+  }
+}

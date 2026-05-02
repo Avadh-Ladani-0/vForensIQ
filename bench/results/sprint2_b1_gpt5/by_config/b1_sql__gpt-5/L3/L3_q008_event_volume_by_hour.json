@@ -1,0 +1,130 @@
+{
+  "question_id": "L3_q008_event_volume_by_hour",
+  "level": "L3",
+  "approach": "b1_sql",
+  "model": "gpt-5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How does activity change throughout the day across the whole venue? Show the total number of events per hour.",
+  "gold_value": [
+    [
+      "00",
+      18040
+    ],
+    [
+      "01",
+      18039
+    ],
+    [
+      "02",
+      18029
+    ],
+    [
+      "03",
+      18032
+    ],
+    [
+      "04",
+      18036
+    ],
+    [
+      "05",
+      18040
+    ],
+    [
+      "06",
+      18037
+    ],
+    [
+      "07",
+      18358
+    ],
+    [
+      "08",
+      19292
+    ],
+    [
+      "09",
+      19003
+    ],
+    [
+      "10",
+      18035
+    ],
+    [
+      "11",
+      18037
+    ],
+    [
+      "12",
+      18323
+    ],
+    [
+      "13",
+      18397
+    ],
+    [
+      "14",
+      18031
+    ],
+    [
+      "15",
+      18440
+    ],
+    [
+      "16",
+      18032
+    ],
+    [
+      "17",
+      18807
+    ],
+    [
+      "18",
+      18792
+    ],
+    [
+      "19",
+      18027
+    ],
+    [
+      "20",
+      18033
+    ],
+    [
+      "21",
+      18032
+    ],
+    [
+      "22",
+      18026
+    ],
+    [
+      "23",
+      18022
+    ]
+  ],
+  "answer_text": null,
+  "structured_answer": {
+    "columns": [],
+    "rows": [],
+    "total_rows": 0
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "",
+      "row_count": 0
+    }
+  ],
+  "duration_ms": 12196,
+  "llm_calls": [],
+  "errors": [
+    "RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": null,
+    "detail": "error"
+  }
+}

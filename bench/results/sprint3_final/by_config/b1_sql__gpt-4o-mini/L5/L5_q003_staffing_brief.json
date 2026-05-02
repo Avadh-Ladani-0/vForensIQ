@@ -1,0 +1,103 @@
+{
+  "question_id": "L5_q003_staffing_brief",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a staffing recommendation brief for the AI Hardware Summit on 2025-12-08 (UTC). Identify (a) the busiest hours of the day requiring extra staff at the gates and on the expo floor, and (b) the quiet hours where minimal coverage is sufficient. Cite specific hour ranges and supporting metrics. Keep it to 4-6 bullet points.",
+  "gold_value": {
+    "rubric": [
+      "Morning gate rush around 08:00-10:00 UTC needs extra staffing",
+      "Evening gate rush around 17:00-19:00 UTC needs extra staffing",
+      "Lunch hours 12:00-14:00 UTC are busy at FoodCourt and need extra coverage",
+      "Late-night and early-morning hours (roughly 22:00-06:00 UTC) are quiet and need minimal coverage",
+      "Keynote hours (09:00-10:00 and 14:00-15:00 UTC) require crowd management at KeynoteHall_Stage"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "- Busiest hours requiring extra staff are from **08:00 to 09:00** with **19,292 total events** and **1,087 gate events**; **09:00 to 10:00** with **19,003 total events** and **991 gate events**; and **17:00 to 18:00** with **18,807 total events** and **633 gate events**.\n- Quiet hours with minimal coverage can be expected from **22:00 to 23:00** with **18,026 total events** and **22 gate events**; **23:00 to 00:00** with **18,022 total events** and **19 gate events**; and **19:00 to 20:00** with **18,027 total events** and **25 gate events**.",
+  "structured_answer": {
+    "columns": [
+      "period",
+      "hour",
+      "total_events",
+      "gate_events",
+      "crowd_head_count"
+    ],
+    "rows": [
+      [
+        "Busiest Hours",
+        "08",
+        19292,
+        1087,
+        90537
+      ],
+      [
+        "Busiest Hours",
+        "09",
+        19003,
+        991,
+        1685871
+      ],
+      [
+        "Busiest Hours",
+        "17",
+        18807,
+        633,
+        733005
+      ],
+      [
+        "Quiet Hours",
+        "23",
+        18022,
+        19,
+        91283
+      ],
+      [
+        "Quiet Hours",
+        "22",
+        18026,
+        22,
+        91063
+      ],
+      [
+        "Quiet Hours",
+        "19",
+        18027,
+        25,
+        90518
+      ]
+    ],
+    "total_rows": 6,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH event_counts AS (\n    SELECT strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n           COUNT(*) AS total_events,\n           SUM(CASE WHEN event_type IN ('person_entry', 'person_exit') THEN 1 ELSE 0 END) AS gate_events,\n           SUM(CASE WHEN event_type = 'crowd' THEN head_count ELSE 0 END) AS crowd_head_count\n    FROM events\n    WHERE timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY hour\n),\nbusiest_hours AS (\n    SELECT hour, total_events, gate_events, crowd_head_count\n    FROM event_counts\n    ORDER BY total_events DESC\n    LIMIT 3\n),\nquiet_hours AS (\n    SELECT hour, total_events, gate_events, crowd_head_count\n    FROM event_counts\n    ORDER BY total_events ASC\n    LIMIT 3\n)\nSELECT 'Busiest Hours' AS period, hour, total_events, gate_events, crowd_head_count FROM busiest_hours\nUNION ALL\nSELECT 'Quiet Hours' AS period, hour, total_events, gate_events, crowd_head_count FROM quiet_hours",
+      "row_count": 6
+    }
+  ],
+  "duration_ms": 9432,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1008,
+      "completion_tokens": 259
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 633,
+      "completion_tokens": 174
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=2/5=0.40 (threshold=0.5)"
+  }
+}

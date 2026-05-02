@@ -1,0 +1,559 @@
+{
+  "question_id": "L5_q001_summit_day_brief",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a security and operations brief for the AI Hardware Summit on 2025-12-08 (UTC). Cover: the busiest traffic windows at the main gates, keynote hall attendance peaks, lunchtime dynamics at the food court, and how the demo booths (NVIDIA and Intel) compared in crowd activity. Keep it to 5 bullet points.",
+  "gold_value": {
+    "rubric": [
+      "Gate_MainEntrance shows morning person-entry peak around 08-10 UTC",
+      "Gate_MainEntrance shows evening person-exit peak around 17-19 UTC",
+      "KeynoteHall_Stage crowd peaks during keynote hours (09-10 UTC and 14-15 UTC)",
+      "FoodCourt_North crowd peaks during lunch hours (12-14 UTC)",
+      "DemoBooth_NVIDIA had higher crowd activity than DemoBooth_Intel"
+    ],
+    "threshold": 0.6
+  },
+  "answer_text": "- The busiest traffic at the main gates occurred at 08:00 with 607 entries, followed closely by 09:00 with 601 entries.\n- Keynote Hall attendance peaked at 09:00 with a headcount of 500, and at 14:00 with 452 attendees.\n- The food court saw the highest activity at 12:00 with 146 people, and again at 13:00 with 139 people.\n- NVIDIA's demo booth had higher crowd activity peaking at 16 attendees per hour at both 00:00 and 09:00 compared to Intel, which peaked at 53 attendees at 16:00.\n- Overall, the afternoon hours showed higher crowd activity at Intel compared to NVIDIA, with significant peaks at Intel during midday and late afternoon.",
+  "structured_answer": {
+    "columns": [
+      "category",
+      "hour",
+      "metric"
+    ],
+    "rows": [
+      [
+        "Main Gate Traffic",
+        "00",
+        26
+      ],
+      [
+        "Main Gate Traffic",
+        "01",
+        27
+      ],
+      [
+        "Main Gate Traffic",
+        "02",
+        19
+      ],
+      [
+        "Main Gate Traffic",
+        "03",
+        20
+      ],
+      [
+        "Main Gate Traffic",
+        "04",
+        20
+      ],
+      [
+        "Main Gate Traffic",
+        "05",
+        29
+      ],
+      [
+        "Main Gate Traffic",
+        "06",
+        25
+      ],
+      [
+        "Main Gate Traffic",
+        "07",
+        23
+      ],
+      [
+        "Main Gate Traffic",
+        "08",
+        607
+      ],
+      [
+        "Main Gate Traffic",
+        "09",
+        601
+      ],
+      [
+        "Main Gate Traffic",
+        "10",
+        21
+      ],
+      [
+        "Main Gate Traffic",
+        "11",
+        22
+      ],
+      [
+        "Main Gate Traffic",
+        "12",
+        312
+      ],
+      [
+        "Main Gate Traffic",
+        "13",
+        30
+      ],
+      [
+        "Main Gate Traffic",
+        "14",
+        19
+      ],
+      [
+        "Main Gate Traffic",
+        "15",
+        20
+      ],
+      [
+        "Main Gate Traffic",
+        "16",
+        21
+      ],
+      [
+        "Main Gate Traffic",
+        "17",
+        517
+      ],
+      [
+        "Main Gate Traffic",
+        "18",
+        498
+      ],
+      [
+        "Main Gate Traffic",
+        "19",
+        19
+      ],
+      [
+        "Main Gate Traffic",
+        "20",
+        21
+      ],
+      [
+        "Main Gate Traffic",
+        "21",
+        22
+      ],
+      [
+        "Main Gate Traffic",
+        "22",
+        19
+      ],
+      [
+        "Main Gate Traffic",
+        "23",
+        13
+      ],
+      [
+        "Keynote Hall Peaks",
+        "00",
+        51
+      ],
+      [
+        "Keynote Hall Peaks",
+        "01",
+        52
+      ],
+      [
+        "Keynote Hall Peaks",
+        "02",
+        50
+      ],
+      [
+        "Keynote Hall Peaks",
+        "03",
+        59
+      ],
+      [
+        "Keynote Hall Peaks",
+        "04",
+        52
+      ],
+      [
+        "Keynote Hall Peaks",
+        "05",
+        51
+      ],
+      [
+        "Keynote Hall Peaks",
+        "06",
+        62
+      ],
+      [
+        "Keynote Hall Peaks",
+        "07",
+        74
+      ],
+      [
+        "Keynote Hall Peaks",
+        "08",
+        68
+      ],
+      [
+        "Keynote Hall Peaks",
+        "09",
+        500
+      ],
+      [
+        "Keynote Hall Peaks",
+        "10",
+        56
+      ],
+      [
+        "Keynote Hall Peaks",
+        "11",
+        55
+      ],
+      [
+        "Keynote Hall Peaks",
+        "12",
+        57
+      ],
+      [
+        "Keynote Hall Peaks",
+        "13",
+        54
+      ],
+      [
+        "Keynote Hall Peaks",
+        "14",
+        452
+      ],
+      [
+        "Keynote Hall Peaks",
+        "15",
+        53
+      ],
+      [
+        "Keynote Hall Peaks",
+        "16",
+        433
+      ],
+      [
+        "Keynote Hall Peaks",
+        "17",
+        51
+      ],
+      [
+        "Keynote Hall Peaks",
+        "18",
+        59
+      ],
+      [
+        "Keynote Hall Peaks",
+        "19",
+        55
+      ],
+      [
+        "Keynote Hall Peaks",
+        "20",
+        57
+      ],
+      [
+        "Keynote Hall Peaks",
+        "21",
+        50
+      ],
+      [
+        "Keynote Hall Peaks",
+        "22",
+        51
+      ],
+      [
+        "Keynote Hall Peaks",
+        "23",
+        57
+      ],
+      [
+        "Food Court Dynamics",
+        "00",
+        25
+      ],
+      [
+        "Food Court Dynamics",
+        "01",
+        26
+      ],
+      [
+        "Food Court Dynamics",
+        "02",
+        24
+      ],
+      [
+        "Food Court Dynamics",
+        "03",
+        26
+      ],
+      [
+        "Food Court Dynamics",
+        "04",
+        26
+      ],
+      [
+        "Food Court Dynamics",
+        "05",
+        24
+      ],
+      [
+        "Food Court Dynamics",
+        "06",
+        34
+      ],
+      [
+        "Food Court Dynamics",
+        "07",
+        27
+      ],
+      [
+        "Food Court Dynamics",
+        "08",
+        25
+      ],
+      [
+        "Food Court Dynamics",
+        "09",
+        25
+      ],
+      [
+        "Food Court Dynamics",
+        "10",
+        28
+      ],
+      [
+        "Food Court Dynamics",
+        "11",
+        27
+      ],
+      [
+        "Food Court Dynamics",
+        "12",
+        146
+      ],
+      [
+        "Food Court Dynamics",
+        "13",
+        139
+      ],
+      [
+        "Food Court Dynamics",
+        "14",
+        27
+      ],
+      [
+        "Food Court Dynamics",
+        "15",
+        27
+      ],
+      [
+        "Food Court Dynamics",
+        "16",
+        23
+      ],
+      [
+        "Food Court Dynamics",
+        "17",
+        119
+      ],
+      [
+        "Food Court Dynamics",
+        "18",
+        121
+      ],
+      [
+        "Food Court Dynamics",
+        "19",
+        25
+      ],
+      [
+        "Food Court Dynamics",
+        "20",
+        27
+      ],
+      [
+        "Food Court Dynamics",
+        "21",
+        24
+      ],
+      [
+        "Food Court Dynamics",
+        "22",
+        27
+      ],
+      [
+        "Food Court Dynamics",
+        "23",
+        24
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 00",
+        14
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 01",
+        14
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 02",
+        14
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 03",
+        14
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 04",
+        13
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 05",
+        15
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 06",
+        13
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 07",
+        14
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 08",
+        13
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 09",
+        14
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 10",
+        50
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 11",
+        51
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 12",
+        14
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 13",
+        40
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 14",
+        14
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 15",
+        51
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 16",
+        53
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 17",
+        14
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 18",
+        15
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 19",
+        13
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 20",
+        15
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 21",
+        13
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 22",
+        13
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel 23",
+        13
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_NVIDIA 00",
+        16
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_NVIDIA 01",
+        15
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_NVIDIA 02",
+        18
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_NVIDIA 03",
+        16
+      ]
+    ],
+    "total_rows": 120,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH time_bounds AS (\n    SELECT \n        MIN(timestamp_epoch_s) AS min_time,\n        MAX(timestamp_epoch_s) AS max_time\n    FROM \n        events\n    WHERE \n        timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n),\nmain_gate_traffic AS (\n    SELECT \n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        COUNT(*) AS event_count\n    FROM \n        events\n    WHERE \n        camera_location LIKE '%MainEntrance%' \n        AND timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        hour\n),\nkeynote_hall_peaks AS (\n    SELECT \n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        MAX(head_count) AS max_head_count\n    FROM \n        events\n    WHERE \n        camera_location LIKE '%KeynoteHall%' \n        AND event_type = 'crowd'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        hour\n),\nfood_court_dynamics AS (\n    SELECT \n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        MAX(head_count) AS max_head_count\n    FROM \n        events\n    WHERE \n        camera_location LIKE '%FoodCourt%' \n        AND event_type = 'crowd'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        hour\n),\ndemo_booth_comparison AS (\n    SELECT \n        camera_location,\n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        MAX(head_count) AS max_head_count\n    FROM \n        events\n    WHERE \n        (camera_location LIKE '%NVIDIA%' OR camera_location LIKE '%Intel%')\n        AND event_type = 'crowd'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        camera_location, hour\n)\nSELECT \n    'Main Gate Traffic' AS category, hour, event_count AS metric\nFROM \n    main_gate_traffic\nUNION ALL\nSELECT \n    'Keynote Hall Peaks' AS category, hour, max_head_count AS metric\nFROM \n    keynote_hall_peaks\nUNION ALL\nSELECT \n    'Food Court Dynamics' AS category, hour, max_head_count AS metric\nFROM \n    food_court_dynamics\nUNION ALL\nSELECT \n    'Demo Booth Comparison' AS category, camera_location || ' ' || hour, max_head_count AS metric\nFROM \n    demo_booth_comparison",
+      "row_count": 120
+    }
+  ],
+  "duration_ms": 13201,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 1003,
+      "completion_tokens": 663
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 2290,
+      "completion_tokens": 162
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=3/5=0.60 (threshold=0.6)"
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "question_id": "L1_q001_car_entry_count_at_gate01",
+  "level": "L1",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "base_quiet_day",
+  "question_text": "How many car_entry events were recorded at Gate_01 on 2025-12-01 (UTC)?",
+  "gold_value": 223,
+  "answer_text": "On December 1, 2025, there were no car entry events recorded at Gate_01.",
+  "structured_answer": {
+    "cypher_columns": [
+      "car_entry_count"
+    ],
+    "cypher_rows": [
+      [
+        0
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_1",
+        "summary": "The CCTV activity at the Gate_ParkingLot camera from December 8, 2025, covers a time range from 07:00 to 17:00 UTC. The dominant event types are person entries (463) and exits (466), along with car entries (283) and exits (317). The total volume of events recorded is 1,529, with a node count of 1,532.",
+        "distance": 0.3054838180541992
+      },
+      {
+        "community_id": "community_0",
+        "summary": "The CCTV activity involves the camera locations at Gate_MainEntrance and Platform_1, covering the time range from December 1, 2025, at 01:00 UTC to December 8, 2025, at 12:59 UTC. The dominant event types are person entries (788) and exits (773), along with car entries (112) and exits (102). The total volume of events recorded is 1,775, with a peak head count of 47 and an average head count of approximately 10.42.",
+        "distance": 0.32682788372039795
+      },
+      {
+        "community_id": "community_18",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 21:00 and 21:59 UTC recorded a total of 41 events. The dominant event types were person entries (14) and exits (17), along with 7 car entries and 3 car exits. The peak head count reached 14, with an average head count of approximately 4.95 during this hour.",
+        "distance": 0.32740139961242676
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.3327960968017578
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event {event_type: 'car_entry'})-[:DETECTED_BY]->(:Camera {camera_location: 'Gate_01'})\nWHERE e.timestamp_utc >= '2025-12-01T00:00:00Z' AND e.timestamp_utc < '2025-12-02T00:00:00Z'\nRETURN COUNT(e) AS car_entry_count",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.3054838180541992
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.32682788372039795
+    },
+    {
+      "type": "community",
+      "community_id": "community_18",
+      "distance": 0.32740139961242676
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.3327960968017578
+    }
+  ],
+  "duration_ms": 3175,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 978,
+      "completion_tokens": 80
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 619,
+      "completion_tokens": 21
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": false,
+    "detail": "expected=223.0 got=1.0"
+  }
+}

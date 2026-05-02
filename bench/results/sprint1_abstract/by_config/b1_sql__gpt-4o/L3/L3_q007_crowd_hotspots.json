@@ -1,0 +1,93 @@
+{
+  "question_id": "L3_q007_crowd_hotspots",
+  "level": "L3",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which areas of the venue had the most crowd activity? Rank them by their average crowd size.",
+  "gold_value": [
+    [
+      "KeynoteHall_Stage",
+      57.4
+    ],
+    [
+      "ExpoFloor_MainAisle",
+      49.36
+    ],
+    [
+      "FoodCourt_North",
+      23.07
+    ],
+    [
+      "DemoBooth_NVIDIA",
+      15.52
+    ],
+    [
+      "DemoBooth_Intel",
+      10.65
+    ]
+  ],
+  "answer_text": "The areas of the venue ranked by average crowd size are as follows: KeynoteHall_Stage with an average crowd size of 57.40, ExpoFloor_MainAisle with 49.36, FoodCourt_North with 23.07, DemoBooth_NVIDIA with 15.52, DemoBooth_Intel with 10.65, and Platform_1 with 10.43.",
+  "structured_answer": {
+    "columns": [
+      "camera_location",
+      "average_crowd_size"
+    ],
+    "rows": [
+      [
+        "KeynoteHall_Stage",
+        57.39643518518518
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        49.3565625
+      ],
+      [
+        "FoodCourt_North",
+        23.069108796296295
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        15.515462962962962
+      ],
+      [
+        "DemoBooth_Intel",
+        10.648136574074075
+      ],
+      [
+        "Platform_1",
+        10.427824074074074
+      ]
+    ],
+    "total_rows": 6
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "SELECT camera_location, AVG(head_count) AS average_crowd_size\nFROM events\nWHERE event_type = 'crowd'\nGROUP BY camera_location\nORDER BY average_crowd_size DESC",
+      "row_count": 6
+    }
+  ],
+  "duration_ms": 4517,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 856,
+      "completion_tokens": 44
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 325,
+      "completion_tokens": 84
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": true,
+    "detail": "all_keys_and_values_matched (rows=5)"
+  }
+}

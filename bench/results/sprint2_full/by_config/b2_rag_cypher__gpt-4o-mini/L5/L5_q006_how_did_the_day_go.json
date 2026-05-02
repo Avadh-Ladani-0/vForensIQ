@@ -1,0 +1,55 @@
+{
+  "question_id": "L5_q006_how_did_the_day_go",
+  "level": "L5",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Tell me how the day went at the conference \u2014 what stood out, when were the big moments, and what does the activity tell us?",
+  "gold_value": {
+    "rubric": [
+      "Significant person traffic at the main entrance, especially in the morning and evening",
+      "Keynote sessions drew large crowds at the keynote stage area",
+      "Demo booths (especially NVIDIA) had notable crowd activity during expo hours",
+      "Food court was busiest around lunchtime",
+      "Overnight hours were quiet across the venue"
+    ],
+    "threshold": 0.4
+  },
+  "answer_text": null,
+  "structured_answer": {
+    "columns": [],
+    "rows": [],
+    "total_rows": 0
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "WITH \n  (MATCH (e:Event)-[:DETECTED_BY]->(:Camera)-[:LOCATED_AT]->(:Location) \n   WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z' \n   RETURN COUNT(e) AS total_events, \n          COUNT(CASE WHEN e.event_type = 'person_entry' THEN 1 END) AS people_entries, \n          COUNT(CASE WHEN e.event_type = 'person_exit' THEN 1 END) AS people_exits, \n          COUNT(CASE WHEN e.event_type = 'car_entry' THEN 1 END) AS car_entries, \n          COUNT(CASE WHEN e.event_type = 'car_exit' THEN 1 END) AS car_exits) AS event_counts,\n  (MATCH (ch:CrowdHour)-[:AT_CAMERA]->(:Camera)-[:LOCATED_AT]->(:Location) \n   WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z' \n   RETURN AVG(ch.avg_hc) AS avg_head_count, \n          MAX(ch.peak_hc) AS peak_head_count, \n          COUNT(ch) AS crowd_events) AS crowd_stats\nRETURN event_counts.total_events AS total_events, \n       event_counts.people_entries AS people_entries, \n       event_counts.people_exits AS people_exits, \n       event_counts.car_entries AS car_entries, \n       event_counts.car_exits AS car_exits, \n       crowd_stats.avg_head_count AS avg_head_count, \n       crowd_stats.peak_head_count AS peak_head_count, \n       crowd_stats.crowd_events AS crowd_events",
+      "row_count": 0
+    }
+  ],
+  "duration_ms": 14956,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 987,
+      "completion_tokens": 350
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1473,
+      "completion_tokens": 377
+    }
+  ],
+  "errors": [
+    "CypherSyntaxError: {neo4j_code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input ':': expected an expression (line 2, column 21 (offset: 26))\n\"  (MATCH (e:Event)-[:DETECTED_BY]->(:Camera)-[:LOCATED_AT]->(:Location)\"\n                     ^} {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": null,
+    "detail": "error"
+  }
+}

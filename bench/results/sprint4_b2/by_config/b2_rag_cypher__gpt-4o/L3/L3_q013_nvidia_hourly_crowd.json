@@ -1,0 +1,291 @@
+{
+  "question_id": "L3_q013_nvidia_hourly_crowd",
+  "level": "L3",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Give me the NVIDIA booth's crowd numbers hour by hour.",
+  "gold_value": [
+    [
+      "00",
+      3.5
+    ],
+    [
+      "01",
+      3.5
+    ],
+    [
+      "02",
+      3.5
+    ],
+    [
+      "03",
+      3.5
+    ],
+    [
+      "04",
+      3.6
+    ],
+    [
+      "05",
+      3.6
+    ],
+    [
+      "06",
+      3.5
+    ],
+    [
+      "07",
+      3.4
+    ],
+    [
+      "08",
+      3.6
+    ],
+    [
+      "09",
+      3.5
+    ],
+    [
+      "10",
+      60.0
+    ],
+    [
+      "11",
+      60.2
+    ],
+    [
+      "12",
+      3.5
+    ],
+    [
+      "13",
+      45.0
+    ],
+    [
+      "14",
+      3.5
+    ],
+    [
+      "15",
+      70.0
+    ],
+    [
+      "16",
+      70.1
+    ],
+    [
+      "17",
+      3.6
+    ],
+    [
+      "18",
+      3.5
+    ],
+    [
+      "19",
+      3.4
+    ],
+    [
+      "20",
+      3.6
+    ],
+    [
+      "21",
+      3.5
+    ],
+    [
+      "22",
+      3.7
+    ],
+    [
+      "23",
+      3.5
+    ]
+  ],
+  "answer_text": "On December 8, 2025, the average head count at the NVIDIA booth increased significantly during typical midday hours. Specifically, at 10:00 UTC, the average was 60.01 with a peak of 75, and at 11:00 UTC, it was 60.2 with a peak of 74. The highest averages occurred at 15:00 UTC (70.0 average, peak 82) and 16:00 UTC (70.11 average, peak 86). During other hours, the average head count was generally between 3.42 and 3.7.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "average_head_count",
+      "peak_head_count",
+      "event_count"
+    ],
+    "rows": [
+      [
+        "2025-12-08T00:00:00Z",
+        3.47,
+        16,
+        3600
+      ],
+      [
+        "2025-12-08T01:00:00Z",
+        3.53,
+        15,
+        3600
+      ],
+      [
+        "2025-12-08T02:00:00Z",
+        3.51,
+        18,
+        3600
+      ],
+      [
+        "2025-12-08T03:00:00Z",
+        3.52,
+        16,
+        3600
+      ],
+      [
+        "2025-12-08T04:00:00Z",
+        3.59,
+        16,
+        3600
+      ],
+      [
+        "2025-12-08T05:00:00Z",
+        3.6,
+        16,
+        3600
+      ],
+      [
+        "2025-12-08T06:00:00Z",
+        3.46,
+        17,
+        3600
+      ],
+      [
+        "2025-12-08T07:00:00Z",
+        3.44,
+        18,
+        3600
+      ],
+      [
+        "2025-12-08T08:00:00Z",
+        3.55,
+        18,
+        3600
+      ],
+      [
+        "2025-12-08T09:00:00Z",
+        3.51,
+        19,
+        3600
+      ],
+      [
+        "2025-12-08T10:00:00Z",
+        60.01,
+        75,
+        3600
+      ],
+      [
+        "2025-12-08T11:00:00Z",
+        60.2,
+        74,
+        3600
+      ],
+      [
+        "2025-12-08T12:00:00Z",
+        3.51,
+        18,
+        3600
+      ],
+      [
+        "2025-12-08T13:00:00Z",
+        45.04,
+        59,
+        3600
+      ],
+      [
+        "2025-12-08T14:00:00Z",
+        3.49,
+        20,
+        3600
+      ],
+      [
+        "2025-12-08T15:00:00Z",
+        70.0,
+        82,
+        3600
+      ],
+      [
+        "2025-12-08T16:00:00Z",
+        70.11,
+        86,
+        3600
+      ],
+      [
+        "2025-12-08T17:00:00Z",
+        3.56,
+        21,
+        3600
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        3.54,
+        17,
+        3600
+      ],
+      [
+        "2025-12-08T19:00:00Z",
+        3.42,
+        17,
+        3600
+      ],
+      [
+        "2025-12-08T20:00:00Z",
+        3.56,
+        19,
+        3600
+      ],
+      [
+        "2025-12-08T21:00:00Z",
+        3.55,
+        17,
+        3600
+      ],
+      [
+        "2025-12-08T22:00:00Z",
+        3.7,
+        18,
+        3600
+      ],
+      [
+        "2025-12-08T23:00:00Z",
+        3.49,
+        19,
+        3600
+      ]
+    ],
+    "total_rows": 24
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour {camera_location: 'DemoBooth_NVIDIA'})\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.hour_utc AS hour, ch.avg_hc AS average_head_count, ch.peak_hc AS peak_head_count, ch.event_count AS event_count\n}\nRETURN hour, average_head_count, peak_head_count, event_count ORDER BY hour",
+      "row_count": 24
+    }
+  ],
+  "duration_ms": 4037,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2506,
+      "completion_tokens": 116
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 978,
+      "completion_tokens": 125
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": false,
+    "detail": "missing_keys=['09', '12', '13', '14', '17'] missing_numbers=[45.0]"
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "question_id": "L3_q002_event_counts_by_type",
+  "level": "L3",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "For 2025-12-08 (UTC), how many events were recorded for each event_type? List every event_type with its count.",
+  "gold_value": [
+    [
+      "car_entry",
+      419
+    ],
+    [
+      "car_exit",
+      427
+    ],
+    [
+      "crowd",
+      432000
+    ],
+    [
+      "person_entry",
+      2601
+    ],
+    [
+      "person_exit",
+      2493
+    ]
+  ],
+  "answer_text": "On 2025-12-08 (UTC), there were 419 car_entry events, 427 car_exit events, 432,000 crowd events, 2,601 person_entry events, and 2,493 person_exit events recorded.",
+  "structured_answer": {
+    "columns": [
+      "event_type",
+      "event_count"
+    ],
+    "rows": [
+      [
+        "car_entry",
+        419
+      ],
+      [
+        "car_exit",
+        427
+      ],
+      [
+        "crowd",
+        432000
+      ],
+      [
+        "person_entry",
+        2601
+      ],
+      [
+        "person_exit",
+        2493
+      ]
+    ],
+    "total_rows": 5
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "SELECT event_type, COUNT(*) AS event_count\nFROM events\nWHERE timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\nGROUP BY event_type",
+      "row_count": 5
+    }
+  ],
+  "duration_ms": 2917,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 665,
+      "completion_tokens": 62
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 295,
+      "completion_tokens": 50
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": true,
+    "detail": "all_keys_and_values_matched (rows=5)"
+  }
+}

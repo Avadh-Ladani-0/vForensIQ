@@ -1,0 +1,77 @@
+{
+  "question_id": "L4_q004_keynote_morning_vs_afternoon",
+  "level": "L4",
+  "approach": "b3_aqr",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Compare the average head_count at KeynoteHall_Stage between the morning keynote window 09:00-10:00 UTC and the afternoon keynote window 14:00-15:00 UTC on 2025-12-08. Which keynote had higher attendance and what were the approximate average head_counts?",
+  "gold_value": {
+    "higher_attendance_window": "morning",
+    "morning_keynote_avg_approx": {
+      "value": 450,
+      "tolerance": 80
+    },
+    "afternoon_keynote_avg_approx": {
+      "value": 400,
+      "tolerance": 80
+    }
+  },
+  "answer_text": "The morning keynote window from 09:00-10:00 UTC had higher attendance, with an average head_count of approximately 450.19. The afternoon keynote window from 14:00-15:00 UTC had an average head_count of approximately 399.51.",
+  "structured_answer": {
+    "columns": [
+      "keynote_window",
+      "average_head_count"
+    ],
+    "rows": [
+      [
+        "09:00",
+        450.19
+      ],
+      [
+        "14:00",
+        399.51
+      ]
+    ],
+    "total_rows": 2
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour {camera_location: 'KeynoteHall_Stage'})\nWHERE (ch.hour_utc >= '2025-12-08T09:00:00Z' AND ch.hour_utc < '2025-12-08T10:00:00Z')\n   OR (ch.hour_utc >= '2025-12-08T14:00:00Z' AND ch.hour_utc < '2025-12-08T15:00:00Z')\nRETURN substring(ch.hour_utc, 11, 5) AS keynote_window, avg(ch.avg_hc) AS average_head_count\nORDER BY keynote_window",
+      "row_count": 2
+    }
+  ],
+  "duration_ms": 6244,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2194,
+      "completion_tokens": 137
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 392,
+      "completion_tokens": 56
+    }
+  ],
+  "errors": [],
+  "routing": {
+    "classified_level": "L4",
+    "routed_to": "b2_rag_cypher",
+    "routing_method": "llm_zero_shot",
+    "routing_duration_ms": 1036,
+    "classifier_metadata": {
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 393,
+      "completion_tokens": 2
+    }
+  },
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_3_facts_satisfied"
+  }
+}

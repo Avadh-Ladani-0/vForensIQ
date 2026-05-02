@@ -1,0 +1,139 @@
+{
+  "question_id": "L4_q004_keynote_morning_vs_afternoon",
+  "level": "L4",
+  "approach": "b2_rag_community",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Compare the average head_count at KeynoteHall_Stage between the morning keynote window 09:00-10:00 UTC and the afternoon keynote window 14:00-15:00 UTC on 2025-12-08. Which keynote had higher attendance and what were the approximate average head_counts?",
+  "gold_value": {
+    "higher_attendance_window": "morning",
+    "morning_keynote_avg_approx": {
+      "value": 450,
+      "tolerance": 80
+    },
+    "afternoon_keynote_avg_approx": {
+      "value": 400,
+      "tolerance": 80
+    }
+  },
+  "answer_text": "The summaries do not provide specific average head counts for the morning keynote window from 09:00 to 10:00 UTC or the afternoon keynote window from 14:00 to 15:00 UTC at KeynoteHall_Stage. While it is noted that there were a total of 449 events at the KeynoteHall_Stage with a peak head count of 500 and an average head count of approximately 31.2, breakdowns by specific time windows are not available. Therefore, I cannot compare the average head counts for the two keynote sessions.",
+  "structured_answer": {
+    "retrieved_communities": [
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.4082428216934204,
+        "metadata": {
+          "total_events": 2209,
+          "community_id": 2,
+          "camera_locations": "KeynoteHall_DoorA",
+          "node_count": 2213
+        }
+      },
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and an average head count of approximately 31.2.",
+        "distance": 0.47737836837768555,
+        "metadata": {
+          "camera_locations": "DemoBooth_Intel,DemoBooth_NVIDIA,ExpoFloor_MainAisle,FoodCourt_North,KeynoteHall_Stage",
+          "node_count": 588,
+          "total_events": 449,
+          "community_id": 9
+        }
+      },
+      {
+        "community_id": "community_14",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 19:00 and 19:58 UTC recorded a total of 53 events, with a peak head count of 42. The dominant event types were person entries (21) and exits (20), alongside 6 car entries and 6 exits. The average head count was approximately 35, with a total of 55 nodes monitored during this period.",
+        "distance": 0.5419098734855652,
+        "metadata": {
+          "node_count": 55,
+          "community_id": 14,
+          "camera_locations": "Platform_1",
+          "total_events": 53
+        }
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity at Platform_1 from 02:00 to 02:55 UTC on December 1, 2025, recorded a total of 37 events, with person entries (16) and exits (14) dominating the activity. There were also 4 car entries and 3 car exits. The peak head count reached 13, with an average head count of 5.05 during this time.",
+        "distance": 0.5498552322387695,
+        "metadata": {
+          "community_id": 10,
+          "camera_locations": "Platform_1",
+          "total_events": 37,
+          "node_count": 39
+        }
+      },
+      {
+        "community_id": "community_17",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 20:00 and 20:58 UTC recorded a total of 33 events. The dominant event types were person exits (13) and person entries (8), with car entries (7) and exits (5) also noted. The peak head count reached 13, and the average head count was approximately 5.05 during this period.",
+        "distance": 0.563004195690155,
+        "metadata": {
+          "total_events": 33,
+          "community_id": 17,
+          "camera_locations": "Platform_1",
+          "node_count": 35
+        }
+      },
+      {
+        "community_id": "community_18",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 21:00 and 21:59 UTC recorded a total of 41 events. The dominant event types were person entries (14) and exits (17), along with 7 car entries and 3 exits. The peak head count reached 14, with an average head count of approximately 4.95 during this hour.",
+        "distance": 0.5656435489654541,
+        "metadata": {
+          "node_count": 43,
+          "total_events": 41,
+          "camera_locations": "Platform_1",
+          "community_id": 18
+        }
+      }
+    ],
+    "top_k": 6
+  },
+  "citations": [
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.4082428216934204
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.47737836837768555
+    },
+    {
+      "type": "community",
+      "community_id": "community_14",
+      "distance": 0.5419098734855652
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.5498552322387695
+    },
+    {
+      "type": "community",
+      "community_id": "community_17",
+      "distance": 0.563004195690155
+    },
+    {
+      "type": "community",
+      "community_id": "community_18",
+      "distance": 0.5656435489654541
+    }
+  ],
+  "duration_ms": 3880,
+  "llm_calls": [
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 856,
+      "completion_tokens": 113
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_3_facts_satisfied"
+  }
+}

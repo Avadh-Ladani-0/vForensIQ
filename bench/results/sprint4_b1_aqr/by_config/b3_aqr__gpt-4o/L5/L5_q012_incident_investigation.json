@@ -1,0 +1,159 @@
+{
+  "question_id": "L5_q012_incident_investigation",
+  "level": "L5",
+  "approach": "b3_aqr",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Something happened at the keynote hall around 9 AM \u2014 the crowd surged massively. Investigate: how many people were there, where did they come from (which gates saw entry spikes before 9 AM), and where did they go afterwards?",
+  "gold_value": {
+    "rubric": [
+      "KeynoteHall_Stage had a crowd peak around 09:00 with head_count around 450-500",
+      "Gate_MainEntrance saw heavy person_entry traffic in the 08:00-09:00 window",
+      "KeynoteHall_DoorA had entry spikes aligned with the keynote start time",
+      "After the keynote, crowd dispersed to the ExpoFloor and DemoBooths"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "At around 9 AM in the keynote hall, there was a significant surge with a peak head count of 500, and an average head count of about 450.19 individuals. Before this surge, a notable entry count of 311 was recorded at the Main Entrance gate, while 51 entries occurred at the Parking Lot gate, indicating these as major ingress points. Subsequently, there was a substantial movement away from the keynote area, with 258 exits through the Main Entrance and a modest 2 via the Parking Lot, suggesting a dispersal primarily via the main entrance.",
+  "structured_answer": {
+    "cypher_columns": [
+      "type",
+      "location",
+      "avg_head_count",
+      "peak_head_count",
+      "entry_count",
+      "exit_count"
+    ],
+    "cypher_rows": [
+      [
+        "keynote_crowd",
+        null,
+        450.19,
+        500,
+        null,
+        null
+      ],
+      [
+        "entry_spike",
+        "Gate_MainEntrance",
+        null,
+        null,
+        311,
+        null
+      ],
+      [
+        "entry_spike",
+        "Gate_ParkingLot",
+        null,
+        null,
+        51,
+        null
+      ],
+      [
+        "exit_spike",
+        "Gate_MainEntrance",
+        null,
+        null,
+        null,
+        258
+      ],
+      [
+        "exit_spike",
+        "Gate_ParkingLot",
+        null,
+        null,
+        null,
+        2
+      ]
+    ],
+    "cypher_total_rows": 5,
+    "retrieved_communities": [
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, covered a time range from 08:00:13 to 15:59:56 UTC. The dominant event types were person entries (680) and exits (685), with a total of 1,376 events recorded. The peak event count per hour occurred during the observed period, contributing to a total of 1,379 node counts.",
+        "distance": 0.39939844608306885
+      },
+      {
+        "community_id": "community_4",
+        "summary": "The CCTV activity involved five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types were person entries (169) and exits (132), with a total of 344 events recorded during the time range from December 8, 2025, 02:03:44 UTC to December 8, 2025, 23:59:14 UTC. The peak head count reached 500, and the average head count was approximately 31.2.",
+        "distance": 0.4240281581878662
+      },
+      {
+        "community_id": "community_0",
+        "summary": "The CCTV activity at the Gate_MainEntrance from December 8, 2025, between 08:00 and 12:59 UTC recorded a total of 930 events. The dominant event types were person entries (470) and exits (450), with car entries (8) and exits (2) also noted. The total volume of events indicates significant foot traffic, although peak head count and average head count data are not available.",
+        "distance": 0.48106539249420166
+      },
+      {
+        "community_id": "community_1",
+        "summary": "The CCTV activity at the Gate_ParkingLot camera from December 8, 2025, between 07:00 and 18:59 UTC recorded a total of 1,540 events. The dominant event types were person entries (454) and exits (476), along with car entries (298) and exits (312). The total volume of events reached 1,543, with no peak head count reported.",
+        "distance": 0.5257198810577393
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour)\n  WHERE ch.camera_location CONTAINS 'KeynoteHall' AND ch.hour_utc = '2025-12-08T09:00:00Z'\n  RETURN 'keynote_crowd' AS type, ch.avg_hc AS avg_head_count, ch.peak_hc AS peak_head_count, null AS location, null AS entry_count, null AS exit_count\n  UNION ALL\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE e.event_type = 'person_entry' AND l.name CONTAINS 'Gate' AND e.timestamp_utc >= '2025-12-08T08:00:00Z' AND e.timestamp_utc < '2025-12-08T09:00:00Z'\n  RETURN 'entry_spike' AS type, null AS avg_head_count, null AS peak_head_count, l.name AS location, count(e) AS entry_count, null AS exit_count\n  UNION ALL\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE e.event_type = 'person_exit' AND l.name CONTAINS 'Gate' AND e.timestamp_utc >= '2025-12-08T09:00:00Z' AND e.timestamp_utc < '2025-12-08T10:00:00Z'\n  RETURN 'exit_spike' AS type, null AS avg_head_count, null AS peak_head_count, l.name AS location, null AS entry_count, count(e) AS exit_count\n}\nRETURN type, location, avg_head_count, peak_head_count, entry_count, exit_count",
+      "row_count": 5
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.39939844608306885
+    },
+    {
+      "type": "community",
+      "community_id": "community_4",
+      "distance": 0.4240281581878662
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.48106539249420166
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.5257198810577393
+    }
+  ],
+  "duration_ms": 11982,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2542,
+      "completion_tokens": 323
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 2978,
+      "completion_tokens": 371
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 816,
+      "completion_tokens": 115
+    }
+  ],
+  "errors": [],
+  "routing": {
+    "classified_level": "L5",
+    "routed_to": "b2_rag_hybrid",
+    "routing_method": "llm_zero_shot",
+    "routing_duration_ms": 1126,
+    "classifier_metadata": {
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 379,
+      "completion_tokens": 2
+    }
+  },
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=2/4=0.50 (threshold=0.5)"
+  }
+}

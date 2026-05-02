@@ -1,0 +1,54 @@
+{
+  "question_id": "L2_q008_lunch_crowd_food_court",
+  "level": "L2",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How busy was the food court during lunch hours on average?",
+  "gold_value": 120.01,
+  "answer_text": "Average headcount was 81.87 during lunch. This covers 3 lunch hours (hour_utc 11, 12, 13) with 10800.0 total_samples.",
+  "structured_answer": {
+    "columns": [
+      "avg_headcount",
+      "lunch_hours_covered",
+      "total_samples"
+    ],
+    "rows": [
+      [
+        81.87,
+        3,
+        10800.0
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour)\nWHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  AND toLower(ch.camera_location) CONTAINS 'food'\n  AND toLower(ch.camera_location) CONTAINS 'court'\n  AND toInteger(substring(ch.hour_utc, 11, 2)) IN [11,12,13]\nWITH sum(toFloat(ch.avg_hc) * toFloat(ch.event_count)) AS weighted_sum,\n     sum(toFloat(ch.event_count)) AS total_samples,\n     count(*) AS lunch_hours_covered\nRETURN CASE WHEN total_samples > 0 THEN weighted_sum / total_samples ELSE null END AS avg_headcount, lunch_hours_covered, total_samples",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 43826,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5",
+      "prompt_tokens": 1866,
+      "completion_tokens": 2742
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-5",
+      "prompt_tokens": 376,
+      "completion_tokens": 1456
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": false,
+    "detail": "exceeds_1pct (expected=120.01 got=81.87)"
+  }
+}

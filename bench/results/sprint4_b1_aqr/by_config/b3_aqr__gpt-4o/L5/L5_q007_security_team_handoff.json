@@ -1,0 +1,131 @@
+{
+  "question_id": "L5_q007_security_team_handoff",
+  "level": "L5",
+  "approach": "b3_aqr",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "If you were running security here, what would you tell your team based on the day's activity? Where should we keep the most eyes, and when do we need extra hands?",
+  "gold_value": {
+    "rubric": [
+      "Main entrance is the highest-traffic location and needs constant attention",
+      "Crowd-management focus on keynote area during keynote hours",
+      "Extra coverage needed during morning arrival window and evening departure window",
+      "Demo booth area requires monitoring during expo hours when crowds gather"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "Based on today's CCTV activity, focus your team's surveillance on the ExpoFloor_MainAisle, particularly in the morning hours around 08:00 UTC. This location experienced the highest average head count of 49.36 and a peak head count reaching 209, indicating significant crowd presence. Additional attention should also be given to the Gate_MainEntrance between 08:00 and 13:00 UTC, with a notable recorded foot traffic of 930 events comprising both entries and exits. These data points suggest a need for heightened vigilance and potentially more security personnel during these times and locations to manage crowd flows effectively.",
+  "structured_answer": {
+    "cypher_columns": [
+      "peak_hours",
+      "busiest_locations"
+    ],
+    "cypher_rows": [
+      [
+        [
+          {
+            "total_events": 19292,
+            "hour": "2025-12-08T08:00:00Z"
+          }
+        ],
+        [
+          {
+            "crowd_samples": 86400,
+            "location": "ExpoFloor_MainAisle",
+            "avg_head_count": 49.35666666666666,
+            "peak_head_count": 209
+          }
+        ]
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_4",
+        "summary": "The CCTV activity involved five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types were person entries (169) and exits (132), with a total of 344 events recorded during the time range from December 8, 2025, 02:03:44 UTC to December 8, 2025, 23:59:14 UTC. The peak head count reached 500, and the average head count was approximately 31.2.",
+        "distance": 0.635388970375061
+      },
+      {
+        "community_id": "community_0",
+        "summary": "The CCTV activity at the Gate_MainEntrance from December 8, 2025, between 08:00 and 12:59 UTC recorded a total of 930 events. The dominant event types were person entries (470) and exits (450), with car entries (8) and exits (2) also noted. The total volume of events indicates significant foot traffic, although peak head count and average head count data are not available.",
+        "distance": 0.6368691921234131
+      },
+      {
+        "community_id": "community_5",
+        "summary": "The CCTV activity involved multiple camera locations during the time range from 16:00:57 to 16:58:54 UTC on December 8, 2025. The dominant event types were person entries, with a total of 16, and person exits, totaling 11, alongside 3 car entries and 2 car exits. The total volume of events recorded was 32, with a node count of 33. There are no notable peak head counts or average head counts reported.",
+        "distance": 0.6402171850204468
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity covers the location from 09:00 to 09:59 UTC on December 8, 2025. The dominant event types are person entries, with 437 recorded, and person exits, totaling 387. There were also 5 car entries and 4 car exits, contributing to a total of 833 events. Notably, the peak head count and average head count data are not available.",
+        "distance": 0.6422811150550842
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event)\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  WITH substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, count(*) AS n\n  RETURN hour, n\n  UNION ALL\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.hour_utc AS hour, ch.event_count AS n\n}\nWITH hour, sum(n) AS total_events\nORDER BY total_events DESC\nLIMIT 1\nWITH collect({hour: hour, total_events: total_events}) AS peak_hours\n\nCALL {\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.camera_location AS location, sum(ch.event_count) AS crowd_samples, avg(ch.avg_hc) AS avg_head_count, max(ch.peak_hc) AS peak_head_count\n  ORDER BY crowd_samples DESC\n  LIMIT 1\n}\nWITH peak_hours, collect({location: location, crowd_samples: crowd_samples, avg_head_count: avg_head_count, peak_head_count: peak_head_count}) AS busiest_locations\n\nRETURN peak_hours, busiest_locations",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_4",
+      "distance": 0.635388970375061
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.6368691921234131
+    },
+    {
+      "type": "community",
+      "community_id": "community_5",
+      "distance": 0.6402171850204468
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.6422811150550842
+    }
+  ],
+  "duration_ms": 10929,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2529,
+      "completion_tokens": 278
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 2919,
+      "completion_tokens": 345
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 773,
+      "completion_tokens": 122
+    }
+  ],
+  "errors": [],
+  "routing": {
+    "classified_level": "L5",
+    "routed_to": "b2_rag_hybrid",
+    "routing_method": "llm_zero_shot",
+    "routing_duration_ms": 1004,
+    "classifier_metadata": {
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 366,
+      "completion_tokens": 2
+    }
+  },
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=1/4=0.25 (threshold=0.5)"
+  }
+}

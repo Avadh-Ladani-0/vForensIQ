@@ -1,0 +1,59 @@
+{
+  "question_id": "L4_q010_camera_correlation",
+  "level": "L4",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which two crowd camera locations had the most similar hourly activity patterns on 2025-12-08? Compare all pairs of crowd cameras by how closely their hourly average head_counts track each other.",
+  "gold_value": {
+    "most_similar_pair_includes": "DemoBooth"
+  },
+  "answer_text": "The crowd camera locations \"DemoBooth_Intel\" and \"DemoBooth_NVIDIA\" had the most similar hourly activity patterns on 2025-12-08, with a total difference in their hourly average head counts of 116.82.",
+  "structured_answer": {
+    "columns": [
+      "camera_a",
+      "camera_b",
+      "total_difference"
+    ],
+    "rows": [
+      [
+        "DemoBooth_Intel",
+        "DemoBooth_NVIDIA",
+        116.81583333333333
+      ]
+    ],
+    "total_rows": 1,
+    "verification_warnings": [
+      "SINGLE_ROW_COMPARISON: comparative question but only 1 result row"
+    ]
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH hourly_head_counts AS (\n    SELECT\n        camera_location,\n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        AVG(head_count) AS avg_head_count\n    FROM\n        events\n    WHERE\n        event_type = 'crowd'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z'\n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY\n        camera_location,\n        hour\n),\ncamera_pairs AS (\n    SELECT\n        a.camera_location AS camera_a,\n        b.camera_location AS camera_b,\n        a.hour,\n        a.avg_head_count AS avg_head_count_a,\n        b.avg_head_count AS avg_head_count_b\n    FROM\n        hourly_head_counts a\n    JOIN\n        hourly_head_counts b\n    ON\n        a.hour = b.hour\n        AND a.camera_location < b.camera_location\n),\nsimilarity_scores AS (\n    SELECT\n        camera_a,\n        camera_b,\n        SUM(ABS(avg_head_count_a - avg_head_count_b)) AS total_difference\n    FROM\n        camera_pairs\n    GROUP BY\n        camera_a,\n        camera_b\n)\nSELECT\n    camera_a,\n    camera_b,\n    total_difference\nFROM\n    similarity_scores\nORDER BY\n    total_difference ASC\nLIMIT 1",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 8384,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 973,
+      "completion_tokens": 285
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 517,
+      "completion_tokens": 51
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_1_facts_satisfied"
+  }
+}

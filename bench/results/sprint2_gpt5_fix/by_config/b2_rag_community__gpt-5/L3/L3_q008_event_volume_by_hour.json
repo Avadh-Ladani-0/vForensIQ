@@ -1,0 +1,226 @@
+{
+  "question_id": "L3_q008_event_volume_by_hour",
+  "level": "L3",
+  "approach": "b2_rag_community",
+  "model": "gpt-5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How does activity change throughout the day across the whole venue? Show the total number of events per hour.",
+  "gold_value": [
+    [
+      "00",
+      18040
+    ],
+    [
+      "01",
+      18039
+    ],
+    [
+      "02",
+      18029
+    ],
+    [
+      "03",
+      18032
+    ],
+    [
+      "04",
+      18036
+    ],
+    [
+      "05",
+      18040
+    ],
+    [
+      "06",
+      18037
+    ],
+    [
+      "07",
+      18358
+    ],
+    [
+      "08",
+      19292
+    ],
+    [
+      "09",
+      19003
+    ],
+    [
+      "10",
+      18035
+    ],
+    [
+      "11",
+      18037
+    ],
+    [
+      "12",
+      18323
+    ],
+    [
+      "13",
+      18397
+    ],
+    [
+      "14",
+      18031
+    ],
+    [
+      "15",
+      18440
+    ],
+    [
+      "16",
+      18032
+    ],
+    [
+      "17",
+      18807
+    ],
+    [
+      "18",
+      18792
+    ],
+    [
+      "19",
+      18027
+    ],
+    [
+      "20",
+      18033
+    ],
+    [
+      "21",
+      18032
+    ],
+    [
+      "22",
+      18026
+    ],
+    [
+      "23",
+      18022
+    ]
+  ],
+  "answer_text": "The summaries don\u2019t provide per-hour totals for this day. Across DemoBooth_Intel (CAM_04), DemoBooth_NVIDIA (CAM_05), ExpoFloor_MainAisle (CAM_06), FoodCourt_North (CAM_07), and KeynoteHall_Stage (CAM_08), there were 449 total events from 2025-12-08T00:02:26Z to 2025-12-08T23:59:14Z (covering the 2025-12-08T00:00:00Z\u20132025-12-08T23:00:00Z UTC hour range). Peak event count per hour is not provided in the supplied data, so I can\u2019t list totals per hour.",
+  "structured_answer": {
+    "retrieved_communities": [
+      {
+        "community_id": "community_17",
+        "summary": "All activity was on Platform_1 between 2025-12-01T20:00:47Z and 2025-12-01T20:58:33Z (hour 2025-12-01T20:00:00Z UTC). There were 33 events total in that hour\u201421 person events (8 person_entry, 13 person_exit) and 12 car events (7 car_entry, 5 car_exit)\u2014so person movement dominated. Peak head_count was 13, the average head count (mean of means) was 5.05, and the peak (and total) event count for the hour was 33; node_count = 35.",
+        "distance": 0.4110408425331116,
+        "metadata": {
+          "community_id": 17,
+          "camera_locations": "Platform_1",
+          "total_events": 33,
+          "node_count": 35
+        }
+      },
+      {
+        "community_id": "community_18",
+        "summary": "All activity was recorded on Platform_1 between 2025-12-01T21:00:18Z and 2025-12-01T21:59:11Z (hour 2025-12-01T21:00:00Z UTC). A total of 41 events were logged: 31 person events (14 person_entry, 17 person_exit) and 10 car events (7 car_entry, 3 car_exit), so person movement dominated. Peak head_count was 14 with an average head_count mean-of-means of 4.95; the peak event count for the hour was 41 and node_count was 43.",
+        "distance": 0.4326612949371338,
+        "metadata": {
+          "camera_locations": "Platform_1",
+          "total_events": 41,
+          "node_count": 43,
+          "community_id": 18
+        }
+      },
+      {
+        "community_id": "community_9",
+        "summary": "Cameras involved: DemoBooth_Intel (CAM_04), DemoBooth_NVIDIA (CAM_05), ExpoFloor_MainAisle (CAM_06), FoodCourt_North (CAM_07), KeynoteHall_Stage (CAM_08). Events are dominated by person movements (person_entry 206, person_exit 181, total 387) versus vehicle events (car_entry 29, car_exit 33). The dataset covers the UTC hour range 2025-12-08T00:00:00Z\u20132025-12-08T23:00:00Z with events from 2025-12-08T00:02:26Z to 2025-12-08T23:59:14Z; total events 449, peak head_count 500, average head_count (mean of means) \u2248 31.1974. Peak event count per hour is not provided in the supplied data.",
+        "distance": 0.4368562698364258,
+        "metadata": {
+          "community_id": 9,
+          "camera_locations": "DemoBooth_Intel,DemoBooth_NVIDIA,ExpoFloor_MainAisle,FoodCourt_North,KeynoteHall_Stage",
+          "node_count": 588,
+          "total_events": 449
+        }
+      },
+      {
+        "community_id": "community_11",
+        "summary": "All activity was recorded at Platform_1. Events were dominated by people (24 person_entry, 23 person_exit = 47 person events) versus 14 car events (9 car_entry, 5 car_exit). The events span 2025-12-01T16:01:45Z to 2025-12-01T16:59:32Z (hour 2025-12-01T16:00:00Z) with a total of 61 events (peak hourly event count 61). Mean head count was 5.03, peak head_count 12.0, and node_count reported as 63.",
+        "distance": 0.4380446672439575,
+        "metadata": {
+          "node_count": 63,
+          "community_id": 11,
+          "camera_locations": "Platform_1",
+          "total_events": 61
+        }
+      },
+      {
+        "community_id": "community_16",
+        "summary": "All activity was on Platform_1 between 2025-12-01T08:00:35Z and 2025-12-01T08:59:56Z (hour 08:00\u201308:59 UTC). Person-related events dominated with 92 person_entry and 107 person_exit (199 person events) versus 46 car_entry and 41 car_exit (87 car events). Total volume was 286 events in the hour (peak per-hour count 286); peak head_count was 47, average head_count_mean_of_means 40.02, node_count 288.",
+        "distance": 0.4389342665672302,
+        "metadata": {
+          "node_count": 288,
+          "camera_locations": "Platform_1",
+          "community_id": 16,
+          "total_events": 286
+        }
+      },
+      {
+        "community_id": "community_12",
+        "summary": "All activity was recorded on Platform_1. Events were dominated by person movements (19 person_entry, 14 person_exit = 33 person events) versus 7 car_entry and 7 car_exit (14 car events). The events occurred between 2025-12-01T04:01:34Z and 2025-12-01T04:59:16Z (within the 2025-12-01T04:00:00Z hour), with a total of 47 events (peak hourly event count 47). Average head count (mean of means) was 5.02 and peak head_count was 12.0; node_count is 49.",
+        "distance": 0.44019150733947754,
+        "metadata": {
+          "community_id": 12,
+          "total_events": 47,
+          "node_count": 49,
+          "camera_locations": "Platform_1"
+        }
+      }
+    ],
+    "top_k": 6
+  },
+  "citations": [
+    {
+      "type": "community",
+      "community_id": "community_17",
+      "distance": 0.4110408425331116
+    },
+    {
+      "type": "community",
+      "community_id": "community_18",
+      "distance": 0.4326612949371338
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.4368562698364258
+    },
+    {
+      "type": "community",
+      "community_id": "community_11",
+      "distance": 0.4380446672439575
+    },
+    {
+      "type": "community",
+      "community_id": "community_16",
+      "distance": 0.4389342665672302
+    },
+    {
+      "type": "community",
+      "community_id": "community_12",
+      "distance": 0.44019150733947754
+    }
+  ],
+  "duration_ms": 14849,
+  "llm_calls": [
+    {
+      "stage": "answer_synth",
+      "model": "gpt-5",
+      "prompt_tokens": 1121,
+      "completion_tokens": 1191
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": false,
+    "detail": "missing_keys=['10', '11', '13', '15', '16'] missing_numbers=[18040.0, 18039.0, 18029.0, 18032.0, 18036.0]"
+  }
+}

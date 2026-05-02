@@ -1,0 +1,70 @@
+{
+  "question_id": "L4_q012_crowd_before_after_keynote",
+  "level": "L4",
+  "approach": "b3_aqr",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Was the expo floor busier before the morning keynote or after it? Compare the average crowd at the expo floor during 07:00-09:00 versus 10:00-12:00.",
+  "gold_value": {
+    "busier_window": "10:00",
+    "after_keynote_higher": "after"
+  },
+  "answer_text": "The expo floor was significantly busier after the morning keynote, with an average crowd of 179.94 during 10:00-12:00, compared to an average crowd of 5.605 during 07:00-09:00.",
+  "structured_answer": {
+    "columns": [
+      "time_period",
+      "avg_crowd"
+    ],
+    "rows": [
+      [
+        "07:00-09:00",
+        5.605
+      ],
+      [
+        "10:00-12:00",
+        179.94
+      ]
+    ],
+    "total_rows": 2
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour)\n  WHERE ch.camera_location CONTAINS 'ExpoFloor' AND ch.hour_utc >= '2025-12-08T07:00:00Z' AND ch.hour_utc < '2025-12-08T09:00:00Z'\n  RETURN '07:00-09:00' AS time_period, avg(ch.avg_hc) AS avg_crowd\n  UNION ALL\n  MATCH (ch:CrowdHour)\n  WHERE ch.camera_location CONTAINS 'ExpoFloor' AND ch.hour_utc >= '2025-12-08T10:00:00Z' AND ch.hour_utc < '2025-12-08T12:00:00Z'\n  RETURN '10:00-12:00' AS time_period, avg(ch.avg_hc) AS avg_crowd\n}\nRETURN time_period, avg_crowd ORDER BY time_period",
+      "row_count": 2
+    }
+  ],
+  "duration_ms": 4284,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2535,
+      "completion_tokens": 199
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 441,
+      "completion_tokens": 51
+    }
+  ],
+  "errors": [],
+  "routing": {
+    "classified_level": "L4",
+    "routed_to": "b2_rag_cypher",
+    "routing_method": "llm_zero_shot",
+    "routing_duration_ms": 1211,
+    "classifier_metadata": {
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 372,
+      "completion_tokens": 2
+    }
+  },
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_2_facts_satisfied"
+  }
+}

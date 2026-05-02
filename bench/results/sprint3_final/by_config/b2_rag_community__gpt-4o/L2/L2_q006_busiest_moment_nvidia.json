@@ -1,0 +1,129 @@
+{
+  "question_id": "L2_q006_busiest_moment_nvidia",
+  "level": "L2",
+  "approach": "b2_rag_community",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How packed did the NVIDIA booth get at its busiest moment?",
+  "gold_value": 86,
+  "answer_text": "The summaries do not provide specific information about the busiest moment at the NVIDIA booth during the AI hardware summit.",
+  "structured_answer": {
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and an average head count of approximately 31.2.",
+        "distance": 0.4454076290130615,
+        "metadata": {
+          "camera_locations": "DemoBooth_Intel,DemoBooth_NVIDIA,ExpoFloor_MainAisle,FoodCourt_North,KeynoteHall_Stage",
+          "total_events": 449,
+          "node_count": 588,
+          "community_id": 9
+        }
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.6045638918876648,
+        "metadata": {
+          "camera_locations": "KeynoteHall_DoorA",
+          "community_id": 2,
+          "node_count": 2213,
+          "total_events": 2209
+        }
+      },
+      {
+        "community_id": "community_14",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 19:00 and 19:58 UTC recorded a total of 53 events, with a peak head count of 42. The dominant event types were person entries (21) and exits (20), alongside 6 car entries and 6 exits. The average head count was approximately 35, with a total of 55 nodes monitored during this period.",
+        "distance": 0.6285203695297241,
+        "metadata": {
+          "camera_locations": "Platform_1",
+          "community_id": 14,
+          "total_events": 53,
+          "node_count": 55
+        }
+      },
+      {
+        "community_id": "community_1",
+        "summary": "The CCTV activity at the Gate_ParkingLot camera from December 8, 2025, between 07:00 and 17:00 UTC recorded a total of 1,529 events. The dominant event types were person entries (463) and exits (466), along with car entries (283) and exits (317). Notably, the total volume of events reached 1,532, indicating a high level of activity during this time.",
+        "distance": 0.6337230205535889,
+        "metadata": {
+          "camera_locations": "Gate_ParkingLot",
+          "total_events": 1529,
+          "node_count": 1532,
+          "community_id": 1
+        }
+      },
+      {
+        "community_id": "community_13",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, 17:00 to 17:59 UTC recorded a total of 194 events, with person entries (92) and exits (89) dominating the activity. The peak head count reached 13 individuals, while the peak event count per hour was 194. Additionally, there were 5 car entries and 8 car exits during this time.",
+        "distance": 0.6531028747558594,
+        "metadata": {
+          "community_id": 13,
+          "camera_locations": "Platform_1",
+          "node_count": 196,
+          "total_events": 194
+        }
+      },
+      {
+        "community_id": "community_7",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 12:00:23 and 12:59:53, recorded a total of 25 events. The dominant event types were person entries (10) and exits (8), along with 4 car entries and 3 car exits. The peak head count reached 13, with an average head count of approximately 5.",
+        "distance": 0.6559159755706787,
+        "metadata": {
+          "camera_locations": "Platform_1",
+          "total_events": 25,
+          "node_count": 27,
+          "community_id": 7
+        }
+      }
+    ],
+    "top_k": 6
+  },
+  "citations": [
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.4454076290130615
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.6045638918876648
+    },
+    {
+      "type": "community",
+      "community_id": "community_14",
+      "distance": 0.6285203695297241
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.6337230205535889
+    },
+    {
+      "type": "community",
+      "community_id": "community_13",
+      "distance": 0.6531028747558594
+    },
+    {
+      "type": "community",
+      "community_id": "community_7",
+      "distance": 0.6559159755706787
+    }
+  ],
+  "duration_ms": 3174,
+  "llm_calls": [
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 810,
+      "completion_tokens": 21
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": false,
+    "detail": "no_number_in_answer"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "question_id": "L1_q004_total_events_in_summit_day",
+  "level": "L1",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many total events of any type were recorded across all cameras during the entire day of 2025-12-08 (UTC)?",
+  "gold_value": 437940,
+  "answer_text": "There were 437,940 total events recorded across all cameras on 2025-12-08 (UTC).",
+  "structured_answer": {
+    "columns": [
+      "total_events"
+    ],
+    "rows": [
+      [
+        437940
+      ]
+    ],
+    "total_rows": 1,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "SELECT COUNT(*) AS total_events\nFROM events\nWHERE timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 2736,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 961,
+      "completion_tokens": 54
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 243,
+      "completion_tokens": 23
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": true,
+    "detail": "match"
+  }
+}

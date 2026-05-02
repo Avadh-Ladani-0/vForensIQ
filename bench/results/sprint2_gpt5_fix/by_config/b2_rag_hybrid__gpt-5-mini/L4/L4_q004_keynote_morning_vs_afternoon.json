@@ -1,0 +1,110 @@
+{
+  "question_id": "L4_q004_keynote_morning_vs_afternoon",
+  "level": "L4",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-5-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Compare the average head_count at KeynoteHall_Stage between the morning keynote window 09:00-10:00 UTC and the afternoon keynote window 14:00-15:00 UTC on 2025-12-08. Which keynote had higher attendance and what were the approximate average head_counts?",
+  "gold_value": {
+    "higher_attendance_window": "morning",
+    "morning_keynote_avg_approx": {
+      "value": 450,
+      "tolerance": 80
+    },
+    "afternoon_keynote_avg_approx": {
+      "value": 400,
+      "tolerance": 80
+    }
+  },
+  "answer_text": "The morning keynote (09:00\u201310:00 UTC) had higher attendance: average head_count 450.19 (3,600 samples) versus the afternoon keynote (14:00\u201315:00 UTC) average 399.51 (3,600 samples). Community summaries note activity at the KeynoteHall (cameras include KeynoteHall_Stage) with person movements dominating and a reported peak head_count around 500.",
+  "structured_answer": {
+    "cypher_columns": [
+      "morning_avg",
+      "morning_samples",
+      "afternoon_avg",
+      "afternoon_samples",
+      "higher_attendance"
+    ],
+    "cypher_rows": [
+      [
+        450.19,
+        3600,
+        399.51,
+        3600,
+        "morning_09_10_higher"
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_2",
+        "summary": "All activity was captured at KeynoteHall_DoorA, with events occurring between 2025-12-08T08:00:13Z and 2025-12-08T15:59:56Z (hour-range summary 2025-12-08T09:00:00Z\u20132025-12-08T15:00:00Z). A total of 2,209 events were recorded (node_count 2,213); person movements dominated with 1,117 person_entry and 1,072 person_exit (2,189 person events) versus 15 car_entry and 5 car_exit (20 car events). No peak head_count was reported and peak events per hour were not provided.",
+        "distance": 0.3616746664047241
+      },
+      {
+        "community_id": "community_9",
+        "summary": "Cameras involved: DemoBooth_Intel (CAM_04), DemoBooth_NVIDIA (CAM_05), ExpoFloor_MainAisle (CAM_06), FoodCourt_North (CAM_07), KeynoteHall_Stage (CAM_08). Events are dominated by person movements (person_entry 206, person_exit 181, total 387) versus vehicle events (car_entry 29, car_exit 33). The dataset covers the UTC hour range 2025-12-08T00:00:00Z\u20132025-12-08T23:00:00Z with events from 2025-12-08T00:02:26Z to 2025-12-08T23:59:14Z; total events 449, peak head_count 500, average head_count (mean of means) \u2248 31.1974. Peak event count per hour is not provided in the supplied data.",
+        "distance": 0.44112473726272583
+      },
+      {
+        "community_id": "community_6",
+        "summary": "All activity was on Platform_1 between 2025-12-01T11:01:47Z and 2025-12-01T11:59:48Z (hour window 2025-12-01T11:00:00Z UTC). There were 44 events total: 29 person events (12 person_entry, 17 person_exit) and 15 car events (9 car_entry, 6 car_exit), so person movements dominated. Peak head_count was 12.0, average head_count (mean of means) 5.05, and the hour\u2019s peak event count was 44; node_count = 46.",
+        "distance": 0.45609039068222046
+      },
+      {
+        "community_id": "community_18",
+        "summary": "All activity was recorded on Platform_1 between 2025-12-01T21:00:18Z and 2025-12-01T21:59:11Z (hour 2025-12-01T21:00:00Z UTC). A total of 41 events were logged: 31 person events (14 person_entry, 17 person_exit) and 10 car events (7 car_entry, 3 car_exit), so person movement dominated. Peak head_count was 14 with an average head_count mean-of-means of 4.95; the peak event count for the hour was 41 and node_count was 43.",
+        "distance": 0.4588051438331604
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour {camera_location: 'KeynoteHall_Stage'})\n  WHERE ch.hour_utc >= '2025-12-08T09:00:00Z' AND ch.hour_utc < '2025-12-08T10:00:00Z'\n  RETURN avg(ch.avg_hc) AS morning_avg, sum(ch.event_count) AS morning_samples\n}\nCALL {\n  MATCH (ch:CrowdHour {camera_location: 'KeynoteHall_Stage'})\n  WHERE ch.hour_utc >= '2025-12-08T14:00:00Z' AND ch.hour_utc < '2025-12-08T15:00:00Z'\n  RETURN avg(ch.avg_hc) AS afternoon_avg, sum(ch.event_count) AS afternoon_samples\n}\nRETURN morning_avg, morning_samples, afternoon_avg, afternoon_samples,\n  CASE\n    WHEN coalesce(morning_avg, 0.0) > coalesce(afternoon_avg, 0.0) THEN 'morning_09_10_higher'\n    WHEN coalesce(afternoon_avg, 0.0) > coalesce(morning_avg, 0.0) THEN 'afternoon_14_15_higher'\n    ELSE 'equal_or_no_data'\n  END AS higher_attendance",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.3616746664047241
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.44112473726272583
+    },
+    {
+      "type": "community",
+      "community_id": "community_6",
+      "distance": 0.45609039068222046
+    },
+    {
+      "type": "community",
+      "community_id": "community_18",
+      "distance": 0.4588051438331604
+    }
+  ],
+  "duration_ms": 32048,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 1916,
+      "completion_tokens": 1629
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 948,
+      "completion_tokens": 801
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_3_facts_satisfied"
+  }
+}

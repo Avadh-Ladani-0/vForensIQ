@@ -1,0 +1,106 @@
+{
+  "question_id": "L5_q007_security_team_handoff",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "If you were running security here, what would you tell your team based on the day's activity? Where should we keep the most eyes, and when do we need extra hands?",
+  "gold_value": {
+    "rubric": [
+      "Main entrance is the highest-traffic location and needs constant attention",
+      "Crowd-management focus on keynote area during keynote hours",
+      "Extra coverage needed during morning arrival window and evening departure window",
+      "Demo booth area requires monitoring during expo hours when crowds gather"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "Based on the day's activity, the ExpoFloor_MainAisle at 11:00 had the highest total head count with 647,900 people, indicating a need for increased monitoring and possibly more staff during this time. The KeynoteHall_Stage at 09:00 also had a significant head count of 1,620,671, suggesting a need for extra hands to manage the crowd. Additionally, the FoodCourt_North at 12:00 and DemoBooth_NVIDIA at 16:00 had high head counts of 432,169 and 252,407, respectively, which may require additional attention. Focus on these areas during the specified peak hours for optimal security management.",
+  "structured_answer": {
+    "columns": [
+      "camera_location",
+      "hour",
+      "event_count",
+      "total_head_count"
+    ],
+    "rows": [
+      [
+        "DemoBooth_Intel",
+        "15",
+        3600,
+        151005
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        "16",
+        3600,
+        252407
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        "11",
+        3600,
+        647900
+      ],
+      [
+        "FoodCourt_North",
+        "12",
+        3600,
+        432169
+      ],
+      [
+        "Gate_MainEntrance",
+        "08",
+        607,
+        0
+      ],
+      [
+        "Gate_ParkingLot",
+        "07",
+        333,
+        0
+      ],
+      [
+        "KeynoteHall_DoorA",
+        "15",
+        411,
+        0
+      ],
+      [
+        "KeynoteHall_Stage",
+        "09",
+        3600,
+        1620671
+      ]
+    ],
+    "total_rows": 8
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH event_counts AS (\n    SELECT \n        camera_location,\n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        COUNT(*) AS event_count,\n        SUM(CASE WHEN event_type = 'crowd' THEN head_count ELSE 0 END) AS total_head_count\n    FROM \n        events\n    WHERE \n        timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        camera_location, hour\n),\npeak_hours AS (\n    SELECT \n        camera_location,\n        hour,\n        event_count,\n        total_head_count,\n        RANK() OVER (PARTITION BY camera_location ORDER BY event_count DESC, total_head_count DESC) AS rank_event,\n        RANK() OVER (PARTITION BY camera_location ORDER BY total_head_count DESC, event_count DESC) AS rank_head_count\n    FROM \n        event_counts\n)\nSELECT \n    camera_location,\n    hour,\n    event_count,\n    total_head_count\nFROM \n    peak_hours\nWHERE \n    rank_event = 1 OR rank_head_count = 1\nORDER BY \n    camera_location, hour",
+      "row_count": 8
+    }
+  ],
+  "duration_ms": 7968,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 969,
+      "completion_tokens": 254
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 607,
+      "completion_tokens": 141
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=2/4=0.50 (threshold=0.5)"
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "question_id": "L4_q001_compare_booths",
+  "level": "L4",
+  "approach": "b3_aqr",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "On 2025-12-08 (UTC), compare the crowd activity at DemoBooth_NVIDIA versus DemoBooth_Intel. Which booth was busier, and approximately what was the ratio of their average head_counts?",
+  "gold_value": {
+    "busier_booth": "DemoBooth_NVIDIA",
+    "average_headcount_ratio_nvidia_over_intel": {
+      "value": 1.4,
+      "tolerance": 0.4
+    }
+  },
+  "answer_text": "On 2025-12-08 (UTC), DemoBooth_NVIDIA was busier than DemoBooth_Intel. The average headcount at DemoBooth_NVIDIA was 15.515, whereas DemoBooth_Intel had an average headcount of 10.648. The ratio of the average headcounts was approximately 0.69, indicating that DemoBooth_Intel had about 69% of the crowd activity of DemoBooth_NVIDIA.",
+  "structured_answer": {
+    "columns": [
+      "busier_location",
+      "busier_avg_head_count",
+      "less_busy_location",
+      "less_busy_avg_head_count",
+      "ratio"
+    ],
+    "rows": [
+      [
+        "DemoBooth_Intel",
+        10.64833333333333,
+        "DemoBooth_NVIDIA",
+        15.515000000000002,
+        0.686325061768181
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour {camera_location: 'DemoBooth_NVIDIA'})\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN 'DemoBooth_NVIDIA' AS location, avg(ch.avg_hc) AS avg_head_count\n  UNION ALL\n  MATCH (ch:CrowdHour {camera_location: 'DemoBooth_Intel'})\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN 'DemoBooth_Intel' AS location, avg(ch.avg_hc) AS avg_head_count\n}\nWITH collect({location: location, avg_head_count: avg_head_count}) AS results\nWITH results, \n     apoc.coll.sortMaps(results, 'avg_head_count') AS sorted_results\nRETURN sorted_results[1].location AS busier_location, \n       sorted_results[1].avg_head_count AS busier_avg_head_count, \n       sorted_results[0].location AS less_busy_location, \n       sorted_results[0].avg_head_count AS less_busy_avg_head_count, \n       CASE WHEN sorted_results[0].avg_head_count > 0 \n            THEN sorted_results[1].avg_head_count / sorted_results[0].avg_head_count \n            ELSE NULL \n       END AS ratio",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 7789,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2540,
+      "completion_tokens": 230
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 2910,
+      "completion_tokens": 325
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 595,
+      "completion_tokens": 96
+    }
+  ],
+  "errors": [],
+  "routing": {
+    "classified_level": "L4",
+    "routed_to": "b2_rag_cypher",
+    "routing_method": "llm_zero_shot",
+    "routing_duration_ms": 922,
+    "classifier_metadata": {
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 377,
+      "completion_tokens": 2
+    }
+  },
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": false,
+    "detail": "missing=['average_headcount_ratio_nvidia_over_intel=1.4+-0.4_no_match (numbers_seen=[15.515, 10.648, 0.69, 69.0])']"
+  }
+}

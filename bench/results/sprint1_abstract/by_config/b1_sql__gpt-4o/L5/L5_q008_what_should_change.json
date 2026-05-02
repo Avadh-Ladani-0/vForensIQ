@@ -1,0 +1,118 @@
+{
+  "question_id": "L5_q008_what_should_change",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Looking at how this conference day played out, what could be improved next time \u2014 staffing, layout, scheduling? Give me your top recommendations grounded in what the data shows.",
+  "gold_value": {
+    "rubric": [
+      "Lunch-hour congestion at the food court suggests adding capacity or staggered breaks",
+      "Concentrated rush hours at the main entrance suggest staggered start times or additional lanes",
+      "Significant peak/baseline contrast at keynote stage suggests dedicated crowd-flow planning around keynote times",
+      "Lower-attended demo booths could be relocated or merged to balance traffic"
+    ],
+    "threshold": 0.4
+  },
+  "answer_text": "The data indicates that the ExpoFloor_MainAisle experienced the highest crowd density at 11:00 with a total head count of 647,900. The FoodCourt_North was busiest at 12:00 with 432,169 people. The KeynoteHall_Stage had a peak head count of 1,620,671 at 09:00. To improve future events, consider increasing staffing and optimizing layout in these high-traffic areas during peak hours to manage crowd flow and enhance attendee experience. Additionally, scheduling key events at staggered times could help distribute the crowd more evenly throughout the day.",
+  "structured_answer": {
+    "columns": [
+      "camera_location",
+      "hour",
+      "event_count",
+      "total_head_count"
+    ],
+    "rows": [
+      [
+        "DemoBooth_Intel",
+        "15",
+        3600,
+        151005
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        "16",
+        3600,
+        252407
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        "11",
+        3600,
+        647900
+      ],
+      [
+        "FoodCourt_North",
+        "12",
+        3600,
+        432169
+      ],
+      [
+        "Gate_01",
+        "08",
+        286,
+        0
+      ],
+      [
+        "Gate_MainEntrance",
+        "08",
+        607,
+        0
+      ],
+      [
+        "Gate_ParkingLot",
+        "07",
+        333,
+        0
+      ],
+      [
+        "KeynoteHall_DoorA",
+        "15",
+        411,
+        0
+      ],
+      [
+        "KeynoteHall_Stage",
+        "09",
+        3600,
+        1620671
+      ],
+      [
+        "Platform_1",
+        "08",
+        3600,
+        144074
+      ]
+    ],
+    "total_rows": 10
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH event_counts AS (\n    SELECT \n        camera_location,\n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        COUNT(*) AS event_count,\n        SUM(CASE WHEN event_type = 'crowd' THEN head_count ELSE 0 END) AS total_head_count\n    FROM \n        events\n    GROUP BY \n        camera_location, hour\n),\npeak_hours AS (\n    SELECT \n        camera_location,\n        hour,\n        event_count,\n        total_head_count,\n        RANK() OVER (PARTITION BY camera_location ORDER BY event_count DESC, total_head_count DESC) AS rank\n    FROM \n        event_counts\n)\nSELECT \n    camera_location,\n    hour,\n    event_count,\n    total_head_count\nFROM \n    peak_hours\nWHERE \n    rank = 1",
+      "row_count": 10
+    }
+  ],
+  "duration_ms": 5935,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 871,
+      "completion_tokens": 166
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 550,
+      "completion_tokens": 124
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=2/4=0.50 (threshold=0.4)"
+  }
+}

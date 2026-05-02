@@ -1,0 +1,92 @@
+{
+  "question_id": "L2_q003_avg_confidence_all_events",
+  "level": "L2",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What was the average detection confidence across all events on 2025-12-08 (UTC)? Report to two decimal places.",
+  "gold_value": 0.9,
+  "answer_text": "The average detection confidence across all events on December 8, 2025 (UTC) was 0.91. This date experienced high levels of activity across various camera locations, with notable events like person entries and exits being predominant, indicating a busy surveillance day.",
+  "structured_answer": {
+    "cypher_columns": [
+      "average_detection_confidence"
+    ],
+    "cypher_rows": [
+      [
+        0.91
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_5",
+        "summary": "The CCTV activity involved multiple camera locations during the time range from 16:00:57 to 16:58:54 UTC on December 8, 2025. The dominant event types were person entries, with a total of 16, and person exits, totaling 11, alongside 3 car entries and 2 car exits. The total volume of events recorded was 32, with a node count of 33. There are no notable peak head counts or average head counts reported.",
+        "distance": 0.492501437664032
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity covers the location from 09:00 to 09:59 UTC on December 8, 2025. The dominant event types are person entries, with 437 recorded, and person exits, totaling 387. There were also 5 car entries and 4 car exits, contributing to a total of 833 events. Notably, the peak head count and average head count data are not available.",
+        "distance": 0.5083491802215576
+      },
+      {
+        "community_id": "community_3",
+        "summary": "The CCTV activity involves monitoring at unspecified camera locations during the time range of December 8, 2025, from 04:01:25 to 04:59:45 UTC. The dominant event types are person entries (12) and exits (18), along with car entries (4) and exits (2). A total of 36 events were recorded, with a peak head count and average head count not specified.",
+        "distance": 0.5347398519515991
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, covered a time range from 08:00:13 to 15:59:56 UTC. The dominant event types were person entries (680) and exits (685), with a total of 1,376 events recorded. The peak event count per hour occurred during the observed period, contributing to a total of 1,379 node counts.",
+        "distance": 0.538122296333313
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event)\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN avg(e.confidence) AS avg_confidence\n  UNION ALL\n  MATCH (ce:CrowdEvent)\n  WHERE ce.timestamp_utc >= '2025-12-08T00:00:00Z' AND ce.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN avg(ce.confidence) AS avg_confidence\n}\nRETURN round(avg(avg_confidence), 2) AS average_detection_confidence",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_5",
+      "distance": 0.492501437664032
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.5083491802215576
+    },
+    {
+      "type": "community",
+      "community_id": "community_3",
+      "distance": 0.5347398519515991
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.538122296333313
+    }
+  ],
+  "duration_ms": 6962,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2520,
+      "completion_tokens": 149
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 661,
+      "completion_tokens": 53
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": false,
+    "detail": "exceeds_1pct (expected=0.9 got=8.0)"
+  }
+}

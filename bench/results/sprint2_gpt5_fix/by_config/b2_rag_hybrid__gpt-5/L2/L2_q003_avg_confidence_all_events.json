@@ -1,0 +1,92 @@
+{
+  "question_id": "L2_q003_avg_confidence_all_events",
+  "level": "L2",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What was the average detection confidence across all events on 2025-12-08 (UTC)? Report to two decimal places.",
+  "gold_value": 0.9,
+  "answer_text": "0.91",
+  "structured_answer": {
+    "cypher_columns": [
+      "avg_detection_confidence"
+    ],
+    "cypher_rows": [
+      [
+        0.91
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_14",
+        "summary": "All activity was recorded at Platform_1 between 2025-12-01T19:00:22Z and 2025-12-01T19:58:59Z (UTC). A total of 53 events were detected in that hour, dominated by person movements (21 person_entry, 20 person_exit) with car events less frequent (6 car_entry, 6 car_exit); peak event count for the hour was 53. Average head count (mean of means) was 34.98 and the peak head count observed was 42. Node count: 55.",
+        "distance": 0.5072526931762695
+      },
+      {
+        "community_id": "community_8",
+        "summary": "All activity was recorded on Platform_1 during the 00:00 UTC hour of 2025-12-01 (events between 2025-12-01T00:02:02Z and 2025-12-01T00:57:29Z). There were 36 events total: 24 person events (8 person_entry, 16 person_exit) and 12 car events (7 car_entry, 5 car_exit), with person movements dominating. Peak head count observed was 13.0, the average head_count mean-of-means was 5.02, and the peak hourly event count was 36; node_count reported as 38.",
+        "distance": 0.5074541568756104
+      },
+      {
+        "community_id": "community_3",
+        "summary": "Between 2025-12-08T01:00:41Z and 2025-12-08T01:59:48Z (hour 01:00\u201301:59 UTC) there were 39 events recorded across the monitored nodes (node_count: 40). Events were dominated by people: 23 person_entry and 11 person_exit (34 person events) versus 1 car_entry and 4 car_exit (5 vehicle events). Camera locations are not specified in the profile and peak_head_count is not provided; the peak hourly event count for the reported hour was 39.",
+        "distance": 0.5194160342216492
+      },
+      {
+        "community_id": "community_15",
+        "summary": "Activity was recorded on Platform_1 between 2025-12-01T07:03:55Z and 2025-12-01T07:59:26Z (hour block 2025-12-01T07:00:00Z\u201307:00:00Z UTC).  \nThere were 34 events total: person movements dominated (25 person events: 9 entries, 16 exits) and vehicle movements accounted for 9 events (8 car entries, 1 car exit).  \nAverage head count (mean of means) was 5.03 with a peak head count of 13.0; the peak event count for the hour was 34 events and node_count is 36.",
+        "distance": 0.5271041989326477
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event)\nWHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z' AND e.confidence IS NOT NULL\nRETURN round(100.0 * avg(e.confidence)) / 100.0 AS avg_detection_confidence",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_14",
+      "distance": 0.5072526931762695
+    },
+    {
+      "type": "community",
+      "community_id": "community_8",
+      "distance": 0.5074541568756104
+    },
+    {
+      "type": "community",
+      "community_id": "community_3",
+      "distance": 0.5194160342216492
+    },
+    {
+      "type": "community",
+      "community_id": "community_15",
+      "distance": 0.5271041989326477
+    }
+  ],
+  "duration_ms": 27448,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5",
+      "prompt_tokens": 1880,
+      "completion_tokens": 1879
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-5",
+      "prompt_tokens": 781,
+      "completion_tokens": 204
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": false,
+    "detail": "exceeds_1pct (expected=0.9 got=0.91)"
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "question_id": "L5_q007_security_team_handoff",
+  "level": "L5",
+  "approach": "b3_aqr",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "If you were running security here, what would you tell your team based on the day's activity? Where should we keep the most eyes, and when do we need extra hands?",
+  "gold_value": {
+    "rubric": [
+      "Main entrance is the highest-traffic location and needs constant attention",
+      "Crowd-management focus on keynote area during keynote hours",
+      "Extra coverage needed during morning arrival window and evening departure window",
+      "Demo booth area requires monitoring during expo hours when crowds gather"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "Based on the day's activity, the peak hours to monitor closely are between 08:00 and 09:00, with 19,292 total events, and again from 15:00 to 18:00, where event counts were consistently high at 18,440 to 18,807. Extra hands will be particularly useful during these periods to manage the influx of activity focused on person and vehicle movements. Overall, attention should be directed to potential spikes around these peak hours, ensuring adequate support to handle the situation effectively.",
+  "structured_answer": {
+    "cypher_columns": [
+      "hour",
+      "total_events"
+    ],
+    "cypher_rows": [
+      [
+        "2025-12-08T08:00:00Z",
+        19292
+      ],
+      [
+        "2025-12-08T09:00:00Z",
+        19003
+      ],
+      [
+        "2025-12-08T17:00:00Z",
+        18807
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        18792
+      ],
+      [
+        "2025-12-08T15:00:00Z",
+        18440
+      ]
+    ],
+    "cypher_total_rows": 5,
+    "retrieved_communities": [
+      {
+        "community_id": "community_17",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 20:00 and 20:58 UTC recorded a total of 33 events. The dominant event types were person exits (13) and person entries (8), with car entries (7) and exits (5) also noted. The peak head count reached 13, and the average head count was approximately 5.05 during this period.",
+        "distance": 0.6233999729156494
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity at Platform_1 from 02:00 to 02:55 UTC on December 1, 2025, recorded a total of 37 events, with person entries (16) and exits (14) dominating the activity. There were also 4 car entries and 3 car exits. The peak head count reached 13, with an average head count of 5.05 during this time.",
+        "distance": 0.6263519525527954
+      },
+      {
+        "community_id": "community_14",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 19:00 and 19:58 UTC recorded a total of 53 events, with a peak head count of 42. The dominant event types were person entries (21) and exits (20), alongside 6 car entries and 6 exits. The average head count was approximately 35, with a total of 55 nodes monitored during this period.",
+        "distance": 0.6282792091369629
+      },
+      {
+        "community_id": "community_13",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, 17:00 to 17:59 UTC recorded a total of 194 events, with person entries (92) and exits (89) dominating the activity. The peak head count reached 13 individuals, while the peak event count per hour was 194. Additionally, there were 5 car entries and 8 car exits during this time.",
+        "distance": 0.6284971237182617
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event) WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  WITH substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, count(*) AS n\n  RETURN hour, n\n  UNION ALL\n  MATCH (ch:CrowdHour) WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.hour_utc AS hour, ch.event_count AS n\n}\nWITH hour, sum(n) AS total_events\nORDER BY total_events DESC\nRETURN hour, total_events LIMIT 5",
+      "row_count": 5
+    },
+    {
+      "type": "community",
+      "community_id": "community_17",
+      "distance": 0.6233999729156494
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.6263519525527954
+    },
+    {
+      "type": "community",
+      "community_id": "community_14",
+      "distance": 0.6282792091369629
+    },
+    {
+      "type": "community",
+      "community_id": "community_13",
+      "distance": 0.6284971237182617
+    }
+  ],
+  "duration_ms": 9617,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2167,
+      "completion_tokens": 182
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 750,
+      "completion_tokens": 107
+    }
+  ],
+  "errors": [],
+  "routing": {
+    "classified_level": "L5",
+    "routed_to": "b2_rag_hybrid",
+    "routing_method": "llm_zero_shot",
+    "routing_duration_ms": 1629,
+    "classifier_metadata": {
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 366,
+      "completion_tokens": 2
+    }
+  },
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=1/4=0.25 (threshold=0.5)"
+  }
+}

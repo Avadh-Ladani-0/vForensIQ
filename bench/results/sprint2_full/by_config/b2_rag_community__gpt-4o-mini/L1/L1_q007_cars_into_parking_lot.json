@@ -1,0 +1,129 @@
+{
+  "question_id": "L1_q007_cars_into_parking_lot",
+  "level": "L1",
+  "approach": "b2_rag_community",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many cars came into the parking lot during the day?",
+  "gold_value": 381,
+  "answer_text": "During the day on December 8, 2025, a total of 283 cars entered the parking lot, as recorded by the Gate_ParkingLot camera from 07:00 to 17:00 UTC.",
+  "structured_answer": {
+    "retrieved_communities": [
+      {
+        "community_id": "community_1",
+        "summary": "The CCTV activity at the Gate_ParkingLot camera from December 8, 2025, covers a time range from 07:00 to 17:00 UTC. The dominant event types are person entries (463) and exits (466), along with car entries (283) and exits (317). The total volume of events recorded is 1,529, with a node count of 1,532.",
+        "distance": 0.44986236095428467,
+        "metadata": {
+          "camera_locations": "Gate_ParkingLot",
+          "node_count": 1532,
+          "total_events": 1529,
+          "community_id": 1
+        }
+      },
+      {
+        "community_id": "community_16",
+        "summary": "The CCTV activity at Platform_1 from 08:00 to 08:59 on December 1, 2025, recorded a total of 286 events, with person entries (92) and exits (107) dominating the activity. Car entries (46) and exits (41) were also significant. The peak head count reached 47, and the average head count was approximately 40.02.",
+        "distance": 0.5198045969009399,
+        "metadata": {
+          "node_count": 288,
+          "camera_locations": "Platform_1",
+          "total_events": 286,
+          "community_id": 16
+        }
+      },
+      {
+        "community_id": "community_14",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 19:00 and 19:58 shows a total of 53 events, with person entries (21) and exits (20) dominating the activity. There were also 6 car entries and 6 car exits recorded. The peak head count reached 42, with an average head count of approximately 35.",
+        "distance": 0.5244483947753906,
+        "metadata": {
+          "total_events": 53,
+          "camera_locations": "Platform_1",
+          "node_count": 55,
+          "community_id": 14
+        }
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity at Platform_1 from 02:00 to 02:55 UTC on December 1, 2025, recorded a total of 37 events, with person entries (16) and exits (14) dominating the activity. There were also 4 car entries and 3 car exits. The peak head count reached 13, with an average head count of 5.05 during this period.",
+        "distance": 0.5400890707969666,
+        "metadata": {
+          "total_events": 37,
+          "community_id": 10,
+          "node_count": 39,
+          "camera_locations": "Platform_1"
+        }
+      },
+      {
+        "community_id": "community_18",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 21:00 and 21:59 UTC recorded a total of 41 events. The dominant event types were person entries (14) and exits (17), along with 7 car entries and 3 car exits. The peak head count reached 14, with an average head count of approximately 4.95 during this hour.",
+        "distance": 0.5420218706130981,
+        "metadata": {
+          "community_id": 18,
+          "node_count": 43,
+          "camera_locations": "Platform_1",
+          "total_events": 41
+        }
+      },
+      {
+        "community_id": "community_7",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 12:00:23 and 12:59:53, recorded a total of 25 events. The dominant event types were person entries (10) and exits (8), along with 4 car entries and 3 car exits. The peak head count reached 13, with an average head count of approximately 4.96 during this period.",
+        "distance": 0.5451606512069702,
+        "metadata": {
+          "community_id": 7,
+          "node_count": 27,
+          "camera_locations": "Platform_1",
+          "total_events": 25
+        }
+      }
+    ],
+    "top_k": 6
+  },
+  "citations": [
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.44986236095428467
+    },
+    {
+      "type": "community",
+      "community_id": "community_16",
+      "distance": 0.5198045969009399
+    },
+    {
+      "type": "community",
+      "community_id": "community_14",
+      "distance": 0.5244483947753906
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.5400890707969666
+    },
+    {
+      "type": "community",
+      "community_id": "community_18",
+      "distance": 0.5420218706130981
+    },
+    {
+      "type": "community",
+      "community_id": "community_7",
+      "distance": 0.5451606512069702
+    }
+  ],
+  "duration_ms": 3215,
+  "llm_calls": [
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 746,
+      "completion_tokens": 44
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": false,
+    "detail": "expected=381.0 got=8.0"
+  }
+}

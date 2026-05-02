@@ -1,0 +1,153 @@
+{
+  "question_id": "L5_q006_how_did_the_day_go",
+  "level": "L5",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Tell me how the day went at the conference \u2014 what stood out, when were the big moments, and what does the activity tell us?",
+  "gold_value": {
+    "rubric": [
+      "Significant person traffic at the main entrance, especially in the morning and evening",
+      "Keynote sessions drew large crowds at the keynote stage area",
+      "Demo booths (especially NVIDIA) had notable crowd activity during expo hours",
+      "Food court was busiest around lunchtime",
+      "Overnight hours were quiet across the venue"
+    ],
+    "threshold": 0.4
+  },
+  "answer_text": "The conference on December 8, 2025, experienced consistent activity throughout the day, with notable peaks. The most significant movements occurred at 08:00 UTC with 19,292 events, and again at 09:00 UTC reaching 19,003 events. Following these peaks, activity remained relatively high around midday and early afternoon, particularly at 13:00 UTC with 18,397 events and at 15:00 UTC with 18,440 events, indicating key sessions or events likely took place during these hours. The data suggests these hours were the big moments of the day.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "total_events"
+    ],
+    "rows": [
+      [
+        "2025-12-08T00:00:00Z",
+        18040
+      ],
+      [
+        "2025-12-08T01:00:00Z",
+        18039
+      ],
+      [
+        "2025-12-08T02:00:00Z",
+        18029
+      ],
+      [
+        "2025-12-08T03:00:00Z",
+        18032
+      ],
+      [
+        "2025-12-08T04:00:00Z",
+        18036
+      ],
+      [
+        "2025-12-08T05:00:00Z",
+        18040
+      ],
+      [
+        "2025-12-08T06:00:00Z",
+        18037
+      ],
+      [
+        "2025-12-08T07:00:00Z",
+        18358
+      ],
+      [
+        "2025-12-08T08:00:00Z",
+        19292
+      ],
+      [
+        "2025-12-08T09:00:00Z",
+        19003
+      ],
+      [
+        "2025-12-08T10:00:00Z",
+        18035
+      ],
+      [
+        "2025-12-08T11:00:00Z",
+        18037
+      ],
+      [
+        "2025-12-08T12:00:00Z",
+        18323
+      ],
+      [
+        "2025-12-08T13:00:00Z",
+        18397
+      ],
+      [
+        "2025-12-08T14:00:00Z",
+        18031
+      ],
+      [
+        "2025-12-08T15:00:00Z",
+        18440
+      ],
+      [
+        "2025-12-08T16:00:00Z",
+        18032
+      ],
+      [
+        "2025-12-08T17:00:00Z",
+        18807
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        18792
+      ],
+      [
+        "2025-12-08T19:00:00Z",
+        18027
+      ],
+      [
+        "2025-12-08T20:00:00Z",
+        18033
+      ],
+      [
+        "2025-12-08T21:00:00Z",
+        18032
+      ],
+      [
+        "2025-12-08T22:00:00Z",
+        18026
+      ],
+      [
+        "2025-12-08T23:00:00Z",
+        18022
+      ]
+    ],
+    "total_rows": 24
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event) \n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  WITH substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, count(*) AS n\n  RETURN hour, n\n  UNION ALL\n  MATCH (ch:CrowdHour) \n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.hour_utc AS hour, ch.event_count AS n\n}\nRETURN hour, sum(n) AS total_events ORDER BY hour",
+      "row_count": 24
+    }
+  ],
+  "duration_ms": 4734,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2160,
+      "completion_tokens": 173
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 849,
+      "completion_tokens": 121
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=0/5=0.00 (threshold=0.4)"
+  }
+}

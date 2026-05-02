@@ -1,0 +1,58 @@
+{
+  "question_id": "L4_q007_nvidia_vs_intel_booth_attraction",
+  "level": "L4",
+  "approach": "b1_sql",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which demo booth attracted bigger crowds \u2014 NVIDIA or Intel? Roughly how much more popular was the winner?",
+  "gold_value": {
+    "winner": "NVIDIA",
+    "popularity_ratio_winner_over_loser": {
+      "value": 1.4,
+      "tolerance": 0.5
+    }
+  },
+  "answer_text": "The NVIDIA booth attracted a crowd of 1,340,536. There is no data provided for the Intel booth, so I cannot determine how much more popular NVIDIA was compared to Intel.",
+  "structured_answer": {
+    "columns": [
+      "booth",
+      "total_head_count"
+    ],
+    "rows": [
+      [
+        "NVIDIA",
+        1340536
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH crowd_nvidia AS (\n    SELECT SUM(head_count) AS total_head_count\n    FROM events\n    WHERE camera_location LIKE '%NVIDIA%' AND event_type = 'crowd'\n),\ncrowd_intel AS (\n    SELECT SUM(head_count) AS total_head_count\n    FROM events\n    WHERE camera_location LIKE '%Intel%' AND event_type = 'crowd'\n)\nSELECT \n    'NVIDIA' AS booth, total_head_count \nFROM crowd_nvidia\nUNION ALL\nSELECT \n    'Intel' AS booth, total_head_count \nFROM crowd_intel\nORDER BY total_head_count DESC\nLIMIT 1",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 5119,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 858,
+      "completion_tokens": 129
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 326,
+      "completion_tokens": 38
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": false,
+    "detail": "missing=['popularity_ratio_winner_over_loser=1.4+-0.5_no_match (numbers_seen=[1340536.0])']"
+  }
+}

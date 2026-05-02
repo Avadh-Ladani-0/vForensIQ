@@ -1,0 +1,102 @@
+{
+  "question_id": "L5_q008_what_should_change",
+  "level": "L5",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Looking at how this conference day played out, what could be improved next time \u2014 staffing, layout, scheduling? Give me your top recommendations grounded in what the data shows.",
+  "gold_value": {
+    "rubric": [
+      "Lunch-hour congestion at the food court suggests adding capacity or staggered breaks",
+      "Concentrated rush hours at the main entrance suggest staggered start times or additional lanes",
+      "Significant peak/baseline contrast at keynote stage suggests dedicated crowd-flow planning around keynote times",
+      "Lower-attended demo booths could be relocated or merged to balance traffic"
+    ],
+    "threshold": 0.4
+  },
+  "answer_text": "To improve the conference day experience, consider enhancing staffing levels during peak times, particularly at the Keynote Hall where significant foot traffic was recorded, with 1,117 entries and 1,072 exits between 09:00 and 15:00 UTC. Additionally, optimizing the layout to facilitate smoother movement between high-traffic areas like the Demo Booths and the Food Court could alleviate congestion, as evidenced by the total of 449 events across five camera locations. Lastly, reevaluating the scheduling of sessions to avoid overlaps during peak entry and exit times may help manage crowd flow more effectively.",
+  "structured_answer": {
+    "cypher_columns": [],
+    "cypher_rows": [],
+    "cypher_total_rows": 0,
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and a total of 588 node counts.",
+        "distance": 0.6283993721008301
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.7096715569496155
+      },
+      {
+        "community_id": "community_16",
+        "summary": "The CCTV activity at Platform_1 from 08:00 to 08:59 on December 1, 2025, recorded a total of 286 events, with person entries (92) and exits (107) dominating the activity. Car entries (46) and exits (41) were also significant. The peak head count reached 47, and the average head count was approximately 40.02.",
+        "distance": 0.7356961965560913
+      },
+      {
+        "community_id": "community_6",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 11:01:47 and 11:59:48, recorded a total of 44 events. The dominant event types were person exits (17) and person entries (12), with car entries (9) and exits (6) also noted. The peak head count reached 12, and the average head count was 5.05 during this period.",
+        "distance": 0.7423809766769409
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "WITH \n  (MATCH (e:Event)-[:DETECTED_BY]->(:Camera {camera_location: 'Gate_MainEntrance'}) \n   WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z' \n   RETURN COUNT(e) AS entry_count) AS entries,\n  (MATCH (e:Event)-[:DETECTED_BY]->(:Camera {camera_location: 'Gate_MainEntrance'}) \n   WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z' \n   AND e.event_type = 'person_exit' \n   RETURN COUNT(e) AS exit_count) AS exits,\n  (MATCH (ch:CrowdHour {camera_location: 'DemoBooth_NVIDIA'}) \n   WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z' \n   RETURN AVG(ch.avg_hc) AS avg_head_count, MAX(ch.peak_hc) AS peak_head_count) AS crowd_stats,\n  (MATCH (ch:CrowdHour) \n   WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z' \n   RETURN COUNT(ch) AS total_crowd_hours) AS total_crowd_hours\nRETURN entries.entry_count AS entry_count, exits.exit_count AS exit_count, crowd_stats.avg_head_count AS avg_head_count, crowd_stats.peak_head_count AS peak_head_count, total_crowd_hours.total_crowd_hours AS total_crowd_hours",
+      "row_count": 0
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.6283993721008301
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.7096715569496155
+    },
+    {
+      "type": "community",
+      "community_id": "community_16",
+      "distance": 0.7356961965560913
+    },
+    {
+      "type": "community",
+      "community_id": "community_6",
+      "distance": 0.7423809766769409
+    }
+  ],
+  "duration_ms": 17323,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 993,
+      "completion_tokens": 375
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1506,
+      "completion_tokens": 395
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 641,
+      "completion_tokens": 119
+    }
+  ],
+  "errors": [
+    "cypher_stream: CypherSyntaxError: {neo4j_code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input ':': expected an expression (line 2, column 21 (offset: 26))\n\"  (MATCH (e:Event)-[:DETECTED_BY]->(:Camera {camera_location: 'Gate_MainEntrance'})\"\n                     ^} {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=1/4=0.25 (threshold=0.4)"
+  }
+}

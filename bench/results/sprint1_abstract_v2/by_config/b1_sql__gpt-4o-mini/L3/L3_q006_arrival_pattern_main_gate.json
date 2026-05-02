@@ -1,0 +1,241 @@
+{
+  "question_id": "L3_q006_arrival_pattern_main_gate",
+  "level": "L3",
+  "approach": "b1_sql",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Show me when people were arriving at the main entrance throughout the day, broken down hour by hour.",
+  "gold_value": [
+    [
+      "00",
+      13
+    ],
+    [
+      "01",
+      18
+    ],
+    [
+      "02",
+      8
+    ],
+    [
+      "03",
+      12
+    ],
+    [
+      "04",
+      8
+    ],
+    [
+      "05",
+      15
+    ],
+    [
+      "06",
+      10
+    ],
+    [
+      "07",
+      7
+    ],
+    [
+      "08",
+      311
+    ],
+    [
+      "09",
+      334
+    ],
+    [
+      "10",
+      9
+    ],
+    [
+      "11",
+      12
+    ],
+    [
+      "12",
+      154
+    ],
+    [
+      "13",
+      14
+    ],
+    [
+      "14",
+      8
+    ],
+    [
+      "15",
+      13
+    ],
+    [
+      "16",
+      12
+    ],
+    [
+      "17",
+      268
+    ],
+    [
+      "18",
+      255
+    ],
+    [
+      "19",
+      14
+    ],
+    [
+      "20",
+      12
+    ],
+    [
+      "21",
+      11
+    ],
+    [
+      "22",
+      7
+    ],
+    [
+      "23",
+      6
+    ]
+  ],
+  "answer_text": "Throughout December 8, 2025, the arrivals at the main entrance were as follows: \n\n- 00:00 - 01:00: 13\n- 01:00 - 02:00: 18\n- 02:00 - 03:00: 8\n- 03:00 - 04:00: 12\n- 04:00 - 05:00: 8\n- 05:00 - 06:00: 15\n- 06:00 - 07:00: 10\n- 07:00 - 08:00: 7\n- 08:00 - 09:00: 311\n- 09:00 - 10:00: 334\n- 10:00 - 11:00: 9\n- 11:00 - 12:00: 12\n- 12:00 - 13:00: 154\n- 13:00 - 14:00: 14\n- 14:00 - 15:00: 8\n- 15:00 - 16:00: 13\n- 16:00 - 17:00: 12\n- 17:00 - 18:00: 268\n- 18:00 - 19:00: 255\n- 19:00 - 20:00: 14\n- 20:00 - 21:00: 12\n- 21:00 - 22:00: 11\n- 22:00 - 23:00: 7\n- 23:00 - 00:00: 6\n\nThe peak hours were 09:00 with 334 arrivals and 08:00 with 311 arrivals.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "arrival_count"
+    ],
+    "rows": [
+      [
+        "00",
+        13
+      ],
+      [
+        "01",
+        18
+      ],
+      [
+        "02",
+        8
+      ],
+      [
+        "03",
+        12
+      ],
+      [
+        "04",
+        8
+      ],
+      [
+        "05",
+        15
+      ],
+      [
+        "06",
+        10
+      ],
+      [
+        "07",
+        7
+      ],
+      [
+        "08",
+        311
+      ],
+      [
+        "09",
+        334
+      ],
+      [
+        "10",
+        9
+      ],
+      [
+        "11",
+        12
+      ],
+      [
+        "12",
+        154
+      ],
+      [
+        "13",
+        14
+      ],
+      [
+        "14",
+        8
+      ],
+      [
+        "15",
+        13
+      ],
+      [
+        "16",
+        12
+      ],
+      [
+        "17",
+        268
+      ],
+      [
+        "18",
+        255
+      ],
+      [
+        "19",
+        14
+      ],
+      [
+        "20",
+        12
+      ],
+      [
+        "21",
+        11
+      ],
+      [
+        "22",
+        7
+      ],
+      [
+        "23",
+        6
+      ]
+    ],
+    "total_rows": 24
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH hourly_arrivals AS (\n    SELECT strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n           COUNT(*) AS arrival_count\n    FROM events\n    WHERE timestamp_utc >= '2025-12-08T00:00:00Z' \n      AND timestamp_utc < '2025-12-09T00:00:00Z'\n      AND event_type = 'person_entry'\n      AND camera_location LIKE '%MainEntrance%'\n    GROUP BY hour\n)\nSELECT hour, arrival_count\nFROM hourly_arrivals\nORDER BY hour",
+      "row_count": 24
+    }
+  ],
+  "duration_ms": 12285,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 954,
+      "completion_tokens": 116
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 469,
+      "completion_tokens": 378
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": true,
+    "detail": "all_keys_and_values_matched (rows=24)"
+  }
+}

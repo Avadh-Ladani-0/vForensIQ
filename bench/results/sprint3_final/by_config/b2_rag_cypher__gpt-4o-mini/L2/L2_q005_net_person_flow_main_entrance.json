@@ -1,0 +1,56 @@
+{
+  "question_id": "L2_q005_net_person_flow_main_entrance",
+  "level": "L2",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What was the net person flow (person_entry events minus person_exit events) at Gate_MainEntrance on 2025-12-08 (UTC)?",
+  "gold_value": 179,
+  "answer_text": "The net person flow at Gate_MainEntrance on 2025-12-08 (UTC) was 179.",
+  "structured_answer": {
+    "columns": [
+      "net_person_flow"
+    ],
+    "rows": [
+      [
+        179
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event {event_type: 'person_entry'})-[:DETECTED_BY]->(:Camera {camera_location: 'Gate_MainEntrance'})\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN count(e) AS count, 'entry' AS type\n  UNION ALL\n  MATCH (e:Event {event_type: 'person_exit'})-[:DETECTED_BY]->(:Camera {camera_location: 'Gate_MainEntrance'})\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN count(e) AS count, 'exit' AS type\n}\nWITH SUM(CASE WHEN type = 'entry' THEN count ELSE 0 END) AS entry_count, \n     SUM(CASE WHEN type = 'exit' THEN count ELSE 0 END) AS exit_count\nRETURN entry_count - exit_count AS net_person_flow",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 9208,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2162,
+      "completion_tokens": 183
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2458,
+      "completion_tokens": 236
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 436,
+      "completion_tokens": 23
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": true,
+    "detail": "within_1pct (expected=179.0 got=179.0)"
+  }
+}

@@ -1,0 +1,228 @@
+{
+  "question_id": "L5_q002_nvidia_booth_timeline",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Describe the full-day activity timeline at DemoBooth_NVIDIA on 2025-12-08 (UTC). Identify the busiest time windows, any lulls, and quantify the peak crowd sizes versus the baseline. Write 3-5 sentences.",
+  "gold_value": {
+    "rubric": [
+      "Morning peak between 10-12 UTC",
+      "Afternoon peak between 15-17 UTC",
+      "Lunch-hour dip (around 12-13 or 13-14 UTC)",
+      "Peak head_count values are substantially higher than baseline of ~3",
+      "Overnight / early-morning hours show baseline/quiet activity"
+    ],
+    "threshold": 0.6
+  },
+  "answer_text": "On 2025-12-08, the DemoBooth_NVIDIA experienced its peak activity between 15:00 and 16:00 UTC, with the highest crowd size of 252,407 at 16:00. The baseline crowd size throughout the day was generally around 12,000 to 13,000, with notable increases during the peak hours. The busiest time windows were from 10:00 to 16:00 UTC, with significant spikes at 11:00 (216,711) and 15:00 (251,999). The quietest hour was 19:00 UTC, with a total head count of 12,313.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "total_head_count",
+      "event_count",
+      "rank_by_head_count",
+      "rank_by_event_count"
+    ],
+    "rows": [
+      [
+        "00",
+        12493,
+        3600,
+        21,
+        1
+      ],
+      [
+        "01",
+        12706,
+        3600,
+        14,
+        1
+      ],
+      [
+        "02",
+        12644,
+        3600,
+        18,
+        1
+      ],
+      [
+        "03",
+        12675,
+        3600,
+        15,
+        1
+      ],
+      [
+        "04",
+        12916,
+        3600,
+        8,
+        1
+      ],
+      [
+        "05",
+        12971,
+        3600,
+        7,
+        1
+      ],
+      [
+        "06",
+        12449,
+        3600,
+        22,
+        1
+      ],
+      [
+        "07",
+        12395,
+        3600,
+        23,
+        1
+      ],
+      [
+        "08",
+        12787,
+        3600,
+        11,
+        1
+      ],
+      [
+        "09",
+        12651,
+        3600,
+        17,
+        1
+      ],
+      [
+        "10",
+        216035,
+        3600,
+        4,
+        1
+      ],
+      [
+        "11",
+        216711,
+        3600,
+        3,
+        1
+      ],
+      [
+        "12",
+        12652,
+        3600,
+        16,
+        1
+      ],
+      [
+        "13",
+        162130,
+        3600,
+        5,
+        1
+      ],
+      [
+        "14",
+        12576,
+        3600,
+        20,
+        1
+      ],
+      [
+        "15",
+        251999,
+        3600,
+        2,
+        1
+      ],
+      [
+        "16",
+        252407,
+        3600,
+        1,
+        1
+      ],
+      [
+        "17",
+        12803,
+        3600,
+        10,
+        1
+      ],
+      [
+        "18",
+        12746,
+        3600,
+        13,
+        1
+      ],
+      [
+        "19",
+        12313,
+        3600,
+        24,
+        1
+      ],
+      [
+        "20",
+        12829,
+        3600,
+        9,
+        1
+      ],
+      [
+        "21",
+        12763,
+        3600,
+        12,
+        1
+      ],
+      [
+        "22",
+        13304,
+        3600,
+        6,
+        1
+      ],
+      [
+        "23",
+        12581,
+        3600,
+        19,
+        1
+      ]
+    ],
+    "total_rows": 24
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH event_data AS (\n    SELECT \n        timestamp_utc,\n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        event_type,\n        head_count\n    FROM \n        events\n    WHERE \n        camera_location LIKE '%NVIDIA%' \n        AND timestamp_utc >= '2025-12-08T00:00:00Z' \n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n),\nhourly_summary AS (\n    SELECT \n        hour,\n        SUM(CASE WHEN event_type = 'crowd' THEN head_count ELSE 0 END) AS total_head_count,\n        COUNT(*) AS event_count\n    FROM \n        event_data\n    GROUP BY \n        hour\n),\npeak_hours AS (\n    SELECT \n        hour,\n        total_head_count,\n        event_count,\n        RANK() OVER (ORDER BY total_head_count DESC) AS rank_by_head_count,\n        RANK() OVER (ORDER BY event_count DESC) AS rank_by_event_count\n    FROM \n        hourly_summary\n)\nSELECT \n    hour,\n    total_head_count,\n    event_count,\n    rank_by_head_count,\n    rank_by_event_count\nFROM \n    peak_hours\nORDER BY \n    hour",
+      "row_count": 24
+    }
+  ],
+  "duration_ms": 6128,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 984,
+      "completion_tokens": 260
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 923,
+      "completion_tokens": 137
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=3/5=0.60 (threshold=0.6)"
+  }
+}

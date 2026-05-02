@@ -1,0 +1,51 @@
+{
+  "question_id": "L1_q011_car_exits_parking",
+  "level": "L1",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many cars drove out of the parking lot?",
+  "gold_value": 397,
+  "answer_text": "There were 397 car_exit events from the parking lot on December 8, 2025.",
+  "structured_answer": {
+    "columns": [
+      "car_exit_count"
+    ],
+    "rows": [
+      [
+        397
+      ]
+    ],
+    "total_rows": 1,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "SELECT COUNT(*) AS car_exit_count\nFROM events\nWHERE event_type = 'car_exit'\n  AND camera_location LIKE '%Parking%'\n  AND timestamp_utc >= '2025-12-08T00:00:00Z'\n  AND timestamp_utc < '2025-12-09T00:00:00Z'",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 4194,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 944,
+      "completion_tokens": 73
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 245,
+      "completion_tokens": 20
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": true,
+    "detail": "match"
+  }
+}

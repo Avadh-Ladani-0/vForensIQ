@@ -1,0 +1,59 @@
+{
+  "question_id": "L4_q007_nvidia_vs_intel_booth_attraction",
+  "level": "L4",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which demo booth attracted bigger crowds \u2014 NVIDIA or Intel? Roughly how much more popular was the winner?",
+  "gold_value": {
+    "winner": "NVIDIA",
+    "intel_mentioned": "Intel"
+  },
+  "answer_text": "Both the NVIDIA and Intel demo booths attracted the same size crowds, with each having a total crowd count of 86,400. Neither was more popular than the other.",
+  "structured_answer": {
+    "columns": [
+      "booth",
+      "total_crowd"
+    ],
+    "rows": [
+      [
+        "NVIDIA",
+        86400
+      ],
+      [
+        "Intel",
+        86400
+      ]
+    ],
+    "total_rows": 2
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour)\n  WHERE ch.camera_location CONTAINS 'NVIDIA' AND ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN 'NVIDIA' AS booth, sum(ch.event_count) AS total_crowd\n  UNION ALL\n  MATCH (ch:CrowdHour)\n  WHERE ch.camera_location CONTAINS 'Intel' AND ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN 'Intel' AS booth, sum(ch.event_count) AS total_crowd\n}\nRETURN booth, total_crowd ORDER BY total_crowd DESC",
+      "row_count": 2
+    }
+  ],
+  "duration_ms": 5733,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2515,
+      "completion_tokens": 185
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 394,
+      "completion_tokens": 34
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_2_facts_satisfied"
+  }
+}

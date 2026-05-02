@@ -1,0 +1,165 @@
+{
+  "question_id": "L5_q014_venue_design_feedback",
+  "level": "L5",
+  "approach": "b3_aqr",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "If you were the venue designer looking at this data, what would you change about the layout? Which areas need more space, which need better flow, and where should food or rest areas be added?",
+  "gold_value": {
+    "rubric": [
+      "KeynoteHall needs more capacity or overflow viewing",
+      "ExpoFloor has sustained high traffic \u2014 wider aisles or more space needed",
+      "FoodCourt peaks sharply at lunch \u2014 add satellite food stations",
+      "Gate areas could benefit from more entry lanes during morning rush"
+    ],
+    "threshold": 0.4
+  },
+  "answer_text": "Based on the gathered data, the KeynoteHall_Stage has a significant peak head count of 500, indicating a need for more space to comfortably accommodate guests during peak times. The ExpoFloor_MainAisle also experiences high congestion with a peak of 209 individuals; enhancing the flow here could improve visitor experience. As the FoodCourt_North has a considerable peak head count of 146, expanding seating and optimizing service flow could alleviate bottlenecks. Given the high ingress and egress activity at the Main Entrance, additional rest areas could provide a buffer for guests arriving or leaving the venue. Adding food or rest zones near the Demo Booths could also encourage more prolonged visitor engagement at quieter spots.",
+  "structured_answer": {
+    "cypher_columns": [
+      "location",
+      "total_avg_head_count",
+      "total_peak_head_count",
+      "total_event_count"
+    ],
+    "cypher_rows": [
+      [
+        "KeynoteHall_Stage",
+        57.3975,
+        500,
+        0
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        49.35666666666666,
+        209,
+        0
+      ],
+      [
+        "FoodCourt_North",
+        23.069583333333334,
+        146,
+        0
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        15.515000000000002,
+        86,
+        0
+      ],
+      [
+        "DemoBooth_Intel",
+        10.64833333333333,
+        53,
+        0
+      ],
+      [
+        "Gate_MainEntrance",
+        0,
+        0,
+        2951
+      ],
+      [
+        "KeynoteHall_DoorA",
+        0,
+        0,
+        1596
+      ],
+      [
+        "Gate_ParkingLot",
+        0,
+        0,
+        1393
+      ]
+    ],
+    "cypher_total_rows": 8,
+    "retrieved_communities": [
+      {
+        "community_id": "community_4",
+        "summary": "The CCTV activity involved five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types were person entries (169) and exits (132), with a total of 344 events recorded during the time range from December 8, 2025, 02:03:44 UTC to December 8, 2025, 23:59:14 UTC. The peak head count reached 500, and the average head count was approximately 31.2.",
+        "distance": 0.5963175296783447
+      },
+      {
+        "community_id": "community_0",
+        "summary": "The CCTV activity at the Gate_MainEntrance from December 8, 2025, between 08:00 and 12:59 UTC recorded a total of 930 events. The dominant event types were person entries (470) and exits (450), with car entries (8) and exits (2) also noted. The total volume of events indicates significant foot traffic, although peak head count and average head count data are not available.",
+        "distance": 0.7067790031433105
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, covered a time range from 08:00:13 to 15:59:56 UTC. The dominant event types were person entries (680) and exits (685), with a total of 1,376 events recorded. The peak event count per hour occurred during the observed period, contributing to a total of 1,379 node counts.",
+        "distance": 0.7216000556945801
+      },
+      {
+        "community_id": "community_1",
+        "summary": "The CCTV activity at the Gate_ParkingLot camera from December 8, 2025, between 07:00 and 18:59 UTC recorded a total of 1,540 events. The dominant event types were person entries (454) and exits (476), along with car entries (298) and exits (312). The total volume of events reached 1,543, with no peak head count reported.",
+        "distance": 0.7312681078910828
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.camera_location AS location, avg(ch.avg_hc) AS avg_head_count, max(ch.peak_hc) AS peak_head_count, 0 AS event_count\n  UNION ALL\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN c.camera_location AS location, 0 AS avg_head_count, 0 AS peak_head_count, count(e) AS event_count\n}\nRETURN location, sum(avg_head_count) AS total_avg_head_count, sum(peak_head_count) AS total_peak_head_count, sum(event_count) AS total_event_count\nORDER BY total_peak_head_count DESC, total_avg_head_count DESC, total_event_count DESC",
+      "row_count": 8
+    },
+    {
+      "type": "community",
+      "community_id": "community_4",
+      "distance": 0.5963175296783447
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.7067790031433105
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.7216000556945801
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.7312681078910828
+    }
+  ],
+  "duration_ms": 10005,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2534,
+      "completion_tokens": 225
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 2872,
+      "completion_tokens": 238
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 861,
+      "completion_tokens": 141
+    }
+  ],
+  "errors": [],
+  "routing": {
+    "classified_level": "L5",
+    "routed_to": "b2_rag_hybrid",
+    "routing_method": "llm_zero_shot",
+    "routing_duration_ms": 1412,
+    "classifier_metadata": {
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 371,
+      "completion_tokens": 2
+    }
+  },
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=2/4=0.50 (threshold=0.4)"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "question_id": "L2_q008_lunch_crowd_food_court",
+  "level": "L2",
+  "approach": "b1_sql",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How busy was the food court during lunch hours on average?",
+  "gold_value": 120.01,
+  "answer_text": "The average busy level of the food court during lunch hours was approximately 62.83 head counts.",
+  "structured_answer": {
+    "columns": [
+      "average_busy_level"
+    ],
+    "rows": [
+      [
+        62.82513888888889
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH lunch_hours AS (\n    SELECT strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour, AVG(head_count) AS avg_head_count\n    FROM events\n    WHERE camera_location LIKE '%FoodCourt%'\n    AND strftime('%H', timestamp_epoch_s, 'unixepoch') BETWEEN '11' AND '14'\n    AND event_type = 'crowd'\n    GROUP BY hour\n)\nSELECT AVG(avg_head_count) AS average_busy_level\nFROM lunch_hours",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 3613,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 849,
+      "completion_tokens": 97
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 282,
+      "completion_tokens": 20
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": false,
+    "detail": "exceeds_1pct (expected=120.01 got=62.83)"
+  }
+}

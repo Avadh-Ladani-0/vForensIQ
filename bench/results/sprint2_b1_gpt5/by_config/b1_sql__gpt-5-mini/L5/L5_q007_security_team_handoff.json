@@ -1,0 +1,41 @@
+{
+  "question_id": "L5_q007_security_team_handoff",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-5-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "If you were running security here, what would you tell your team based on the day's activity? Where should we keep the most eyes, and when do we need extra hands?",
+  "gold_value": {
+    "rubric": [
+      "Main entrance is the highest-traffic location and needs constant attention",
+      "Crowd-management focus on keynote area during keynote hours",
+      "Extra coverage needed during morning arrival window and evening departure window",
+      "Demo booth area requires monitoring during expo hours when crowds gather"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": null,
+  "structured_answer": {
+    "columns": [],
+    "rows": [],
+    "total_rows": 0
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "",
+      "row_count": 0
+    }
+  ],
+  "duration_ms": 12132,
+  "llm_calls": [],
+  "errors": [
+    "RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": null,
+    "detail": "error"
+  }
+}

@@ -1,0 +1,241 @@
+{
+  "question_id": "L3_q008_event_volume_by_hour",
+  "level": "L3",
+  "approach": "b1_sql",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How does activity change throughout the day across the whole venue? Show the total number of events per hour.",
+  "gold_value": [
+    [
+      "00",
+      18040
+    ],
+    [
+      "01",
+      18039
+    ],
+    [
+      "02",
+      18029
+    ],
+    [
+      "03",
+      18032
+    ],
+    [
+      "04",
+      18036
+    ],
+    [
+      "05",
+      18040
+    ],
+    [
+      "06",
+      18037
+    ],
+    [
+      "07",
+      18358
+    ],
+    [
+      "08",
+      19292
+    ],
+    [
+      "09",
+      19003
+    ],
+    [
+      "10",
+      18035
+    ],
+    [
+      "11",
+      18037
+    ],
+    [
+      "12",
+      18323
+    ],
+    [
+      "13",
+      18397
+    ],
+    [
+      "14",
+      18031
+    ],
+    [
+      "15",
+      18440
+    ],
+    [
+      "16",
+      18032
+    ],
+    [
+      "17",
+      18807
+    ],
+    [
+      "18",
+      18792
+    ],
+    [
+      "19",
+      18027
+    ],
+    [
+      "20",
+      18033
+    ],
+    [
+      "21",
+      18032
+    ],
+    [
+      "22",
+      18026
+    ],
+    [
+      "23",
+      18022
+    ]
+  ],
+  "answer_text": "The total number of events per hour is as follows: \n\n- 00: 21,676\n- 01: 21,683\n- 02: 21,666\n- 03: 21,675\n- 04: 21,683\n- 05: 21,673\n- 06: 21,674\n- 07: 21,992\n- 08: 23,178\n- 09: 22,873\n- 10: 21,676\n- 11: 21,681\n- 12: 21,948\n- 13: 22,036\n- 14: 21,664\n- 15: 22,077\n- 16: 21,693\n- 17: 22,601\n- 18: 22,579\n- 19: 21,680\n- 20: 21,666\n- 21: 21,673\n- 22: 21,669\n- 23: 21,660\n\nActivity peaks at 08:00 with 23,178 events and is lowest at 00:00 with 21,676 events.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "total_events"
+    ],
+    "rows": [
+      [
+        "00",
+        21676
+      ],
+      [
+        "01",
+        21683
+      ],
+      [
+        "02",
+        21666
+      ],
+      [
+        "03",
+        21675
+      ],
+      [
+        "04",
+        21683
+      ],
+      [
+        "05",
+        21673
+      ],
+      [
+        "06",
+        21674
+      ],
+      [
+        "07",
+        21992
+      ],
+      [
+        "08",
+        23178
+      ],
+      [
+        "09",
+        22873
+      ],
+      [
+        "10",
+        21676
+      ],
+      [
+        "11",
+        21681
+      ],
+      [
+        "12",
+        21948
+      ],
+      [
+        "13",
+        22036
+      ],
+      [
+        "14",
+        21664
+      ],
+      [
+        "15",
+        22077
+      ],
+      [
+        "16",
+        21693
+      ],
+      [
+        "17",
+        22601
+      ],
+      [
+        "18",
+        22579
+      ],
+      [
+        "19",
+        21680
+      ],
+      [
+        "20",
+        21666
+      ],
+      [
+        "21",
+        21673
+      ],
+      [
+        "22",
+        21669
+      ],
+      [
+        "23",
+        21660
+      ]
+    ],
+    "total_rows": 24
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH hourly_events AS (\n    SELECT strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour, COUNT(*) AS total_events\n    FROM events\n    GROUP BY hour\n)\nSELECT hour, total_events\nFROM hourly_events\nORDER BY hour",
+      "row_count": 24
+    }
+  ],
+  "duration_ms": 7620,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 858,
+      "completion_tokens": 52
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 430,
+      "completion_tokens": 256
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": false,
+    "detail": "missing_numbers=[18040.0, 18039.0, 18029.0, 18032.0, 18036.0]"
+  }
+}

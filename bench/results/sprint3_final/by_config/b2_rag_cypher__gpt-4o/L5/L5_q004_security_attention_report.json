@@ -1,0 +1,54 @@
+{
+  "question_id": "L5_q004_security_attention_report",
+  "level": "L5",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Produce a security-attention report for 2025-12-08 (UTC) at the AI Hardware Summit. Identify the locations and time windows that warrant the most security focus based on volume of activity. Specifically highlight (1) the gate that handles the largest volume of person traffic, (2) the gate with the most car traffic, and (3) the public area with the highest crowd density spikes. Quantify each with approximate numbers and times.",
+  "gold_value": {
+    "rubric": [
+      "Gate_MainEntrance handles the largest person traffic volume",
+      "Gate_ParkingLot handles the most car traffic",
+      "KeynoteHall_Stage shows the highest crowd density spikes (head_counts in the hundreds)",
+      "Peak hours for these hotspots fall within the working-day window (08:00-19:00 UTC)"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": null,
+  "structured_answer": {
+    "columns": [],
+    "rows": [],
+    "total_rows": 0
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  // (1) Gate with the largest volume of person traffic\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE e.event_type IN ['person_entry', 'person_exit']\n    AND e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN l.name AS location, count(e) AS volume, 'Person Traffic' AS category\n  ORDER BY volume DESC\n  LIMIT 1\n}\nUNION ALL\nCALL {\n  // (2) Gate with the most car traffic\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE e.event_type IN ['car_entry', 'car_exit']\n    AND e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN l.name AS location, count(e) AS volume, 'Car Traffic' AS category\n  ORDER BY volume DESC\n  LIMIT 1\n}\nUNION ALL\nCALL {\n  // (3) Public area with the highest crowd density spikes\n  MATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN l.name AS location, max(ch.peak_hc) AS volume, 'Crowd Density' AS category\n  ORDER BY volume DESC\n  LIMIT 1\n}\nRETURN category, location, volume",
+      "row_count": 0
+    }
+  ],
+  "duration_ms": 11048,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2223,
+      "completion_tokens": 444
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 2787,
+      "completion_tokens": 400
+    }
+  ],
+  "errors": [
+    "CypherSyntaxError: {neo4j_code: Neo.ClientError.Statement.SyntaxError} {message: Query cannot conclude with CALL (must be a RETURN clause, a FINISH clause, an update clause, a unit subquery call, or a procedure call with no YIELD). (line 1, column 1 (offset: 0))\n\"CALL {\"\n ^} {gql_status: 42001} {gql_status_description: error: syntax error or access rule violation - invalid syntax}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": null,
+    "detail": "error"
+  }
+}

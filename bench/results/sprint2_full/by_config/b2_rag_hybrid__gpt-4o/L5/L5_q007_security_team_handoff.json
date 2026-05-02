@@ -1,0 +1,268 @@
+{
+  "question_id": "L5_q007_security_team_handoff",
+  "level": "L5",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "If you were running security here, what would you tell your team based on the day's activity? Where should we keep the most eyes, and when do we need extra hands?",
+  "gold_value": {
+    "rubric": [
+      "Main entrance is the highest-traffic location and needs constant attention",
+      "Crowd-management focus on keynote area during keynote hours",
+      "Extra coverage needed during morning arrival window and evening departure window",
+      "Demo booth area requires monitoring during expo hours when crowds gather"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "Based on today's activity, the Keynote Hall Stage should be a primary focus for security, especially during the morning session at 09:00, where the peak head count reached 500. Additionally, the Main Entrance and Gate 01 experience significant entry and exit activity, particularly at 08:00 and 17:00, with over 600 and 500 events respectively. Extra hands may be needed during these peak times to manage crowd flow and ensure safety.",
+  "structured_answer": {
+    "cypher_columns": [
+      "location",
+      "hour",
+      "average_head_count",
+      "peak_head_count",
+      "event_count",
+      "entry_exit_event_count"
+    ],
+    "cypher_rows": [
+      [
+        "KeynoteHall_Stage",
+        "2025-12-08T09:00:00Z",
+        450.19,
+        500,
+        3600,
+        null
+      ],
+      [
+        "KeynoteHall_Stage",
+        "2025-12-08T14:00:00Z",
+        399.51,
+        452,
+        3600,
+        null
+      ],
+      [
+        "KeynoteHall_Stage",
+        "2025-12-08T16:00:00Z",
+        379.46,
+        433,
+        3600,
+        null
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        "2025-12-08T10:00:00Z",
+        179.91,
+        209,
+        3600,
+        null
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        "2025-12-08T11:00:00Z",
+        179.97,
+        208,
+        3600,
+        null
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        "2025-12-08T16:00:00Z",
+        159.96,
+        191,
+        3600,
+        null
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        "2025-12-08T13:00:00Z",
+        159.95,
+        189,
+        3600,
+        null
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        "2025-12-08T15:00:00Z",
+        160.01,
+        187,
+        3600,
+        null
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        "2025-12-08T14:00:00Z",
+        160.08,
+        185,
+        3600,
+        null
+      ],
+      [
+        "FoodCourt_North",
+        "2025-12-08T12:00:00Z",
+        120.05,
+        146,
+        3600,
+        null
+      ],
+      [
+        "Gate_01",
+        "2025-12-08T08:00:00Z",
+        null,
+        null,
+        null,
+        607
+      ],
+      [
+        "Gate_MainEntrance",
+        "2025-12-08T08:00:00Z",
+        null,
+        null,
+        null,
+        607
+      ],
+      [
+        "Gate_MainEntrance",
+        "2025-12-08T09:00:00Z",
+        null,
+        null,
+        null,
+        601
+      ],
+      [
+        "Gate_01",
+        "2025-12-08T09:00:00Z",
+        null,
+        null,
+        null,
+        601
+      ],
+      [
+        "Gate_MainEntrance",
+        "2025-12-08T17:00:00Z",
+        null,
+        null,
+        null,
+        517
+      ],
+      [
+        "Gate_01",
+        "2025-12-08T17:00:00Z",
+        null,
+        null,
+        null,
+        517
+      ],
+      [
+        "Gate_MainEntrance",
+        "2025-12-08T18:00:00Z",
+        null,
+        null,
+        null,
+        498
+      ],
+      [
+        "Gate_01",
+        "2025-12-08T18:00:00Z",
+        null,
+        null,
+        null,
+        498
+      ],
+      [
+        "KeynoteHall_DoorA",
+        "2025-12-08T15:00:00Z",
+        null,
+        null,
+        null,
+        411
+      ],
+      [
+        "KeynoteHall_DoorA",
+        "2025-12-08T09:00:00Z",
+        null,
+        null,
+        null,
+        393
+      ]
+    ],
+    "cypher_total_rows": 20,
+    "retrieved_communities": [
+      {
+        "community_id": "community_17",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 20:00 and 20:58 UTC recorded a total of 33 events. The dominant event types were person exits (13) and person entries (8), with car entries (7) and exits (5) also noted. The peak head count reached 13, and the average head count was approximately 5.05 during this period.",
+        "distance": 0.6233999729156494
+      },
+      {
+        "community_id": "community_8",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 00:02:02 and 00:57:29, recorded a total of 36 events. The dominant event types were person exits (16) and person entries (8), with car entries (7) and exits (5) also noted. The peak head count reached 13, and the average head count was 5.02 during this period.",
+        "distance": 0.6254317760467529
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity at Platform_1 from 02:00 to 02:55 UTC on December 1, 2025, recorded a total of 37 events, with person entries (16) and exits (14) dominating the activity. There were also 4 car entries and 3 car exits. The peak head count reached 13, with an average head count of 5.05 during this period.",
+        "distance": 0.6263476610183716
+      },
+      {
+        "community_id": "community_13",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 17:00 and 17:59 UTC recorded a total of 194 events. The dominant event types were person entries (92) and exits (89), with car entries (5) and exits (8) also noted. The peak head count reached 13 individuals, and the average head count was approximately 5.04.",
+        "distance": 0.628203272819519
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera)-[:LOCATED_AT]->(l:Location)\nWHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\nRETURN l.name AS location, ch.hour_utc AS hour, ch.avg_hc AS average_head_count, ch.peak_hc AS peak_head_count, ch.event_count AS event_count, NULL AS entry_exit_event_count\nORDER BY ch.peak_hc DESC, ch.avg_hc DESC, ch.event_count DESC\nLIMIT 10\nUNION\nMATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location), (e)-[:OCCURRED_IN]->(h:Hour)\nWHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\nRETURN l.name AS location, h.hour_utc AS hour, NULL AS average_head_count, NULL AS peak_head_count, NULL AS event_count, COUNT(e) AS entry_exit_event_count\nORDER BY entry_exit_event_count DESC\nLIMIT 10",
+      "row_count": 20
+    },
+    {
+      "type": "community",
+      "community_id": "community_17",
+      "distance": 0.6233999729156494
+    },
+    {
+      "type": "community",
+      "community_id": "community_8",
+      "distance": 0.6254317760467529
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.6263476610183716
+    },
+    {
+      "type": "community",
+      "community_id": "community_13",
+      "distance": 0.628203272819519
+    }
+  ],
+  "duration_ms": 15326,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 994,
+      "completion_tokens": 250
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 1355,
+      "completion_tokens": 274
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 1285,
+      "completion_tokens": 93
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=2/4=0.50 (threshold=0.5)"
+  }
+}

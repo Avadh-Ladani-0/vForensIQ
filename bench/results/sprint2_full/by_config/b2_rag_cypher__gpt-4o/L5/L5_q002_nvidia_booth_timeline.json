@@ -1,0 +1,203 @@
+{
+  "question_id": "L5_q002_nvidia_booth_timeline",
+  "level": "L5",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Describe the full-day activity timeline at DemoBooth_NVIDIA on 2025-12-08 (UTC). Identify the busiest time windows, any lulls, and quantify the peak crowd sizes versus the baseline. Write 3-5 sentences.",
+  "gold_value": {
+    "rubric": [
+      "Morning peak between 10-12 UTC",
+      "Afternoon peak between 15-17 UTC",
+      "Lunch-hour dip (around 12-13 or 13-14 UTC)",
+      "Peak head_count values are substantially higher than baseline of ~3",
+      "Overnight / early-morning hours show baseline/quiet activity"
+    ],
+    "threshold": 0.6
+  },
+  "answer_text": "On December 8, 2025, at DemoBooth_NVIDIA, the busiest periods were from 10:00 to 11:00 UTC and 15:00 to 16:00 UTC, with average head counts of 60.01 and 70.0, and peak head counts of 75 and 82, respectively. Another notable busy period was from 13:00 to 14:00 UTC with an average head count of 45.04 and a peak of 59. The rest of the day saw significantly lower activity, with average head counts hovering around 3.5 and peak head counts ranging from 15 to 21, indicating a baseline lull in activity outside the peak hours.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "average_head_count",
+      "peak_head_count",
+      "event_count"
+    ],
+    "rows": [
+      [
+        "2025-12-08T00:00:00Z",
+        3.47,
+        16,
+        3600
+      ],
+      [
+        "2025-12-08T01:00:00Z",
+        3.53,
+        15,
+        3600
+      ],
+      [
+        "2025-12-08T02:00:00Z",
+        3.51,
+        18,
+        3600
+      ],
+      [
+        "2025-12-08T03:00:00Z",
+        3.52,
+        16,
+        3600
+      ],
+      [
+        "2025-12-08T04:00:00Z",
+        3.59,
+        16,
+        3600
+      ],
+      [
+        "2025-12-08T05:00:00Z",
+        3.6,
+        16,
+        3600
+      ],
+      [
+        "2025-12-08T06:00:00Z",
+        3.46,
+        17,
+        3600
+      ],
+      [
+        "2025-12-08T07:00:00Z",
+        3.44,
+        18,
+        3600
+      ],
+      [
+        "2025-12-08T08:00:00Z",
+        3.55,
+        18,
+        3600
+      ],
+      [
+        "2025-12-08T09:00:00Z",
+        3.51,
+        19,
+        3600
+      ],
+      [
+        "2025-12-08T10:00:00Z",
+        60.01,
+        75,
+        3600
+      ],
+      [
+        "2025-12-08T11:00:00Z",
+        60.2,
+        74,
+        3600
+      ],
+      [
+        "2025-12-08T12:00:00Z",
+        3.51,
+        18,
+        3600
+      ],
+      [
+        "2025-12-08T13:00:00Z",
+        45.04,
+        59,
+        3600
+      ],
+      [
+        "2025-12-08T14:00:00Z",
+        3.49,
+        20,
+        3600
+      ],
+      [
+        "2025-12-08T15:00:00Z",
+        70.0,
+        82,
+        3600
+      ],
+      [
+        "2025-12-08T16:00:00Z",
+        70.11,
+        86,
+        3600
+      ],
+      [
+        "2025-12-08T17:00:00Z",
+        3.56,
+        21,
+        3600
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        3.54,
+        17,
+        3600
+      ],
+      [
+        "2025-12-08T19:00:00Z",
+        3.42,
+        17,
+        3600
+      ],
+      [
+        "2025-12-08T20:00:00Z",
+        3.56,
+        19,
+        3600
+      ],
+      [
+        "2025-12-08T21:00:00Z",
+        3.55,
+        17,
+        3600
+      ],
+      [
+        "2025-12-08T22:00:00Z",
+        3.7,
+        18,
+        3600
+      ],
+      [
+        "2025-12-08T23:00:00Z",
+        3.49,
+        19,
+        3600
+      ]
+    ],
+    "total_rows": 24
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour)-[:AT_CAMERA]->(:Camera {camera_location: 'DemoBooth_NVIDIA'})\nWHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\nRETURN ch.hour_utc AS hour, ch.avg_hc AS average_head_count, ch.peak_hc AS peak_head_count, ch.event_count AS event_count\nORDER BY ch.hour_utc",
+      "row_count": 24
+    }
+  ],
+  "duration_ms": 5120,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 1009,
+      "completion_tokens": 107
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 1007,
+      "completion_tokens": 147
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=3/5=0.60 (threshold=0.6)"
+  }
+}

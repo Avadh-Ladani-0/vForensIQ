@@ -1,0 +1,119 @@
+{
+  "question_id": "L5_q009_community_pattern_analysis",
+  "level": "L5",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Looking at the overall structure of activity on 2025-12-08, which groups of cameras and locations naturally cluster together based on their activity patterns? Describe 2-3 distinct activity clusters and what characterizes each one.",
+  "gold_value": {
+    "rubric": [
+      "Gate cameras (MainEntrance, ParkingLot) form a cluster with entry/exit-dominated activity",
+      "Demo booth cameras (NVIDIA, Intel) form a cluster with similar crowd patterns",
+      "The keynote and expo areas show high-volume crowd activity distinct from gate traffic"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "On December 8, 2025, the activity patterns across the observed locations form distinct clusters. The first cluster consists of the DemoBooth sites, specifically the DemoBooth_NVIDIA and DemoBooth_Intel, along with the ExpoFloor_MainAisle. Each of these locations had perfect consistent activity registration, with 86,400 total activity points. This indicates an around-the-clock surveillance with either a high volume of event detection or stable technical operation throughout the day.\n\nIn terms of temporal patterns and contextual dynamics, early morning (starting from 06:00 UTC) and early afternoon (around 16:00 UTC) periods represent peak moments characterized primarily by person movements, with entries and exits being the most frequent types of events. These patterns correspond to business event setups and visitor flow changes typical for such exhibition environments. By investigating these periods, activity clusters can be better understood in terms of crowd dynamics and surveillance effectiveness.",
+  "structured_answer": {
+    "cypher_columns": [
+      "location",
+      "cameras",
+      "total_activity"
+    ],
+    "cypher_rows": [
+      [
+        "DemoBooth_NVIDIA",
+        [
+          "CAM_05"
+        ],
+        86400
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        [
+          "CAM_04"
+        ],
+        86400
+      ],
+      [
+        "DemoBooth_Intel",
+        [
+          "CAM_06"
+        ],
+        86400
+      ]
+    ],
+    "cypher_total_rows": 3,
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity covers the time range from December 8, 2025, 06:00:12 UTC to December 8, 2025, 06:59:23 UTC. The camera locations involved recorded a total of 37 events, with person exits (18) and person entries (14) dominating the activity, alongside 4 car entries and 1 car exit. Notably, there were 38 nodes monitored during this period.",
+        "distance": 0.4402806758880615
+      },
+      {
+        "community_id": "community_5",
+        "summary": "The CCTV activity involved multiple camera locations during the time range from 16:00:57 to 16:58:54 UTC on December 8, 2025. The dominant event types were person entries, with a total of 16, and person exits, totaling 11, alongside 3 car entries and 2 car exits. The total volume of events recorded was 32, with a node count of 33. There are no notable peak head counts or average head counts reported.",
+        "distance": 0.4406009912490845
+      },
+      {
+        "community_id": "community_3",
+        "summary": "The CCTV activity involves monitoring at unspecified camera locations during the time range of December 8, 2025, from 04:01:25 to 04:59:45 UTC. The dominant event types are person entries (12) and exits (18), along with car entries (4) and exits (2). A total of 36 events were recorded, with a peak head count and average head count not specified.",
+        "distance": 0.44567424058914185
+      },
+      {
+        "community_id": "community_8",
+        "summary": "The CCTV activity covers the time range from 00:02:26 to 00:59:58 on December 8, 2025. The camera locations involved recorded a total of 40 events, with person entries (17) and car exits (5) being the dominant event types. Notably, there were 2 car entries and 16 person exits during this period. The peak head count and average head count data are not available.",
+        "distance": 0.4602470397949219
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN c.camera_id AS camera_id, l.name AS location, count(e) AS event_count\n  UNION ALL\n  MATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN c.camera_id AS camera_id, l.name AS location, sum(ch.event_count) AS event_count\n}\nWITH camera_id, location, sum(event_count) AS total_activity\nRETURN location, collect(camera_id) AS cameras, total_activity\nORDER BY total_activity DESC\nLIMIT 3",
+      "row_count": 3
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.4402806758880615
+    },
+    {
+      "type": "community",
+      "community_id": "community_5",
+      "distance": 0.4406009912490845
+    },
+    {
+      "type": "community",
+      "community_id": "community_3",
+      "distance": 0.44567424058914185
+    },
+    {
+      "type": "community",
+      "community_id": "community_8",
+      "distance": 0.4602470397949219
+    }
+  ],
+  "duration_ms": 8073,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2540,
+      "completion_tokens": 228
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 739,
+      "completion_tokens": 187
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=1/3=0.33 (threshold=0.5)"
+  }
+}

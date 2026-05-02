@@ -1,0 +1,92 @@
+{
+  "question_id": "L5_q003_staffing_brief",
+  "level": "L5",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a staffing recommendation brief for the AI Hardware Summit on 2025-12-08 (UTC). Identify (a) the busiest hours of the day requiring extra staff at the gates and on the expo floor, and (b) the quiet hours where minimal coverage is sufficient. Cite specific hour ranges and supporting metrics. Keep it to 4-6 bullet points.",
+  "gold_value": {
+    "rubric": [
+      "Morning gate rush around 08:00-10:00 UTC needs extra staffing",
+      "Evening gate rush around 17:00-19:00 UTC needs extra staffing",
+      "Lunch hours 12:00-14:00 UTC are busy at FoodCourt and need extra coverage",
+      "Late-night and early-morning hours (roughly 22:00-06:00 UTC) are quiet and need minimal coverage",
+      "Keynote hours (09:00-10:00 and 14:00-15:00 UTC) require crowd management at KeynoteHall_Stage"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "**Staffing Recommendation Brief for the AI Hardware Summit (2025-12-08)**\n\n- **Busiest Hours:** Expect peak foot traffic from **09:00 to 15:00 UTC**, with a total of **2,209 events** at KeynoteHall_DoorA due to high attendee movement (1,117 entries and 1,072 exits).\n- **Expo Floor Coverage:** Increased personnel is recommended throughout the busy hours, particularly in high-traffic areas like DemoBooth_Intel and DemoBooth_NVIDIA, where attendee engagement is expected to be significant.\n- **Quiet Hours:** Coverage can be minimized during **early morning (00:00 to 09:00 UTC)** and **evening (after 18:00 UTC)** when overall attendance drops significantly, as indicated by lower recorded events during these times.\n- **Staff Allocation Tips:** Utilize a flexible staffing model to adjust the number of attendees in real time; ensure that key areas remain manned throughout peak hours while reducing presence in quiet areas.",
+  "structured_answer": {
+    "cypher_columns": [],
+    "cypher_rows": [],
+    "cypher_total_rows": 0,
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and an average head count of approximately 31.2.",
+        "distance": 0.510784924030304
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.6044529676437378
+      },
+      {
+        "community_id": "community_17",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 20:00 and 20:58 UTC recorded a total of 33 events. The dominant event types were person exits (13) and person entries (8), with car entries (7) and exits (5) also noted. The peak head count reached 13, and the average head count was approximately 5.05 during this period.",
+        "distance": 0.6296484470367432
+      },
+      {
+        "community_id": "community_6",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 11:01:47 and 11:59:48, recorded a total of 44 events. The dominant event types were person exits (17) and person entries (12), with car entries (9) and exits (6) also noted. The peak head count reached 12, and the average head count was 5.05 during this period.",
+        "distance": 0.6304506063461304
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.510784924030304
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.6044529676437378
+    },
+    {
+      "type": "community",
+      "community_id": "community_17",
+      "distance": 0.6296484470367432
+    },
+    {
+      "type": "community",
+      "community_id": "community_6",
+      "distance": 0.6304506063461304
+    }
+  ],
+  "duration_ms": 13008,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2206,
+      "completion_tokens": 401
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 729,
+      "completion_tokens": 209
+    }
+  ],
+  "errors": [
+    "cypher_stream: ValueError: Multiple statements not allowed"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=2/5=0.40 (threshold=0.5)"
+  }
+}

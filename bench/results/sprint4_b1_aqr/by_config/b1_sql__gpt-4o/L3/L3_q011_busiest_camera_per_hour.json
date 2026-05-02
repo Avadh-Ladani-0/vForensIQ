@@ -1,0 +1,291 @@
+{
+  "question_id": "L3_q011_busiest_camera_per_hour",
+  "level": "L3",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "For each hour of the day, which camera location had the highest crowd? Show me the winning location and its average crowd size for each hour.",
+  "gold_value": [
+    [
+      "00",
+      "KeynoteHall_Stage",
+      7.0
+    ],
+    [
+      "01",
+      "KeynoteHall_Stage",
+      7.3
+    ],
+    [
+      "02",
+      "KeynoteHall_Stage",
+      7.1
+    ],
+    [
+      "03",
+      "KeynoteHall_Stage",
+      7.2
+    ],
+    [
+      "04",
+      "KeynoteHall_Stage",
+      7.0
+    ],
+    [
+      "05",
+      "KeynoteHall_Stage",
+      6.9
+    ],
+    [
+      "06",
+      "KeynoteHall_Stage",
+      6.8
+    ],
+    [
+      "07",
+      "KeynoteHall_Stage",
+      7.1
+    ],
+    [
+      "08",
+      "KeynoteHall_Stage",
+      7.0
+    ],
+    [
+      "09",
+      "KeynoteHall_Stage",
+      450.2
+    ],
+    [
+      "10",
+      "ExpoFloor_MainAisle",
+      179.9
+    ],
+    [
+      "11",
+      "ExpoFloor_MainAisle",
+      180.0
+    ],
+    [
+      "12",
+      "FoodCourt_North",
+      120.0
+    ],
+    [
+      "13",
+      "ExpoFloor_MainAisle",
+      160.0
+    ],
+    [
+      "14",
+      "KeynoteHall_Stage",
+      399.5
+    ],
+    [
+      "15",
+      "ExpoFloor_MainAisle",
+      160.0
+    ],
+    [
+      "16",
+      "KeynoteHall_Stage",
+      379.5
+    ],
+    [
+      "17",
+      "FoodCourt_North",
+      100.1
+    ],
+    [
+      "18",
+      "FoodCourt_North",
+      99.8
+    ],
+    [
+      "19",
+      "KeynoteHall_Stage",
+      7.2
+    ],
+    [
+      "20",
+      "KeynoteHall_Stage",
+      7.1
+    ],
+    [
+      "21",
+      "KeynoteHall_Stage",
+      7.0
+    ],
+    [
+      "22",
+      "KeynoteHall_Stage",
+      7.3
+    ],
+    [
+      "23",
+      "KeynoteHall_Stage",
+      7.3
+    ]
+  ],
+  "answer_text": "Here are the camera locations with the highest average crowd size for each hour on December 8, 2025:\n\n- 00:00 - KeynoteHall_Stage, average crowd size of 6.97\n- 01:00 - KeynoteHall_Stage, average crowd size of 7.27\n- 02:00 - KeynoteHall_Stage, average crowd size of 7.12\n- 03:00 - KeynoteHall_Stage, average crowd size of 7.21\n- 04:00 - KeynoteHall_Stage, average crowd size of 7.01\n- 05:00 - KeynoteHall_Stage, average crowd size of 6.93\n- 06:00 - KeynoteHall_Stage, average crowd size of 6.80\n- 07:00 - KeynoteHall_Stage, average crowd size of 7.12\n- 08:00 - KeynoteHall_Stage, average crowd size of 6.98\n- 09:00 - KeynoteHall_Stage, average crowd size of 450.19\n- 10:00 - ExpoFloor_MainAisle, average crowd size of 179.91\n- 11:00 - ExpoFloor_MainAisle, average crowd size of 179.97\n- 12:00 - FoodCourt_North, average crowd size of 120.05\n- 13:00 - ExpoFloor_MainAisle, average crowd size of 159.95\n- 14:00 - KeynoteHall_Stage, average crowd size of 399.51\n- 15:00 - ExpoFloor_MainAisle, average crowd size of 160.01\n- 16:00 - KeynoteHall_Stage, average crowd size of 379.46\n- 17:00 - FoodCourt_North, average crowd size of 100.10\n- 18:00 - FoodCourt_North, average crowd size of 99.83\n- 19:00 - KeynoteHall_Stage, average crowd size of 7.18\n- 20:00 - KeynoteHall_Stage, average crowd size of 7.09\n- 21:00 - KeynoteHall_Stage, average crowd size of 6.96\n- 22:00 - KeynoteHall_Stage, average crowd size of 7.25\n- 23:00 - KeynoteHall_Stage, average crowd size of 7.31",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "camera_location",
+      "avg_crowd_size"
+    ],
+    "rows": [
+      [
+        "00",
+        "KeynoteHall_Stage",
+        6.969722222222222
+      ],
+      [
+        "01",
+        "KeynoteHall_Stage",
+        7.269166666666667
+      ],
+      [
+        "02",
+        "KeynoteHall_Stage",
+        7.120277777777778
+      ],
+      [
+        "03",
+        "KeynoteHall_Stage",
+        7.207777777777777
+      ],
+      [
+        "04",
+        "KeynoteHall_Stage",
+        7.010555555555555
+      ],
+      [
+        "05",
+        "KeynoteHall_Stage",
+        6.9255555555555555
+      ],
+      [
+        "06",
+        "KeynoteHall_Stage",
+        6.797777777777778
+      ],
+      [
+        "07",
+        "KeynoteHall_Stage",
+        7.1161111111111115
+      ],
+      [
+        "08",
+        "KeynoteHall_Stage",
+        6.976111111111111
+      ],
+      [
+        "09",
+        "KeynoteHall_Stage",
+        450.18638888888887
+      ],
+      [
+        "10",
+        "ExpoFloor_MainAisle",
+        179.9063888888889
+      ],
+      [
+        "11",
+        "ExpoFloor_MainAisle",
+        179.97222222222223
+      ],
+      [
+        "12",
+        "FoodCourt_North",
+        120.04694444444445
+      ],
+      [
+        "13",
+        "ExpoFloor_MainAisle",
+        159.95388888888888
+      ],
+      [
+        "14",
+        "KeynoteHall_Stage",
+        399.5133333333333
+      ],
+      [
+        "15",
+        "ExpoFloor_MainAisle",
+        160.00944444444445
+      ],
+      [
+        "16",
+        "KeynoteHall_Stage",
+        379.45916666666665
+      ],
+      [
+        "17",
+        "FoodCourt_North",
+        100.09722222222223
+      ],
+      [
+        "18",
+        "FoodCourt_North",
+        99.82861111111112
+      ],
+      [
+        "19",
+        "KeynoteHall_Stage",
+        7.176388888888889
+      ],
+      [
+        "20",
+        "KeynoteHall_Stage",
+        7.085277777777778
+      ],
+      [
+        "21",
+        "KeynoteHall_Stage",
+        6.958888888888889
+      ],
+      [
+        "22",
+        "KeynoteHall_Stage",
+        7.251111111111111
+      ],
+      [
+        "23",
+        "KeynoteHall_Stage",
+        7.313611111111111
+      ]
+    ],
+    "total_rows": 24,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH HourlyCrowd AS (\n    SELECT\n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        camera_location,\n        AVG(head_count) AS avg_crowd_size\n    FROM\n        events\n    WHERE\n        event_type = 'crowd'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z'\n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY\n        hour, camera_location\n),\nMaxCrowdPerHour AS (\n    SELECT\n        hour,\n        MAX(avg_crowd_size) AS max_avg_crowd_size\n    FROM\n        HourlyCrowd\n    GROUP BY\n        hour\n)\nSELECT\n    h.hour,\n    h.camera_location,\n    h.avg_crowd_size\nFROM\n    HourlyCrowd h\nJOIN\n    MaxCrowdPerHour m\nON\n    h.hour = m.hour AND h.avg_crowd_size = m.max_avg_crowd_size\nORDER BY\n    h.hour",
+      "row_count": 24
+    }
+  ],
+  "duration_ms": 7713,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 963,
+      "completion_tokens": 232
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 911,
+      "completion_tokens": 527
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": true,
+    "detail": "all_keys_and_values_matched (rows=24)"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "question_id": "L5_q006_how_did_the_day_go",
+  "level": "L5",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Tell me how the day went at the conference \u2014 what stood out, when were the big moments, and what does the activity tell us?",
+  "gold_value": {
+    "rubric": [
+      "Significant person traffic at the main entrance, especially in the morning and evening",
+      "Keynote sessions drew large crowds at the keynote stage area",
+      "Demo booths (especially NVIDIA) had notable crowd activity during expo hours",
+      "Food court was busiest around lunchtime",
+      "Overnight hours were quiet across the venue"
+    ],
+    "threshold": 0.4
+  },
+  "answer_text": null,
+  "structured_answer": {
+    "columns": [],
+    "rows": [],
+    "total_rows": 0
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "",
+      "row_count": 0
+    }
+  ],
+  "duration_ms": 12038,
+  "llm_calls": [],
+  "errors": [
+    "RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": null,
+    "detail": "error"
+  }
+}

@@ -1,0 +1,283 @@
+{
+  "question_id": "L3_q008_event_volume_by_hour",
+  "level": "L3",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How does activity change throughout the day across the whole venue? Show the total number of events per hour.",
+  "gold_value": [
+    [
+      "00",
+      18040
+    ],
+    [
+      "01",
+      18039
+    ],
+    [
+      "02",
+      18029
+    ],
+    [
+      "03",
+      18032
+    ],
+    [
+      "04",
+      18036
+    ],
+    [
+      "05",
+      18040
+    ],
+    [
+      "06",
+      18037
+    ],
+    [
+      "07",
+      18358
+    ],
+    [
+      "08",
+      19292
+    ],
+    [
+      "09",
+      19003
+    ],
+    [
+      "10",
+      18035
+    ],
+    [
+      "11",
+      18037
+    ],
+    [
+      "12",
+      18323
+    ],
+    [
+      "13",
+      18397
+    ],
+    [
+      "14",
+      18031
+    ],
+    [
+      "15",
+      18440
+    ],
+    [
+      "16",
+      18032
+    ],
+    [
+      "17",
+      18807
+    ],
+    [
+      "18",
+      18792
+    ],
+    [
+      "19",
+      18027
+    ],
+    [
+      "20",
+      18033
+    ],
+    [
+      "21",
+      18032
+    ],
+    [
+      "22",
+      18026
+    ],
+    [
+      "23",
+      18022
+    ]
+  ],
+  "answer_text": "The total number of events per hour on December 8, 2025, is as follows:\n\n- 00:00 - 40\n- 01:00 - 39\n- 02:00 - 29\n- 03:00 - 32\n- 04:00 - 36\n- 05:00 - 40\n- 06:00 - 37\n- 07:00 - 358\n- 08:00 - 1292\n- 09:00 - 1003\n- 10:00 - 35\n- 11:00 - 37\n- 12:00 - 323\n- 13:00 - 397\n- 14:00 - 31\n- 15:00 - 440\n- 16:00 - 32\n- 17:00 - 807\n- 18:00 - 792\n- 19:00 - 27\n- 20:00 - 33\n- 21:00 - 32\n- 22:00 - 26\n- 23:00 - 22\n\nThe data shows significant peaks in activity, particularly between 08:00 and 09:00, indicating a busy morning period, likely due to attendees arriving for events.",
+  "structured_answer": {
+    "cypher_columns": [
+      "hour",
+      "total_events"
+    ],
+    "cypher_rows": [
+      [
+        "2025-12-08T00:00:00Z",
+        40
+      ],
+      [
+        "2025-12-08T01:00:00Z",
+        39
+      ],
+      [
+        "2025-12-08T02:00:00Z",
+        29
+      ],
+      [
+        "2025-12-08T03:00:00Z",
+        32
+      ],
+      [
+        "2025-12-08T04:00:00Z",
+        36
+      ],
+      [
+        "2025-12-08T05:00:00Z",
+        40
+      ],
+      [
+        "2025-12-08T06:00:00Z",
+        37
+      ],
+      [
+        "2025-12-08T07:00:00Z",
+        358
+      ],
+      [
+        "2025-12-08T08:00:00Z",
+        1292
+      ],
+      [
+        "2025-12-08T09:00:00Z",
+        1003
+      ],
+      [
+        "2025-12-08T10:00:00Z",
+        35
+      ],
+      [
+        "2025-12-08T11:00:00Z",
+        37
+      ],
+      [
+        "2025-12-08T12:00:00Z",
+        323
+      ],
+      [
+        "2025-12-08T13:00:00Z",
+        397
+      ],
+      [
+        "2025-12-08T14:00:00Z",
+        31
+      ],
+      [
+        "2025-12-08T15:00:00Z",
+        440
+      ],
+      [
+        "2025-12-08T16:00:00Z",
+        32
+      ],
+      [
+        "2025-12-08T17:00:00Z",
+        807
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        792
+      ],
+      [
+        "2025-12-08T19:00:00Z",
+        27
+      ],
+      [
+        "2025-12-08T20:00:00Z",
+        33
+      ],
+      [
+        "2025-12-08T21:00:00Z",
+        32
+      ],
+      [
+        "2025-12-08T22:00:00Z",
+        26
+      ],
+      [
+        "2025-12-08T23:00:00Z",
+        22
+      ]
+    ],
+    "cypher_total_rows": 24,
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and a total of 588 node counts.",
+        "distance": 0.46198081970214844
+      },
+      {
+        "community_id": "community_14",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 19:00 and 19:58 shows a total of 53 events, with person entries (21) and exits (20) dominating the activity. There were also 6 car entries and 6 car exits recorded. The peak head count reached 42, with an average head count of approximately 35.",
+        "distance": 0.4754346013069153
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.4812021851539612
+      },
+      {
+        "community_id": "community_16",
+        "summary": "The CCTV activity at Platform_1 from 08:00 to 08:59 on December 1, 2025, recorded a total of 286 events, with person entries (92) and exits (107) dominating the activity. Car entries (46) and exits (41) were also significant. The peak head count reached 47, and the average head count was approximately 40.02.",
+        "distance": 0.4906562566757202
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event)-[:OCCURRED_IN]->(h:Hour) \nWHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z' \nRETURN h.hour_utc AS hour, COUNT(e) AS total_events \nORDER BY h.hour_utc",
+      "row_count": 24
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.46198081970214844
+    },
+    {
+      "type": "community",
+      "community_id": "community_14",
+      "distance": 0.4754346013069153
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.4812021851539612
+    },
+    {
+      "type": "community",
+      "community_id": "community_16",
+      "distance": 0.4906562566757202
+    }
+  ],
+  "duration_ms": 7555,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 980,
+      "completion_tokens": 82
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1057,
+      "completion_tokens": 272
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": false,
+    "detail": "missing_numbers=[18040.0, 18039.0, 18029.0, 18032.0, 18036.0]"
+  }
+}

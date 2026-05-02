@@ -1,0 +1,367 @@
+{
+  "question_id": "L5_q005_keynote_hall_lifecycle",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Describe the full lifecycle of activity at the keynote hall on 2025-12-08 (UTC). Cover: (a) door entry patterns at KeynoteHall_DoorA throughout the day, (b) the in-hall crowd density at KeynoteHall_Stage during keynote sessions, and (c) how the post-keynote dispersal compares to pre-keynote build-up. Use specific hours and numbers from the data. 4-6 sentences.",
+  "gold_value": {
+    "rubric": [
+      "KeynoteHall_DoorA shows entry peaks aligned with keynote start times (around 08:00-10:00, 13:00-14:00, or 15:00-16:00 UTC)",
+      "KeynoteHall_Stage crowd peaks during the keynote sessions, reaching head_counts in the hundreds",
+      "Outside of keynote hours the in-hall head_count drops to a low baseline (single digits)",
+      "Pre-keynote door entry traffic precedes the in-hall crowd surge"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "On 2025-12-08, door entry at KeynoteHall_DoorA peaked at 186 entries at 08:00, 181 at 09:00, 172 at 13:00, and 210 at 15:00. During keynote sessions, crowd density at KeynoteHall_Stage was highest at 09:00 with an average head count of 450.19, followed by 399.51 at 14:00, and 379.46 at 16:00. Post-keynote dispersal was significant, with exits peaking at 192 at 08:00, 212 at 09:00, 187 at 13:00, and 201 at 15:00, indicating a rapid dispersal similar to the pre-keynote build-up.",
+  "structured_answer": {
+    "columns": [
+      "type",
+      "hour",
+      "count"
+    ],
+    "rows": [
+      [
+        "crowd",
+        "00",
+        6.969722222222222
+      ],
+      [
+        "crowd",
+        "01",
+        7.269166666666667
+      ],
+      [
+        "crowd",
+        "02",
+        7.120277777777778
+      ],
+      [
+        "crowd",
+        "03",
+        7.207777777777777
+      ],
+      [
+        "crowd",
+        "04",
+        7.010555555555555
+      ],
+      [
+        "crowd",
+        "05",
+        6.9255555555555555
+      ],
+      [
+        "crowd",
+        "06",
+        6.797777777777778
+      ],
+      [
+        "crowd",
+        "07",
+        7.1161111111111115
+      ],
+      [
+        "crowd",
+        "08",
+        6.976111111111111
+      ],
+      [
+        "crowd",
+        "09",
+        450.18638888888887
+      ],
+      [
+        "crowd",
+        "10",
+        7.025833333333333
+      ],
+      [
+        "crowd",
+        "11",
+        6.928888888888889
+      ],
+      [
+        "crowd",
+        "12",
+        7.1563888888888885
+      ],
+      [
+        "crowd",
+        "13",
+        7.074722222222222
+      ],
+      [
+        "crowd",
+        "14",
+        399.5133333333333
+      ],
+      [
+        "crowd",
+        "15",
+        7.225555555555555
+      ],
+      [
+        "crowd",
+        "16",
+        379.45916666666665
+      ],
+      [
+        "crowd",
+        "17",
+        6.9325
+      ],
+      [
+        "crowd",
+        "18",
+        6.833333333333333
+      ],
+      [
+        "crowd",
+        "19",
+        7.176388888888889
+      ],
+      [
+        "crowd",
+        "20",
+        7.085277777777778
+      ],
+      [
+        "crowd",
+        "21",
+        6.958888888888889
+      ],
+      [
+        "crowd",
+        "22",
+        7.251111111111111
+      ],
+      [
+        "crowd",
+        "23",
+        7.313611111111111
+      ],
+      [
+        "entry",
+        "00",
+        1
+      ],
+      [
+        "entry",
+        "01",
+        3
+      ],
+      [
+        "entry",
+        "02",
+        2
+      ],
+      [
+        "entry",
+        "03",
+        1
+      ],
+      [
+        "entry",
+        "04",
+        3
+      ],
+      [
+        "entry",
+        "05",
+        5
+      ],
+      [
+        "entry",
+        "08",
+        186
+      ],
+      [
+        "entry",
+        "09",
+        181
+      ],
+      [
+        "entry",
+        "10",
+        2
+      ],
+      [
+        "entry",
+        "12",
+        1
+      ],
+      [
+        "entry",
+        "13",
+        172
+      ],
+      [
+        "entry",
+        "14",
+        1
+      ],
+      [
+        "entry",
+        "15",
+        210
+      ],
+      [
+        "entry",
+        "16",
+        2
+      ],
+      [
+        "entry",
+        "17",
+        1
+      ],
+      [
+        "entry",
+        "18",
+        1
+      ],
+      [
+        "entry",
+        "19",
+        2
+      ],
+      [
+        "entry",
+        "20",
+        1
+      ],
+      [
+        "entry",
+        "21",
+        1
+      ],
+      [
+        "entry",
+        "22",
+        1
+      ],
+      [
+        "entry",
+        "23",
+        5
+      ],
+      [
+        "exit",
+        "00",
+        1
+      ],
+      [
+        "exit",
+        "03",
+        1
+      ],
+      [
+        "exit",
+        "04",
+        2
+      ],
+      [
+        "exit",
+        "06",
+        1
+      ],
+      [
+        "exit",
+        "07",
+        2
+      ],
+      [
+        "exit",
+        "08",
+        192
+      ],
+      [
+        "exit",
+        "09",
+        212
+      ],
+      [
+        "exit",
+        "10",
+        2
+      ],
+      [
+        "exit",
+        "11",
+        5
+      ],
+      [
+        "exit",
+        "12",
+        1
+      ],
+      [
+        "exit",
+        "13",
+        187
+      ],
+      [
+        "exit",
+        "14",
+        2
+      ],
+      [
+        "exit",
+        "15",
+        201
+      ],
+      [
+        "exit",
+        "16",
+        2
+      ],
+      [
+        "exit",
+        "18",
+        1
+      ],
+      [
+        "exit",
+        "21",
+        1
+      ],
+      [
+        "exit",
+        "22",
+        1
+      ]
+    ],
+    "total_rows": 62
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH entry_patterns AS (\n    SELECT \n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        COUNT(*) AS entry_count\n    FROM \n        events\n    WHERE \n        camera_location = 'KeynoteHall_DoorA' \n        AND event_type = 'person_entry'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z' \n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        hour\n),\ncrowd_density AS (\n    SELECT \n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        AVG(head_count) AS avg_head_count\n    FROM \n        events\n    WHERE \n        camera_location = 'KeynoteHall_Stage' \n        AND event_type = 'crowd'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z' \n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        hour\n),\ndispersal_patterns AS (\n    SELECT \n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        COUNT(*) AS exit_count\n    FROM \n        events\n    WHERE \n        camera_location = 'KeynoteHall_DoorA' \n        AND event_type = 'person_exit'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z' \n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        hour\n)\nSELECT \n    'entry' AS type, hour, entry_count AS count\nFROM \n    entry_patterns\nUNION ALL\nSELECT \n    'crowd' AS type, hour, avg_head_count AS count\nFROM \n    crowd_density\nUNION ALL\nSELECT \n    'exit' AS type, hour, exit_count AS count\nFROM \n    dispersal_patterns\nORDER BY \n    type, hour",
+      "row_count": 62
+    }
+  ],
+  "duration_ms": 9916,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 729,
+      "completion_tokens": 429
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 1477,
+      "completion_tokens": 167
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=3/4=0.75 (threshold=0.5)"
+  }
+}

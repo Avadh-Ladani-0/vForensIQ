@@ -1,0 +1,96 @@
+{
+  "question_id": "L4_q010_camera_correlation",
+  "level": "L4",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which two crowd camera locations had the most similar hourly activity patterns on 2025-12-08? Compare all pairs of crowd cameras by how closely their hourly average head_counts track each other.",
+  "gold_value": {
+    "most_similar_pair_includes": "DemoBooth"
+  },
+  "answer_text": "Based on the community summaries, the crowd cameras likely to have the most similar hourly activity patterns on December 8, 2025, are those represented in [community_5] and [community_7]. Both time ranges (16:00-16:58 and 17:00-17:59 UTC) show significant activities centered around person entries and exits. Although [community_7] features a much larger total event count, the similarity lies in the dominance of person movements, suggesting comparable human traffic patterns at the involved camera locations despite the volume difference.",
+  "structured_answer": {
+    "cypher_columns": [],
+    "cypher_rows": [],
+    "cypher_total_rows": 0,
+    "retrieved_communities": [
+      {
+        "community_id": "community_5",
+        "summary": "The CCTV activity involved multiple camera locations during the time range from 16:00:57 to 16:58:54 UTC on December 8, 2025. The dominant event types were person entries, with a total of 16, and person exits, totaling 11, alongside 3 car entries and 2 car exits. The total volume of events recorded was 32, with a node count of 33. There are no notable peak head counts or average head counts reported.",
+        "distance": 0.3943464159965515
+      },
+      {
+        "community_id": "community_8",
+        "summary": "The CCTV activity covers the time range from 00:02:26 to 00:59:58 on December 8, 2025. The camera locations involved recorded a total of 40 events, with person entries (17) and car exits (5) being the dominant event types. Notably, there were 2 car entries and 16 person exits during this period. The peak head count and average head count data are not available.",
+        "distance": 0.4072471261024475
+      },
+      {
+        "community_id": "community_3",
+        "summary": "The CCTV activity involves monitoring at unspecified camera locations during the time range of December 8, 2025, from 04:01:25 to 04:59:45 UTC. The dominant event types are person entries (12) and exits (18), along with car entries (4) and exits (2). A total of 36 events were recorded, with a peak head count and average head count not specified.",
+        "distance": 0.4374939799308777
+      },
+      {
+        "community_id": "community_7",
+        "summary": "The CCTV activity covers the time range from December 8, 2025, 17:00 to 17:59 UTC. The events are recorded at unspecified camera locations, with a total of 733 events, dominated by person entries (309) and exits (289), alongside 68 car entries and 67 exits. Notable figures include a total event count of 733, but no peak head count or average head count data is available.",
+        "distance": 0.43915796279907227
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch1:CrowdHour)-[:AT_CAMERA]->(c1:Camera)\n  WHERE ch1.hour_utc >= '2025-12-08T00:00:00Z' AND ch1.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN c1.camera_location AS location1, ch1.hour_utc AS hour, ch1.avg_hc AS avg_hc1\n}\nWITH location1, hour, avg_hc1\nCALL {\n  MATCH (ch2:CrowdHour)-[:AT_CAMERA]->(c2:Camera)\n  WHERE ch2.hour_utc >= '2025-12-08T00:00:00Z' AND ch2.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN c2.camera_location AS location2, ch2.hour_utc AS hour, ch2.avg_hc AS avg_hc2\n}\nWITH location1, location2, hour, avg_hc1, avg_hc2\nWHERE location1 < location2\nWITH location1, location2, collect({hour: hour, diff: abs(avg_hc1 - avg_hc2)}) AS differences\nWITH location1, location2, reduce(total_diff = 0, d IN differences | total_diff + d.diff) AS total_difference\nRETURN location1, location2, total_difference\nORDER BY total_difference ASC\nLIMIT 1",
+      "row_count": 0
+    },
+    {
+      "type": "community",
+      "community_id": "community_5",
+      "distance": 0.3943464159965515
+    },
+    {
+      "type": "community",
+      "community_id": "community_8",
+      "distance": 0.4072471261024475
+    },
+    {
+      "type": "community",
+      "community_id": "community_3",
+      "distance": 0.4374939799308777
+    },
+    {
+      "type": "community",
+      "community_id": "community_7",
+      "distance": 0.43915796279907227
+    }
+  ],
+  "duration_ms": 14744,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2533,
+      "completion_tokens": 308
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 2970,
+      "completion_tokens": 308
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 663,
+      "completion_tokens": 113
+    }
+  ],
+  "errors": [
+    "cypher_stream: CypherSyntaxError: {neo4j_code: Neo.ClientError.Statement.SyntaxError} {message: Variable `hour` already declared in outer scope (line 10, column 59 (offset: 468))\n\"  RETURN c2.camera_location AS location2, ch2.hour_utc AS hour, ch2.avg_hc AS avg_hc2\"\n                                                           ^} {gql_status: 42001} {gql_status_description: error: syntax error or access rule violation - invalid syntax}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": false,
+    "detail": "missing=[\"most_similar_pair_includes='DemoBooth'_not_mentioned\"]"
+  }
+}

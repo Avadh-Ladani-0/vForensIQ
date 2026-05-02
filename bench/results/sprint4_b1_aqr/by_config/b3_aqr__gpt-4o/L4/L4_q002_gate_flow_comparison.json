@@ -1,0 +1,77 @@
+{
+  "question_id": "L4_q002_gate_flow_comparison",
+  "level": "L4",
+  "approach": "b3_aqr",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "On 2025-12-08 (UTC), which gate had higher total person flow (person_entry + person_exit combined) \u2014 Gate_MainEntrance or Gate_ParkingLot? State which gate and their approximate totals.",
+  "gold_value": {
+    "higher_flow_gate": "Gate_MainEntrance",
+    "gate_mainentrance_flow_approx": {
+      "value": 2900,
+      "tolerance": 400
+    },
+    "gate_parkinglot_flow_approx": {
+      "value": 620,
+      "tolerance": 150
+    }
+  },
+  "answer_text": "Gate_MainEntrance had the higher total person flow with 2,883 combined person_entry and person_exit events, while Gate_ParkingLot had 615 such events.",
+  "structured_answer": {
+    "columns": [
+      "gate",
+      "total_person_flow"
+    ],
+    "rows": [
+      [
+        "Gate_MainEntrance",
+        2883
+      ],
+      [
+        "Gate_ParkingLot",
+        615
+      ]
+    ],
+    "total_rows": 2
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event)-[:DETECTED_BY]->(:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n    AND e.event_type IN ['person_entry', 'person_exit']\n    AND (l.name = 'Gate_MainEntrance' OR l.name = 'Gate_ParkingLot')\n  RETURN l.name AS gate, count(e) AS total_person_flow\n}\nRETURN gate, total_person_flow\nORDER BY total_person_flow DESC",
+      "row_count": 2
+    }
+  ],
+  "duration_ms": 5732,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2538,
+      "completion_tokens": 134
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 367,
+      "completion_tokens": 33
+    }
+  ],
+  "errors": [],
+  "routing": {
+    "classified_level": "L4",
+    "routed_to": "b2_rag_cypher",
+    "routing_method": "llm_zero_shot",
+    "routing_duration_ms": 926,
+    "classifier_metadata": {
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 375,
+      "completion_tokens": 2
+    }
+  },
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_3_facts_satisfied"
+  }
+}

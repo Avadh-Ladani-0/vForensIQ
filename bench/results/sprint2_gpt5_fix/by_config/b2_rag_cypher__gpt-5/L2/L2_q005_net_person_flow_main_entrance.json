@@ -1,0 +1,50 @@
+{
+  "question_id": "L2_q005_net_person_flow_main_entrance",
+  "level": "L2",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What was the net person flow (person_entry events minus person_exit events) at Gate_MainEntrance on 2025-12-08 (UTC)?",
+  "gold_value": 179,
+  "answer_text": "At camera_location Gate_MainEntrance on 2025-12-08 (UTC), the net person flow was 179.",
+  "structured_answer": {
+    "columns": [
+      "net_person_flow"
+    ],
+    "rows": [
+      [
+        179
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event)-[:DETECTED_BY]->(c:Camera {camera_location: 'Gate_MainEntrance'})\nWHERE e.timestamp_utc >= '2025-12-08T00:00:00Z'\n  AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  AND e.event_type IN ['person_entry','person_exit']\nRETURN coalesce(sum(CASE e.event_type WHEN 'person_entry' THEN 1 WHEN 'person_exit' THEN -1 ELSE 0 END), 0) AS net_person_flow",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 22482,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5",
+      "prompt_tokens": 1884,
+      "completion_tokens": 1406
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-5",
+      "prompt_tokens": 316,
+      "completion_tokens": 354
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": true,
+    "detail": "within_1pct (expected=179.0 got=179.0)"
+  }
+}

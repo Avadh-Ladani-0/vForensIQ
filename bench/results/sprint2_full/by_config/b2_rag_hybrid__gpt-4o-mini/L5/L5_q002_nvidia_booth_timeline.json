@@ -1,0 +1,92 @@
+{
+  "question_id": "L5_q002_nvidia_booth_timeline",
+  "level": "L5",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Describe the full-day activity timeline at DemoBooth_NVIDIA on 2025-12-08 (UTC). Identify the busiest time windows, any lulls, and quantify the peak crowd sizes versus the baseline. Write 3-5 sentences.",
+  "gold_value": {
+    "rubric": [
+      "Morning peak between 10-12 UTC",
+      "Afternoon peak between 15-17 UTC",
+      "Lunch-hour dip (around 12-13 or 13-14 UTC)",
+      "Peak head_count values are substantially higher than baseline of ~3",
+      "Overnight / early-morning hours show baseline/quiet activity"
+    ],
+    "threshold": 0.6
+  },
+  "answer_text": "On December 8, 2025, at DemoBooth_NVIDIA, a total of 449 events were recorded, with 206 person entries and 181 exits throughout the day. The peak crowd size reached 500 individuals, indicating a significant influx of visitors, while the baseline activity suggests a steady flow of attendees. The busiest time windows likely correspond to the overall peak, while lulls may have occurred during less active hours, although specific time frames are not detailed in the available summaries.",
+  "structured_answer": {
+    "cypher_columns": [],
+    "cypher_rows": [],
+    "cypher_total_rows": 0,
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and a total of 588 node counts.",
+        "distance": 0.34603774547576904
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.5075981616973877
+      },
+      {
+        "community_id": "community_7",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 12:00:23 and 12:59:53, recorded a total of 25 events. The dominant event types were person entries (10) and exits (8), along with 4 car entries and 3 car exits. The peak head count reached 13, with an average head count of approximately 4.96 during this period.",
+        "distance": 0.5576469898223877
+      },
+      {
+        "community_id": "community_16",
+        "summary": "The CCTV activity at Platform_1 from 08:00 to 08:59 on December 1, 2025, recorded a total of 286 events, with person entries (92) and exits (107) dominating the activity. Car entries (46) and exits (41) were also significant. The peak head count reached 47, and the average head count was approximately 40.02.",
+        "distance": 0.5578783750534058
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.34603774547576904
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.5075981616973877
+    },
+    {
+      "type": "community",
+      "community_id": "community_7",
+      "distance": 0.5576469898223877
+    },
+    {
+      "type": "community",
+      "community_id": "community_16",
+      "distance": 0.5578783750534058
+    }
+  ],
+  "duration_ms": 5627,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1009,
+      "completion_tokens": 186
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 655,
+      "completion_tokens": 99
+    }
+  ],
+  "errors": [
+    "cypher_stream: ValueError: Multiple statements not allowed"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=1/5=0.20 (threshold=0.6)"
+  }
+}

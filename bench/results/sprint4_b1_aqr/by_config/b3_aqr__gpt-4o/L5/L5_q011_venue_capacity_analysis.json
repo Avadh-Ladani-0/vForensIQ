@@ -1,0 +1,135 @@
+{
+  "question_id": "L5_q011_venue_capacity_analysis",
+  "level": "L5",
+  "approach": "b3_aqr",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Based on the crowd data, which areas of the venue seem overcrowded and which seem underutilized? Give me a capacity assessment with recommendations.",
+  "gold_value": {
+    "rubric": [
+      "KeynoteHall_Stage has the highest crowd peaks (500) suggesting potential overcrowding",
+      "ExpoFloor_MainAisle has sustained high crowd levels throughout the day",
+      "DemoBooth_Intel has lower crowds than NVIDIA \u2014 potentially underutilized",
+      "FoodCourt peaks sharply at lunch suggesting capacity bottleneck"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "The venue's most overcrowded area appears to be the 'KeynoteHall_Stage', where the peak head count hits 500, indicating potential capacity issues during peak events. On average, this area holds around 57 people, suggesting consistent high traffic. In contrast, 'DemoBooth_Intel' reports the lowest average head count of approximately 10.6 and a peak of 53, indicating it is underutilized relative to other areas. The 'FoodCourt_North' experiences moderate use with an average head count just over 23 but a peak traffic of 146, perhaps pointing to lunchtime surges. \n\nTo optimize flow and enhance visitor experience, consider redistributing event activities to less crowded booths and implementing controlled entry strategies during peak times at the KeynoteHall. Increasing engagement or promotional activities at underutilized areas like the Intel booth may also balance visitor distribution across the venue.",
+  "structured_answer": {
+    "cypher_columns": [
+      "location",
+      "avg_head_count",
+      "peak_head_count"
+    ],
+    "cypher_rows": [
+      [
+        "KeynoteHall_Stage",
+        57.3975,
+        500
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        49.35666666666666,
+        209
+      ],
+      [
+        "FoodCourt_North",
+        23.069583333333334,
+        146
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        15.515000000000002,
+        86
+      ],
+      [
+        "DemoBooth_Intel",
+        10.64833333333333,
+        53
+      ]
+    ],
+    "cypher_total_rows": 5,
+    "retrieved_communities": [
+      {
+        "community_id": "community_4",
+        "summary": "The CCTV activity involved five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types were person entries (169) and exits (132), with a total of 344 events recorded during the time range from December 8, 2025, 02:03:44 UTC to December 8, 2025, 23:59:14 UTC. The peak head count reached 500, and the average head count was approximately 31.2.",
+        "distance": 0.5543317794799805
+      },
+      {
+        "community_id": "community_0",
+        "summary": "The CCTV activity at the Gate_MainEntrance from December 8, 2025, between 08:00 and 12:59 UTC recorded a total of 930 events. The dominant event types were person entries (470) and exits (450), with car entries (8) and exits (2) also noted. The total volume of events indicates significant foot traffic, although peak head count and average head count data are not available.",
+        "distance": 0.6555959582328796
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, covered a time range from 08:00:13 to 15:59:56 UTC. The dominant event types were person entries (680) and exits (685), with a total of 1,376 events recorded. The peak event count per hour occurred during the observed period, contributing to a total of 1,379 node counts.",
+        "distance": 0.6722586154937744
+      },
+      {
+        "community_id": "community_1",
+        "summary": "The CCTV activity at the Gate_ParkingLot camera from December 8, 2025, between 07:00 and 18:59 UTC recorded a total of 1,540 events. The dominant event types were person entries (454) and exits (476), along with car entries (298) and exits (312). The total volume of events reached 1,543, with no peak head count reported.",
+        "distance": 0.6826983690261841
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.camera_location AS location, avg(ch.avg_hc) AS avg_head_count, max(ch.peak_hc) AS peak_head_count\n}\nRETURN location, avg_head_count, peak_head_count\nORDER BY peak_head_count DESC, avg_head_count DESC",
+      "row_count": 5
+    },
+    {
+      "type": "community",
+      "community_id": "community_4",
+      "distance": 0.5543317794799805
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.6555959582328796
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.6722586154937744
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.6826983690261841
+    }
+  ],
+  "duration_ms": 6042,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2523,
+      "completion_tokens": 108
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 779,
+      "completion_tokens": 180
+    }
+  ],
+  "errors": [],
+  "routing": {
+    "classified_level": "L5",
+    "routed_to": "b2_rag_hybrid",
+    "routing_method": "llm_zero_shot",
+    "routing_duration_ms": 920,
+    "classifier_metadata": {
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 360,
+      "completion_tokens": 2
+    }
+  },
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=2/4=0.50 (threshold=0.5)"
+  }
+}

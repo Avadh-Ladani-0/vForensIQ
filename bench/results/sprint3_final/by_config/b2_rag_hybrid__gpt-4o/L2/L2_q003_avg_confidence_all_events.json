@@ -1,0 +1,92 @@
+{
+  "question_id": "L2_q003_avg_confidence_all_events",
+  "level": "L2",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What was the average detection confidence across all events on 2025-12-08 (UTC)? Report to two decimal places.",
+  "gold_value": 0.9,
+  "answer_text": "The average detection confidence across all events on December 8, 2025 (UTC), was 0.91. On this date, CCTV activities were fairly active, particularly around 05:00 to 05:59 UTC, where multiple locations recorded a variety of person-related events, adding depth to the overall surveillance events observed on the said day.",
+  "structured_answer": {
+    "cypher_columns": [
+      "average_detection_confidence"
+    ],
+    "cypher_rows": [
+      [
+        0.91
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_4",
+        "summary": "The CCTV activity involved multiple camera locations during the time range from 05:00:59 to 05:59:16 UTC on December 8, 2025. The dominant event types were person entries, with a total of 22 recorded, followed by person exits at 14 and car exits at 4. The total volume of events reached 40, with a node count of 41. No peak head count or average head count data is available.",
+        "distance": 0.49094849824905396
+      },
+      {
+        "community_id": "community_14",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 19:00 and 19:58 UTC recorded a total of 53 events, with a peak head count of 42. The dominant event types were person entries (21) and exits (20), alongside 6 car entries and 6 exits. The average head count was approximately 35, with a total of 55 nodes monitored during this period.",
+        "distance": 0.509917140007019
+      },
+      {
+        "community_id": "community_3",
+        "summary": "The CCTV activity involved monitoring at unspecified camera locations from 01:00 to 01:59 UTC on December 8, 2025. The dominant event types were person entries, with 23 occurrences, and car exits, totaling 4. The total volume of events recorded was 39, with no peak head count reported.",
+        "distance": 0.5149269700050354
+      },
+      {
+        "community_id": "community_18",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 21:00 and 21:59 UTC recorded a total of 41 events. The dominant event types were person entries (14) and exits (17), along with 7 car entries and 3 exits. The peak head count reached 14, with an average head count of approximately 4.95 during this hour.",
+        "distance": 0.528903603553772
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event)\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN avg(e.confidence) AS avg_confidence\n  UNION ALL\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN null AS avg_confidence\n}\nRETURN round(avg(avg_confidence), 2) AS average_detection_confidence",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_4",
+      "distance": 0.49094849824905396
+    },
+    {
+      "type": "community",
+      "community_id": "community_14",
+      "distance": 0.509917140007019
+    },
+    {
+      "type": "community",
+      "community_id": "community_3",
+      "distance": 0.5149269700050354
+    },
+    {
+      "type": "community",
+      "community_id": "community_18",
+      "distance": 0.528903603553772
+    }
+  ],
+  "duration_ms": 5115,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2158,
+      "completion_tokens": 144
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 636,
+      "completion_tokens": 71
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": false,
+    "detail": "exceeds_1pct (expected=0.9 got=8.0)"
+  }
+}

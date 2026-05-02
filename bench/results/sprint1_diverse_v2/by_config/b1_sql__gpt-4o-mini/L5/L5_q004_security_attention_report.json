@@ -1,0 +1,76 @@
+{
+  "question_id": "L5_q004_security_attention_report",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Produce a security-attention report for 2025-12-08 (UTC) at the AI Hardware Summit. Identify the locations and time windows that warrant the most security focus based on volume of activity. Specifically highlight (1) the gate that handles the largest volume of person traffic, (2) the gate with the most car traffic, and (3) the public area with the highest crowd density spikes. Quantify each with approximate numbers and times.",
+  "gold_value": {
+    "rubric": [
+      "Gate_MainEntrance handles the largest person traffic volume",
+      "Gate_ParkingLot handles the most car traffic",
+      "KeynoteHall_Stage shows the highest crowd density spikes (head_counts in the hundreds)",
+      "Peak hours for these hotspots fall within the working-day window (08:00-19:00 UTC)"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "On December 8, 2025, the security-attention report highlights the following:\n\n1. The gate with the largest volume of person traffic was **Gate_MainEntrance**, with **599** events recorded during the **08:00** hour.\n2. The gate with the most car traffic was **Gate_ParkingLot**, with **204** events during the **07:00** hour.\n3. The public area with the highest crowd density spike was **KeynoteHall_Stage**, reaching a peak of **500** during the **09:00** hour.",
+  "structured_answer": {
+    "columns": [
+      "report_type",
+      "camera_location",
+      "volume",
+      "hour"
+    ],
+    "rows": [
+      [
+        "person_traffic",
+        "Gate_MainEntrance",
+        599,
+        "08"
+      ],
+      [
+        "car_traffic",
+        "Gate_ParkingLot",
+        204,
+        "07"
+      ],
+      [
+        "crowd_density",
+        "KeynoteHall_Stage",
+        500,
+        "09"
+      ]
+    ],
+    "total_rows": 3
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH person_traffic AS (\n    SELECT camera_location, \n           COUNT(*) AS total_person_events,\n           strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour\n    FROM events\n    WHERE timestamp_utc >= '2025-12-08T00:00:00Z' \n      AND timestamp_utc < '2025-12-09T00:00:00Z'\n      AND event_type IN ('person_entry', 'person_exit')\n    GROUP BY camera_location, hour\n),\ncar_traffic AS (\n    SELECT camera_location, \n           COUNT(*) AS total_car_events,\n           strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour\n    FROM events\n    WHERE timestamp_utc >= '2025-12-08T00:00:00Z' \n      AND timestamp_utc < '2025-12-09T00:00:00Z'\n      AND event_type IN ('car_entry', 'car_exit')\n    GROUP BY camera_location, hour\n),\ncrowd_density AS (\n    SELECT camera_location, \n           MAX(head_count) AS peak_density,\n           strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour\n    FROM events\n    WHERE timestamp_utc >= '2025-12-08T00:00:00Z' \n      AND timestamp_utc < '2025-12-09T00:00:00Z'\n      AND event_type = 'crowd'\n    GROUP BY camera_location, hour\n)\nSELECT 'person_traffic' AS report_type, camera_location, total_person_events AS volume, hour\nFROM person_traffic\nWHERE total_person_events = (SELECT MAX(total_person_events) FROM person_traffic)\nUNION ALL\nSELECT 'car_traffic' AS report_type, camera_location, total_car_events AS volume, hour\nFROM car_traffic\nWHERE total_car_events = (SELECT MAX(total_car_events) FROM car_traffic)\nUNION ALL\nSELECT 'crowd_density' AS report_type, camera_location, peak_density AS volume, hour\nFROM crowd_density\nWHERE peak_density = (SELECT MAX(peak_density) FROM crowd_density)",
+      "row_count": 3
+    }
+  ],
+  "duration_ms": 13068,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 727,
+      "completion_tokens": 446
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 762,
+      "completion_tokens": 115
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=4/4=1.00 (threshold=0.5)"
+  }
+}

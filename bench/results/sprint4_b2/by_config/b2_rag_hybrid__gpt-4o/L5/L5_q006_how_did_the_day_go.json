@@ -1,0 +1,103 @@
+{
+  "question_id": "L5_q006_how_did_the_day_go",
+  "level": "L5",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Tell me how the day went at the conference \u2014 what stood out, when were the big moments, and what does the activity tell us?",
+  "gold_value": {
+    "rubric": [
+      "Significant person traffic at the main entrance, especially in the morning and evening",
+      "Keynote sessions drew large crowds at the keynote stage area",
+      "Demo booths (especially NVIDIA) had notable crowd activity during expo hours",
+      "Food court was busiest around lunchtime",
+      "Overnight hours were quiet across the venue"
+    ],
+    "threshold": 0.4
+  },
+  "answer_text": "The conference day was vibrant and bustling, with significant crowd activity noted across various locations. Key moments were centered around the Keynote Hall between 08:00 and 16:00 UTC, where a substantial spike in attendees was witnessed, tallying 1,376 entries and exits. Morning activities also surged with 833 event counts around 09:00 to 10:00 UTC, indicating a high level of enthusiasm and engagement. The expo floor and demo booths saw consistent engagement throughout, particularly peaking with a maximum head count approximating 500 by day's end. This activity suggests a lively atmosphere, with attendees heavily engaging in keynote presentations and exhibitions, aligning with typical conference dynamics.",
+  "structured_answer": {
+    "cypher_columns": [],
+    "cypher_rows": [],
+    "cypher_total_rows": 0,
+    "retrieved_communities": [
+      {
+        "community_id": "community_4",
+        "summary": "The CCTV activity involved five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types were person entries (169) and exits (132), with a total of 344 events recorded during the time range from December 8, 2025, 02:03:44 UTC to December 8, 2025, 23:59:14 UTC. The peak head count reached 500, and the average head count was approximately 31.2.",
+        "distance": 0.6187763214111328
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, covered a time range from 08:00:13 to 15:59:56 UTC. The dominant event types were person entries (680) and exits (685), with a total of 1,376 events recorded. The peak event count per hour occurred during the observed period, contributing to a total of 1,379 node counts.",
+        "distance": 0.6742916703224182
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity covers the location from 09:00 to 09:59 UTC on December 8, 2025. The dominant event types are person entries, with 437 recorded, and person exits, totaling 387. There were also 5 car entries and 4 car exits, contributing to a total of 833 events. Notably, the peak head count and average head count data are not available.",
+        "distance": 0.7276626229286194
+      },
+      {
+        "community_id": "community_5",
+        "summary": "The CCTV activity involved multiple camera locations during the time range from 16:00:57 to 16:58:54 UTC on December 8, 2025. The dominant event types were person entries, with a total of 16, and person exits, totaling 11, alongside 3 car entries and 2 car exits. The total volume of events recorded was 32, with a node count of 33. There are no notable peak head counts or average head counts reported.",
+        "distance": 0.7300142049789429
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event)\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  WITH substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, count(*) AS n\n  RETURN hour, n\n  UNION ALL\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.hour_utc AS hour, ch.event_count AS n\n}\nRETURN 'hourly_events' AS category, hour AS key, sum(n) AS value ORDER BY key\n\nUNION ALL\n\nCALL {\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.camera_location AS location, avg(ch.avg_hc) AS avg_head_count, max(ch.peak_hc) AS peak_head_count\n}\nRETURN 'location_stats' AS category, location AS key, avg_head_count AS value1, peak_head_count AS value2\nORDER BY value2 DESC\n\nUNION ALL\n\nCALL {\n  MATCH (e:Event)\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN e.event_type AS event_type, count(*) AS n\n  UNION ALL\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN 'crowd' AS event_type, sum(ch.event_count) AS n\n}\nRETURN 'event_type_counts' AS category, event_type AS key, sum(n) AS value ORDER BY value DESC",
+      "row_count": 0
+    },
+    {
+      "type": "community",
+      "community_id": "community_4",
+      "distance": 0.6187763214111328
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.6742916703224182
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.7276626229286194
+    },
+    {
+      "type": "community",
+      "community_id": "community_5",
+      "distance": 0.7300142049789429
+    }
+  ],
+  "duration_ms": 15359,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2522,
+      "completion_tokens": 421
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 3055,
+      "completion_tokens": 471
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 677,
+      "completion_tokens": 137
+    }
+  ],
+  "errors": [
+    "cypher_stream: CypherSyntaxError: {neo4j_code: Neo.ClientError.Statement.SyntaxError} {message: All sub queries in an UNION must have the same return column names (line 13, column 1 (offset: 466))\n\"UNION ALL\"\n ^} {gql_status: 42001} {gql_status_description: error: syntax error or access rule violation - invalid syntax}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=1/5=0.20 (threshold=0.4)"
+  }
+}

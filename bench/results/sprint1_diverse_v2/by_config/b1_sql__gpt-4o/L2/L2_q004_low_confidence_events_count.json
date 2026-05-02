@@ -1,0 +1,50 @@
+{
+  "question_id": "L2_q004_low_confidence_events_count",
+  "level": "L2",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many events on 2025-12-08 (UTC) had a detection confidence below 0.85?",
+  "gold_value": 30467,
+  "answer_text": "There were 30,467 events on 2025-12-08 (UTC) with a detection confidence below 0.85.",
+  "structured_answer": {
+    "columns": [
+      "low_confidence_event_count"
+    ],
+    "rows": [
+      [
+        30467
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "SELECT COUNT(*) AS low_confidence_event_count\nFROM events\nWHERE timestamp_utc >= '2025-12-08T00:00:00Z'\n  AND timestamp_utc < '2025-12-09T00:00:00Z'\n  AND confidence < 0.85",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 2361,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 660,
+      "completion_tokens": 67
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 256,
+      "completion_tokens": 28
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": true,
+    "detail": "within_1pct (expected=30467.0 got=30467.0)"
+  }
+}

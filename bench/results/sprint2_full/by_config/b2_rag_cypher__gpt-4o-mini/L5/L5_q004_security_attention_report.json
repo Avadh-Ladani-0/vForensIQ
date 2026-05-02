@@ -1,0 +1,54 @@
+{
+  "question_id": "L5_q004_security_attention_report",
+  "level": "L5",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Produce a security-attention report for 2025-12-08 (UTC) at the AI Hardware Summit. Identify the locations and time windows that warrant the most security focus based on volume of activity. Specifically highlight (1) the gate that handles the largest volume of person traffic, (2) the gate with the most car traffic, and (3) the public area with the highest crowd density spikes. Quantify each with approximate numbers and times.",
+  "gold_value": {
+    "rubric": [
+      "Gate_MainEntrance handles the largest person traffic volume",
+      "Gate_ParkingLot handles the most car traffic",
+      "KeynoteHall_Stage shows the highest crowd density spikes (head_counts in the hundreds)",
+      "Peak hours for these hotspots fall within the working-day window (08:00-19:00 UTC)"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": null,
+  "structured_answer": {
+    "columns": [],
+    "rows": [],
+    "total_rows": 0
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "WITH \n  (MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location) \n   WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z' \n   AND e.event_type = 'person_entry' \n   RETURN l.name AS location, COUNT(e) AS volume, \n          COLLECT(e.timestamp_utc) AS times \n   ORDER BY volume DESC LIMIT 1) AS person_traffic,\n\n  (MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location) \n   WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z' \n   AND e.event_type IN ['car_entry', 'car_exit'] \n   RETURN l.name AS location, COUNT(e) AS volume, \n          COLLECT(e.timestamp_utc) AS times \n   ORDER BY volume DESC LIMIT 1) AS car_traffic,\n\n  (MATCH (ch:CrowdHour) \n   WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z' \n   RETURN ch.camera_location AS location, ch.peak_hc AS peak_density, \n          ch.hour_utc AS time_window \n   ORDER BY peak_density DESC LIMIT 1) AS crowd_density\n\nRETURN person_traffic.location AS person_gate, person_traffic.volume AS person_volume, person_traffic.times AS person_times,\n       car_traffic.location AS car_gate, car_traffic.volume AS car_volume, car_traffic.times AS car_times,\n       crowd_density.location AS public_area, crowd_density.peak_density AS peak_density, crowd_density.time_window AS density_time_window",
+      "row_count": 0
+    }
+  ],
+  "duration_ms": 15038,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1050,
+      "completion_tokens": 425
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1616,
+      "completion_tokens": 423
+    }
+  ],
+  "errors": [
+    "CypherSyntaxError: {neo4j_code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input ':': expected an expression (line 2, column 21 (offset: 26))\n\"  (MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\"\n                     ^} {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": null,
+    "detail": "error"
+  }
+}

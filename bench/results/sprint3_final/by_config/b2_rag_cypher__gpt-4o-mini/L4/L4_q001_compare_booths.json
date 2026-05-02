@@ -1,0 +1,60 @@
+{
+  "question_id": "L4_q001_compare_booths",
+  "level": "L4",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "On 2025-12-08 (UTC), compare the crowd activity at DemoBooth_NVIDIA versus DemoBooth_Intel. Which booth was busier, and approximately what was the ratio of their average head_counts?",
+  "gold_value": {
+    "busier_booth": "DemoBooth_NVIDIA",
+    "average_headcount_ratio_nvidia_over_intel": {
+      "value": 1.4,
+      "tolerance": 0.4
+    }
+  },
+  "answer_text": "On 2025-12-08 (UTC), DemoBooth_NVIDIA had an average headcount of approximately 15.5, while DemoBooth_Intel had about 10.6. The ratio of their average headcounts was approximately 1.46, indicating that DemoBooth_NVIDIA was busier.",
+  "structured_answer": {
+    "columns": [
+      "avg_hc_nvidia",
+      "avg_hc_intel",
+      "ratio"
+    ],
+    "rows": [
+      [
+        15.515000000000002,
+        10.64833333333333,
+        1.4570355298168733
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour {camera_location: 'DemoBooth_NVIDIA'}) \n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN avg(ch.avg_hc) AS avg_hc_nvidia\n}\nCALL {\n  MATCH (ch:CrowdHour {camera_location: 'DemoBooth_Intel'}) \n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN avg(ch.avg_hc) AS avg_hc_intel\n}\nRETURN avg_hc_nvidia, avg_hc_intel, \n       CASE \n         WHEN avg_hc_intel > 0 THEN avg_hc_nvidia / avg_hc_intel \n         ELSE null \n       END AS ratio",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 13318,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2178,
+      "completion_tokens": 210
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 463,
+      "completion_tokens": 66
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_2_facts_satisfied"
+  }
+}

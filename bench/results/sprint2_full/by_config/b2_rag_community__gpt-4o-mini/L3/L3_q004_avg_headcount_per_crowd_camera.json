@@ -1,0 +1,150 @@
+{
+  "question_id": "L3_q004_avg_headcount_per_crowd_camera",
+  "level": "L3",
+  "approach": "b2_rag_community",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "For each crowd-mode camera_location on 2025-12-08 (UTC), report the average head_count over the full day.",
+  "gold_value": [
+    [
+      "DemoBooth_Intel",
+      10.65
+    ],
+    [
+      "DemoBooth_NVIDIA",
+      15.52
+    ],
+    [
+      "ExpoFloor_MainAisle",
+      49.36
+    ],
+    [
+      "FoodCourt_North",
+      23.07
+    ],
+    [
+      "KeynoteHall_Stage",
+      57.4
+    ]
+  ],
+  "answer_text": "On December 8, 2025, the average head count for the crowd-mode camera locations was not explicitly provided in the summaries. However, the camera locations at ExpoFloor_MainAisle, FoodCourt_North, DemoBooth_Intel, DemoBooth_NVIDIA, and KeynoteHall_Stage recorded a peak head count of 500 and a total of 588 node counts throughout the day, but no average head count was specified. The summaries do not include average head count data for the specific camera locations requested.",
+  "structured_answer": {
+    "retrieved_communities": [
+      {
+        "community_id": "community_4",
+        "summary": "The CCTV activity involves multiple camera locations with a total of 40 events recorded between 05:00:59 and 05:59:16 UTC on December 8, 2025. The dominant event types are person entries (22) and car exits (4). Notably, there were 14 person exits during this period, but no peak head count or average head count data is available.",
+        "distance": 0.4257098436355591,
+        "metadata": {
+          "community_id": 4,
+          "total_events": 40,
+          "camera_locations": "",
+          "node_count": 41
+        }
+      },
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and a total of 588 node counts.",
+        "distance": 0.46024173498153687,
+        "metadata": {
+          "community_id": 9,
+          "total_events": 449,
+          "camera_locations": "DemoBooth_Intel,DemoBooth_NVIDIA,ExpoFloor_MainAisle,FoodCourt_North,KeynoteHall_Stage",
+          "node_count": 588
+        }
+      },
+      {
+        "community_id": "community_13",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 17:00 and 17:59 UTC recorded a total of 194 events. The dominant event types were person entries (92) and exits (89), with car entries (5) and exits (8) also noted. The peak head count reached 13 individuals, and the average head count was approximately 5.04.",
+        "distance": 0.4805387854576111,
+        "metadata": {
+          "node_count": 196,
+          "community_id": 13,
+          "camera_locations": "Platform_1",
+          "total_events": 194
+        }
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity at Platform_1 from 02:00 to 02:55 UTC on December 1, 2025, recorded a total of 37 events, with person entries (16) and exits (14) dominating the activity. There were also 4 car entries and 3 car exits. The peak head count reached 13, with an average head count of 5.05 during this period.",
+        "distance": 0.4894958734512329,
+        "metadata": {
+          "total_events": 37,
+          "node_count": 39,
+          "camera_locations": "Platform_1",
+          "community_id": 10
+        }
+      },
+      {
+        "community_id": "community_0",
+        "summary": "The CCTV activity involves the camera locations at Gate_MainEntrance and Platform_1, covering the time range from December 1, 2025, at 01:00 UTC to December 8, 2025, at 12:59 UTC. The dominant event types are person entries (788) and exits (773), along with car entries (112) and exits (102). The total volume of events recorded is 1,775, with a peak head count of 47 and an average head count of approximately 10.42.",
+        "distance": 0.49140191078186035,
+        "metadata": {
+          "total_events": 1775,
+          "camera_locations": "Gate_MainEntrance,Platform_1",
+          "node_count": 1802,
+          "community_id": 0
+        }
+      },
+      {
+        "community_id": "community_5",
+        "summary": "The CCTV activity covers the time range from December 8, 2025, 18:00:01 to 18:59:57 UTC. The camera locations involved recorded a total of 744 events, with person entries (300) and exits (299) dominating the activity, alongside 83 car entries and 62 car exits. Notably, there were 745 nodes counted during this period.",
+        "distance": 0.49307823181152344,
+        "metadata": {
+          "node_count": 745,
+          "camera_locations": "",
+          "community_id": 5,
+          "total_events": 744
+        }
+      }
+    ],
+    "top_k": 6
+  },
+  "citations": [
+    {
+      "type": "community",
+      "community_id": "community_4",
+      "distance": 0.4257098436355591
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.46024173498153687
+    },
+    {
+      "type": "community",
+      "community_id": "community_13",
+      "distance": 0.4805387854576111
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.4894958734512329
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.49140191078186035
+    },
+    {
+      "type": "community",
+      "community_id": "community_5",
+      "distance": 0.49307823181152344
+    }
+  ],
+  "duration_ms": 3296,
+  "llm_calls": [
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 818,
+      "completion_tokens": 107
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": false,
+    "detail": "missing_numbers=[10.65, 15.52, 49.36, 23.07, 57.4]"
+  }
+}

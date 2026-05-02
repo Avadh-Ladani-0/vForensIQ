@@ -1,0 +1,92 @@
+{
+  "question_id": "L2_q001_peak_headcount_nvidia_booth",
+  "level": "L2",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What was the peak head_count observed at DemoBooth_NVIDIA on 2025-12-08 (UTC)?",
+  "gold_value": 86,
+  "answer_text": "The peak head count observed at DemoBooth_NVIDIA on December 8, 2025, was 86. This location was part of a larger event with significant foot traffic across various sites, as seen in the large number of person entries and exits throughout the day, contributing to the dynamic activity captured in the CCTV data.",
+  "structured_answer": {
+    "cypher_columns": [
+      "peak_head_count"
+    ],
+    "cypher_rows": [
+      [
+        86
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and an average head count of approximately 31.2.",
+        "distance": 0.3754020929336548
+      },
+      {
+        "community_id": "community_14",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 19:00 and 19:58 UTC recorded a total of 53 events, with a peak head count of 42. The dominant event types were person entries (21) and exits (20), alongside 6 car entries and 6 exits. The average head count was approximately 35, with a total of 55 nodes monitored during this period.",
+        "distance": 0.47052639722824097
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.49444711208343506
+      },
+      {
+        "community_id": "community_4",
+        "summary": "The CCTV activity involved multiple camera locations during the time range from 05:00:59 to 05:59:16 UTC on December 8, 2025. The dominant event types were person entries, with a total of 22 recorded, followed by person exits at 14 and car exits at 4. The total volume of events reached 40, with a node count of 41. No peak head count or average head count data is available.",
+        "distance": 0.495927631855011
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour {camera_location: 'DemoBooth_NVIDIA'})\nWHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\nRETURN max(ch.peak_hc) AS peak_head_count",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.3754020929336548
+    },
+    {
+      "type": "community",
+      "community_id": "community_14",
+      "distance": 0.47052639722824097
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.49444711208343506
+    },
+    {
+      "type": "community",
+      "community_id": "community_4",
+      "distance": 0.495927631855011
+    }
+  ],
+  "duration_ms": 5022,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2156,
+      "completion_tokens": 72
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 700,
+      "completion_tokens": 66
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": false,
+    "detail": "exceeds_1pct (expected=86.0 got=8.0)"
+  }
+}

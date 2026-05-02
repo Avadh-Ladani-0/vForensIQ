@@ -1,0 +1,66 @@
+{
+  "question_id": "L4_q003_morning_vs_evening_main_entrance",
+  "level": "L4",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "On 2025-12-08 (UTC), compare the morning rush window (08:00-10:00) versus the evening rush window (17:00-19:00) at Gate_MainEntrance for total person flow (person_entry + person_exit). Which window was busier and approximately by how much?",
+  "gold_value": {
+    "busier_window": "08:00",
+    "morning_total_approx": {
+      "value": 1200,
+      "tolerance": 250
+    },
+    "evening_total_approx": {
+      "value": 1000,
+      "tolerance": 250
+    }
+  },
+  "answer_text": "The morning rush window (08:00-10:00) at Gate_MainEntrance was busier with a total person flow of 1,191, compared to the evening rush window (17:00-19:00), which had a total person flow of 997. The morning was busier by 194 people.",
+  "structured_answer": {
+    "columns": [
+      "window",
+      "total_person_flow"
+    ],
+    "rows": [
+      [
+        "morning",
+        1191
+      ],
+      [
+        "evening",
+        997
+      ]
+    ],
+    "total_rows": 2
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH morning_rush AS (\n    SELECT \n        'morning' AS window,\n        COUNT(*) AS total_person_flow\n    FROM \n        events\n    WHERE \n        camera_location LIKE '%MainEntrance%'\n        AND event_type IN ('person_entry', 'person_exit')\n        AND timestamp_utc >= '2025-12-08T08:00:00Z'\n        AND timestamp_utc < '2025-12-08T10:00:00Z'\n),\nevening_rush AS (\n    SELECT \n        'evening' AS window,\n        COUNT(*) AS total_person_flow\n    FROM \n        events\n    WHERE \n        camera_location LIKE '%MainEntrance%'\n        AND event_type IN ('person_entry', 'person_exit')\n        AND timestamp_utc >= '2025-12-08T17:00:00Z'\n        AND timestamp_utc < '2025-12-08T19:00:00Z'\n)\nSELECT * FROM morning_rush\nUNION ALL\nSELECT * FROM evening_rush",
+      "row_count": 2
+    }
+  ],
+  "duration_ms": 4216,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 999,
+      "completion_tokens": 214
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 461,
+      "completion_tokens": 66
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_3_facts_satisfied"
+  }
+}

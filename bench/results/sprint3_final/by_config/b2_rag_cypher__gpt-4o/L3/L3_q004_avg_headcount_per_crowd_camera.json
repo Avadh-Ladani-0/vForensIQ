@@ -1,0 +1,89 @@
+{
+  "question_id": "L3_q004_avg_headcount_per_crowd_camera",
+  "level": "L3",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "For each crowd-mode camera_location on 2025-12-08 (UTC), report the average head_count over the full day.",
+  "gold_value": [
+    [
+      "DemoBooth_Intel",
+      10.65
+    ],
+    [
+      "DemoBooth_NVIDIA",
+      15.52
+    ],
+    [
+      "ExpoFloor_MainAisle",
+      49.36
+    ],
+    [
+      "FoodCourt_North",
+      23.07
+    ],
+    [
+      "KeynoteHall_Stage",
+      57.4
+    ]
+  ],
+  "answer_text": "On 2025-12-08, the average head counts per location were as follows: DemoBooth_Intel had an average of 10.65, DemoBooth_NVIDIA had 15.52, ExpoFloor_MainAisle had 49.36, FoodCourt_North had 23.07, and KeynoteHall_Stage had 57.4.",
+  "structured_answer": {
+    "columns": [
+      "camera_location",
+      "average_head_count"
+    ],
+    "rows": [
+      [
+        "DemoBooth_Intel",
+        10.65
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        15.52
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        49.36
+      ],
+      [
+        "FoodCourt_North",
+        23.07
+      ],
+      [
+        "KeynoteHall_Stage",
+        57.4
+      ]
+    ],
+    "total_rows": 5
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (cd:CrowdDay)\nWHERE cd.date = '2025-12-08'\nRETURN cd.camera_location AS camera_location, avg(cd.avg_hc) AS average_head_count ORDER BY camera_location",
+      "row_count": 5
+    }
+  ],
+  "duration_ms": 2667,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2159,
+      "completion_tokens": 42
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 304,
+      "completion_tokens": 78
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": true,
+    "detail": "all_keys_and_values_matched (rows=5)"
+  }
+}

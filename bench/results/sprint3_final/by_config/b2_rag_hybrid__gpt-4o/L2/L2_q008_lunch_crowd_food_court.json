@@ -1,0 +1,92 @@
+{
+  "question_id": "L2_q008_lunch_crowd_food_court",
+  "level": "L2",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How busy was the food court during lunch hours on average?",
+  "gold_value": 120.01,
+  "answer_text": "The food court was moderately busy during lunch hours, with an average crowd of approximately 82 people. This sustained level of activity reflects its role as a central gathering point, possibly influenced by concurrent events throughout the venue, such as entries and exits at nearby locations like the ExpoFloor and KeynoteHall.",
+  "structured_answer": {
+    "cypher_columns": [
+      "average_crowd_during_lunch"
+    ],
+    "cypher_rows": [
+      [
+        81.86999999999999
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and an average head count of approximately 31.2.",
+        "distance": 0.5715296268463135
+      },
+      {
+        "community_id": "community_1",
+        "summary": "The CCTV activity at the Gate_ParkingLot camera from December 8, 2025, between 07:00 and 17:00 UTC recorded a total of 1,529 events. The dominant event types were person entries (463) and exits (466), along with car entries (283) and exits (317). Notably, the total volume of events reached 1,532, indicating a high level of activity during this time.",
+        "distance": 0.6432994604110718
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.6463984847068787
+      },
+      {
+        "community_id": "community_6",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 11:01:47 and 11:59:48, recorded a total of 44 events. The dominant event types were person exits (17) and person entries (12), with car entries (9) and exits (6) also noted. The peak head count reached 12, and the average head count was 5.05 during this period.",
+        "distance": 0.6546993255615234
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour)\nWHERE ch.camera_location CONTAINS 'FoodCourt' \n  AND ch.hour_utc >= '2025-12-08T11:00:00Z' \n  AND ch.hour_utc < '2025-12-08T14:00:00Z'\nRETURN avg(ch.avg_hc) AS average_crowd_during_lunch",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.5715296268463135
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.6432994604110718
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.6463984847068787
+    },
+    {
+      "type": "community",
+      "community_id": "community_6",
+      "distance": 0.6546993255615234
+    }
+  ],
+  "duration_ms": 6357,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2144,
+      "completion_tokens": 81
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 697,
+      "completion_tokens": 60
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": false,
+    "detail": "exceeds_1pct (expected=120.01 got=82.0)"
+  }
+}

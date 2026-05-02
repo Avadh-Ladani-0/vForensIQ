@@ -1,0 +1,63 @@
+{
+  "question_id": "L4_q007_nvidia_vs_intel_booth_attraction",
+  "level": "L4",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-5-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which demo booth attracted bigger crowds \u2014 NVIDIA or Intel? Roughly how much more popular was the winner?",
+  "gold_value": {
+    "winner": "NVIDIA",
+    "intel_mentioned": "Intel"
+  },
+  "answer_text": null,
+  "structured_answer": {
+    "cypher_columns": [
+      "booth",
+      "total_samples",
+      "weighted_avg_hc",
+      "peak_hc"
+    ],
+    "cypher_rows": [
+      [
+        "NVIDIA",
+        86400,
+        15.515,
+        86
+      ],
+      [
+        "Intel",
+        86400,
+        10.648333333333333,
+        53
+      ]
+    ],
+    "cypher_total_rows": 2,
+    "retrieved_communities": []
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour)\n  WHERE ch.camera_location CONTAINS 'NVIDIA'\n    AND ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN\n    'NVIDIA' AS booth,\n    coalesce(sum(ch.event_count), 0) AS total_samples,\n    CASE WHEN coalesce(sum(ch.event_count), 0) > 0 THEN toFloat(sum(ch.avg_hc * ch.event_count)) / coalesce(sum(ch.event_count), 0) ELSE NULL END AS weighted_avg_hc,\n    max(ch.peak_hc) AS peak_hc\n  UNION ALL\n  MATCH (ch:CrowdHour)\n  WHERE ch.camera_location CONTAINS 'Intel'\n    AND ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN\n    'Intel' AS booth,\n    coalesce(sum(ch.event_count), 0) AS total_samples,\n    CASE WHEN coalesce(sum(ch.event_count), 0) > 0 THEN toFloat(sum(ch.avg_hc * ch.event_count)) / coalesce(sum(ch.event_count), 0) ELSE NULL END AS weighted_avg_hc,\n    max(ch.peak_hc) AS peak_hc\n}\nRETURN booth, total_samples, weighted_avg_hc, peak_hc\nORDER BY total_samples DESC",
+      "row_count": 2
+    }
+  ],
+  "duration_ms": 51794,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 1875,
+      "completion_tokens": 1427
+    }
+  ],
+  "errors": [
+    "community_stream: RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}",
+    "hybrid_top: RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": null,
+    "detail": "error"
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "question_id": "L3_q004_avg_headcount_per_crowd_camera",
+  "level": "L3",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "For each crowd-mode camera_location on 2025-12-08 (UTC), report the average head_count over the full day.",
+  "gold_value": [
+    [
+      "DemoBooth_Intel",
+      10.65
+    ],
+    [
+      "DemoBooth_NVIDIA",
+      15.52
+    ],
+    [
+      "ExpoFloor_MainAisle",
+      49.36
+    ],
+    [
+      "FoodCourt_North",
+      23.07
+    ],
+    [
+      "KeynoteHall_Stage",
+      57.4
+    ]
+  ],
+  "answer_text": "On 2025-12-08, the average head count for each crowd-mode camera location was as follows: DemoBooth_Intel had an average of 10.65, DemoBooth_NVIDIA had 15.52, ExpoFloor_MainAisle had 49.36, FoodCourt_North had 23.07, and KeynoteHall_Stage had 57.40.",
+  "structured_answer": {
+    "columns": [
+      "camera_location",
+      "average_head_count"
+    ],
+    "rows": [
+      [
+        "DemoBooth_Intel",
+        10.648136574074075
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        15.515462962962962
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        49.3565625
+      ],
+      [
+        "FoodCourt_North",
+        23.069108796296295
+      ],
+      [
+        "KeynoteHall_Stage",
+        57.39643518518518
+      ]
+    ],
+    "total_rows": 5
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH day_bounds AS (\n    SELECT \n        MIN(timestamp_epoch_s) AS start_epoch,\n        MAX(timestamp_epoch_s) AS end_epoch\n    FROM events\n    WHERE timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n),\ncrowd_events AS (\n    SELECT \n        camera_location,\n        head_count\n    FROM events\n    WHERE event_type = 'crowd'\n    AND timestamp_epoch_s BETWEEN (SELECT start_epoch FROM day_bounds) AND (SELECT end_epoch FROM day_bounds)\n)\nSELECT \n    camera_location,\n    AVG(head_count) AS average_head_count\nFROM crowd_events\nGROUP BY camera_location",
+      "row_count": 5
+    }
+  ],
+  "duration_ms": 4311,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 961,
+      "completion_tokens": 152
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 428,
+      "completion_tokens": 82
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": true,
+    "detail": "all_keys_and_values_matched (rows=5)"
+  }
+}

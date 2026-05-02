@@ -1,0 +1,46 @@
+{
+  "question_id": "L1_q006_active_cameras_during_keynote",
+  "level": "L1",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many distinct cameras produced at least one event between 09:00 and 10:00 UTC on 2025-12-08 (the morning keynote hour)?",
+  "gold_value": 8,
+  "answer_text": null,
+  "structured_answer": {
+    "columns": [],
+    "rows": [],
+    "total_rows": 0
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event)\nWHERE e.timestamp_utc >= '2025-12-08T09:00:00Z' AND e.timestamp_utc < '2025-12-08T10:00:00Z'\nRETURN COUNT(DISTINCT (e)-[:DETECTED_BY]->(c:Camera)) AS distinct_camera_count",
+      "row_count": 0
+    }
+  ],
+  "duration_ms": 3325,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 993,
+      "completion_tokens": 67
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1193,
+      "completion_tokens": 70
+    }
+  ],
+  "errors": [
+    "CypherSyntaxError: {neo4j_code: Neo.ClientError.Statement.SyntaxError} {message: PatternExpressions are not allowed to introduce new variables: 'c'. (line 3, column 44 (offset: 152))\n\"RETURN COUNT(DISTINCT (e)-[:DETECTED_BY]->(c:Camera)) AS distinct_camera_count\"\n                                            ^} {gql_status: 42001} {gql_status_description: error: syntax error or access rule violation - invalid syntax}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": null,
+    "detail": "error"
+  }
+}

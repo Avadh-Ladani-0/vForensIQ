@@ -1,0 +1,25 @@
+{
+  "run_id": "sprint3_final",
+  "started_at_utc": "2026-04-14T15:48:26Z",
+  "approaches": [
+    "b1_sql",
+    "b2_rag_cypher",
+    "b2_rag_community",
+    "b2_rag_hybrid",
+    "b3_aqr"
+  ],
+  "models": [
+    "gpt-4o-mini",
+    "gpt-4o"
+  ],
+  "levels": [
+    "L1",
+    "L2",
+    "L3",
+    "L4",
+    "L5"
+  ],
+  "question_count": 41,
+  "total_cells": 410,
+  "finished_at_utc": "2026-04-14T16:34:25Z"
+}

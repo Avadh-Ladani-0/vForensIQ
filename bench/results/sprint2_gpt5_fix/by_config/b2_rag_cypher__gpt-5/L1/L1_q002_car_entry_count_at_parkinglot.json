@@ -1,0 +1,50 @@
+{
+  "question_id": "L1_q002_car_entry_count_at_parkinglot",
+  "level": "L1",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many car_entry events were recorded at Gate_ParkingLot on 2025-12-08 (UTC)?",
+  "gold_value": 381,
+  "answer_text": "There were 381 car_entry events at Gate_ParkingLot on 2025-12-08 (UTC).",
+  "structured_answer": {
+    "columns": [
+      "car_entry_events"
+    ],
+    "rows": [
+      [
+        381
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event {event_type: 'car_entry'})-[:DETECTED_BY]->(:Camera {camera_location: 'Gate_ParkingLot'})\nWHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\nRETURN count(e) AS car_entry_events",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 9626,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5",
+      "prompt_tokens": 1877,
+      "completion_tokens": 602
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-5",
+      "prompt_tokens": 273,
+      "completion_tokens": 288
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": true,
+    "detail": "match"
+  }
+}

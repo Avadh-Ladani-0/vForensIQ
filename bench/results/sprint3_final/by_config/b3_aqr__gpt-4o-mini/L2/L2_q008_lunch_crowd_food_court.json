@@ -1,0 +1,68 @@
+{
+  "question_id": "L2_q008_lunch_crowd_food_court",
+  "level": "L2",
+  "approach": "b3_aqr",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How busy was the food court during lunch hours on average?",
+  "gold_value": 120.01,
+  "answer_text": "During lunch hours, the average head count in the food court was approximately 120 at 12 PM and about 120 at 1 PM.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "avg_head_count"
+    ],
+    "rows": [
+      [
+        "12",
+        120.04694444444445
+      ],
+      [
+        "13",
+        119.9661111111111
+      ]
+    ],
+    "total_rows": 2,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH lunch_hours AS (\n    SELECT strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour, AVG(head_count) AS avg_head_count\n    FROM events\n    WHERE camera_location LIKE '%FoodCourt%'\n      AND timestamp_utc >= '2025-12-08T12:00:00Z' \n      AND timestamp_utc < '2025-12-08T14:00:00Z'\n      AND event_type = 'crowd'\n    GROUP BY hour\n)\nSELECT hour, avg_head_count\nFROM lunch_hours",
+      "row_count": 2
+    }
+  ],
+  "duration_ms": 4696,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 946,
+      "completion_tokens": 114
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 317,
+      "completion_tokens": 29
+    }
+  ],
+  "errors": [],
+  "routing": {
+    "classified_level": "L2",
+    "routed_to": "b1_sql",
+    "routing_method": "llm_zero_shot",
+    "routing_duration_ms": 1013,
+    "classifier_metadata": {
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 343,
+      "completion_tokens": 2
+    }
+  },
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": true,
+    "detail": "within_1pct (expected=120.01 got=120.0)"
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "question_id": "L5_q006_how_did_the_day_go",
+  "level": "L5",
+  "approach": "b2_rag_community",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Tell me how the day went at the conference \u2014 what stood out, when were the big moments, and what does the activity tell us?",
+  "gold_value": {
+    "rubric": [
+      "Significant person traffic at the main entrance, especially in the morning and evening",
+      "Keynote sessions drew large crowds at the keynote stage area",
+      "Demo booths (especially NVIDIA) had notable crowd activity during expo hours",
+      "Food court was busiest around lunchtime",
+      "Overnight hours were quiet across the venue"
+    ],
+    "threshold": 0.4
+  },
+  "answer_text": "On December 8, 2025, the conference saw significant activity, particularly at KeynoteHall_DoorA, where there were 2,209 recorded events between 09:00 and 15:00 UTC, including 1,117 person entries and 1,072 exits. The overall day recorded 449 events across five camera locations, with a peak head count of 500 and a total of 588 node counts. The dominant activities were person entries (206) and exits (181), indicating a busy and engaging atmosphere throughout the day. The high foot traffic suggests that the conference was well-attended and likely featured popular sessions or activities.",
+  "structured_answer": {
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and a total of 588 node counts.",
+        "distance": 0.6229447722434998,
+        "metadata": {
+          "camera_locations": "DemoBooth_Intel,DemoBooth_NVIDIA,ExpoFloor_MainAisle,FoodCourt_North,KeynoteHall_Stage",
+          "community_id": 9,
+          "total_events": 449,
+          "node_count": 588
+        }
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.6849648952484131,
+        "metadata": {
+          "community_id": 2,
+          "node_count": 2213,
+          "camera_locations": "KeynoteHall_DoorA",
+          "total_events": 2209
+        }
+      },
+      {
+        "community_id": "community_16",
+        "summary": "The CCTV activity at Platform_1 from 08:00 to 08:59 on December 1, 2025, recorded a total of 286 events, with person entries (92) and exits (107) dominating the activity. Car entries (46) and exits (41) were also significant. The peak head count reached 47, and the average head count was approximately 40.02.",
+        "distance": 0.7188088893890381,
+        "metadata": {
+          "total_events": 286,
+          "camera_locations": "Platform_1",
+          "node_count": 288,
+          "community_id": 16
+        }
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity at Platform_1 from 02:00 to 02:55 UTC on December 1, 2025, recorded a total of 37 events, with person entries (16) and exits (14) dominating the activity. There were also 4 car entries and 3 car exits. The peak head count reached 13, with an average head count of 5.05 during this period.",
+        "distance": 0.721294641494751,
+        "metadata": {
+          "community_id": 10,
+          "node_count": 39,
+          "camera_locations": "Platform_1",
+          "total_events": 37
+        }
+      },
+      {
+        "community_id": "community_14",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 19:00 and 19:58 shows a total of 53 events, with person entries (21) and exits (20) dominating the activity. There were also 6 car entries and 6 car exits recorded. The peak head count reached 42, with an average head count of approximately 35.",
+        "distance": 0.7258075475692749,
+        "metadata": {
+          "camera_locations": "Platform_1",
+          "total_events": 53,
+          "community_id": 14,
+          "node_count": 55
+        }
+      },
+      {
+        "community_id": "community_13",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 17:00 and 17:59 UTC recorded a total of 194 events. The dominant event types were person entries (92) and exits (89), with car entries (5) and exits (8) also noted. The peak head count reached 13 individuals, and the average head count was approximately 5.04.",
+        "distance": 0.7301033139228821,
+        "metadata": {
+          "node_count": 196,
+          "camera_locations": "Platform_1",
+          "community_id": 13,
+          "total_events": 194
+        }
+      }
+    ],
+    "top_k": 6
+  },
+  "citations": [
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.6229447722434998
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.6849648952484131
+    },
+    {
+      "type": "community",
+      "community_id": "community_16",
+      "distance": 0.7188088893890381
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.721294641494751
+    },
+    {
+      "type": "community",
+      "community_id": "community_14",
+      "distance": 0.7258075475692749
+    },
+    {
+      "type": "community",
+      "community_id": "community_13",
+      "distance": 0.7301033139228821
+    }
+  ],
+  "duration_ms": 4189,
+  "llm_calls": [
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 806,
+      "completion_tokens": 132
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=0/5=0.00 (threshold=0.4)"
+  }
+}

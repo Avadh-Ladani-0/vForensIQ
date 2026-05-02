@@ -1,0 +1,60 @@
+{
+  "question_id": "L4_q011_people_flow_gate_to_keynote",
+  "level": "L4",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Did people who came through the main entrance also show up at the keynote? How many people were tracked at both locations compared to just the main entrance?",
+  "gold_value": {
+    "overlap_exists": "yes",
+    "main_entrance_mentioned": "Gate_MainEntrance"
+  },
+  "answer_text": "409 people were tracked at both the main entrance and the keynote. In comparison, 1,122 people were tracked only at the main entrance.",
+  "structured_answer": {
+    "columns": [
+      "location",
+      "person_count"
+    ],
+    "rows": [
+      [
+        "Both Locations",
+        409
+      ],
+      [
+        "Main Entrance Only",
+        1122
+      ]
+    ],
+    "total_rows": 2,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH main_entrance_entries AS (\n    SELECT DISTINCT object_id\n    FROM events\n    WHERE event_type = 'person_entry'\n      AND camera_location LIKE '%MainEntrance%'\n      AND timestamp_utc >= '2025-12-08T00:00:00Z'\n      AND timestamp_utc < '2025-12-09T00:00:00Z'\n),\nkeynote_entries AS (\n    SELECT DISTINCT object_id\n    FROM events\n    WHERE event_type = 'person_entry'\n      AND camera_location LIKE '%KeynoteHall%'\n      AND timestamp_utc >= '2025-12-08T00:00:00Z'\n      AND timestamp_utc < '2025-12-09T00:00:00Z'\n)\nSELECT \n    'Both Locations' AS location,\n    COUNT(DISTINCT main_entrance_entries.object_id) AS person_count\nFROM \n    main_entrance_entries\nJOIN \n    keynote_entries ON main_entrance_entries.object_id = keynote_entries.object_id\nUNION ALL\nSELECT \n    'Main Entrance Only' AS location,\n    COUNT(DISTINCT object_id) AS person_count\nFROM \n    main_entrance_entries\nWHERE \n    object_id NOT IN (SELECT object_id FROM keynote_entries)",
+      "row_count": 2
+    }
+  ],
+  "duration_ms": 4503,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 964,
+      "completion_tokens": 262
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 474,
+      "completion_tokens": 29
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": false,
+    "detail": "missing=[\"overlap_exists='yes'_not_mentioned\", \"main_entrance_mentioned='Gate_MainEntrance'_not_mentioned\"]"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "question_id": "L4_q007_nvidia_vs_intel_booth_attraction",
+  "level": "L4",
+  "approach": "b2_rag_community",
+  "model": "gpt-5-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which demo booth attracted bigger crowds \u2014 NVIDIA or Intel? Roughly how much more popular was the winner?",
+  "gold_value": {
+    "winner": "NVIDIA",
+    "intel_mentioned": "Intel"
+  },
+  "answer_text": null,
+  "structured_answer": {
+    "retrieved_communities": [],
+    "top_k": 6
+  },
+  "citations": [],
+  "duration_ms": 12491,
+  "llm_calls": [],
+  "errors": [
+    "RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": null,
+    "detail": "error"
+  }
+}

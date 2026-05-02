@@ -1,0 +1,60 @@
+{
+  "question_id": "L4_q007_nvidia_vs_intel_booth_attraction",
+  "level": "L4",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which demo booth attracted bigger crowds \u2014 NVIDIA or Intel? Roughly how much more popular was the winner?",
+  "gold_value": {
+    "winner": "NVIDIA",
+    "intel_mentioned": "Intel"
+  },
+  "answer_text": "The NVIDIA demo booth attracted a bigger crowd with a total head count of 1,340,536, compared to Intel's 919,999. The NVIDIA booth was roughly 420,537 people more popular than the Intel booth.",
+  "structured_answer": {
+    "columns": [
+      "camera_location",
+      "total_head_count"
+    ],
+    "rows": [
+      [
+        "DemoBooth_NVIDIA",
+        1340536
+      ],
+      [
+        "DemoBooth_Intel",
+        919999
+      ]
+    ],
+    "total_rows": 2,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH crowd_counts AS (\n    SELECT \n        camera_location,\n        SUM(head_count) AS total_head_count\n    FROM \n        events\n    WHERE \n        event_type = 'crowd'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z'\n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n        AND (camera_location LIKE '%NVIDIA%' OR camera_location LIKE '%Intel%')\n    GROUP BY \n        camera_location\n)\nSELECT \n    camera_location,\n    total_head_count\nFROM \n    crowd_counts\nORDER BY \n    total_head_count DESC",
+      "row_count": 2
+    }
+  ],
+  "duration_ms": 3895,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 955,
+      "completion_tokens": 134
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 346,
+      "completion_tokens": 47
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_2_facts_satisfied"
+  }
+}

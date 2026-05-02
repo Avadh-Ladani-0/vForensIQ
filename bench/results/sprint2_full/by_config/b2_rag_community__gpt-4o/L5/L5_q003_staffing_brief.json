@@ -1,0 +1,138 @@
+{
+  "question_id": "L5_q003_staffing_brief",
+  "level": "L5",
+  "approach": "b2_rag_community",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a staffing recommendation brief for the AI Hardware Summit on 2025-12-08 (UTC). Identify (a) the busiest hours of the day requiring extra staff at the gates and on the expo floor, and (b) the quiet hours where minimal coverage is sufficient. Cite specific hour ranges and supporting metrics. Keep it to 4-6 bullet points.",
+  "gold_value": {
+    "rubric": [
+      "Morning gate rush around 08:00-10:00 UTC needs extra staffing",
+      "Evening gate rush around 17:00-19:00 UTC needs extra staffing",
+      "Lunch hours 12:00-14:00 UTC are busy at FoodCourt and need extra coverage",
+      "Late-night and early-morning hours (roughly 22:00-06:00 UTC) are quiet and need minimal coverage",
+      "Keynote hours (09:00-10:00 and 14:00-15:00 UTC) require crowd management at KeynoteHall_Stage"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "- **Busiest Hours (Extra Staff Needed):** The period from 09:00 to 15:00 UTC at KeynoteHall_DoorA experienced significant foot traffic with 2,209 events, including 1,117 person entries and 1,072 exits. This indicates a high demand for staff at the gates and on the expo floor during these hours.\n\n- **Quiet Hours (Minimal Coverage Sufficient):** The overall activity at other locations, such as DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage, recorded a total of 449 events throughout the day, suggesting quieter periods outside the peak hours at KeynoteHall_DoorA.\n\n- **Peak Head Count:** The peak head count across all locations reached 500, indicating the need for adequate staffing during peak times to manage the crowd effectively.\n\n- **Total Events:** With a total of 588 node counts recorded, staffing should be adjusted based on the distribution of these events, focusing on the busiest hours identified.\n\n- **Overall Recommendation:** Allocate more staff during the 09:00 to 15:00 UTC window at KeynoteHall_DoorA and maintain minimal coverage during other times, especially outside the peak hours.",
+  "structured_answer": {
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and a total of 588 node counts.",
+        "distance": 0.524042010307312,
+        "metadata": {
+          "total_events": 449,
+          "camera_locations": "DemoBooth_Intel,DemoBooth_NVIDIA,ExpoFloor_MainAisle,FoodCourt_North,KeynoteHall_Stage",
+          "node_count": 588,
+          "community_id": 9
+        }
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.6044568419456482,
+        "metadata": {
+          "camera_locations": "KeynoteHall_DoorA",
+          "community_id": 2,
+          "total_events": 2209,
+          "node_count": 2213
+        }
+      },
+      {
+        "community_id": "community_16",
+        "summary": "The CCTV activity at Platform_1 from 08:00 to 08:59 on December 1, 2025, recorded a total of 286 events, with person entries (92) and exits (107) dominating the activity. Car entries (46) and exits (41) were also significant. The peak head count reached 47, and the average head count was approximately 40.02.",
+        "distance": 0.6246757507324219,
+        "metadata": {
+          "camera_locations": "Platform_1",
+          "total_events": 286,
+          "node_count": 288,
+          "community_id": 16
+        }
+      },
+      {
+        "community_id": "community_17",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 20:00 and 20:58 UTC recorded a total of 33 events. The dominant event types were person exits (13) and person entries (8), with car entries (7) and exits (5) also noted. The peak head count reached 13, and the average head count was approximately 5.05 during this period.",
+        "distance": 0.6296461820602417,
+        "metadata": {
+          "total_events": 33,
+          "camera_locations": "Platform_1",
+          "community_id": 17,
+          "node_count": 35
+        }
+      },
+      {
+        "community_id": "community_6",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 11:01:47 and 11:59:48, recorded a total of 44 events. The dominant event types were person exits (17) and person entries (12), with car entries (9) and exits (6) also noted. The peak head count reached 12, and the average head count was 5.05 during this period.",
+        "distance": 0.6304481029510498,
+        "metadata": {
+          "node_count": 46,
+          "camera_locations": "Platform_1",
+          "community_id": 6,
+          "total_events": 44
+        }
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity at Platform_1 from 02:00 to 02:55 UTC on December 1, 2025, recorded a total of 37 events, with person entries (16) and exits (14) dominating the activity. There were also 4 car entries and 3 car exits. The peak head count reached 13, with an average head count of 5.05 during this period.",
+        "distance": 0.6324406862258911,
+        "metadata": {
+          "community_id": 10,
+          "total_events": 37,
+          "node_count": 39,
+          "camera_locations": "Platform_1"
+        }
+      }
+    ],
+    "top_k": 6
+  },
+  "citations": [
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.524042010307312
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.6044568419456482
+    },
+    {
+      "type": "community",
+      "community_id": "community_16",
+      "distance": 0.6246757507324219
+    },
+    {
+      "type": "community",
+      "community_id": "community_17",
+      "distance": 0.6296461820602417
+    },
+    {
+      "type": "community",
+      "community_id": "community_6",
+      "distance": 0.6304481029510498
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.6324406862258911
+    }
+  ],
+  "duration_ms": 6960,
+  "llm_calls": [
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 865,
+      "completion_tokens": 261
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=0/5=0.00 (threshold=0.5)"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "question_id": "L1_q010_person_exits_main_gate",
+  "level": "L1",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many people left through the main entrance gate today?",
+  "gold_value": 1352,
+  "answer_text": "1,352 people exited through the main entrance gate today.",
+  "structured_answer": {
+    "columns": [
+      "people_exited_main_entrance"
+    ],
+    "rows": [
+      [
+        1352
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event {event_type: 'person_exit'})-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\nWHERE l.name CONTAINS 'MainEntrance' AND e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\nRETURN count(e) AS people_exited_main_entrance",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 2941,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2505,
+      "completion_tokens": 98
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 284,
+      "completion_tokens": 12
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": true,
+    "detail": "match"
+  }
+}

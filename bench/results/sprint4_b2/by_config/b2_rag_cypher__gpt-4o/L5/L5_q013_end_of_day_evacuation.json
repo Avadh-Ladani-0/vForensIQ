@@ -1,0 +1,142 @@
+{
+  "question_id": "L5_q013_end_of_day_evacuation",
+  "level": "L5",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How did the end-of-day evacuation go? Describe the departure pattern from 17:00 onwards \u2014 which areas emptied first, how the gates handled the outflow, and whether the departure was orderly or had bottleneck moments.",
+  "gold_value": {
+    "rubric": [
+      "Gate_MainEntrance saw heavy person_exit traffic in the 17:00-19:00 window",
+      "Gate_ParkingLot had car_exit spikes during the same evening window",
+      "Crowd levels at ExpoFloor and DemoBooths dropped as people left",
+      "The departure was spread over 2+ hours rather than a sudden rush"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "The end-of-day evacuation from 17:00 onwards proceeded primarily through the main entrance and the parking lot gates. At 17:00, the Gate_MainEntrance saw 243 exits, while Gate_ParkingLot had 153. The pattern continued similarly at 18:00 with Gate_MainEntrance having 239 exits and Gate_ParkingLot 146 exits. The flow significantly decreased after 19:00, with exits dropping at both gates and no notable bottlenecks observed. The departure appeared orderly, with the majority of exits occurring initially and tapering off into lower numbers as the evening progressed.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "location",
+      "total_exits"
+    ],
+    "rows": [
+      [
+        "2025-12-08T17:00:00Z",
+        "Gate_MainEntrance",
+        243
+      ],
+      [
+        "2025-12-08T17:00:00Z",
+        "Gate_ParkingLot",
+        153
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        "Gate_MainEntrance",
+        239
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        "Gate_ParkingLot",
+        146
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        "KeynoteHall_DoorA",
+        1
+      ],
+      [
+        "2025-12-08T19:00:00Z",
+        "Gate_MainEntrance",
+        5
+      ],
+      [
+        "2025-12-08T19:00:00Z",
+        "Gate_ParkingLot",
+        3
+      ],
+      [
+        "2025-12-08T20:00:00Z",
+        "Gate_MainEntrance",
+        8
+      ],
+      [
+        "2025-12-08T20:00:00Z",
+        "Gate_ParkingLot",
+        6
+      ],
+      [
+        "2025-12-08T21:00:00Z",
+        "Gate_MainEntrance",
+        11
+      ],
+      [
+        "2025-12-08T21:00:00Z",
+        "Gate_ParkingLot",
+        3
+      ],
+      [
+        "2025-12-08T21:00:00Z",
+        "KeynoteHall_DoorA",
+        1
+      ],
+      [
+        "2025-12-08T22:00:00Z",
+        "Gate_MainEntrance",
+        12
+      ],
+      [
+        "2025-12-08T22:00:00Z",
+        "Gate_ParkingLot",
+        1
+      ],
+      [
+        "2025-12-08T22:00:00Z",
+        "KeynoteHall_DoorA",
+        1
+      ],
+      [
+        "2025-12-08T23:00:00Z",
+        "Gate_MainEntrance",
+        6
+      ],
+      [
+        "2025-12-08T23:00:00Z",
+        "Gate_ParkingLot",
+        1
+      ]
+    ],
+    "total_rows": 17
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event)\n  WHERE e.timestamp_utc >= '2025-12-08T17:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z' AND e.event_type = 'person_exit'\n  WITH e, substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour\n  MATCH (e)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  RETURN hour, l.name AS location, count(e) AS exit_count\n  UNION ALL\n  MATCH (e:Event)\n  WHERE e.timestamp_utc >= '2025-12-08T17:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z' AND e.event_type = 'car_exit'\n  WITH e, substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour\n  MATCH (e)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  RETURN hour, l.name AS location, count(e) AS exit_count\n}\nRETURN hour, location, sum(exit_count) AS total_exits\nORDER BY hour, total_exits DESC",
+      "row_count": 17
+    }
+  ],
+  "duration_ms": 6155,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2539,
+      "completion_tokens": 281
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 922,
+      "completion_tokens": 121
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=2/4=0.50 (threshold=0.5)"
+  }
+}

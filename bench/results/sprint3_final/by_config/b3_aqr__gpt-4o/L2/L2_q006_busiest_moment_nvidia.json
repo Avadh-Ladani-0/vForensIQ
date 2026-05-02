@@ -1,0 +1,80 @@
+{
+  "question_id": "L2_q006_busiest_moment_nvidia",
+  "level": "L2",
+  "approach": "b3_aqr",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How packed did the NVIDIA booth get at its busiest moment?",
+  "gold_value": 86,
+  "answer_text": "The NVIDIA booth was at its busiest at 16:48:47 UTC on December 8, 2025, when the head count reached 86 people, as recorded by camera CAM_05 at the location DemoBooth_NVIDIA.",
+  "structured_answer": {
+    "columns": [
+      "event_id",
+      "timestamp_utc",
+      "timestamp_epoch_s",
+      "camera_id",
+      "event_type",
+      "object_id",
+      "confidence",
+      "camera_location",
+      "head_count",
+      "ingested_at_utc"
+    ],
+    "rows": [
+      [
+        "7eadedd02e808198",
+        "2025-12-08T16:48:47Z",
+        1765212527,
+        "CAM_05",
+        "crowd",
+        null,
+        0.9,
+        "DemoBooth_NVIDIA",
+        86,
+        "2026-04-14T15:48:21Z"
+      ]
+    ],
+    "total_rows": 1,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH event_window AS (\n    SELECT *\n    FROM events\n    WHERE timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n      AND camera_location LIKE '%NVIDIA%'\n      AND event_type = 'crowd'\n),\npeak_moment AS (\n    SELECT MAX(head_count) AS max_head_count\n    FROM event_window\n)\nSELECT e.*\nFROM event_window e\nJOIN peak_moment pm ON e.head_count = pm.max_head_count",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 4719,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 946,
+      "completion_tokens": 117
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 402,
+      "completion_tokens": 49
+    }
+  ],
+  "errors": [],
+  "routing": {
+    "classified_level": "L2",
+    "routed_to": "b1_sql",
+    "routing_method": "llm_zero_shot",
+    "routing_duration_ms": 924,
+    "classifier_metadata": {
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 343,
+      "completion_tokens": 2
+    }
+  },
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": false,
+    "detail": "exceeds_1pct (expected=86.0 got=8.0)"
+  }
+}

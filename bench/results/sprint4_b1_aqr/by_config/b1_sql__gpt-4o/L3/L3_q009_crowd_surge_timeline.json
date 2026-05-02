@@ -1,0 +1,242 @@
+{
+  "question_id": "L3_q009_crowd_surge_timeline",
+  "level": "L3",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Show me how the crowd size changed at the keynote stage throughout the day \u2014 give me the average crowd for each hour.",
+  "gold_value": [
+    [
+      "00",
+      7.0
+    ],
+    [
+      "01",
+      7.3
+    ],
+    [
+      "02",
+      7.1
+    ],
+    [
+      "03",
+      7.2
+    ],
+    [
+      "04",
+      7.0
+    ],
+    [
+      "05",
+      6.9
+    ],
+    [
+      "06",
+      6.8
+    ],
+    [
+      "07",
+      7.1
+    ],
+    [
+      "08",
+      7.0
+    ],
+    [
+      "09",
+      450.2
+    ],
+    [
+      "10",
+      7.0
+    ],
+    [
+      "11",
+      6.9
+    ],
+    [
+      "12",
+      7.2
+    ],
+    [
+      "13",
+      7.1
+    ],
+    [
+      "14",
+      399.5
+    ],
+    [
+      "15",
+      7.2
+    ],
+    [
+      "16",
+      379.5
+    ],
+    [
+      "17",
+      6.9
+    ],
+    [
+      "18",
+      6.8
+    ],
+    [
+      "19",
+      7.2
+    ],
+    [
+      "20",
+      7.1
+    ],
+    [
+      "21",
+      7.0
+    ],
+    [
+      "22",
+      7.3
+    ],
+    [
+      "23",
+      7.3
+    ]
+  ],
+  "answer_text": "Throughout the day at the keynote stage, major crowd size increases are noted during the 9 AM, 2 PM, and 4 PM hours with average crowds of approximately 450.19, 399.51, and 379.46 people respectively. At other times, the average crowd size remains relatively consistent and low, ranging from about 6.80 to 7.31 people.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "avg_crowd_size"
+    ],
+    "rows": [
+      [
+        "00",
+        6.969722222222222
+      ],
+      [
+        "01",
+        7.269166666666667
+      ],
+      [
+        "02",
+        7.120277777777778
+      ],
+      [
+        "03",
+        7.207777777777777
+      ],
+      [
+        "04",
+        7.010555555555555
+      ],
+      [
+        "05",
+        6.9255555555555555
+      ],
+      [
+        "06",
+        6.797777777777778
+      ],
+      [
+        "07",
+        7.1161111111111115
+      ],
+      [
+        "08",
+        6.976111111111111
+      ],
+      [
+        "09",
+        450.18638888888887
+      ],
+      [
+        "10",
+        7.025833333333333
+      ],
+      [
+        "11",
+        6.928888888888889
+      ],
+      [
+        "12",
+        7.1563888888888885
+      ],
+      [
+        "13",
+        7.074722222222222
+      ],
+      [
+        "14",
+        399.5133333333333
+      ],
+      [
+        "15",
+        7.225555555555555
+      ],
+      [
+        "16",
+        379.45916666666665
+      ],
+      [
+        "17",
+        6.9325
+      ],
+      [
+        "18",
+        6.833333333333333
+      ],
+      [
+        "19",
+        7.176388888888889
+      ],
+      [
+        "20",
+        7.085277777777778
+      ],
+      [
+        "21",
+        6.958888888888889
+      ],
+      [
+        "22",
+        7.251111111111111
+      ],
+      [
+        "23",
+        7.313611111111111
+      ]
+    ],
+    "total_rows": 24,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH hourly_crowd AS (\n    SELECT \n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        AVG(head_count) AS avg_crowd_size\n    FROM \n        events\n    WHERE \n        event_type = 'crowd'\n        AND camera_location LIKE '%KeynoteHall_Stage%'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z'\n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        hour\n)\nSELECT \n    hour, \n    avg_crowd_size\nFROM \n    hourly_crowd\nORDER BY \n    hour",
+      "row_count": 24
+    }
+  ],
+  "duration_ms": 5057,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 958,
+      "completion_tokens": 145
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 648,
+      "completion_tokens": 80
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": false,
+    "detail": "missing_keys=['10', '11', '12', '13', '15']"
+  }
+}

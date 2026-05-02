@@ -1,0 +1,68 @@
+{
+  "question_id": "L4_q015_quiet_vs_busy_locations",
+  "level": "L4",
+  "approach": "b3_aqr",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which location was the quietest and which was the busiest in terms of average crowd? How big is the gap?",
+  "gold_value": {
+    "busiest": "KeynoteHall_Stage",
+    "quietest": "DemoBooth_Intel"
+  },
+  "answer_text": "The quietest location was \"DemoBooth_Intel,\" and the busiest was \"KeynoteHall_Stage.\" The gap in average crowd size between these two locations was 46.74916666666667.",
+  "structured_answer": {
+    "columns": [
+      "quietest_location",
+      "busiest_location",
+      "crowd_gap"
+    ],
+    "rows": [
+      [
+        "DemoBooth_Intel",
+        "KeynoteHall_Stage",
+        46.74916666666667
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.camera_location AS location, avg(ch.avg_hc) AS avg_crowd\n}\nWITH location, avg_crowd\nORDER BY avg_crowd ASC\nWITH collect({location: location, avg_crowd: avg_crowd}) AS locations\nRETURN \n  locations[0].location AS quietest_location, \n  locations[-1].location AS busiest_location, \n  locations[-1].avg_crowd - locations[0].avg_crowd AS crowd_gap",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 4503,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2517,
+      "completion_tokens": 157
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 381,
+      "completion_tokens": 43
+    }
+  ],
+  "errors": [],
+  "routing": {
+    "classified_level": "L4",
+    "routed_to": "b2_rag_cypher",
+    "routing_method": "llm_zero_shot",
+    "routing_duration_ms": 1333,
+    "classifier_metadata": {
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 354,
+      "completion_tokens": 2
+    }
+  },
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_2_facts_satisfied"
+  }
+}

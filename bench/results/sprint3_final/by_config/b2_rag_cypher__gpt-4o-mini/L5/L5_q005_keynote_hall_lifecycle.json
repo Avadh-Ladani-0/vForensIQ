@@ -1,0 +1,278 @@
+{
+  "question_id": "L5_q005_keynote_hall_lifecycle",
+  "level": "L5",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Describe the full lifecycle of activity at the keynote hall on 2025-12-08 (UTC). Cover: (a) door entry patterns at KeynoteHall_DoorA throughout the day, (b) the in-hall crowd density at KeynoteHall_Stage during keynote sessions, and (c) how the post-keynote dispersal compares to pre-keynote build-up. Use specific hours and numbers from the data. 4-6 sentences.",
+  "gold_value": {
+    "rubric": [
+      "KeynoteHall_DoorA shows entry peaks aligned with keynote start times (around 08:00-10:00, 13:00-14:00, or 15:00-16:00 UTC)",
+      "KeynoteHall_Stage crowd peaks during the keynote sessions, reaching head_counts in the hundreds",
+      "Outside of keynote hours the in-hall head_count drops to a low baseline (single digits)",
+      "Pre-keynote door entry traffic precedes the in-hall crowd surge"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "On December 8, 2025, the entry patterns at KeynoteHall_DoorA peaked in the morning, with 378 entries recorded at 08:00:00 UTC and 411 entries at 15:00:00 UTC. The in-hall crowd density at KeynoteHall_Stage reached a peak head count of 500 at 09:00:00 UTC during keynote sessions, demonstrating a significant build-up before the keynotes. In contrast, the post-keynote dispersal was much lower, with only 2 entries at 18:00:00 UTC, illustrating a stark difference between the pre-keynote build-up and post-keynote dispersal activities.",
+  "structured_answer": {
+    "columns": [
+      "door_entries",
+      "crowd_data"
+    ],
+    "rows": [
+      [
+        [
+          {
+            "hour": "2025-12-08T08:00:00Z",
+            "entry_count": 378
+          },
+          {
+            "hour": "2025-12-08T18:00:00Z",
+            "entry_count": 2
+          },
+          {
+            "hour": "2025-12-08T22:00:00Z",
+            "entry_count": 2
+          },
+          {
+            "hour": "2025-12-08T21:00:00Z",
+            "entry_count": 2
+          },
+          {
+            "hour": "2025-12-08T16:00:00Z",
+            "entry_count": 4
+          },
+          {
+            "hour": "2025-12-08T15:00:00Z",
+            "entry_count": 411
+          },
+          {
+            "hour": "2025-12-08T13:00:00Z",
+            "entry_count": 359
+          },
+          {
+            "hour": "2025-12-08T14:00:00Z",
+            "entry_count": 3
+          },
+          {
+            "hour": "2025-12-08T09:00:00Z",
+            "entry_count": 393
+          },
+          {
+            "hour": "2025-12-08T11:00:00Z",
+            "entry_count": 5
+          },
+          {
+            "hour": "2025-12-08T10:00:00Z",
+            "entry_count": 4
+          },
+          {
+            "hour": "2025-12-08T12:00:00Z",
+            "entry_count": 2
+          },
+          {
+            "hour": "2025-12-08T07:00:00Z",
+            "entry_count": 2
+          },
+          {
+            "hour": "2025-12-08T03:00:00Z",
+            "entry_count": 2
+          },
+          {
+            "hour": "2025-12-08T00:00:00Z",
+            "entry_count": 2
+          },
+          {
+            "hour": "2025-12-08T04:00:00Z",
+            "entry_count": 5
+          },
+          {
+            "hour": "2025-12-08T06:00:00Z",
+            "entry_count": 1
+          },
+          {
+            "hour": "2025-12-08T23:00:00Z",
+            "entry_count": 5
+          },
+          {
+            "hour": "2025-12-08T19:00:00Z",
+            "entry_count": 2
+          },
+          {
+            "hour": "2025-12-08T20:00:00Z",
+            "entry_count": 1
+          },
+          {
+            "hour": "2025-12-08T17:00:00Z",
+            "entry_count": 1
+          },
+          {
+            "hour": "2025-12-08T05:00:00Z",
+            "entry_count": 5
+          },
+          {
+            "hour": "2025-12-08T01:00:00Z",
+            "entry_count": 3
+          },
+          {
+            "hour": "2025-12-08T02:00:00Z",
+            "entry_count": 2
+          }
+        ],
+        [
+          {
+            "hour": "2025-12-08T00:00:00Z",
+            "avg_head_count": 6.97,
+            "peak_head_count": 51
+          },
+          {
+            "hour": "2025-12-08T01:00:00Z",
+            "avg_head_count": 7.27,
+            "peak_head_count": 52
+          },
+          {
+            "hour": "2025-12-08T02:00:00Z",
+            "avg_head_count": 7.12,
+            "peak_head_count": 50
+          },
+          {
+            "hour": "2025-12-08T03:00:00Z",
+            "avg_head_count": 7.21,
+            "peak_head_count": 59
+          },
+          {
+            "hour": "2025-12-08T04:00:00Z",
+            "avg_head_count": 7.01,
+            "peak_head_count": 52
+          },
+          {
+            "hour": "2025-12-08T05:00:00Z",
+            "avg_head_count": 6.93,
+            "peak_head_count": 51
+          },
+          {
+            "hour": "2025-12-08T06:00:00Z",
+            "avg_head_count": 6.8,
+            "peak_head_count": 62
+          },
+          {
+            "hour": "2025-12-08T07:00:00Z",
+            "avg_head_count": 7.12,
+            "peak_head_count": 74
+          },
+          {
+            "hour": "2025-12-08T08:00:00Z",
+            "avg_head_count": 6.98,
+            "peak_head_count": 68
+          },
+          {
+            "hour": "2025-12-08T09:00:00Z",
+            "avg_head_count": 450.19,
+            "peak_head_count": 500
+          },
+          {
+            "hour": "2025-12-08T10:00:00Z",
+            "avg_head_count": 7.03,
+            "peak_head_count": 56
+          },
+          {
+            "hour": "2025-12-08T11:00:00Z",
+            "avg_head_count": 6.93,
+            "peak_head_count": 55
+          },
+          {
+            "hour": "2025-12-08T12:00:00Z",
+            "avg_head_count": 7.16,
+            "peak_head_count": 57
+          },
+          {
+            "hour": "2025-12-08T13:00:00Z",
+            "avg_head_count": 7.07,
+            "peak_head_count": 54
+          },
+          {
+            "hour": "2025-12-08T14:00:00Z",
+            "avg_head_count": 399.51,
+            "peak_head_count": 452
+          },
+          {
+            "hour": "2025-12-08T15:00:00Z",
+            "avg_head_count": 7.23,
+            "peak_head_count": 53
+          },
+          {
+            "hour": "2025-12-08T16:00:00Z",
+            "avg_head_count": 379.46,
+            "peak_head_count": 433
+          },
+          {
+            "hour": "2025-12-08T17:00:00Z",
+            "avg_head_count": 6.93,
+            "peak_head_count": 51
+          },
+          {
+            "hour": "2025-12-08T18:00:00Z",
+            "avg_head_count": 6.83,
+            "peak_head_count": 59
+          },
+          {
+            "hour": "2025-12-08T19:00:00Z",
+            "avg_head_count": 7.18,
+            "peak_head_count": 55
+          },
+          {
+            "hour": "2025-12-08T20:00:00Z",
+            "avg_head_count": 7.09,
+            "peak_head_count": 57
+          },
+          {
+            "hour": "2025-12-08T21:00:00Z",
+            "avg_head_count": 6.96,
+            "peak_head_count": 50
+          },
+          {
+            "hour": "2025-12-08T22:00:00Z",
+            "avg_head_count": 7.25,
+            "peak_head_count": 51
+          },
+          {
+            "hour": "2025-12-08T23:00:00Z",
+            "avg_head_count": 7.31,
+            "peak_head_count": 57
+          }
+        ]
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera {camera_location: 'KeynoteHall_DoorA'}) \n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  WITH substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, count(*) AS entry_count\n  RETURN hour, entry_count\n}\nWITH collect({hour: hour, entry_count: entry_count}) AS door_entries\nCALL {\n  MATCH (ch:CrowdHour {camera_location: 'KeynoteHall_Stage'}) \n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.hour_utc AS hour, ch.avg_hc AS avg_head_count, ch.peak_hc AS peak_head_count\n}\nWITH door_entries, collect({hour: hour, avg_head_count: avg_head_count, peak_head_count: peak_head_count}) AS crowd_data\nRETURN door_entries, crowd_data",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 6852,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2225,
+      "completion_tokens": 259
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1989,
+      "completion_tokens": 138
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=3/4=0.75 (threshold=0.5)"
+  }
+}

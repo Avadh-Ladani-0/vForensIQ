@@ -1,0 +1,57 @@
+{
+  "question_id": "L5_q002_nvidia_booth_timeline",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Describe the full-day activity timeline at DemoBooth_NVIDIA on 2025-12-08 (UTC). Identify the busiest time windows, any lulls, and quantify the peak crowd sizes versus the baseline. Write 3-5 sentences.",
+  "gold_value": {
+    "rubric": [
+      "Morning peak between 10-12 UTC",
+      "Afternoon peak between 15-17 UTC",
+      "Lunch-hour dip (around 12-13 or 13-14 UTC)",
+      "Peak head_count values are substantially higher than baseline of ~3",
+      "Overnight / early-morning hours show baseline/quiet activity"
+    ],
+    "threshold": 0.6
+  },
+  "answer_text": "There were no recorded crowd events or entry/exit events at DemoBooth_NVIDIA on 2025-12-08. Consequently, there is no activity timeline, peak crowd sizes, or lulls to report for that day.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "total_head_count",
+      "total_events"
+    ],
+    "rows": [],
+    "total_rows": 0
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH crowd_events AS (\n    SELECT strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n           SUM(head_count) AS total_head_count\n    FROM events\n    WHERE camera_location LIKE '%NVIDIA%'\n      AND event_type = 'crowd'\n      AND timestamp_utc >= '2025-12-08T00:00:00Z'\n      AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY hour\n),\nentry_exit_events AS (\n    SELECT strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n           COUNT(*) AS total_events\n    FROM events\n    WHERE camera_location LIKE '%NVIDIA%'\n      AND event_type IN ('person_entry', 'person_exit', 'car_entry', 'car_exit')\n      AND timestamp_utc >= '2025-12-08T00:00:00Z'\n      AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY hour\n)\nSELECT hour, total_head_count, total_events\nFROM crowd_events\nJOIN entry_exit_events USING (hour)\nORDER BY hour",
+      "row_count": 0
+    }
+  ],
+  "duration_ms": 7162,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 984,
+      "completion_tokens": 241
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 460,
+      "completion_tokens": 47
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=0/5=0.00 (threshold=0.6)"
+  }
+}

@@ -1,0 +1,233 @@
+{
+  "question_id": "L5_q005_keynote_hall_lifecycle",
+  "level": "L5",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Describe the full lifecycle of activity at the keynote hall on 2025-12-08 (UTC). Cover: (a) door entry patterns at KeynoteHall_DoorA throughout the day, (b) the in-hall crowd density at KeynoteHall_Stage during keynote sessions, and (c) how the post-keynote dispersal compares to pre-keynote build-up. Use specific hours and numbers from the data. 4-6 sentences.",
+  "gold_value": {
+    "rubric": [
+      "KeynoteHall_DoorA shows entry peaks aligned with keynote start times (around 08:00-10:00, 13:00-14:00, or 15:00-16:00 UTC)",
+      "KeynoteHall_Stage crowd peaks during the keynote sessions, reaching head_counts in the hundreds",
+      "Outside of keynote hours the in-hall head_count drops to a low baseline (single digits)",
+      "Pre-keynote door entry traffic precedes the in-hall crowd surge"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "On 2025-12-08, door entry patterns at KeynoteHall_DoorA showed significant entry spikes at 08:00 with 186 entries and at 15:00 with 210 entries, indicative of pre-keynote activity. During keynote sessions, crowd density at KeynoteHall_Stage peaked at 09:00 with a peak headcount of 500 and an average headcount of 450.19, and again at 14:00 with a peak headcount of 452 and an average of 399.51. Regarding dispersal, there were 192 exits at 08:00 which roughly matched the pre-keynote build-up of entries, and 201 exits at 15:00, demonstrating a pattern where post-keynote dispersals closely mirrored pre-keynote build-ups.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "entry_count",
+      "avg_head_count",
+      "peak_head_count",
+      "exit_count"
+    ],
+    "rows": [
+      [
+        "2025-12-08T00:00:00Z",
+        1,
+        6.97,
+        51,
+        1
+      ],
+      [
+        "2025-12-08T01:00:00Z",
+        3,
+        7.27,
+        52,
+        0
+      ],
+      [
+        "2025-12-08T02:00:00Z",
+        2,
+        7.12,
+        50,
+        0
+      ],
+      [
+        "2025-12-08T03:00:00Z",
+        1,
+        7.21,
+        59,
+        1
+      ],
+      [
+        "2025-12-08T04:00:00Z",
+        3,
+        7.01,
+        52,
+        2
+      ],
+      [
+        "2025-12-08T05:00:00Z",
+        5,
+        6.93,
+        51,
+        0
+      ],
+      [
+        "2025-12-08T06:00:00Z",
+        0,
+        6.8,
+        62,
+        1
+      ],
+      [
+        "2025-12-08T07:00:00Z",
+        0,
+        7.12,
+        74,
+        2
+      ],
+      [
+        "2025-12-08T08:00:00Z",
+        186,
+        6.98,
+        68,
+        192
+      ],
+      [
+        "2025-12-08T09:00:00Z",
+        181,
+        450.19,
+        500,
+        212
+      ],
+      [
+        "2025-12-08T10:00:00Z",
+        2,
+        7.03,
+        56,
+        2
+      ],
+      [
+        "2025-12-08T11:00:00Z",
+        0,
+        6.93,
+        55,
+        5
+      ],
+      [
+        "2025-12-08T12:00:00Z",
+        1,
+        7.16,
+        57,
+        1
+      ],
+      [
+        "2025-12-08T13:00:00Z",
+        172,
+        7.07,
+        54,
+        187
+      ],
+      [
+        "2025-12-08T14:00:00Z",
+        1,
+        399.51,
+        452,
+        2
+      ],
+      [
+        "2025-12-08T15:00:00Z",
+        210,
+        7.23,
+        53,
+        201
+      ],
+      [
+        "2025-12-08T16:00:00Z",
+        2,
+        379.46,
+        433,
+        2
+      ],
+      [
+        "2025-12-08T17:00:00Z",
+        1,
+        6.93,
+        51,
+        0
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        1,
+        6.83,
+        59,
+        1
+      ],
+      [
+        "2025-12-08T19:00:00Z",
+        2,
+        7.18,
+        55,
+        0
+      ],
+      [
+        "2025-12-08T20:00:00Z",
+        1,
+        7.09,
+        57,
+        0
+      ],
+      [
+        "2025-12-08T21:00:00Z",
+        1,
+        6.96,
+        50,
+        1
+      ],
+      [
+        "2025-12-08T22:00:00Z",
+        1,
+        7.25,
+        51,
+        1
+      ],
+      [
+        "2025-12-08T23:00:00Z",
+        5,
+        7.31,
+        57,
+        0
+      ]
+    ],
+    "total_rows": 24
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  // (a) Door entry patterns at KeynoteHall_DoorA throughout the day\n  MATCH (e:Event {event_type: 'person_entry'})-[:DETECTED_BY]->(c:Camera {camera_location: 'KeynoteHall_DoorA'})\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  WITH substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, count(*) AS entry_count\n  RETURN hour, entry_count, null AS avg_head_count, null AS peak_head_count, null AS exit_count\n  UNION ALL\n  // (b) In-hall crowd density at KeynoteHall_Stage during keynote sessions\n  MATCH (ch:CrowdHour {camera_location: 'KeynoteHall_Stage'})\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.hour_utc AS hour, null AS entry_count, ch.avg_hc AS avg_head_count, ch.peak_hc AS peak_head_count, null AS exit_count\n  UNION ALL\n  // (c) Post-keynote dispersal vs pre-keynote build-up\n  MATCH (e:Event {event_type: 'person_exit'})-[:DETECTED_BY]->(c:Camera {camera_location: 'KeynoteHall_DoorA'})\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  WITH substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, count(*) AS exit_count\n  RETURN hour, null AS entry_count, null AS avg_head_count, null AS peak_head_count, exit_count\n}\nRETURN hour, sum(entry_count) AS entry_count, avg(avg_head_count) AS avg_head_count, max(peak_head_count) AS peak_head_count, sum(exit_count) AS exit_count ORDER BY hour",
+      "row_count": 24
+    }
+  ],
+  "duration_ms": 13516,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2587,
+      "completion_tokens": 412
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 3112,
+      "completion_tokens": 475
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 1470,
+      "completion_tokens": 164
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=3/4=0.75 (threshold=0.5)"
+  }
+}

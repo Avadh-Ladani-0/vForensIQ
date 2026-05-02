@@ -1,0 +1,68 @@
+{
+  "question_id": "L5_q012_incident_investigation",
+  "level": "L5",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Something happened at the keynote hall around 9 AM \u2014 the crowd surged massively. Investigate: how many people were there, where did they come from (which gates saw entry spikes before 9 AM), and where did they go afterwards?",
+  "gold_value": {
+    "rubric": [
+      "KeynoteHall_Stage had a crowd peak around 09:00 with head_count around 450-500",
+      "Gate_MainEntrance saw heavy person_entry traffic in the 08:00-09:00 window",
+      "KeynoteHall_DoorA had entry spikes aligned with the keynote start time",
+      "After the keynote, crowd dispersed to the ExpoFloor and DemoBooths"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "At 9 AM, there were 1,620,671 people in the Keynote Hall. Prior to 9 AM, 362 people entered through gates. After 9 AM, 260 people exited through gates.",
+  "structured_answer": {
+    "columns": [
+      "type",
+      "count"
+    ],
+    "rows": [
+      [
+        "crowd",
+        1620671
+      ],
+      [
+        "entry",
+        362
+      ],
+      [
+        "exit",
+        260
+      ]
+    ],
+    "total_rows": 3
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ce:CrowdEvent)\n  WHERE ce.timestamp_utc >= '2025-12-08T09:00:00Z' AND ce.timestamp_utc < '2025-12-08T10:00:00Z'\n    AND ce.camera_location CONTAINS 'KeynoteHall'\n  RETURN 'crowd' AS type, sum(ce.head_count) AS count\n  UNION ALL\n  MATCH (e:Event {event_type: 'person_entry'})-[:DETECTED_BY]->(c:Camera)\n  WHERE e.timestamp_utc >= '2025-12-08T08:00:00Z' AND e.timestamp_utc < '2025-12-08T09:00:00Z'\n    AND c.camera_location CONTAINS 'Gate'\n  RETURN 'entry' AS type, count(e) AS count\n  UNION ALL\n  MATCH (e:Event {event_type: 'person_exit'})-[:DETECTED_BY]->(c:Camera)\n  WHERE e.timestamp_utc >= '2025-12-08T09:00:00Z' AND e.timestamp_utc < '2025-12-08T10:00:00Z'\n    AND c.camera_location CONTAINS 'Gate'\n  RETURN 'exit' AS type, count(e) AS count\n}\nRETURN type, count",
+      "row_count": 3
+    }
+  ],
+  "duration_ms": 16282,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2542,
+      "completion_tokens": 284
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 523,
+      "completion_tokens": 45
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=0/4=0.00 (threshold=0.5)"
+  }
+}

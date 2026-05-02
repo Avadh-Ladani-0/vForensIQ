@@ -1,0 +1,77 @@
+{
+  "question_id": "L4_q007_nvidia_vs_intel_booth_attraction",
+  "level": "L4",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which demo booth attracted bigger crowds \u2014 NVIDIA or Intel? Roughly how much more popular was the winner?",
+  "gold_value": {
+    "winner": "NVIDIA",
+    "intel_mentioned": "Intel"
+  },
+  "answer_text": "NVIDIA attracted bigger crowds. From 2025-12-08T00:00:00Z to 2025-12-09T00:00:00Z, its weighted average headcount was 15.515 vs Intel\u2019s 10.648333333333333 \u2014 about 1.457035529816873\u00d7 higher (a +4.866666666666667 difference), with peaks of 86 vs 53.",
+  "structured_answer": {
+    "columns": [
+      "winner",
+      "winner_weighted_avg_hc",
+      "loser_weighted_avg_hc",
+      "popularity_ratio",
+      "popularity_diff_hc",
+      "winner_peak_hc",
+      "loser_peak_hc",
+      "winner_person_seconds",
+      "loser_person_seconds",
+      "winner_samples",
+      "loser_samples",
+      "window_start_utc",
+      "window_end_utc"
+    ],
+    "rows": [
+      [
+        "NVIDIA",
+        15.515,
+        10.648333333333333,
+        1.457035529816873,
+        4.866666666666667,
+        86,
+        53,
+        1340496.0,
+        920016.0,
+        86400,
+        86400,
+        "2025-12-08T00:00:00Z",
+        "2025-12-09T00:00:00Z"
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "WITH '2025-12-08T00:00:00Z' AS W_start, '2025-12-09T00:00:00Z' AS W_end\nMATCH (ch:CrowdHour)\nWHERE ch.hour_utc >= W_start AND ch.hour_utc < W_end\n  AND (toLower(ch.camera_location) CONTAINS 'nvidia' OR toLower(ch.camera_location) CONTAINS 'intel')\nWITH CASE\n       WHEN toLower(ch.camera_location) CONTAINS 'nvidia' THEN 'NVIDIA'\n       WHEN toLower(ch.camera_location) CONTAINS 'intel' THEN 'Intel'\n     END AS booth, ch, W_start, W_end\nWITH booth,\n     sum(coalesce(ch.event_count,0)) AS samples,\n     sum(coalesce(ch.avg_hc,0.0) * coalesce(ch.event_count,0)) AS person_seconds,\n     max(coalesce(ch.peak_hc,0.0)) AS peak_hc,\n     W_start, W_end\nWITH collect({\n  booth: booth,\n  samples: samples,\n  person_seconds: person_seconds,\n  peak_hc: peak_hc,\n  weighted_avg: CASE WHEN samples > 0 THEN person_seconds / samples ELSE 0.0 END\n}) AS booths, W_start, W_end\nWITH\n  [b IN booths WHERE b.booth = 'NVIDIA'][0] AS n,\n  [b IN booths WHERE b.booth = 'Intel'][0] AS i,\n  W_start, W_end\nWITH\n  coalesce(n.weighted_avg, 0.0) AS n_avg,\n  coalesce(i.weighted_avg, 0.0) AS i_avg,\n  coalesce(n.peak_hc, 0.0) AS n_peak,\n  coalesce(i.peak_hc, 0.0) AS i_peak,\n  coalesce(n.samples, 0) AS n_samples,\n  coalesce(i.samples, 0) AS i_samples,\n  coalesce(n.person_seconds, 0.0) AS n_ps,\n  coalesce(i.person_seconds, 0.0) AS i_ps,\n  W_start, W_end\nWITH\n  CASE WHEN n_avg >= i_avg THEN 'NVIDIA' ELSE 'Intel' END AS winner,\n  n_avg, i_avg, n_peak, i_peak, n_samples, i_samples, n_ps, i_ps, W_start, W_end\nWITH winner,\n     CASE WHEN winner = 'NVIDIA' THEN n_avg ELSE i_avg END AS winner_weighted_avg_hc,\n     CASE WHEN winner = 'NVIDIA' THEN i_avg ELSE n_avg END AS loser_weighted_avg_hc,\n     CASE WHEN winner = 'NVIDIA' THEN n_peak ELSE i_peak END AS winner_peak_hc,\n     CASE WHEN winner = 'NVIDIA' THEN i_peak ELSE n_peak END AS loser_peak_hc,\n     CASE WHEN winner = 'NVIDIA' THEN n_samples ELSE i_samples END AS winner_samples,\n     CASE WHEN winner = 'NVIDIA' THEN i_samples ELSE n_samples END AS loser_samples,\n     CASE WHEN winner = 'NVIDIA' THEN n_ps ELSE i_ps END AS winner_person_seconds,\n     CASE WHEN winner = 'NVIDIA' THEN i_ps ELSE n_ps END AS loser_person_seconds,\n     W_start, W_end\nRETURN winner,\n       winner_weighted_avg_hc,\n       loser_weighted_avg_hc,\n       CASE WHEN loser_weighted_avg_hc = 0 THEN null ELSE winner_weighted_avg_hc / loser_weighted_avg_hc END AS popularity_ratio,\n       (winner_weighted_avg_hc - loser_weighted_avg_hc) AS popularity_diff_hc,\n       winner_peak_hc,\n       loser_peak_hc,\n       winner_person_seconds,\n       loser_person_seconds,\n       winner_samples,\n       loser_samples,\n       W_start AS window_start_utc,\n       W_end AS window_end_utc",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 85195,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5",
+      "prompt_tokens": 1875,
+      "completion_tokens": 4923
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-5",
+      "prompt_tokens": 1170,
+      "completion_tokens": 996
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_2_facts_satisfied"
+  }
+}

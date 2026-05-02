@@ -1,0 +1,203 @@
+{
+  "question_id": "L5_q002_nvidia_booth_timeline",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Describe the full-day activity timeline at DemoBooth_NVIDIA on 2025-12-08 (UTC). Identify the busiest time windows, any lulls, and quantify the peak crowd sizes versus the baseline. Write 3-5 sentences.",
+  "gold_value": {
+    "rubric": [
+      "Morning peak between 10-12 UTC",
+      "Afternoon peak between 15-17 UTC",
+      "Lunch-hour dip (around 12-13 or 13-14 UTC)",
+      "Peak head_count values are substantially higher than baseline of ~3",
+      "Overnight / early-morning hours show baseline/quiet activity"
+    ],
+    "threshold": 0.6
+  },
+  "answer_text": "On 2025-12-08, the DemoBooth_NVIDIA experienced its busiest periods between 10:00 and 11:00 UTC, with total head counts of 216,035 and 216,711, and peak head counts of 75 and 74, respectively. Another significant peak occurred from 15:00 to 16:00 UTC, with total head counts of 251,999 and 252,407, and peak head counts of 82 and 86. The baseline activity throughout the day generally ranged from 12,313 to 13,304 total head counts per hour, with peak head counts between 15 and 21. Lulls were observed during the early morning hours, particularly from 00:00 to 09:00 UTC, where total head counts were consistently below 13,000.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "event_count",
+      "total_head_count",
+      "peak_head_count"
+    ],
+    "rows": [
+      [
+        "00",
+        3600,
+        12493,
+        16
+      ],
+      [
+        "01",
+        3600,
+        12706,
+        15
+      ],
+      [
+        "02",
+        3600,
+        12644,
+        18
+      ],
+      [
+        "03",
+        3600,
+        12675,
+        16
+      ],
+      [
+        "04",
+        3600,
+        12916,
+        16
+      ],
+      [
+        "05",
+        3600,
+        12971,
+        16
+      ],
+      [
+        "06",
+        3600,
+        12449,
+        17
+      ],
+      [
+        "07",
+        3600,
+        12395,
+        18
+      ],
+      [
+        "08",
+        3600,
+        12787,
+        18
+      ],
+      [
+        "09",
+        3600,
+        12651,
+        19
+      ],
+      [
+        "10",
+        3600,
+        216035,
+        75
+      ],
+      [
+        "11",
+        3600,
+        216711,
+        74
+      ],
+      [
+        "12",
+        3600,
+        12652,
+        18
+      ],
+      [
+        "13",
+        3600,
+        162130,
+        59
+      ],
+      [
+        "14",
+        3600,
+        12576,
+        20
+      ],
+      [
+        "15",
+        3600,
+        251999,
+        82
+      ],
+      [
+        "16",
+        3600,
+        252407,
+        86
+      ],
+      [
+        "17",
+        3600,
+        12803,
+        21
+      ],
+      [
+        "18",
+        3600,
+        12746,
+        17
+      ],
+      [
+        "19",
+        3600,
+        12313,
+        17
+      ],
+      [
+        "20",
+        3600,
+        12829,
+        19
+      ],
+      [
+        "21",
+        3600,
+        12763,
+        17
+      ],
+      [
+        "22",
+        3600,
+        13304,
+        18
+      ],
+      [
+        "23",
+        3600,
+        12581,
+        19
+      ]
+    ],
+    "total_rows": 24
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH event_data AS (\n    SELECT \n        timestamp_utc,\n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        event_type,\n        head_count\n    FROM \n        events\n    WHERE \n        camera_location LIKE '%NVIDIA%' \n        AND timestamp_utc >= '2025-12-08T00:00:00Z' \n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n),\nhourly_summary AS (\n    SELECT \n        hour,\n        COUNT(*) AS event_count,\n        SUM(head_count) AS total_head_count,\n        MAX(head_count) AS peak_head_count\n    FROM \n        event_data\n    GROUP BY \n        hour\n)\nSELECT \n    hour,\n    event_count,\n    total_head_count,\n    peak_head_count\nFROM \n    hourly_summary\nORDER BY \n    hour",
+      "row_count": 24
+    }
+  ],
+  "duration_ms": 5754,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 984,
+      "completion_tokens": 184
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 768,
+      "completion_tokens": 171
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=4/5=0.80 (threshold=0.6)"
+  }
+}

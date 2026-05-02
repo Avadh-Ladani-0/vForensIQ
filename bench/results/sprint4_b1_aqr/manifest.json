@@ -1,0 +1,21 @@
+{
+  "run_id": "sprint4_b1_aqr",
+  "started_at_utc": "2026-04-14T18:45:09Z",
+  "approaches": [
+    "b1_sql",
+    "b3_aqr"
+  ],
+  "models": [
+    "gpt-4o"
+  ],
+  "levels": [
+    "L1",
+    "L2",
+    "L3",
+    "L4",
+    "L5"
+  ],
+  "question_count": 75,
+  "total_cells": 150,
+  "finished_at_utc": "2026-04-14T19:09:49Z"
+}

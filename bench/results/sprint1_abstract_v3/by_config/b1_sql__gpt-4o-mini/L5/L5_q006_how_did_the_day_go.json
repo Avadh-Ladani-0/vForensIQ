@@ -1,0 +1,95 @@
+{
+  "question_id": "L5_q006_how_did_the_day_go",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Tell me how the day went at the conference \u2014 what stood out, when were the big moments, and what does the activity tell us?",
+  "gold_value": {
+    "rubric": [
+      "Significant person traffic at the main entrance, especially in the morning and evening",
+      "Keynote sessions drew large crowds at the keynote stage area",
+      "Demo booths (especially NVIDIA) had notable crowd activity during expo hours",
+      "Food court was busiest around lunchtime",
+      "Overnight hours were quiet across the venue"
+    ],
+    "threshold": 0.4
+  },
+  "answer_text": "The conference had significant activity, particularly at 09:00 with 19,003 events and a total head count of 1,685,871. The peak crowd sizes were noted at 09:00 with 1,685,871 attendees, 14:00 with 2,059,433, and 16:00 with 2,365,493. These moments indicate high engagement and attendance during the morning and late afternoon sessions.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "event_count",
+      "total_head_count",
+      "type"
+    ],
+    "rows": [
+      [
+        "08",
+        19292,
+        90537,
+        "event"
+      ],
+      [
+        "09",
+        19003,
+        1685871,
+        "event"
+      ],
+      [
+        "09",
+        null,
+        1685871,
+        "crowd"
+      ],
+      [
+        "14",
+        null,
+        2059433,
+        "crowd"
+      ],
+      [
+        "16",
+        null,
+        2365493,
+        "crowd"
+      ],
+      [
+        "17",
+        18807,
+        733005,
+        "event"
+      ]
+    ],
+    "total_rows": 6
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH event_counts AS (\n    SELECT strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n           COUNT(*) AS event_count,\n           SUM(head_count) AS total_head_count\n    FROM events\n    WHERE timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY hour\n),\npeak_hours AS (\n    SELECT hour, event_count, total_head_count,\n           RANK() OVER (ORDER BY event_count DESC) AS event_rank,\n           RANK() OVER (ORDER BY total_head_count DESC) AS head_count_rank\n    FROM event_counts\n)\nSELECT hour, event_count, total_head_count, 'event' AS type\nFROM peak_hours\nWHERE event_rank <= 3\nUNION ALL\nSELECT hour, NULL AS event_count, total_head_count, 'crowd' AS type\nFROM peak_hours\nWHERE head_count_rank <= 3\nORDER BY hour",
+      "row_count": 6
+    }
+  ],
+  "duration_ms": 7474,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 962,
+      "completion_tokens": 212
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 503,
+      "completion_tokens": 91
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=0/5=0.00 (threshold=0.4)"
+  }
+}

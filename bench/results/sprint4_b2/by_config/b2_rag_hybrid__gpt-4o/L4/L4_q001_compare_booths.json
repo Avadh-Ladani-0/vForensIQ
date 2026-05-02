@@ -1,0 +1,108 @@
+{
+  "question_id": "L4_q001_compare_booths",
+  "level": "L4",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "On 2025-12-08 (UTC), compare the crowd activity at DemoBooth_NVIDIA versus DemoBooth_Intel. Which booth was busier, and approximately what was the ratio of their average head_counts?",
+  "gold_value": {
+    "busier_booth": "DemoBooth_NVIDIA",
+    "average_headcount_ratio_nvidia_over_intel": {
+      "value": 1.4,
+      "tolerance": 0.4
+    }
+  },
+  "answer_text": "On December 8, 2025, the DemoBooth_NVIDIA was busier than DemoBooth_Intel, with an average head count of approximately 15.5 compared to Intel's 10.6. The ratio of their average head counts was about 1.46, indicating that NVIDIA's booth attracted roughly 46% more visitors than Intel's during the monitored period.",
+  "structured_answer": {
+    "cypher_columns": [
+      "nvidia_avg",
+      "intel_avg",
+      "ratio"
+    ],
+    "cypher_rows": [
+      [
+        15.515000000000002,
+        10.64833333333333,
+        1.4570355298168733
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_4",
+        "summary": "The CCTV activity involved five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types were person entries (169) and exits (132), with a total of 344 events recorded during the time range from December 8, 2025, 02:03:44 UTC to December 8, 2025, 23:59:14 UTC. The peak head count reached 500, and the average head count was approximately 31.2.",
+        "distance": 0.31725603342056274
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, covered a time range from 08:00:13 to 15:59:56 UTC. The dominant event types were person entries (680) and exits (685), with a total of 1,376 events recorded. The peak event count per hour occurred during the observed period, contributing to a total of 1,379 node counts.",
+        "distance": 0.5480305552482605
+      },
+      {
+        "community_id": "community_5",
+        "summary": "The CCTV activity involved multiple camera locations during the time range from 16:00:57 to 16:58:54 UTC on December 8, 2025. The dominant event types were person entries, with a total of 16, and person exits, totaling 11, alongside 3 car entries and 2 car exits. The total volume of events recorded was 32, with a node count of 33. There are no notable peak head counts or average head counts reported.",
+        "distance": 0.5710901021957397
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity covers the location from 09:00 to 09:59 UTC on December 8, 2025. The dominant event types are person entries, with 437 recorded, and person exits, totaling 387. There were also 5 car entries and 4 car exits, contributing to a total of 833 events. Notably, the peak head count and average head count data are not available.",
+        "distance": 0.6024610996246338
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n    AND ch.camera_location CONTAINS 'DemoBooth_NVIDIA'\n  RETURN avg(ch.avg_hc) AS nvidia_avg\n}\nCALL {\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n    AND ch.camera_location CONTAINS 'DemoBooth_Intel'\n  RETURN avg(ch.avg_hc) AS intel_avg\n}\nRETURN nvidia_avg, intel_avg, \n       CASE \n         WHEN intel_avg = 0 THEN 'undefined'\n         ELSE nvidia_avg / intel_avg\n       END AS ratio",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_4",
+      "distance": 0.31725603342056274
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.5480305552482605
+    },
+    {
+      "type": "community",
+      "community_id": "community_5",
+      "distance": 0.5710901021957397
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.6024610996246338
+    }
+  ],
+  "duration_ms": 8396,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2540,
+      "completion_tokens": 311
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 3154,
+      "completion_tokens": 201
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 743,
+      "completion_tokens": 79
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_2_facts_satisfied"
+  }
+}

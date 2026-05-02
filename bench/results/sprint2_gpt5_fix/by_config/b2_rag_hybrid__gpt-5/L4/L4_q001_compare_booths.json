@@ -1,0 +1,110 @@
+{
+  "question_id": "L4_q001_compare_booths",
+  "level": "L4",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "On 2025-12-08 (UTC), compare the crowd activity at DemoBooth_NVIDIA versus DemoBooth_Intel. Which booth was busier, and approximately what was the ratio of their average head_counts?",
+  "gold_value": {
+    "busier_booth": "DemoBooth_NVIDIA",
+    "average_headcount_ratio_nvidia_over_intel": {
+      "value": 1.4,
+      "tolerance": 0.4
+    }
+  },
+  "answer_text": "DemoBooth_NVIDIA was busier. Its average head_count was 15.515 vs 10.648 at DemoBooth_Intel, for an approximate NVIDIA-to-Intel ratio of 1.46:1.",
+  "structured_answer": {
+    "cypher_columns": [
+      "nvidia_avg_hc",
+      "intel_avg_hc",
+      "avg_hc_ratio_nvidia_to_intel",
+      "avg_hc_ratio_approx_2dp",
+      "busier_booth",
+      "nvidia_samples",
+      "intel_samples"
+    ],
+    "cypher_rows": [
+      [
+        15.515,
+        10.648333333333333,
+        1.457035529816873,
+        1.46,
+        "DemoBooth_NVIDIA",
+        86400.0,
+        86400.0
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "Cameras involved: DemoBooth_Intel (CAM_04), DemoBooth_NVIDIA (CAM_05), ExpoFloor_MainAisle (CAM_06), FoodCourt_North (CAM_07), KeynoteHall_Stage (CAM_08). Events are dominated by person movements (person_entry 206, person_exit 181, total 387) versus vehicle events (car_entry 29, car_exit 33). The dataset covers the UTC hour range 2025-12-08T00:00:00Z\u20132025-12-08T23:00:00Z with events from 2025-12-08T00:02:26Z to 2025-12-08T23:59:14Z; total events 449, peak head_count 500, average head_count (mean of means) \u2248 31.1974. Peak event count per hour is not provided in the supplied data.",
+        "distance": 0.2962181568145752
+      },
+      {
+        "community_id": "community_7",
+        "summary": "All activity was recorded on Platform_1 between 2025-12-01T12:00:23Z and 2025-12-01T12:59:53Z (hour block 2025-12-01T12:00:00Z). There were 25 events in the hour, dominated by person movements (10 person_entry, 8 person_exit) versus 4 car_entry and 3 car_exit. Average head count (mean of means) was 4.96, peak head_count was 13.0, and node_count is 27.",
+        "distance": 0.5192188024520874
+      },
+      {
+        "community_id": "community_14",
+        "summary": "All activity was recorded at Platform_1 between 2025-12-01T19:00:22Z and 2025-12-01T19:58:59Z (UTC). A total of 53 events were detected in that hour, dominated by person movements (21 person_entry, 20 person_exit) with car events less frequent (6 car_entry, 6 car_exit); peak event count for the hour was 53. Average head count (mean of means) was 34.98 and the peak head count observed was 42. Node count: 55.",
+        "distance": 0.5220048427581787
+      },
+      {
+        "community_id": "community_6",
+        "summary": "All activity was on Platform_1 between 2025-12-01T11:01:47Z and 2025-12-01T11:59:48Z (hour window 2025-12-01T11:00:00Z UTC). There were 44 events total: 29 person events (12 person_entry, 17 person_exit) and 15 car events (9 car_entry, 6 car_exit), so person movements dominated. Peak head_count was 12.0, average head_count (mean of means) 5.05, and the hour\u2019s peak event count was 44; node_count = 46.",
+        "distance": 0.5221058130264282
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour)\nWHERE ch.camera_location IN ['DemoBooth_NVIDIA','DemoBooth_Intel']\n  AND ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\nWITH ch.camera_location AS booth,\n     sum(toFloat(ch.avg_hc) * toFloat(ch.event_count)) AS wsum,\n     sum(toFloat(ch.event_count)) AS total_samples\nWITH booth,\n     CASE WHEN total_samples > 0 THEN wsum / total_samples ELSE 0.0 END AS avg_hc,\n     total_samples\nWITH collect({booth: booth, avg_hc: avg_hc, total_samples: total_samples}) AS booths\nWITH\n  coalesce([b IN booths WHERE b.booth = 'DemoBooth_NVIDIA'][0].avg_hc, 0.0) AS nvidia_avg_hc,\n  coalesce([b IN booths WHERE b.booth = 'DemoBooth_Intel'][0].avg_hc, 0.0) AS intel_avg_hc,\n  coalesce([b IN booths WHERE b.booth = 'DemoBooth_NVIDIA'][0].total_samples, 0) AS nvidia_samples,\n  coalesce([b IN booths WHERE b.booth = 'DemoBooth_Intel'][0].total_samples, 0) AS intel_samples\nRETURN nvidia_avg_hc,\n       intel_avg_hc,\n       CASE WHEN intel_avg_hc = 0 THEN null ELSE nvidia_avg_hc / intel_avg_hc END AS avg_hc_ratio_nvidia_to_intel,\n       CASE WHEN intel_avg_hc = 0 THEN null ELSE round((nvidia_avg_hc / intel_avg_hc) * 100.0) / 100.0 END AS avg_hc_ratio_approx_2dp,\n       CASE WHEN nvidia_avg_hc > intel_avg_hc THEN 'DemoBooth_NVIDIA'\n            WHEN intel_avg_hc > nvidia_avg_hc THEN 'DemoBooth_Intel'\n            ELSE 'tie' END AS busier_booth,\n       nvidia_samples,\n       intel_samples",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.2962181568145752
+    },
+    {
+      "type": "community",
+      "community_id": "community_7",
+      "distance": 0.5192188024520874
+    },
+    {
+      "type": "community",
+      "community_id": "community_14",
+      "distance": 0.5220048427581787
+    },
+    {
+      "type": "community",
+      "community_id": "community_6",
+      "distance": 0.5221058130264282
+    }
+  ],
+  "duration_ms": 60110,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5",
+      "prompt_tokens": 1900,
+      "completion_tokens": 5270
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-5",
+      "prompt_tokens": 929,
+      "completion_tokens": 567
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_2_facts_satisfied"
+  }
+}

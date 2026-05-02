@@ -1,0 +1,196 @@
+{
+  "question_id": "L5_q008_what_should_change",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Looking at how this conference day played out, what could be improved next time \u2014 staffing, layout, scheduling? Give me your top recommendations grounded in what the data shows.",
+  "gold_value": {
+    "rubric": [
+      "Lunch-hour congestion at the food court suggests adding capacity or staggered breaks",
+      "Concentrated rush hours at the main entrance suggest staggered start times or additional lanes",
+      "Significant peak/baseline contrast at keynote stage suggests dedicated crowd-flow planning around keynote times",
+      "Lower-attended demo booths could be relocated or merged to balance traffic"
+    ],
+    "threshold": 0.4
+  },
+  "answer_text": "The data indicates that the peak hour was at 08:00, with 19,292 events and a head count of 90,537. The Keynote Hall Stage and Expo Floor Main Aisle experienced the highest crowd counts, with 4,959,052 and 4,264,407 total head counts, respectively. To improve future conferences, consider increasing staffing during peak hours, especially in high-traffic areas like the Keynote Hall and Expo Floor. Additionally, optimizing the layout to manage crowd flow in these areas could enhance attendee experience.",
+  "structured_answer": {
+    "columns": [
+      "camera_location",
+      "event_type",
+      "event_count",
+      "total_head_count",
+      "peak_hour",
+      "peak_hour_event_count",
+      "peak_hour_head_count"
+    ],
+    "rows": [
+      [
+        "KeynoteHall_Stage",
+        "crowd",
+        86400,
+        4959052,
+        "08",
+        19292,
+        90537
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        "crowd",
+        86400,
+        4264407,
+        "08",
+        19292,
+        90537
+      ],
+      [
+        "FoodCourt_North",
+        "crowd",
+        86400,
+        1993171,
+        "08",
+        19292,
+        90537
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        "crowd",
+        86400,
+        1340536,
+        "08",
+        19292,
+        90537
+      ],
+      [
+        "DemoBooth_Intel",
+        "crowd",
+        86400,
+        919999,
+        "08",
+        19292,
+        90537
+      ],
+      [
+        "Gate_MainEntrance",
+        "person_entry",
+        1531,
+        0,
+        "08",
+        19292,
+        90537
+      ],
+      [
+        "Gate_MainEntrance",
+        "person_exit",
+        1352,
+        0,
+        "08",
+        19292,
+        90537
+      ],
+      [
+        "KeynoteHall_DoorA",
+        "person_exit",
+        814,
+        0,
+        "08",
+        19292,
+        90537
+      ],
+      [
+        "KeynoteHall_DoorA",
+        "person_entry",
+        782,
+        0,
+        "08",
+        19292,
+        90537
+      ],
+      [
+        "Gate_ParkingLot",
+        "car_exit",
+        397,
+        0,
+        "08",
+        19292,
+        90537
+      ],
+      [
+        "Gate_ParkingLot",
+        "car_entry",
+        381,
+        0,
+        "08",
+        19292,
+        90537
+      ],
+      [
+        "Gate_ParkingLot",
+        "person_exit",
+        327,
+        0,
+        "08",
+        19292,
+        90537
+      ],
+      [
+        "Gate_ParkingLot",
+        "person_entry",
+        288,
+        0,
+        "08",
+        19292,
+        90537
+      ],
+      [
+        "Gate_MainEntrance",
+        "car_entry",
+        38,
+        0,
+        "08",
+        19292,
+        90537
+      ],
+      [
+        "Gate_MainEntrance",
+        "car_exit",
+        30,
+        0,
+        "08",
+        19292,
+        90537
+      ]
+    ],
+    "total_rows": 15
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH event_counts AS (\n    SELECT \n        camera_location,\n        event_type,\n        COUNT(*) AS event_count,\n        SUM(head_count) AS total_head_count\n    FROM \n        events\n    WHERE \n        timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        camera_location, event_type\n),\npeak_hours AS (\n    SELECT \n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        COUNT(*) AS event_count,\n        SUM(head_count) AS total_head_count\n    FROM \n        events\n    WHERE \n        timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        hour\n    ORDER BY \n        event_count DESC\n    LIMIT 1\n)\nSELECT \n    ec.camera_location,\n    ec.event_type,\n    ec.event_count,\n    ec.total_head_count,\n    ph.hour AS peak_hour,\n    ph.event_count AS peak_hour_event_count,\n    ph.total_head_count AS peak_hour_head_count\nFROM \n    event_counts ec\nCROSS JOIN \n    peak_hours ph\nORDER BY \n    ec.total_head_count DESC, ec.event_count DESC",
+      "row_count": 15
+    }
+  ],
+  "duration_ms": 7688,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 968,
+      "completion_tokens": 288
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 953,
+      "completion_tokens": 112
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=0/4=0.00 (threshold=0.4)"
+  }
+}

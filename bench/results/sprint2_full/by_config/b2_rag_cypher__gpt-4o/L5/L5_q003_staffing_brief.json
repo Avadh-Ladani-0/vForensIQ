@@ -1,0 +1,124 @@
+{
+  "question_id": "L5_q003_staffing_brief",
+  "level": "L5",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a staffing recommendation brief for the AI Hardware Summit on 2025-12-08 (UTC). Identify (a) the busiest hours of the day requiring extra staff at the gates and on the expo floor, and (b) the quiet hours where minimal coverage is sufficient. Cite specific hour ranges and supporting metrics. Keep it to 4-6 bullet points.",
+  "gold_value": {
+    "rubric": [
+      "Morning gate rush around 08:00-10:00 UTC needs extra staffing",
+      "Evening gate rush around 17:00-19:00 UTC needs extra staffing",
+      "Lunch hours 12:00-14:00 UTC are busy at FoodCourt and need extra coverage",
+      "Late-night and early-morning hours (roughly 22:00-06:00 UTC) are quiet and need minimal coverage",
+      "Keynote hours (09:00-10:00 and 14:00-15:00 UTC) require crowd management at KeynoteHall_Stage"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "- **Busiest Hours for Staffing:**\n  - **16:00 UTC:** Peak crowd at NVIDIA location with 86 people, indicating a need for extra staff on the expo floor.\n  - **15:00 UTC:** High crowd presence with 82 people at NVIDIA, suggesting additional staffing is necessary.\n  - **10:00 UTC:** Significant crowd activity with 75 people at NVIDIA, requiring more personnel.\n\n- **Quiet Hours for Minimal Coverage:**\n  - **19:00 UTC:** Low average crowd of 3.42 at NVIDIA, indicating minimal staffing is sufficient.\n  - **07:00 UTC:** Average crowd of 3.44 at NVIDIA, suggesting reduced staffing needs.\n  - **06:00 UTC:** Very low average crowd of 3.46 at NVIDIA, allowing for minimal coverage.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "count",
+      "type"
+    ],
+    "rows": [
+      [
+        "2025-12-08T09:08:13Z",
+        8,
+        "entry_exit"
+      ],
+      [
+        "2025-12-08T08:30:05Z",
+        8,
+        "entry_exit"
+      ],
+      [
+        "2025-12-08T18:57:41Z",
+        6,
+        "entry_exit"
+      ],
+      [
+        "2025-12-08T16:00:00Z",
+        86,
+        "crowd_peak"
+      ],
+      [
+        "2025-12-08T15:00:00Z",
+        82,
+        "crowd_peak"
+      ],
+      [
+        "2025-12-08T10:00:00Z",
+        75,
+        "crowd_peak"
+      ],
+      [
+        "2025-12-08T18:47:26Z",
+        2,
+        "entry_exit"
+      ],
+      [
+        "2025-12-08T23:04:05Z",
+        2,
+        "entry_exit"
+      ],
+      [
+        "2025-12-08T19:25:39Z",
+        2,
+        "entry_exit"
+      ],
+      [
+        "2025-12-08T19:00:00Z",
+        3.42,
+        "crowd_avg"
+      ],
+      [
+        "2025-12-08T07:00:00Z",
+        3.44,
+        "crowd_avg"
+      ],
+      [
+        "2025-12-08T06:00:00Z",
+        3.46,
+        "crowd_avg"
+      ]
+    ],
+    "total_rows": 12
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\nWHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\nAND (c.camera_location CONTAINS 'MainEntrance' OR c.camera_location CONTAINS 'Parking')\nRETURN e.timestamp_utc AS hour, COUNT(e) AS count, 'entry_exit' AS type\nORDER BY count DESC\nLIMIT 3\n\nUNION\n\nMATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera)\nWHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\nAND c.camera_location CONTAINS 'NVIDIA'\nRETURN ch.hour_utc AS hour, ch.peak_hc AS count, 'crowd_peak' AS type\nORDER BY count DESC\nLIMIT 3\n\nUNION\n\nMATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\nWHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\nAND (c.camera_location CONTAINS 'MainEntrance' OR c.camera_location CONTAINS 'Parking')\nRETURN e.timestamp_utc AS hour, COUNT(e) AS count, 'entry_exit' AS type\nORDER BY count ASC\nLIMIT 3\n\nUNION\n\nMATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera)\nWHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\nAND c.camera_location CONTAINS 'NVIDIA'\nRETURN ch.hour_utc AS hour, ch.avg_hc AS count, 'crowd_avg' AS type\nORDER BY count ASC\nLIMIT 3",
+      "row_count": 12
+    }
+  ],
+  "duration_ms": 11974,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 1033,
+      "completion_tokens": 439
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 1583,
+      "completion_tokens": 453
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 985,
+      "completion_tokens": 167
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=2/5=0.40 (threshold=0.5)"
+  }
+}

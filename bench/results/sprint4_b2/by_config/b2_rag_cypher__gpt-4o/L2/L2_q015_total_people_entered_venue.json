@@ -1,0 +1,50 @@
+{
+  "question_id": "L2_q015_total_people_entered_venue",
+  "level": "L2",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Roughly how many people entered the venue in total today, counting all gates?",
+  "gold_value": 2601,
+  "answer_text": "A total of 2601 people entered the venue today.",
+  "structured_answer": {
+    "columns": [
+      "total_people_entered"
+    ],
+    "rows": [
+      [
+        2601
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event {event_type: 'person_entry'})\nWHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\nRETURN count(e) AS total_people_entered",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 5938,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2510,
+      "completion_tokens": 64
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 253,
+      "completion_tokens": 12
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": true,
+    "detail": "within_1pct (expected=2601.0 got=2601.0)"
+  }
+}

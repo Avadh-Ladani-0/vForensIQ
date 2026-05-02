@@ -1,0 +1,92 @@
+{
+  "question_id": "L2_q002_avg_headcount_foodcourt_lunch",
+  "level": "L2",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What was the average head_count at FoodCourt_North during lunch hours 12:00 to 14:00 UTC on 2025-12-08?",
+  "gold_value": 120.01,
+  "answer_text": "120.01",
+  "structured_answer": {
+    "cypher_columns": [
+      "avg_head_count"
+    ],
+    "cypher_rows": [
+      [
+        120.01
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "Cameras involved: DemoBooth_Intel (CAM_04), DemoBooth_NVIDIA (CAM_05), ExpoFloor_MainAisle (CAM_06), FoodCourt_North (CAM_07), KeynoteHall_Stage (CAM_08). Events are dominated by person movements (person_entry 206, person_exit 181, total 387) versus vehicle events (car_entry 29, car_exit 33). The dataset covers the UTC hour range 2025-12-08T00:00:00Z\u20132025-12-08T23:00:00Z with events from 2025-12-08T00:02:26Z to 2025-12-08T23:59:14Z; total events 449, peak head_count 500, average head_count (mean of means) \u2248 31.1974. Peak event count per hour is not provided in the supplied data.",
+        "distance": 0.43968844413757324
+      },
+      {
+        "community_id": "community_14",
+        "summary": "All activity was recorded at Platform_1 between 2025-12-01T19:00:22Z and 2025-12-01T19:58:59Z (UTC). A total of 53 events were detected in that hour, dominated by person movements (21 person_entry, 20 person_exit) with car events less frequent (6 car_entry, 6 car_exit); peak event count for the hour was 53. Average head count (mean of means) was 34.98 and the peak head count observed was 42. Node count: 55.",
+        "distance": 0.4464823603630066
+      },
+      {
+        "community_id": "community_18",
+        "summary": "All activity was recorded on Platform_1 between 2025-12-01T21:00:18Z and 2025-12-01T21:59:11Z (hour 2025-12-01T21:00:00Z UTC). A total of 41 events were logged: 31 person events (14 person_entry, 17 person_exit) and 10 car events (7 car_entry, 3 car_exit), so person movement dominated. Peak head_count was 14 with an average head_count mean-of-means of 4.95; the peak event count for the hour was 41 and node_count was 43.",
+        "distance": 0.4523564577102661
+      },
+      {
+        "community_id": "community_8",
+        "summary": "All activity was recorded on Platform_1 during the 00:00 UTC hour of 2025-12-01 (events between 2025-12-01T00:02:02Z and 2025-12-01T00:57:29Z). There were 36 events total: 24 person events (8 person_entry, 16 person_exit) and 12 car events (7 car_entry, 5 car_exit), with person movements dominating. Peak head count observed was 13.0, the average head_count mean-of-means was 5.02, and the peak hourly event count was 36; node_count reported as 38.",
+        "distance": 0.4526408910751343
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour {camera_location: 'FoodCourt_North'})\nWHERE ch.hour_utc >= '2025-12-08T12:00:00Z' AND ch.hour_utc < '2025-12-08T14:00:00Z'\nWITH sum(ch.avg_hc * ch.event_count) AS weighted_sum, sum(ch.event_count) AS total_samples\nRETURN CASE WHEN total_samples > 0 THEN weighted_sum / total_samples ELSE null END AS avg_head_count",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.43968844413757324
+    },
+    {
+      "type": "community",
+      "community_id": "community_14",
+      "distance": 0.4464823603630066
+    },
+    {
+      "type": "community",
+      "community_id": "community_18",
+      "distance": 0.4523564577102661
+    },
+    {
+      "type": "community",
+      "community_id": "community_8",
+      "distance": 0.4526408910751343
+    }
+  ],
+  "duration_ms": 43005,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5",
+      "prompt_tokens": 1887,
+      "completion_tokens": 1969
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-5",
+      "prompt_tokens": 849,
+      "completion_tokens": 268
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": true,
+    "detail": "within_1pct (expected=120.01 got=120.01)"
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "question_id": "L5_q003_staffing_brief",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a staffing recommendation brief for the AI Hardware Summit on 2025-12-08 (UTC). Identify (a) the busiest hours of the day requiring extra staff at the gates and on the expo floor, and (b) the quiet hours where minimal coverage is sufficient. Cite specific hour ranges and supporting metrics. Keep it to 4-6 bullet points.",
+  "gold_value": {
+    "rubric": [
+      "Morning gate rush around 08:00-10:00 UTC needs extra staffing",
+      "Evening gate rush around 17:00-19:00 UTC needs extra staffing",
+      "Lunch hours 12:00-14:00 UTC are busy at FoodCourt and need extra coverage",
+      "Late-night and early-morning hours (roughly 22:00-06:00 UTC) are quiet and need minimal coverage",
+      "Keynote hours (09:00-10:00 and 14:00-15:00 UTC) require crowd management at KeynoteHall_Stage"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "- **Busiest Hours:**\n  - From 15:00 to 16:00 at 'DemoBooth_NVIDIA', there were 3,600 events with a total head count of 252,407 and 251,999 respectively. Extra staff is recommended during these hours.\n  - At 11:00, 'DemoBooth_NVIDIA' also experienced high activity with 3,600 events and a total head count of 216,711. Additional staffing is advised.\n\n- **Quiet Hours:**\n  - At 23:00, 'Gate_MainEntrance' recorded only 13 events with no head count, indicating minimal coverage is sufficient.\n  - During 02:00 and 14:00, 'Gate_MainEntrance' had 19 events each with no head count, suggesting these are quiet periods requiring minimal staff.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "camera_location",
+      "event_count",
+      "total_head_count"
+    ],
+    "rows": [
+      [
+        "16",
+        "DemoBooth_NVIDIA",
+        3600,
+        252407
+      ],
+      [
+        "15",
+        "DemoBooth_NVIDIA",
+        3600,
+        251999
+      ],
+      [
+        "11",
+        "DemoBooth_NVIDIA",
+        3600,
+        216711
+      ],
+      [
+        "23",
+        "Gate_MainEntrance",
+        13,
+        0
+      ],
+      [
+        "02",
+        "Gate_MainEntrance",
+        19,
+        0
+      ],
+      [
+        "14",
+        "Gate_MainEntrance",
+        19,
+        0
+      ]
+    ],
+    "total_rows": 6
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH event_counts AS (\n    SELECT \n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        camera_location,\n        COUNT(*) AS event_count,\n        SUM(head_count) AS total_head_count\n    FROM \n        events\n    WHERE \n        timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        hour, camera_location\n),\nbusiest_hours AS (\n    SELECT \n        hour,\n        camera_location,\n        event_count,\n        total_head_count\n    FROM \n        event_counts\n    WHERE \n        camera_location LIKE '%MainEntrance%' OR camera_location LIKE '%NVIDIA%'\n    ORDER BY \n        event_count DESC, total_head_count DESC\n    LIMIT 3\n),\nquiet_hours AS (\n    SELECT \n        hour,\n        camera_location,\n        event_count,\n        total_head_count\n    FROM \n        event_counts\n    WHERE \n        camera_location LIKE '%MainEntrance%' OR camera_location LIKE '%NVIDIA%'\n    ORDER BY \n        event_count ASC, total_head_count ASC\n    LIMIT 3\n)\nSELECT * FROM busiest_hours\nUNION ALL\nSELECT * FROM quiet_hours",
+      "row_count": 6
+    }
+  ],
+  "duration_ms": 5935,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 1008,
+      "completion_tokens": 262
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 611,
+      "completion_tokens": 173
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=1/5=0.20 (threshold=0.5)"
+  }
+}

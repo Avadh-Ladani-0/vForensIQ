@@ -1,0 +1,107 @@
+{
+  "question_id": "L3_q001_peak_per_booth",
+  "level": "L3",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "For each demo booth (DemoBooth_NVIDIA and DemoBooth_Intel), what was the peak head_count observed on 2025-12-08 (UTC)?",
+  "gold_value": [
+    [
+      "DemoBooth_Intel",
+      53
+    ],
+    [
+      "DemoBooth_NVIDIA",
+      86
+    ]
+  ],
+  "answer_text": "On December 8, 2025, the peak head count for DemoBooth_NVIDIA was 86, while DemoBooth_Intel saw a peak head count of 53. This was amidst a bustling day at the event, with various activity hotspots and a notable peak head count of 500 across the venue during key periods.",
+  "structured_answer": {
+    "cypher_columns": [
+      "demo_booth",
+      "peak_head_count"
+    ],
+    "cypher_rows": [
+      [
+        "DemoBooth_NVIDIA",
+        86
+      ],
+      [
+        "DemoBooth_Intel",
+        53
+      ]
+    ],
+    "cypher_total_rows": 2,
+    "retrieved_communities": [
+      {
+        "community_id": "community_4",
+        "summary": "The CCTV activity involved five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types were person entries (169) and exits (132), with a total of 344 events recorded during the time range from December 8, 2025, 02:03:44 UTC to December 8, 2025, 23:59:14 UTC. The peak head count reached 500, and the average head count was approximately 31.2.",
+        "distance": 0.2831770181655884
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, covered a time range from 08:00:13 to 15:59:56 UTC. The dominant event types were person entries (680) and exits (685), with a total of 1,376 events recorded. The peak event count per hour occurred during the observed period, contributing to a total of 1,379 node counts.",
+        "distance": 0.49348437786102295
+      },
+      {
+        "community_id": "community_5",
+        "summary": "The CCTV activity involved multiple camera locations during the time range from 16:00:57 to 16:58:54 UTC on December 8, 2025. The dominant event types were person entries, with a total of 16, and person exits, totaling 11, alongside 3 car entries and 2 car exits. The total volume of events recorded was 32, with a node count of 33. There are no notable peak head counts or average head counts reported.",
+        "distance": 0.521379292011261
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity covers the location from 09:00 to 09:59 UTC on December 8, 2025. The dominant event types are person entries, with 437 recorded, and person exits, totaling 387. There were also 5 car entries and 4 car exits, contributing to a total of 833 events. Notably, the peak head count and average head count data are not available.",
+        "distance": 0.5518521666526794
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour)\nWHERE ch.camera_location IN ['DemoBooth_NVIDIA', 'DemoBooth_Intel'] \n  AND ch.hour_utc >= '2025-12-08T00:00:00Z' \n  AND ch.hour_utc < '2025-12-09T00:00:00Z'\nRETURN ch.camera_location AS demo_booth, max(ch.peak_hc) AS peak_head_count",
+      "row_count": 2
+    },
+    {
+      "type": "community",
+      "community_id": "community_4",
+      "distance": 0.2831770181655884
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.49348437786102295
+    },
+    {
+      "type": "community",
+      "community_id": "community_5",
+      "distance": 0.521379292011261
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.5518521666526794
+    }
+  ],
+  "duration_ms": 5542,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2529,
+      "completion_tokens": 93
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 722,
+      "completion_tokens": 68
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": true,
+    "detail": "all_keys_and_values_matched (rows=2)"
+  }
+}

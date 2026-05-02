@@ -1,0 +1,242 @@
+{
+  "question_id": "L3_q008_event_volume_by_hour",
+  "level": "L3",
+  "approach": "b1_sql",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How does activity change throughout the day across the whole venue? Show the total number of events per hour.",
+  "gold_value": [
+    [
+      "00",
+      18040
+    ],
+    [
+      "01",
+      18039
+    ],
+    [
+      "02",
+      18029
+    ],
+    [
+      "03",
+      18032
+    ],
+    [
+      "04",
+      18036
+    ],
+    [
+      "05",
+      18040
+    ],
+    [
+      "06",
+      18037
+    ],
+    [
+      "07",
+      18358
+    ],
+    [
+      "08",
+      19292
+    ],
+    [
+      "09",
+      19003
+    ],
+    [
+      "10",
+      18035
+    ],
+    [
+      "11",
+      18037
+    ],
+    [
+      "12",
+      18323
+    ],
+    [
+      "13",
+      18397
+    ],
+    [
+      "14",
+      18031
+    ],
+    [
+      "15",
+      18440
+    ],
+    [
+      "16",
+      18032
+    ],
+    [
+      "17",
+      18807
+    ],
+    [
+      "18",
+      18792
+    ],
+    [
+      "19",
+      18027
+    ],
+    [
+      "20",
+      18033
+    ],
+    [
+      "21",
+      18032
+    ],
+    [
+      "22",
+      18026
+    ],
+    [
+      "23",
+      18022
+    ]
+  ],
+  "answer_text": "The total number of events per hour on December 8, 2025, is as follows: \n\n- 00: 18,040 \n- 01: 18,039 \n- 02: 18,029 \n- 03: 18,032 \n- 04: 18,036 \n- 05: 18,040 \n- 06: 18,037 \n- 07: 18,358 \n- 08: 19,292 \n- 09: 19,003 \n- 10: 18,035 \n- 11: 18,037 \n- 12: 18,323 \n- 13: 18,397 \n- 14: 18,031 \n- 15: 18,440 \n- 16: 18,032 \n- 17: 18,807 \n- 18: 18,792 \n- 19: 18,027 \n- 20: 18,033 \n- 21: 18,032 \n- 22: 18,026 \n- 23: 18,022. \n\nThe highest activity occurred at 08:00 with 19,292 events.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "event_count"
+    ],
+    "rows": [
+      [
+        "00",
+        18040
+      ],
+      [
+        "01",
+        18039
+      ],
+      [
+        "02",
+        18029
+      ],
+      [
+        "03",
+        18032
+      ],
+      [
+        "04",
+        18036
+      ],
+      [
+        "05",
+        18040
+      ],
+      [
+        "06",
+        18037
+      ],
+      [
+        "07",
+        18358
+      ],
+      [
+        "08",
+        19292
+      ],
+      [
+        "09",
+        19003
+      ],
+      [
+        "10",
+        18035
+      ],
+      [
+        "11",
+        18037
+      ],
+      [
+        "12",
+        18323
+      ],
+      [
+        "13",
+        18397
+      ],
+      [
+        "14",
+        18031
+      ],
+      [
+        "15",
+        18440
+      ],
+      [
+        "16",
+        18032
+      ],
+      [
+        "17",
+        18807
+      ],
+      [
+        "18",
+        18792
+      ],
+      [
+        "19",
+        18027
+      ],
+      [
+        "20",
+        18033
+      ],
+      [
+        "21",
+        18032
+      ],
+      [
+        "22",
+        18026
+      ],
+      [
+        "23",
+        18022
+      ]
+    ],
+    "total_rows": 24,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH hourly_events AS (\n    SELECT strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour, COUNT(*) AS event_count\n    FROM events\n    WHERE timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY hour\n)\nSELECT hour, event_count\nFROM hourly_events\nORDER BY hour",
+      "row_count": 24
+    }
+  ],
+  "duration_ms": 7844,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 955,
+      "completion_tokens": 93
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 471,
+      "completion_tokens": 254
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": true,
+    "detail": "all_keys_and_values_matched (rows=24)"
+  }
+}

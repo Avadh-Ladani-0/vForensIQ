@@ -1,0 +1,90 @@
+{
+  "question_id": "L3_q015_peak_crowd_each_location",
+  "level": "L3",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What was the peak crowd at each location across the venue?",
+  "gold_value": [
+    [
+      "KeynoteHall_Stage",
+      500
+    ],
+    [
+      "ExpoFloor_MainAisle",
+      209
+    ],
+    [
+      "FoodCourt_North",
+      146
+    ],
+    [
+      "DemoBooth_NVIDIA",
+      86
+    ],
+    [
+      "DemoBooth_Intel",
+      53
+    ]
+  ],
+  "answer_text": "The peak crowds at each location across the venue on December 8, 2025, were as follows: DemoBooth_Intel saw 53 people, DemoBooth_NVIDIA had 86 people, ExpoFloor_MainAisle reached 209 people, FoodCourt_North recorded 146 people, and KeynoteHall_Stage had the highest count with 500 people.",
+  "structured_answer": {
+    "columns": [
+      "camera_location",
+      "peak_crowd"
+    ],
+    "rows": [
+      [
+        "DemoBooth_Intel",
+        53
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        86
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        209
+      ],
+      [
+        "FoodCourt_North",
+        146
+      ],
+      [
+        "KeynoteHall_Stage",
+        500
+      ]
+    ],
+    "total_rows": 5,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH max_crowd_per_location AS (\n    SELECT \n        camera_location,\n        MAX(head_count) AS peak_crowd\n    FROM \n        events\n    WHERE \n        event_type = 'crowd'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z'\n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        camera_location\n)\nSELECT \n    camera_location,\n    peak_crowd\nFROM \n    max_crowd_per_location",
+      "row_count": 5
+    }
+  ],
+  "duration_ms": 3437,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 946,
+      "completion_tokens": 117
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 351,
+      "completion_tokens": 77
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": true,
+    "detail": "all_keys_and_values_matched (rows=5)"
+  }
+}

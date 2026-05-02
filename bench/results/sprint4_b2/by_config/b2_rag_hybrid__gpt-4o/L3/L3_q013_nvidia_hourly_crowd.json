@@ -1,0 +1,333 @@
+{
+  "question_id": "L3_q013_nvidia_hourly_crowd",
+  "level": "L3",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Give me the NVIDIA booth's crowd numbers hour by hour.",
+  "gold_value": [
+    [
+      "00",
+      3.5
+    ],
+    [
+      "01",
+      3.5
+    ],
+    [
+      "02",
+      3.5
+    ],
+    [
+      "03",
+      3.5
+    ],
+    [
+      "04",
+      3.6
+    ],
+    [
+      "05",
+      3.6
+    ],
+    [
+      "06",
+      3.5
+    ],
+    [
+      "07",
+      3.4
+    ],
+    [
+      "08",
+      3.6
+    ],
+    [
+      "09",
+      3.5
+    ],
+    [
+      "10",
+      60.0
+    ],
+    [
+      "11",
+      60.2
+    ],
+    [
+      "12",
+      3.5
+    ],
+    [
+      "13",
+      45.0
+    ],
+    [
+      "14",
+      3.5
+    ],
+    [
+      "15",
+      70.0
+    ],
+    [
+      "16",
+      70.1
+    ],
+    [
+      "17",
+      3.6
+    ],
+    [
+      "18",
+      3.5
+    ],
+    [
+      "19",
+      3.4
+    ],
+    [
+      "20",
+      3.6
+    ],
+    [
+      "21",
+      3.5
+    ],
+    [
+      "22",
+      3.7
+    ],
+    [
+      "23",
+      3.5
+    ]
+  ],
+  "answer_text": "The NVIDIA booth experienced varying crowd numbers throughout December 8, 2025. During early morning hours (midnight to 09:00), the average head count hovered around 3 to 4 individuals per hour, with peak counts reaching between 15 and 19. Activity peaked significantly between 10:00 and 11:00, with an average head count of around 60 and a peak of 75 individuals. A subsequent notable increase was observed again from 15:00 to 16:00, with average and peak head counts reaching 70 and 86, respectively. Post-afternoon hours showed a return to lower engagement with head counts similar to the early morning scenario, averaging between 3 and 4 per hour. The fluctuations reflect typical interest patterns around significant events or presentations, with brief intervals of intensified crowd activity interspersed with the baseline flow.",
+  "structured_answer": {
+    "cypher_columns": [
+      "hour",
+      "average_head_count",
+      "peak_head_count",
+      "event_count"
+    ],
+    "cypher_rows": [
+      [
+        "2025-12-08T00:00:00Z",
+        3.47,
+        16,
+        3600
+      ],
+      [
+        "2025-12-08T01:00:00Z",
+        3.53,
+        15,
+        3600
+      ],
+      [
+        "2025-12-08T02:00:00Z",
+        3.51,
+        18,
+        3600
+      ],
+      [
+        "2025-12-08T03:00:00Z",
+        3.52,
+        16,
+        3600
+      ],
+      [
+        "2025-12-08T04:00:00Z",
+        3.59,
+        16,
+        3600
+      ],
+      [
+        "2025-12-08T05:00:00Z",
+        3.6,
+        16,
+        3600
+      ],
+      [
+        "2025-12-08T06:00:00Z",
+        3.46,
+        17,
+        3600
+      ],
+      [
+        "2025-12-08T07:00:00Z",
+        3.44,
+        18,
+        3600
+      ],
+      [
+        "2025-12-08T08:00:00Z",
+        3.55,
+        18,
+        3600
+      ],
+      [
+        "2025-12-08T09:00:00Z",
+        3.51,
+        19,
+        3600
+      ],
+      [
+        "2025-12-08T10:00:00Z",
+        60.01,
+        75,
+        3600
+      ],
+      [
+        "2025-12-08T11:00:00Z",
+        60.2,
+        74,
+        3600
+      ],
+      [
+        "2025-12-08T12:00:00Z",
+        3.51,
+        18,
+        3600
+      ],
+      [
+        "2025-12-08T13:00:00Z",
+        45.04,
+        59,
+        3600
+      ],
+      [
+        "2025-12-08T14:00:00Z",
+        3.49,
+        20,
+        3600
+      ],
+      [
+        "2025-12-08T15:00:00Z",
+        70.0,
+        82,
+        3600
+      ],
+      [
+        "2025-12-08T16:00:00Z",
+        70.11,
+        86,
+        3600
+      ],
+      [
+        "2025-12-08T17:00:00Z",
+        3.56,
+        21,
+        3600
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        3.54,
+        17,
+        3600
+      ],
+      [
+        "2025-12-08T19:00:00Z",
+        3.42,
+        17,
+        3600
+      ],
+      [
+        "2025-12-08T20:00:00Z",
+        3.56,
+        19,
+        3600
+      ],
+      [
+        "2025-12-08T21:00:00Z",
+        3.55,
+        17,
+        3600
+      ],
+      [
+        "2025-12-08T22:00:00Z",
+        3.7,
+        18,
+        3600
+      ],
+      [
+        "2025-12-08T23:00:00Z",
+        3.49,
+        19,
+        3600
+      ]
+    ],
+    "cypher_total_rows": 24,
+    "retrieved_communities": [
+      {
+        "community_id": "community_4",
+        "summary": "The CCTV activity involved five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types were person entries (169) and exits (132), with a total of 344 events recorded during the time range from December 8, 2025, 02:03:44 UTC to December 8, 2025, 23:59:14 UTC. The peak head count reached 500, and the average head count was approximately 31.2.",
+        "distance": 0.4170513153076172
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, covered a time range from 08:00:13 to 15:59:56 UTC. The dominant event types were person entries (680) and exits (685), with a total of 1,376 events recorded. The peak event count per hour occurred during the observed period, contributing to a total of 1,379 node counts.",
+        "distance": 0.5930646657943726
+      },
+      {
+        "community_id": "community_1",
+        "summary": "The CCTV activity at the Gate_ParkingLot camera from December 8, 2025, between 07:00 and 18:59 UTC recorded a total of 1,540 events. The dominant event types were person entries (454) and exits (476), along with car entries (298) and exits (312). The total volume of events reached 1,543, with no peak head count reported.",
+        "distance": 0.6362999081611633
+      },
+      {
+        "community_id": "community_5",
+        "summary": "The CCTV activity involved multiple camera locations during the time range from 16:00:57 to 16:58:54 UTC on December 8, 2025. The dominant event types were person entries, with a total of 16, and person exits, totaling 11, alongside 3 car entries and 2 car exits. The total volume of events recorded was 32, with a node count of 33. There are no notable peak head counts or average head counts reported.",
+        "distance": 0.6385481953620911
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour {camera_location: 'DemoBooth_NVIDIA'})\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.hour_utc AS hour, ch.avg_hc AS average_head_count, ch.peak_hc AS peak_head_count, ch.event_count AS event_count\n}\nRETURN hour, average_head_count, peak_head_count, event_count ORDER BY hour",
+      "row_count": 24
+    },
+    {
+      "type": "community",
+      "community_id": "community_4",
+      "distance": 0.4170513153076172
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.5930646657943726
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.6362999081611633
+    },
+    {
+      "type": "community",
+      "community_id": "community_5",
+      "distance": 0.6385481953620911
+    }
+  ],
+  "duration_ms": 11262,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2506,
+      "completion_tokens": 116
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 1334,
+      "completion_tokens": 176
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": false,
+    "detail": "missing_keys=['13', '14', '17', '18', '21'] missing_numbers=[45.0]"
+  }
+}

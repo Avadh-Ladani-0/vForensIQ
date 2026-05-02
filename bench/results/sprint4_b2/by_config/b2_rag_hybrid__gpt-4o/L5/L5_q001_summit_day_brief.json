@@ -1,0 +1,213 @@
+{
+  "question_id": "L5_q001_summit_day_brief",
+  "level": "L5",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a security and operations brief for the AI Hardware Summit on 2025-12-08 (UTC). Cover: the busiest traffic windows at the main gates, keynote hall attendance peaks, lunchtime dynamics at the food court, and how the demo booths (NVIDIA and Intel) compared in crowd activity. Keep it to 5 bullet points.",
+  "gold_value": {
+    "rubric": [
+      "Gate_MainEntrance shows morning person-entry peak around 08-10 UTC",
+      "Gate_MainEntrance shows evening person-exit peak around 17-19 UTC",
+      "KeynoteHall_Stage crowd peaks during keynote hours (09-10 UTC and 14-15 UTC)",
+      "FoodCourt_North crowd peaks during lunch hours (12-14 UTC)",
+      "DemoBooth_NVIDIA had higher crowd activity than DemoBooth_Intel"
+    ],
+    "threshold": 0.6
+  },
+  "answer_text": "- **Main Gate Traffic Busiest Windows**: The main entrance experienced its highest traffic from 08:00 to 09:00 UTC, with an event count of 607, closely followed by 09:00 to 10:00 UTC with 601 events, signaling peak entry times as attendees arrived for the summit.\n  \n- **Keynote Hall Attendance Peaks**: The keynote hall saw its peak attendance at 09:00 UTC with a head count of 500, coinciding with the first major keynote session, while subsequent peaks were noted at 14:00 and 16:00 UTC with head counts of 452 and 433, respectively.\n\n- **Lunchtime Dynamics at the Food Court**: The food court had a consistently high average head count during lunchtime hours at approximately 120 around 12:00 to 13:00 UTC, reflecting a significant rush during the typical midday break.\n\n- **NVIDIA vs. Intel Demo Booths**: Crowd activity at the NVIDIA booth consistently outpaced the Intel booth, with an average head count of 70 at 15:00 and peaking at 86 people at 16:00, compared to Intel's peak of 53 at the same time.\n\n- **Overall Event Activity**: Across key summit locations, the dominant pedestrian movements contributed to a total of 1,379 events, reflecting significant engagement throughout the day for both scheduled events and spontaneous booth visits.",
+  "structured_answer": {
+    "cypher_columns": [
+      "category",
+      "hour",
+      "event_count",
+      "avg_head_count",
+      "peak_head_count"
+    ],
+    "cypher_rows": [
+      [
+        "food_court_lunchtime",
+        "2025-12-08T12:00:00Z",
+        null,
+        120.05,
+        null
+      ],
+      [
+        "food_court_lunchtime",
+        "2025-12-08T13:00:00Z",
+        null,
+        119.97,
+        null
+      ],
+      [
+        "food_court_lunchtime",
+        "2025-12-08T17:00:00Z",
+        null,
+        100.1,
+        null
+      ],
+      [
+        "intel_booth",
+        "2025-12-08T11:00:00Z",
+        null,
+        40.01,
+        51
+      ],
+      [
+        "intel_booth",
+        "2025-12-08T15:00:00Z",
+        null,
+        41.95,
+        51
+      ],
+      [
+        "intel_booth",
+        "2025-12-08T16:00:00Z",
+        null,
+        41.93,
+        53
+      ],
+      [
+        "keynote_hall_peaks",
+        "2025-12-08T09:00:00Z",
+        null,
+        null,
+        500
+      ],
+      [
+        "keynote_hall_peaks",
+        "2025-12-08T14:00:00Z",
+        null,
+        null,
+        452
+      ],
+      [
+        "keynote_hall_peaks",
+        "2025-12-08T16:00:00Z",
+        null,
+        null,
+        433
+      ],
+      [
+        "main_gate_traffic",
+        "2025-12-08T08:00:00Z",
+        607,
+        null,
+        null
+      ],
+      [
+        "main_gate_traffic",
+        "2025-12-08T09:00:00Z",
+        601,
+        null,
+        null
+      ],
+      [
+        "main_gate_traffic",
+        "2025-12-08T17:00:00Z",
+        517,
+        null,
+        null
+      ],
+      [
+        "nvidia_booth",
+        "2025-12-08T11:00:00Z",
+        null,
+        60.2,
+        74
+      ],
+      [
+        "nvidia_booth",
+        "2025-12-08T15:00:00Z",
+        null,
+        70.0,
+        82
+      ],
+      [
+        "nvidia_booth",
+        "2025-12-08T16:00:00Z",
+        null,
+        70.11,
+        86
+      ]
+    ],
+    "cypher_total_rows": 15,
+    "retrieved_communities": [
+      {
+        "community_id": "community_4",
+        "summary": "The CCTV activity involved five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types were person entries (169) and exits (132), with a total of 344 events recorded during the time range from December 8, 2025, 02:03:44 UTC to December 8, 2025, 23:59:14 UTC. The peak head count reached 500, and the average head count was approximately 31.2.",
+        "distance": 0.3992958664894104
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, covered a time range from 08:00:13 to 15:59:56 UTC. The dominant event types were person entries (680) and exits (685), with a total of 1,376 events recorded. The peak event count per hour occurred during the observed period, contributing to a total of 1,379 node counts.",
+        "distance": 0.5176883935928345
+      },
+      {
+        "community_id": "community_0",
+        "summary": "The CCTV activity at the Gate_MainEntrance from December 8, 2025, between 08:00 and 12:59 UTC recorded a total of 930 events. The dominant event types were person entries (470) and exits (450), with car entries (8) and exits (2) also noted. The total volume of events indicates significant foot traffic, although peak head count and average head count data are not available.",
+        "distance": 0.5452357530593872
+      },
+      {
+        "community_id": "community_1",
+        "summary": "The CCTV activity at the Gate_ParkingLot camera from December 8, 2025, between 07:00 and 18:59 UTC recorded a total of 1,540 events. The dominant event types were person entries (454) and exits (476), along with car entries (298) and exits (312). The total volume of events reached 1,543, with no peak head count reported.",
+        "distance": 0.5683318376541138
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  // Busiest traffic windows at the main gates\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE l.name CONTAINS 'MainEntrance' AND e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  WITH substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, count(e) AS event_count\n  RETURN 'main_gate_traffic' AS category, hour, event_count, null AS avg_head_count, null AS peak_head_count\n  ORDER BY event_count DESC\n  LIMIT 3\n  UNION ALL\n  // Keynote hall attendance peaks\n  MATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE l.name CONTAINS 'KeynoteHall' AND ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN 'keynote_hall_peaks' AS category, ch.hour_utc AS hour, null AS event_count, null AS avg_head_count, ch.peak_hc AS peak_head_count\n  ORDER BY peak_head_count DESC\n  LIMIT 3\n  UNION ALL\n  // Lunchtime dynamics at the food court\n  MATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE l.name CONTAINS 'FoodCourt' AND ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN 'food_court_lunchtime' AS category, ch.hour_utc AS hour, null AS event_count, ch.avg_hc AS avg_head_count, null AS peak_head_count\n  ORDER BY avg_head_count DESC\n  LIMIT 3\n  UNION ALL\n  // Demo booths comparison: NVIDIA\n  MATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE l.name CONTAINS 'NVIDIA' AND ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN 'nvidia_booth' AS category, ch.hour_utc AS hour, null AS event_count, ch.avg_hc AS avg_head_count, ch.peak_hc AS peak_head_count\n  ORDER BY avg_head_count DESC\n  LIMIT 3\n  UNION ALL\n  // Demo booths comparison: Intel\n  MATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE l.name CONTAINS 'Intel' AND ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN 'intel_booth' AS category, ch.hour_utc AS hour, null AS event_count, ch.avg_hc AS avg_head_count, ch.peak_hc AS peak_head_count\n  ORDER BY avg_head_count DESC\n  LIMIT 3\n}\nRETURN category, hour, event_count, avg_head_count, peak_head_count\nORDER BY category, hour",
+      "row_count": 15
+    },
+    {
+      "type": "community",
+      "community_id": "community_4",
+      "distance": 0.3992958664894104
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.5176883935928345
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.5452357530593872
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.5683318376541138
+    }
+  ],
+  "duration_ms": 27544,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2563,
+      "completion_tokens": 733
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 3409,
+      "completion_tokens": 777
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 1187,
+      "completion_tokens": 292
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=4/5=0.80 (threshold=0.6)"
+  }
+}

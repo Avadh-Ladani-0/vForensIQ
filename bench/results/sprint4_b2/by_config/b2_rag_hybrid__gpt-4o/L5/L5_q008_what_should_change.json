@@ -1,0 +1,102 @@
+{
+  "question_id": "L5_q008_what_should_change",
+  "level": "L5",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Looking at how this conference day played out, what could be improved next time \u2014 staffing, layout, scheduling? Give me your top recommendations grounded in what the data shows.",
+  "gold_value": {
+    "rubric": [
+      "Lunch-hour congestion at the food court suggests adding capacity or staggered breaks",
+      "Concentrated rush hours at the main entrance suggest staggered start times or additional lanes",
+      "Significant peak/baseline contrast at keynote stage suggests dedicated crowd-flow planning around keynote times",
+      "Lower-attended demo booths could be relocated or merged to balance traffic"
+    ],
+    "threshold": 0.4
+  },
+  "answer_text": "Based on the community summaries, several improvements could enhance the conference experience next time. First, consider optimizing staffing at KeynoteHall, especially between 08:00 and 16:00 UTC, as this area saw the highest foot traffic with over 1,300 entry and exit events. Enhancing the layout to streamline movement and prevent bottlenecks may help manage the large crowds observed during these peak periods. Additionally, scheduling more staggered sessions or utilizing remote participation options could alleviate congestion during peak hours. Effective adjustments in these areas could significantly enhance attendee flow and satisfaction.",
+  "structured_answer": {
+    "cypher_columns": [],
+    "cypher_rows": [],
+    "cypher_total_rows": 0,
+    "retrieved_communities": [
+      {
+        "community_id": "community_4",
+        "summary": "The CCTV activity involved five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types were person entries (169) and exits (132), with a total of 344 events recorded during the time range from December 8, 2025, 02:03:44 UTC to December 8, 2025, 23:59:14 UTC. The peak head count reached 500, and the average head count was approximately 31.2.",
+        "distance": 0.6221539974212646
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, covered a time range from 08:00:13 to 15:59:56 UTC. The dominant event types were person entries (680) and exits (685), with a total of 1,376 events recorded. The peak event count per hour occurred during the observed period, contributing to a total of 1,379 node counts.",
+        "distance": 0.705346941947937
+      },
+      {
+        "community_id": "community_5",
+        "summary": "The CCTV activity involved multiple camera locations during the time range from 16:00:57 to 16:58:54 UTC on December 8, 2025. The dominant event types were person entries, with a total of 16, and person exits, totaling 11, alongside 3 car entries and 2 car exits. The total volume of events recorded was 32, with a node count of 33. There are no notable peak head counts or average head counts reported.",
+        "distance": 0.740698516368866
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity covers the location from 09:00 to 09:59 UTC on December 8, 2025. The dominant event types are person entries, with 437 recorded, and person exits, totaling 387. There were also 5 car entries and 4 car exits, contributing to a total of 833 events. Notably, the peak head count and average head count data are not available.",
+        "distance": 0.7436507940292358
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  // Total events (entry/exit + crowd) for the day\n  MATCH (e:Event)\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN 'total_events' AS metric, count(e) AS value\n  UNION ALL\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN 'total_events' AS metric, sum(ch.event_count) AS value\n}\nUNION ALL\nCALL {\n  // Hourly breakdown of all events\n  MATCH (e:Event)\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  WITH substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, count(*) AS n\n  RETURN hour, n\n  UNION ALL\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.hour_utc AS hour, ch.event_count AS n\n}\nRETURN hour, sum(n) AS count ORDER BY hour\nUNION ALL\nCALL {\n  // Peak crowd density at NVIDIA booth\n  MATCH (ch:CrowdHour {camera_location: 'DemoBooth_NVIDIA'})\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN 'peak_crowd_nvidia' AS metric, max(ch.peak_hc) AS value\n}\nUNION ALL\nCALL {\n  // Peak crowd density at Main Entrance\n  MATCH (ch:CrowdHour {camera_location: 'Gate_MainEntrance'})\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN 'peak_crowd_main_entrance' AS metric, max(ch.peak_hc) AS value\n}\nUNION ALL\nCALL {\n  // Distinct active cameras\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN c.camera_id AS cid\n  UNION\n  MATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN c.camera_id AS cid\n}\nRETURN 'active_cameras' AS metric, count(DISTINCT cid) AS value",
+      "row_count": 0
+    },
+    {
+      "type": "community",
+      "community_id": "community_4",
+      "distance": 0.6221539974212646
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.705346941947937
+    },
+    {
+      "type": "community",
+      "community_id": "community_5",
+      "distance": 0.740698516368866
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.7436507940292358
+    }
+  ],
+  "duration_ms": 19555,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2528,
+      "completion_tokens": 707
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 3357,
+      "completion_tokens": 719
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 683,
+      "completion_tokens": 114
+    }
+  ],
+  "errors": [
+    "cypher_stream: CypherSyntaxError: {neo4j_code: Neo.ClientError.Statement.SyntaxError} {message: Query cannot conclude with CALL (must be a RETURN clause, a FINISH clause, an update clause, a unit subquery call, or a procedure call with no YIELD). (line 1, column 1 (offset: 0))\n\"CALL {\"\n ^} {gql_status: 42001} {gql_status_description: error: syntax error or access rule violation - invalid syntax}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=1/4=0.25 (threshold=0.4)"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "question_id": "L5_q004_security_attention_report",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Produce a security-attention report for 2025-12-08 (UTC) at the AI Hardware Summit. Identify the locations and time windows that warrant the most security focus based on volume of activity. Specifically highlight (1) the gate that handles the largest volume of person traffic, (2) the gate with the most car traffic, and (3) the public area with the highest crowd density spikes. Quantify each with approximate numbers and times.",
+  "gold_value": {
+    "rubric": [
+      "Gate_MainEntrance handles the largest person traffic volume",
+      "Gate_ParkingLot handles the most car traffic",
+      "KeynoteHall_Stage shows the highest crowd density spikes (head_counts in the hundreds)",
+      "Peak hours for these hotspots fall within the working-day window (08:00-19:00 UTC)"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "On December 8, 2025, at the AI Hardware Summit, the main entrance gate handled the largest volume of person traffic with 2,883 entries and exits. The parking lot gate experienced the most car traffic, with 778 entries and exits. The highest crowd density spike occurred at the Keynote Hall Stage, reaching 500 people at 09:00 UTC.",
+  "structured_answer": {
+    "columns": [
+      "category",
+      "camera_location",
+      "count",
+      "hour"
+    ],
+    "rows": [
+      [
+        "Person Traffic",
+        "Gate_MainEntrance",
+        2883,
+        null
+      ],
+      [
+        "Car Traffic",
+        "Gate_ParkingLot",
+        778,
+        null
+      ],
+      [
+        "Crowd Density",
+        "KeynoteHall_Stage",
+        500,
+        "09"
+      ]
+    ],
+    "total_rows": 3
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH date_filtered_events AS (\n    SELECT *\n    FROM events\n    WHERE timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n),\nperson_traffic AS (\n    SELECT camera_location, COUNT(*) AS person_count\n    FROM date_filtered_events\n    WHERE event_type IN ('person_entry', 'person_exit')\n    GROUP BY camera_location\n    ORDER BY person_count DESC\n    LIMIT 1\n),\ncar_traffic AS (\n    SELECT camera_location, COUNT(*) AS car_count\n    FROM date_filtered_events\n    WHERE event_type IN ('car_entry', 'car_exit')\n    GROUP BY camera_location\n    ORDER BY car_count DESC\n    LIMIT 1\n),\ncrowd_density AS (\n    SELECT camera_location, strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour, MAX(head_count) AS max_head_count\n    FROM date_filtered_events\n    WHERE event_type = 'crowd'\n    GROUP BY camera_location, hour\n    ORDER BY max_head_count DESC\n    LIMIT 1\n)\nSELECT 'Person Traffic' AS category, camera_location, person_count AS count, NULL AS hour\nFROM person_traffic\nUNION ALL\nSELECT 'Car Traffic' AS category, camera_location, car_count AS count, NULL AS hour\nFROM car_traffic\nUNION ALL\nSELECT 'Crowd Density' AS category, camera_location, max_head_count AS count, hour\nFROM crowd_density",
+      "row_count": 3
+    }
+  ],
+  "duration_ms": 6463,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 928,
+      "completion_tokens": 317
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 629,
+      "completion_tokens": 76
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=3/4=0.75 (threshold=0.5)"
+  }
+}

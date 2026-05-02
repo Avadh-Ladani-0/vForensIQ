@@ -1,0 +1,290 @@
+{
+  "question_id": "L3_q011_busiest_camera_per_hour",
+  "level": "L3",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "For each hour of the day, which camera location had the highest crowd? Show me the winning location and its average crowd size for each hour.",
+  "gold_value": [
+    [
+      "00",
+      "KeynoteHall_Stage",
+      7.0
+    ],
+    [
+      "01",
+      "KeynoteHall_Stage",
+      7.3
+    ],
+    [
+      "02",
+      "KeynoteHall_Stage",
+      7.1
+    ],
+    [
+      "03",
+      "KeynoteHall_Stage",
+      7.2
+    ],
+    [
+      "04",
+      "KeynoteHall_Stage",
+      7.0
+    ],
+    [
+      "05",
+      "KeynoteHall_Stage",
+      6.9
+    ],
+    [
+      "06",
+      "KeynoteHall_Stage",
+      6.8
+    ],
+    [
+      "07",
+      "KeynoteHall_Stage",
+      7.1
+    ],
+    [
+      "08",
+      "KeynoteHall_Stage",
+      7.0
+    ],
+    [
+      "09",
+      "KeynoteHall_Stage",
+      450.2
+    ],
+    [
+      "10",
+      "ExpoFloor_MainAisle",
+      179.9
+    ],
+    [
+      "11",
+      "ExpoFloor_MainAisle",
+      180.0
+    ],
+    [
+      "12",
+      "FoodCourt_North",
+      120.0
+    ],
+    [
+      "13",
+      "ExpoFloor_MainAisle",
+      160.0
+    ],
+    [
+      "14",
+      "KeynoteHall_Stage",
+      399.5
+    ],
+    [
+      "15",
+      "ExpoFloor_MainAisle",
+      160.0
+    ],
+    [
+      "16",
+      "KeynoteHall_Stage",
+      379.5
+    ],
+    [
+      "17",
+      "FoodCourt_North",
+      100.1
+    ],
+    [
+      "18",
+      "FoodCourt_North",
+      99.8
+    ],
+    [
+      "19",
+      "KeynoteHall_Stage",
+      7.2
+    ],
+    [
+      "20",
+      "KeynoteHall_Stage",
+      7.1
+    ],
+    [
+      "21",
+      "KeynoteHall_Stage",
+      7.0
+    ],
+    [
+      "22",
+      "KeynoteHall_Stage",
+      7.3
+    ],
+    [
+      "23",
+      "KeynoteHall_Stage",
+      7.3
+    ]
+  ],
+  "answer_text": "For each hour on December 8, 2025, the camera location with the highest average crowd size was as follows:\n\n- 00:00 - 08:00: 'KeynoteHall_Stage' with average crowds ranging from 6.8 to 7.27.\n- 09:00: 'KeynoteHall_Stage' with an average crowd of 450.19.\n- 10:00 - 11:00: 'ExpoFloor_MainAisle' with average crowds of 179.91 and 179.97.\n- 12:00: 'FoodCourt_North' with an average crowd of 120.05.\n- 13:00: 'ExpoFloor_MainAisle' with an average crowd of 159.95.\n- 14:00: 'KeynoteHall_Stage' with an average crowd of 399.51.\n- 15:00: 'ExpoFloor_MainAisle' with an average crowd of 160.01.\n- 16:00: 'KeynoteHall_Stage' with an average crowd of 379.46.\n- 17:00 - 18:00: 'FoodCourt_North' with average crowds of 100.1 and 99.83.\n- 19:00 - 23:00: 'KeynoteHall_Stage' with average crowds ranging from 6.96 to 7.31.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "winning_location",
+      "avg_crowd_per_hour"
+    ],
+    "rows": [
+      [
+        "2025-12-08T00:00:00Z",
+        "KeynoteHall_Stage",
+        6.97
+      ],
+      [
+        "2025-12-08T01:00:00Z",
+        "KeynoteHall_Stage",
+        7.27
+      ],
+      [
+        "2025-12-08T02:00:00Z",
+        "KeynoteHall_Stage",
+        7.12
+      ],
+      [
+        "2025-12-08T03:00:00Z",
+        "KeynoteHall_Stage",
+        7.21
+      ],
+      [
+        "2025-12-08T04:00:00Z",
+        "KeynoteHall_Stage",
+        7.01
+      ],
+      [
+        "2025-12-08T05:00:00Z",
+        "KeynoteHall_Stage",
+        6.93
+      ],
+      [
+        "2025-12-08T06:00:00Z",
+        "KeynoteHall_Stage",
+        6.8
+      ],
+      [
+        "2025-12-08T07:00:00Z",
+        "KeynoteHall_Stage",
+        7.12
+      ],
+      [
+        "2025-12-08T08:00:00Z",
+        "KeynoteHall_Stage",
+        6.98
+      ],
+      [
+        "2025-12-08T09:00:00Z",
+        "KeynoteHall_Stage",
+        450.19
+      ],
+      [
+        "2025-12-08T10:00:00Z",
+        "ExpoFloor_MainAisle",
+        179.91
+      ],
+      [
+        "2025-12-08T11:00:00Z",
+        "ExpoFloor_MainAisle",
+        179.97
+      ],
+      [
+        "2025-12-08T12:00:00Z",
+        "FoodCourt_North",
+        120.05
+      ],
+      [
+        "2025-12-08T13:00:00Z",
+        "ExpoFloor_MainAisle",
+        159.95
+      ],
+      [
+        "2025-12-08T14:00:00Z",
+        "KeynoteHall_Stage",
+        399.51
+      ],
+      [
+        "2025-12-08T15:00:00Z",
+        "ExpoFloor_MainAisle",
+        160.01
+      ],
+      [
+        "2025-12-08T16:00:00Z",
+        "KeynoteHall_Stage",
+        379.46
+      ],
+      [
+        "2025-12-08T17:00:00Z",
+        "FoodCourt_North",
+        100.1
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        "FoodCourt_North",
+        99.83
+      ],
+      [
+        "2025-12-08T19:00:00Z",
+        "KeynoteHall_Stage",
+        7.18
+      ],
+      [
+        "2025-12-08T20:00:00Z",
+        "KeynoteHall_Stage",
+        7.09
+      ],
+      [
+        "2025-12-08T21:00:00Z",
+        "KeynoteHall_Stage",
+        6.96
+      ],
+      [
+        "2025-12-08T22:00:00Z",
+        "KeynoteHall_Stage",
+        7.25
+      ],
+      [
+        "2025-12-08T23:00:00Z",
+        "KeynoteHall_Stage",
+        7.31
+      ]
+    ],
+    "total_rows": 24
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.hour_utc AS hour, ch.camera_location AS location, ch.avg_hc AS avg_crowd\n}\nWITH hour, location, avg_crowd\nORDER BY hour, avg_crowd DESC\nWITH hour, collect({location: location, avg_crowd: avg_crowd}) AS crowds\nRETURN hour, crowds[0].location AS winning_location, crowds[0].avg_crowd AS avg_crowd_per_hour ORDER BY hour",
+      "row_count": 24
+    }
+  ],
+  "duration_ms": 8020,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2523,
+      "completion_tokens": 152
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 1030,
+      "completion_tokens": 294
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": false,
+    "detail": "missing_keys=['21', '22']"
+  }
+}

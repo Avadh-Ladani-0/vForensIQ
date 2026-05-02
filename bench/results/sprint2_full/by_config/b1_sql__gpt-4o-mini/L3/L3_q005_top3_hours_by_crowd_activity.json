@@ -1,0 +1,73 @@
+{
+  "question_id": "L3_q005_top3_hours_by_crowd_activity",
+  "level": "L3",
+  "approach": "b1_sql",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What were the top 3 UTC hours on 2025-12-08 by total head_count summed across all crowd cameras? List the hour and its total head_count for each of the top 3.",
+  "gold_value": [
+    [
+      "16",
+      2365493
+    ],
+    [
+      "14",
+      2059433
+    ],
+    [
+      "09",
+      1685871
+    ]
+  ],
+  "answer_text": "The top 3 UTC hours on 2025-12-08 by total head_count are: 16:00 with 2,365,493, 14:00 with 2,059,433, and 09:00 with 1,685,871.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "total_head_count"
+    ],
+    "rows": [
+      [
+        "16",
+        2365493
+      ],
+      [
+        "14",
+        2059433
+      ],
+      [
+        "09",
+        1685871
+      ]
+    ],
+    "total_rows": 3
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH hourly_head_count AS (\n    SELECT strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n           SUM(head_count) AS total_head_count\n    FROM events\n    WHERE timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n          AND event_type = 'crowd'\n    GROUP BY hour\n)\nSELECT hour, total_head_count\nFROM hourly_head_count\nORDER BY total_head_count DESC\nLIMIT 3",
+      "row_count": 3
+    }
+  ],
+  "duration_ms": 4642,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 976,
+      "completion_tokens": 116
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 351,
+      "completion_tokens": 57
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": true,
+    "detail": "all_keys_and_values_matched (rows=3)"
+  }
+}

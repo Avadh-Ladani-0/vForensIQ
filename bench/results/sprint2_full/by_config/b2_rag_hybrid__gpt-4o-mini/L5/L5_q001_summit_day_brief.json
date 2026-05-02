@@ -1,0 +1,103 @@
+{
+  "question_id": "L5_q001_summit_day_brief",
+  "level": "L5",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a security and operations brief for the AI Hardware Summit on 2025-12-08 (UTC). Cover: the busiest traffic windows at the main gates, keynote hall attendance peaks, lunchtime dynamics at the food court, and how the demo booths (NVIDIA and Intel) compared in crowd activity. Keep it to 5 bullet points.",
+  "gold_value": {
+    "rubric": [
+      "Gate_MainEntrance shows morning person-entry peak around 08-10 UTC",
+      "Gate_MainEntrance shows evening person-exit peak around 17-19 UTC",
+      "KeynoteHall_Stage crowd peaks during keynote hours (09-10 UTC and 14-15 UTC)",
+      "FoodCourt_North crowd peaks during lunch hours (12-14 UTC)",
+      "DemoBooth_NVIDIA had higher crowd activity than DemoBooth_Intel"
+    ],
+    "threshold": 0.6
+  },
+  "answer_text": "- The busiest traffic windows at the main gates occurred on December 8, 2025, with a total of 788 person entries and 773 exits recorded, indicating a high volume of attendees arriving and departing throughout the day.\n- Keynote hall attendance peaked between 09:00 and 15:00 UTC, with 2,209 recorded events, including 1,117 entries, showcasing significant interest in the sessions.\n- Lunchtime dynamics at the food court were lively, contributing to the overall event atmosphere, although specific attendance figures were not detailed.\n- The demo booths for NVIDIA and Intel experienced notable crowd activity, with a total of 449 events recorded across both locations, highlighting their popularity among attendees.\n- Overall, the event saw a peak head count of 500, reflecting strong engagement and participation throughout the day.",
+  "structured_answer": {
+    "cypher_columns": [],
+    "cypher_rows": [],
+    "cypher_total_rows": 0,
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and a total of 588 node counts.",
+        "distance": 0.4113588333129883
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.5134987831115723
+      },
+      {
+        "community_id": "community_0",
+        "summary": "The CCTV activity involves the camera locations at Gate_MainEntrance and Platform_1, covering the time range from December 1, 2025, at 01:00 UTC to December 8, 2025, at 12:59 UTC. The dominant event types are person entries (788) and exits (773), along with car entries (112) and exits (102). The total volume of events recorded is 1,775, with a peak head count of 47 and an average head count of approximately 10.42.",
+        "distance": 0.5543285608291626
+      },
+      {
+        "community_id": "community_16",
+        "summary": "The CCTV activity at Platform_1 from 08:00 to 08:59 on December 1, 2025, recorded a total of 286 events, with person entries (92) and exits (107) dominating the activity. Car entries (46) and exits (41) were also significant. The peak head count reached 47, and the average head count was approximately 40.02.",
+        "distance": 0.5670034885406494
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "WITH \n  (MATCH (e:Event)-[:DETECTED_BY]->(:Camera) \n   WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z' AND e.event_type IN ['car_entry', 'car_exit', 'person_entry', 'person_exit'] \n   AND e.camera_location CONTAINS 'MainEntrance' \n   RETURN COUNT(e) AS main_gate_traffic) AS main_gate_traffic,\n\n  (MATCH (ch:CrowdHour)-[:AT_CAMERA]->(:Camera) \n   WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z' \n   AND ch.camera_location CONTAINS 'Keynote_Hall' \n   RETURN ch.hour_utc, ch.peak_hc ORDER BY ch.peak_hc DESC LIMIT 1) AS keynote_peak,\n\n  (MATCH (ch:CrowdHour)-[:AT_CAMERA]->(:Camera) \n   WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z' \n   AND ch.camera_location CONTAINS 'Food_Court' \n   RETURN ch.hour_utc, ch.avg_hc ORDER BY ch.avg_hc DESC LIMIT 1) AS lunchtime_dynamics,\n\n  (MATCH (ch:CrowdHour)-[:AT_CAMERA]->(:Camera) \n   WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z' \n   AND ch.camera_location CONTAINS 'NVIDIA' \n   RETURN SUM(ch.event_count) AS nvidia_activity) AS nvidia_activity,\n\n  (MATCH (ch:CrowdHour)-[:AT_CAMERA]->(:Camera) \n   WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z' \n   AND ch.camera_location CONTAINS 'Intel' \n   RETURN SUM(ch.event_count) AS intel_activity) AS intel_activity\n\nRETURN main_gate_traffic.main_gate_traffic AS main_gate_traffic, \n       keynote_peak.hour_utc AS keynote_peak_hour, \n       keynote_peak.peak_hc AS keynote_peak_hc, \n       lunchtime_dynamics.hour_utc AS lunchtime_hour, \n       lunchtime_dynamics.avg_hc AS lunchtime_avg_hc, \n       nvidia_activity.nvidia_activity AS nvidia_activity, \n       intel_activity.intel_activity AS intel_activity",
+      "row_count": 0
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.4113588333129883
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.5134987831115723
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.5543285608291626
+    },
+    {
+      "type": "community",
+      "community_id": "community_16",
+      "distance": 0.5670034885406494
+    }
+  ],
+  "duration_ms": 24064,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1028,
+      "completion_tokens": 554
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1718,
+      "completion_tokens": 593
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 695,
+      "completion_tokens": 166
+    }
+  ],
+  "errors": [
+    "cypher_stream: CypherSyntaxError: {neo4j_code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input ':': expected an expression (line 2, column 21 (offset: 26))\n\"  (MATCH (e:Event)-[:DETECTED_BY]->(:Camera)\"\n                     ^} {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=0/5=0.00 (threshold=0.6)"
+  }
+}

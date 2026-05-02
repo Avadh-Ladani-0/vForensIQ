@@ -1,0 +1,55 @@
+{
+  "question_id": "L4_q011_people_flow_gate_to_keynote",
+  "level": "L4",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Did people who came through the main entrance also show up at the keynote? How many people were tracked at both locations compared to just the main entrance?",
+  "gold_value": {
+    "overlap_exists": "yes",
+    "main_entrance_mentioned": "Gate_MainEntrance"
+  },
+  "answer_text": "Yes, people who came through the main entrance also showed up at the keynote. There were 1,531 people tracked at the main entrance, and 409 of these were tracked at both the main entrance and the keynote.",
+  "structured_answer": {
+    "columns": [
+      "total_main_entrance",
+      "both_locations"
+    ],
+    "rows": [
+      [
+        1531,
+        409
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e1:Event {event_type: 'person_entry'})-[:DETECTED_BY]->(c1:Camera)-[:LOCATED_AT]->(l1:Location)\nWHERE l1.name CONTAINS 'MainEntrance' AND e1.timestamp_utc >= '2025-12-08T00:00:00Z' AND e1.timestamp_utc < '2025-12-09T00:00:00Z'\nWITH e1.object_id AS person_id\nMATCH (e2:Event {event_type: 'person_entry'})-[:DETECTED_BY]->(c2:Camera)-[:LOCATED_AT]->(l2:Location)\nWHERE l2.name CONTAINS 'Keynote' AND e2.timestamp_utc >= '2025-12-08T00:00:00Z' AND e2.timestamp_utc < '2025-12-09T00:00:00Z'\nWITH person_id, collect(e2.object_id) AS keynote_ids\nRETURN count(DISTINCT person_id) AS total_main_entrance, count(DISTINCT CASE WHEN person_id IN keynote_ids THEN person_id END) AS both_locations",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 44542,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2524,
+      "completion_tokens": 241
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 451,
+      "completion_tokens": 45
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": false,
+    "detail": "missing=[\"main_entrance_mentioned='Gate_MainEntrance'_not_mentioned\"]"
+  }
+}

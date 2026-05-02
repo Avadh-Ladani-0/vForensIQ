@@ -1,0 +1,140 @@
+{
+  "question_id": "L5_q003_staffing_brief",
+  "level": "L5",
+  "approach": "b3_aqr",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a staffing recommendation brief for the AI Hardware Summit on 2025-12-08 (UTC). Identify (a) the busiest hours of the day requiring extra staff at the gates and on the expo floor, and (b) the quiet hours where minimal coverage is sufficient. Cite specific hour ranges and supporting metrics. Keep it to 4-6 bullet points.",
+  "gold_value": {
+    "rubric": [
+      "Morning gate rush around 08:00-10:00 UTC needs extra staffing",
+      "Evening gate rush around 17:00-19:00 UTC needs extra staffing",
+      "Lunch hours 12:00-14:00 UTC are busy at FoodCourt and need extra coverage",
+      "Late-night and early-morning hours (roughly 22:00-06:00 UTC) are quiet and need minimal coverage",
+      "Keynote hours (09:00-10:00 and 14:00-15:00 UTC) require crowd management at KeynoteHall_Stage"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "- **Busiest Hours (Extra Staff Recommended):**\n  - 08:00 - 09:00 UTC with 4,814 events.\n  - 09:00 - 10:00 UTC with 4,802 events.\n  - 17:00 - 18:00 UTC with 4,634 events.\n  \n- **Quiet Hours (Minimal Coverage Suggested):**\n  - 14:00 - 15:00 UTC with only 66 events.\n  - 05:00 - 06:00 UTC with 66 events.\n  - 12:00 - 13:00 UTC with 50 events.\n\nPeak periods highlight a surge of attendees, particularly around opening and closing times, indicating the need for increased staff at the gates and on the expo floor to manage high foot traffic effectively.",
+  "structured_answer": {
+    "cypher_columns": [
+      "busiest_hours",
+      "quiet_hours"
+    ],
+    "cypher_rows": [
+      [
+        [
+          {
+            "total_events": 4814,
+            "hour": "2025-12-08T08:00:00Z"
+          },
+          {
+            "total_events": 4802,
+            "hour": "2025-12-08T09:00:00Z"
+          },
+          {
+            "total_events": 4634,
+            "hour": "2025-12-08T17:00:00Z"
+          }
+        ],
+        [
+          {
+            "total_events": 66,
+            "hour": "2025-12-01T14:00:00Z"
+          },
+          {
+            "total_events": 66,
+            "hour": "2025-12-01T05:00:00Z"
+          },
+          {
+            "total_events": 50,
+            "hour": "2025-12-01T12:00:00Z"
+          }
+        ]
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and an average head count of approximately 31.2.",
+        "distance": 0.5108164548873901
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.6044568419456482
+      },
+      {
+        "community_id": "community_17",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 20:00 and 20:58 UTC recorded a total of 33 events. The dominant event types were person exits (13) and person entries (8), with car entries (7) and exits (5) also noted. The peak head count reached 13, and the average head count was approximately 5.05 during this period.",
+        "distance": 0.6296461820602417
+      },
+      {
+        "community_id": "community_6",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 11:01:47 and 11:59:48, recorded a total of 44 events. The dominant event types were person exits (17) and person entries (12), with car entries (9) and exits (6) also noted. The peak head count reached 12, and the average head count was 5.05 during this period.",
+        "distance": 0.6304481029510498
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(:Location) \n  WHERE c.camera_location CONTAINS 'MainEntrance' OR c.camera_location CONTAINS 'NVIDIA'\n  AND e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  WITH substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, count(*) AS n\n  RETURN hour, n\n  UNION ALL\n  MATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera) \n  WHERE (c.camera_location CONTAINS 'MainEntrance' OR c.camera_location CONTAINS 'NVIDIA')\n  AND ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.hour_utc AS hour, ch.event_count AS n\n}\nWITH hour, sum(n) AS total_events\nORDER BY total_events DESC\nWITH collect({hour: hour, total_events: total_events}) AS hourly_data\nRETURN hourly_data[0..3] AS busiest_hours, hourly_data[-3..] AS quiet_hours",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.5108164548873901
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.6044568419456482
+    },
+    {
+      "type": "community",
+      "community_id": "community_17",
+      "distance": 0.6296461820602417
+    },
+    {
+      "type": "community",
+      "community_id": "community_6",
+      "distance": 0.6304481029510498
+    }
+  ],
+  "duration_ms": 11164,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2206,
+      "completion_tokens": 289
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 904,
+      "completion_tokens": 168
+    }
+  ],
+  "errors": [],
+  "routing": {
+    "classified_level": "L5",
+    "routed_to": "b2_rag_hybrid",
+    "routing_method": "llm_zero_shot",
+    "routing_duration_ms": 914,
+    "classifier_metadata": {
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 405,
+      "completion_tokens": 2
+    }
+  },
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=3/5=0.60 (threshold=0.5)"
+  }
+}

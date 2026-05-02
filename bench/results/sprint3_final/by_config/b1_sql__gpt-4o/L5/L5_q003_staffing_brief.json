@@ -1,0 +1,103 @@
+{
+  "question_id": "L5_q003_staffing_brief",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a staffing recommendation brief for the AI Hardware Summit on 2025-12-08 (UTC). Identify (a) the busiest hours of the day requiring extra staff at the gates and on the expo floor, and (b) the quiet hours where minimal coverage is sufficient. Cite specific hour ranges and supporting metrics. Keep it to 4-6 bullet points.",
+  "gold_value": {
+    "rubric": [
+      "Morning gate rush around 08:00-10:00 UTC needs extra staffing",
+      "Evening gate rush around 17:00-19:00 UTC needs extra staffing",
+      "Lunch hours 12:00-14:00 UTC are busy at FoodCourt and need extra coverage",
+      "Late-night and early-morning hours (roughly 22:00-06:00 UTC) are quiet and need minimal coverage",
+      "Keynote hours (09:00-10:00 and 14:00-15:00 UTC) require crowd management at KeynoteHall_Stage"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "- **Busiest Hours:**\n  - From 15:00 to 16:00, the Demo Booth at NVIDIA experienced the highest traffic with a head count of 251,999-252,407. Consider additional staffing for visitor management.\n  - Between 11:00 and 12:00, this same location also saw significant activity, with a total head count of 216,711.\n  \n- **Quiet Hours:**\n  - Minimal coverage is sufficient at the Main Entrance Gate from 02:00 to 03:00, 14:00 to 15:00, and 23:00 to 00:00, as each of these hours recorded 0 in total head count.",
+  "structured_answer": {
+    "columns": [
+      "period",
+      "hour",
+      "camera_location",
+      "event_count",
+      "total_head_count"
+    ],
+    "rows": [
+      [
+        "Busiest",
+        "16",
+        "DemoBooth_NVIDIA",
+        3600,
+        252407
+      ],
+      [
+        "Busiest",
+        "15",
+        "DemoBooth_NVIDIA",
+        3600,
+        251999
+      ],
+      [
+        "Busiest",
+        "11",
+        "DemoBooth_NVIDIA",
+        3600,
+        216711
+      ],
+      [
+        "Quiet",
+        "02",
+        "Gate_MainEntrance",
+        19,
+        0
+      ],
+      [
+        "Quiet",
+        "14",
+        "Gate_MainEntrance",
+        19,
+        0
+      ],
+      [
+        "Quiet",
+        "23",
+        "Gate_MainEntrance",
+        13,
+        0
+      ]
+    ],
+    "total_rows": 6,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH event_counts AS (\n    SELECT \n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        camera_location,\n        COUNT(*) AS event_count,\n        SUM(head_count) AS total_head_count\n    FROM \n        events\n    WHERE \n        timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        hour, camera_location\n),\nbusiest_hours AS (\n    SELECT \n        hour,\n        camera_location,\n        event_count,\n        total_head_count\n    FROM \n        event_counts\n    WHERE \n        camera_location LIKE '%MainEntrance%' OR camera_location LIKE '%NVIDIA%'\n    ORDER BY \n        total_head_count DESC, event_count DESC\n    LIMIT 3\n),\nquiet_hours AS (\n    SELECT \n        hour,\n        camera_location,\n        event_count,\n        total_head_count\n    FROM \n        event_counts\n    WHERE \n        camera_location LIKE '%MainEntrance%' OR camera_location LIKE '%NVIDIA%'\n    ORDER BY \n        total_head_count ASC, event_count ASC\n    LIMIT 3\n)\nSELECT \n    'Busiest' AS period, \n    hour, \n    camera_location, \n    event_count, \n    total_head_count\nFROM \n    busiest_hours\nUNION ALL\nSELECT \n    'Quiet' AS period, \n    hour, \n    camera_location, \n    event_count, \n    total_head_count\nFROM \n    quiet_hours\nORDER BY \n    period, total_head_count DESC, event_count DESC",
+      "row_count": 6
+    }
+  ],
+  "duration_ms": 7379,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 1008,
+      "completion_tokens": 337
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 713,
+      "completion_tokens": 146
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=1/5=0.20 (threshold=0.5)"
+  }
+}

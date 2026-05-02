@@ -1,0 +1,55 @@
+{
+  "question_id": "L4_q007_nvidia_vs_intel_booth_attraction",
+  "level": "L4",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which demo booth attracted bigger crowds \u2014 NVIDIA or Intel? Roughly how much more popular was the winner?",
+  "gold_value": {
+    "winner": "NVIDIA",
+    "intel_mentioned": "Intel"
+  },
+  "answer_text": "The NVIDIA demo booth attracted bigger crowds than the Intel booth. NVIDIA was roughly 116.8 more popular in terms of crowd size.",
+  "structured_answer": {
+    "columns": [
+      "more_popular_booth",
+      "difference_in_crowd"
+    ],
+    "rows": [
+      [
+        "NVIDIA",
+        116.79999999999995
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch_nvidia:CrowdHour)\nWHERE ch_nvidia.camera_location CONTAINS 'NVIDIA' \n  AND ch_nvidia.hour_utc >= '2025-12-08T00:00:00Z' \n  AND ch_nvidia.hour_utc < '2025-12-09T00:00:00Z'\nWITH SUM(ch_nvidia.avg_hc) AS total_nvidia_crowd\n\nMATCH (ch_intel:CrowdHour)\nWHERE ch_intel.camera_location CONTAINS 'Intel' \n  AND ch_intel.hour_utc >= '2025-12-08T00:00:00Z' \n  AND ch_intel.hour_utc < '2025-12-09T00:00:00Z'\nWITH total_nvidia_crowd, SUM(ch_intel.avg_hc) AS total_intel_crowd\n\nRETURN \n  CASE \n    WHEN total_nvidia_crowd > total_intel_crowd THEN 'NVIDIA'\n    ELSE 'Intel'\n  END AS more_popular_booth,\n  ABS(total_nvidia_crowd - total_intel_crowd) AS difference_in_crowd",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 4425,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 980,
+      "completion_tokens": 247
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 457,
+      "completion_tokens": 27
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_2_facts_satisfied"
+  }
+}

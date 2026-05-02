@@ -1,0 +1,96 @@
+{
+  "question_id": "L4_q005_highest_peak_to_baseline_ratio",
+  "level": "L4",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Across all crowd-mode cameras (ExpoFloor_MainAisle, DemoBooth_NVIDIA, DemoBooth_Intel, KeynoteHall_Stage, FoodCourt_North) on 2025-12-08 (UTC), which location showed the most extreme peak-to-baseline contrast \u2014 meaning the largest ratio of its peak head_count to its overnight quiet-hour average head_count? Identify the camera_location and explain the ratio order of magnitude.",
+  "gold_value": {
+    "most_extreme_location": "KeynoteHall_Stage"
+  },
+  "answer_text": "The location with the most extreme peak-to-baseline contrast in head count on December 8, 2025, was the KeynoteHall_Stage, with a ratio of approximately 8.18 between its peak and overnight quiet-hour average head counts. This indicates a significant spike in activity, possibly driven by a scheduled keynote event, where the activity was predominantly characterized by a large number of person entries and exits throughout the day.",
+  "structured_answer": {
+    "cypher_columns": [
+      "location",
+      "ratio"
+    ],
+    "cypher_rows": [
+      [
+        "KeynoteHall_Stage",
+        8.183079056865465
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_4",
+        "summary": "The CCTV activity involved five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types were person entries (169) and exits (132), with a total of 344 events recorded during the time range from December 8, 2025, 02:03:44 UTC to December 8, 2025, 23:59:14 UTC. The peak head count reached 500, and the average head count was approximately 31.2.",
+        "distance": 0.29601383209228516
+      },
+      {
+        "community_id": "community_5",
+        "summary": "The CCTV activity involved multiple camera locations during the time range from 16:00:57 to 16:58:54 UTC on December 8, 2025. The dominant event types were person entries, with a total of 16, and person exits, totaling 11, alongside 3 car entries and 2 car exits. The total volume of events recorded was 32, with a node count of 33. There are no notable peak head counts or average head counts reported.",
+        "distance": 0.4504958987236023
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, covered a time range from 08:00:13 to 15:59:56 UTC. The dominant event types were person entries (680) and exits (685), with a total of 1,376 events recorded. The peak event count per hour occurred during the observed period, contributing to a total of 1,379 node counts.",
+        "distance": 0.4538150429725647
+      },
+      {
+        "community_id": "community_8",
+        "summary": "The CCTV activity covers the time range from 00:02:26 to 00:59:58 on December 8, 2025. The camera locations involved recorded a total of 40 events, with person entries (17) and car exits (5) being the dominant event types. Notably, there were 2 car entries and 16 person exits during this period. The peak head count and average head count data are not available.",
+        "distance": 0.474916934967041
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour)\nWHERE ch.camera_location IN ['ExpoFloor_MainAisle', 'DemoBooth_NVIDIA', 'DemoBooth_Intel', 'KeynoteHall_Stage', 'FoodCourt_North']\n  AND ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\nWITH ch.camera_location AS location, ch.peak_hc AS peak_hc, ch.avg_hc AS avg_hc, ch.hour_utc AS hour\nWITH location, peak_hc, avg_hc, hour, CASE WHEN hour >= '2025-12-08T00:00:00Z' AND hour < '2025-12-08T06:00:00Z' THEN avg_hc ELSE 0 END AS overnight_avg\nWITH location, peak_hc, max(overnight_avg) AS overnight_avg\nWITH location, peak_hc, overnight_avg, CASE WHEN overnight_avg > 0 THEN peak_hc / overnight_avg ELSE 0 END AS ratio\nRETURN location, ratio\nORDER BY ratio DESC\nLIMIT 1",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_4",
+      "distance": 0.29601383209228516
+    },
+    {
+      "type": "community",
+      "community_id": "community_5",
+      "distance": 0.4504958987236023
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.4538150429725647
+    },
+    {
+      "type": "community",
+      "community_id": "community_8",
+      "distance": 0.474916934967041
+    }
+  ],
+  "duration_ms": 6479,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2583,
+      "completion_tokens": 247
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 774,
+      "completion_tokens": 86
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_1_facts_satisfied"
+  }
+}

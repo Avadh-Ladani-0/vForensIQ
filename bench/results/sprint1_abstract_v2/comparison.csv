@@ -1,0 +1,83 @@
+approach,model,level,question_id,scoring,invocation_status,passed,detail
+b1_sql,gpt-4o-mini,L1,L1_q001_car_entry_count_at_gate01,exact_numeric,ok,True,match
+b1_sql,gpt-4o,L1,L1_q001_car_entry_count_at_gate01,exact_numeric,ok,True,match
+b1_sql,gpt-4o-mini,L1,L1_q002_car_entry_count_at_parkinglot,exact_numeric,ok,True,match
+b1_sql,gpt-4o,L1,L1_q002_car_entry_count_at_parkinglot,exact_numeric,ok,True,match
+b1_sql,gpt-4o-mini,L1,L1_q003_person_entry_at_keynote_door,exact_numeric,ok,True,match
+b1_sql,gpt-4o,L1,L1_q003_person_entry_at_keynote_door,exact_numeric,ok,True,match
+b1_sql,gpt-4o-mini,L1,L1_q004_total_events_in_summit_day,exact_numeric,ok,True,match
+b1_sql,gpt-4o,L1,L1_q004_total_events_in_summit_day,exact_numeric,ok,True,match
+b1_sql,gpt-4o-mini,L1,L1_q005_distinct_object_ids_at_main_entrance,exact_numeric,ok,True,match
+b1_sql,gpt-4o,L1,L1_q005_distinct_object_ids_at_main_entrance,exact_numeric,ok,True,match
+b1_sql,gpt-4o-mini,L1,L1_q006_active_cameras_during_keynote,exact_numeric,ok,True,match
+b1_sql,gpt-4o,L1,L1_q006_active_cameras_during_keynote,exact_numeric,ok,True,match
+b1_sql,gpt-4o-mini,L1,L1_q007_cars_into_parking_lot,exact_numeric,ok,True,match
+b1_sql,gpt-4o,L1,L1_q007_cars_into_parking_lot,exact_numeric,ok,True,match
+b1_sql,gpt-4o-mini,L1,L1_q008_people_through_main_gate,exact_numeric,ok,True,match
+b1_sql,gpt-4o,L1,L1_q008_people_through_main_gate,exact_numeric,ok,True,match
+b1_sql,gpt-4o-mini,L1,L1_q009_total_cameras_at_venue,exact_numeric,ok,True,match
+b1_sql,gpt-4o,L1,L1_q009_total_cameras_at_venue,exact_numeric,ok,True,match
+b1_sql,gpt-4o-mini,L2,L2_q001_peak_headcount_nvidia_booth,numeric_tolerance_1pct,ok,True,within_1pct (expected=86.0 got=86.0)
+b1_sql,gpt-4o,L2,L2_q001_peak_headcount_nvidia_booth,numeric_tolerance_1pct,ok,True,within_1pct (expected=86.0 got=86.0)
+b1_sql,gpt-4o-mini,L2,L2_q002_avg_headcount_foodcourt_lunch,numeric_tolerance_1pct,ok,True,within_1pct (expected=120.01 got=120.01)
+b1_sql,gpt-4o,L2,L2_q002_avg_headcount_foodcourt_lunch,numeric_tolerance_1pct,ok,True,within_1pct (expected=120.01 got=120.01)
+b1_sql,gpt-4o-mini,L2,L2_q003_avg_confidence_all_events,numeric_tolerance_1pct,ok,True,within_1pct (expected=0.9 got=0.9)
+b1_sql,gpt-4o,L2,L2_q003_avg_confidence_all_events,numeric_tolerance_1pct,ok,True,within_1pct (expected=0.9 got=0.9)
+b1_sql,gpt-4o-mini,L2,L2_q004_low_confidence_events_count,numeric_tolerance_1pct,ok,True,within_1pct (expected=30467.0 got=30467.0)
+b1_sql,gpt-4o,L2,L2_q004_low_confidence_events_count,numeric_tolerance_1pct,ok,True,within_1pct (expected=30467.0 got=30467.0)
+b1_sql,gpt-4o-mini,L2,L2_q005_net_person_flow_main_entrance,numeric_tolerance_1pct,ok,True,within_1pct (expected=179.0 got=179.0)
+b1_sql,gpt-4o,L2,L2_q005_net_person_flow_main_entrance,numeric_tolerance_1pct,ok,True,within_1pct (expected=179.0 got=179.0)
+b1_sql,gpt-4o-mini,L2,L2_q006_busiest_moment_nvidia,numeric_tolerance_1pct,ok,True,within_1pct (expected=86.0 got=86.0)
+b1_sql,gpt-4o,L2,L2_q006_busiest_moment_nvidia,numeric_tolerance_1pct,ok,True,within_1pct (expected=86.0 got=86.0)
+b1_sql,gpt-4o-mini,L2,L2_q007_low_confidence_detections,numeric_tolerance_1pct,ok,True,within_1pct (expected=30467.0 got=30467.0)
+b1_sql,gpt-4o,L2,L2_q007_low_confidence_detections,numeric_tolerance_1pct,ok,True,within_1pct (expected=30467.0 got=30467.0)
+b1_sql,gpt-4o-mini,L2,L2_q008_lunch_crowd_food_court,numeric_tolerance_1pct,ok,True,within_1pct (expected=120.01 got=120.0)
+b1_sql,gpt-4o,L2,L2_q008_lunch_crowd_food_court,numeric_tolerance_1pct,ok,False,exceeds_1pct (expected=120.01 got=81.87)
+b1_sql,gpt-4o-mini,L3,L3_q001_peak_per_booth,set_match_with_tolerance,ok,True,all_keys_and_values_matched (rows=2)
+b1_sql,gpt-4o,L3,L3_q001_peak_per_booth,set_match_with_tolerance,ok,True,all_keys_and_values_matched (rows=2)
+b1_sql,gpt-4o-mini,L3,L3_q002_event_counts_by_type,set_match_with_tolerance,ok,True,all_keys_and_values_matched (rows=5)
+b1_sql,gpt-4o,L3,L3_q002_event_counts_by_type,set_match_with_tolerance,ok,True,all_keys_and_values_matched (rows=5)
+b1_sql,gpt-4o-mini,L3,L3_q003_hourly_person_entry_main_entrance,set_match_with_tolerance,ok,True,all_keys_and_values_matched (rows=24)
+b1_sql,gpt-4o,L3,L3_q003_hourly_person_entry_main_entrance,set_match_with_tolerance,ok,True,all_keys_and_values_matched (rows=24)
+b1_sql,gpt-4o-mini,L3,L3_q004_avg_headcount_per_crowd_camera,set_match_with_tolerance,ok,True,all_keys_and_values_matched (rows=5)
+b1_sql,gpt-4o,L3,L3_q004_avg_headcount_per_crowd_camera,set_match_with_tolerance,ok,True,all_keys_and_values_matched (rows=5)
+b1_sql,gpt-4o-mini,L3,L3_q005_top3_hours_by_crowd_activity,set_match_with_tolerance,ok,True,all_keys_and_values_matched (rows=3)
+b1_sql,gpt-4o,L3,L3_q005_top3_hours_by_crowd_activity,set_match_with_tolerance,ok,True,all_keys_and_values_matched (rows=3)
+b1_sql,gpt-4o-mini,L3,L3_q006_arrival_pattern_main_gate,set_match_with_tolerance,ok,True,all_keys_and_values_matched (rows=24)
+b1_sql,gpt-4o,L3,L3_q006_arrival_pattern_main_gate,set_match_with_tolerance,ok,False,"missing_keys=['00', '01', '03', '04', '05']"
+b1_sql,gpt-4o-mini,L3,L3_q007_crowd_hotspots,set_match_with_tolerance,ok,True,all_keys_and_values_matched (rows=5)
+b1_sql,gpt-4o,L3,L3_q007_crowd_hotspots,set_match_with_tolerance,ok,True,all_keys_and_values_matched (rows=5)
+b1_sql,gpt-4o-mini,L3,L3_q008_event_volume_by_hour,set_match_with_tolerance,ok,True,all_keys_and_values_matched (rows=24)
+b1_sql,gpt-4o,L3,L3_q008_event_volume_by_hour,set_match_with_tolerance,ok,False,"missing_keys=['01', '03', '04', '05', '06'] missing_numbers=[18358.0, 19003.0, 18323.0, 18397.0, 18440.0]"
+b1_sql,gpt-4o-mini,L4,L4_q001_compare_booths,structured_facts,ok,True,all_2_facts_satisfied
+b1_sql,gpt-4o,L4,L4_q001_compare_booths,structured_facts,ok,True,all_2_facts_satisfied
+b1_sql,gpt-4o-mini,L4,L4_q002_gate_flow_comparison,structured_facts,ok,True,all_3_facts_satisfied
+b1_sql,gpt-4o,L4,L4_q002_gate_flow_comparison,structured_facts,ok,True,all_3_facts_satisfied
+b1_sql,gpt-4o-mini,L4,L4_q003_morning_vs_evening_main_entrance,structured_facts,ok,True,all_3_facts_satisfied
+b1_sql,gpt-4o,L4,L4_q003_morning_vs_evening_main_entrance,structured_facts,ok,True,all_3_facts_satisfied
+b1_sql,gpt-4o-mini,L4,L4_q004_keynote_morning_vs_afternoon,structured_facts,ok,True,all_3_facts_satisfied
+b1_sql,gpt-4o,L4,L4_q004_keynote_morning_vs_afternoon,structured_facts,ok,True,all_3_facts_satisfied
+b1_sql,gpt-4o-mini,L4,L4_q005_highest_peak_to_baseline_ratio,structured_facts,ok,True,all_1_facts_satisfied
+b1_sql,gpt-4o,L4,L4_q005_highest_peak_to_baseline_ratio,structured_facts,ok,True,all_1_facts_satisfied
+b1_sql,gpt-4o-mini,L4,L4_q006_morning_vs_evening_rush,structured_facts,ok,False,"missing=['evening_total_approx=1000.0+-250.0_no_match (numbers_seen=[1408.0, 1475.0])']"
+b1_sql,gpt-4o,L4,L4_q006_morning_vs_evening_rush,structured_facts,ok,True,all_3_facts_satisfied
+b1_sql,gpt-4o-mini,L4,L4_q007_nvidia_vs_intel_booth_attraction,structured_facts,ok,False,missing=['popularity_ratio_winner_over_loser=1.4+-0.5_no_match (numbers_seen=[1340536.0])']
+b1_sql,gpt-4o,L4,L4_q007_nvidia_vs_intel_booth_attraction,structured_facts,ok,False,"missing=['popularity_ratio_winner_over_loser=1.4+-0.5_no_match (numbers_seen=[1340536.0, 919999.0, 420537.0])']"
+b1_sql,gpt-4o-mini,L4,L4_q008_keynote_attendance_dropoff,structured_facts,ok,False,"missing=['morning_keynote_avg_approx=450.0+-100.0_no_match (numbers_seen=[1438248.0, 24957.0])', 'afternoon_keynote_avg_approx=400.0+-100.0_no_match (numbers_seen=[1438248.0, 24957.0])']"
+b1_sql,gpt-4o,L4,L4_q008_keynote_attendance_dropoff,structured_facts,ok,False,"missing=['morning_keynote_avg_approx=450.0+-100.0_no_match (numbers_seen=[1620671.0, 1438248.0, 1366053.0])', 'afternoon_keynote_avg_approx=400.0+-100.0_no_match (numbers_seen=[1620671.0, 1438248.0, 1366053.0])']"
+b1_sql,gpt-4o-mini,L5,L5_q001_summit_day_brief,rubric_coverage,ok,True,coverage=4/5=0.80 (threshold=0.6)
+b1_sql,gpt-4o,L5,L5_q001_summit_day_brief,rubric_coverage,ok,True,coverage=4/5=0.80 (threshold=0.6)
+b1_sql,gpt-4o-mini,L5,L5_q002_nvidia_booth_timeline,rubric_coverage,ok,True,coverage=3/5=0.60 (threshold=0.6)
+b1_sql,gpt-4o,L5,L5_q002_nvidia_booth_timeline,rubric_coverage,ok,True,coverage=4/5=0.80 (threshold=0.6)
+b1_sql,gpt-4o-mini,L5,L5_q003_staffing_brief,rubric_coverage,ok,False,coverage=2/5=0.40 (threshold=0.5)
+b1_sql,gpt-4o,L5,L5_q003_staffing_brief,rubric_coverage,ok,False,coverage=1/5=0.20 (threshold=0.5)
+b1_sql,gpt-4o-mini,L5,L5_q004_security_attention_report,rubric_coverage,ok,True,coverage=4/4=1.00 (threshold=0.5)
+b1_sql,gpt-4o,L5,L5_q004_security_attention_report,rubric_coverage,ok,True,coverage=2/4=0.50 (threshold=0.5)
+b1_sql,gpt-4o-mini,L5,L5_q005_keynote_hall_lifecycle,rubric_coverage,ok,True,coverage=3/4=0.75 (threshold=0.5)
+b1_sql,gpt-4o,L5,L5_q005_keynote_hall_lifecycle,rubric_coverage,ok,True,coverage=3/4=0.75 (threshold=0.5)
+b1_sql,gpt-4o-mini,L5,L5_q006_how_did_the_day_go,rubric_coverage,ok,False,coverage=0/5=0.00 (threshold=0.4)
+b1_sql,gpt-4o,L5,L5_q006_how_did_the_day_go,rubric_coverage,ok,False,coverage=1/5=0.20 (threshold=0.4)
+b1_sql,gpt-4o-mini,L5,L5_q007_security_team_handoff,rubric_coverage,ok,False,coverage=1/4=0.25 (threshold=0.5)
+b1_sql,gpt-4o,L5,L5_q007_security_team_handoff,rubric_coverage,ok,True,coverage=2/4=0.50 (threshold=0.5)
+b1_sql,gpt-4o-mini,L5,L5_q008_what_should_change,rubric_coverage,ok,False,coverage=0/4=0.00 (threshold=0.4)
+b1_sql,gpt-4o,L5,L5_q008_what_should_change,rubric_coverage,ok,False,coverage=0/4=0.00 (threshold=0.4)

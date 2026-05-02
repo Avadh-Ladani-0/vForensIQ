@@ -1,0 +1,179 @@
+{
+  "question_id": "L5_q002_nvidia_booth_timeline",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Describe the full-day activity timeline at DemoBooth_NVIDIA on 2025-12-08 (UTC). Identify the busiest time windows, any lulls, and quantify the peak crowd sizes versus the baseline. Write 3-5 sentences.",
+  "gold_value": {
+    "rubric": [
+      "Morning peak between 10-12 UTC",
+      "Afternoon peak between 15-17 UTC",
+      "Lunch-hour dip (around 12-13 or 13-14 UTC)",
+      "Peak head_count values are substantially higher than baseline of ~3",
+      "Overnight / early-morning hours show baseline/quiet activity"
+    ],
+    "threshold": 0.6
+  },
+  "answer_text": "On 2025-12-08, the activity at DemoBooth_NVIDIA was highest between 15:00 and 16:00 UTC, with a peak head count of 252,407 people. Another high-activity period was between 11:00 and 13:00 UTC, with head counts reaching 216,711 and then decreasing to 12,652. The quieter periods occurred overnight, from 00:00 to 09:00 UTC, where head counts remained below 13,000 each hour. Thus, the peak crowd size significantly surpassed the baseline activity, with the most substantial contrast noted around mid-morning and mid-afternoon.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "total_head_count",
+      "event_count"
+    ],
+    "rows": [
+      [
+        "00",
+        12493,
+        3600
+      ],
+      [
+        "01",
+        12706,
+        3600
+      ],
+      [
+        "02",
+        12644,
+        3600
+      ],
+      [
+        "03",
+        12675,
+        3600
+      ],
+      [
+        "04",
+        12916,
+        3600
+      ],
+      [
+        "05",
+        12971,
+        3600
+      ],
+      [
+        "06",
+        12449,
+        3600
+      ],
+      [
+        "07",
+        12395,
+        3600
+      ],
+      [
+        "08",
+        12787,
+        3600
+      ],
+      [
+        "09",
+        12651,
+        3600
+      ],
+      [
+        "10",
+        216035,
+        3600
+      ],
+      [
+        "11",
+        216711,
+        3600
+      ],
+      [
+        "12",
+        12652,
+        3600
+      ],
+      [
+        "13",
+        162130,
+        3600
+      ],
+      [
+        "14",
+        12576,
+        3600
+      ],
+      [
+        "15",
+        251999,
+        3600
+      ],
+      [
+        "16",
+        252407,
+        3600
+      ],
+      [
+        "17",
+        12803,
+        3600
+      ],
+      [
+        "18",
+        12746,
+        3600
+      ],
+      [
+        "19",
+        12313,
+        3600
+      ],
+      [
+        "20",
+        12829,
+        3600
+      ],
+      [
+        "21",
+        12763,
+        3600
+      ],
+      [
+        "22",
+        13304,
+        3600
+      ],
+      [
+        "23",
+        12581,
+        3600
+      ]
+    ],
+    "total_rows": 24,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH event_data AS (\n    SELECT \n        timestamp_utc,\n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        event_type,\n        head_count\n    FROM \n        events\n    WHERE \n        camera_location LIKE '%NVIDIA%' \n        AND timestamp_utc >= '2025-12-08T00:00:00Z' \n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n),\nhourly_summary AS (\n    SELECT \n        hour,\n        SUM(CASE WHEN event_type = 'crowd' THEN head_count ELSE 0 END) AS total_head_count,\n        COUNT(*) AS event_count\n    FROM \n        event_data\n    GROUP BY \n        hour\n)\nSELECT \n    hour,\n    total_head_count,\n    event_count\nFROM \n    hourly_summary\nORDER BY \n    hour",
+      "row_count": 24
+    }
+  ],
+  "duration_ms": 5078,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 984,
+      "completion_tokens": 184
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 691,
+      "completion_tokens": 135
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=3/5=0.60 (threshold=0.6)"
+  }
+}

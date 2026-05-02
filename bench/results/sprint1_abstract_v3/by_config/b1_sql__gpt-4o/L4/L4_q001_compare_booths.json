@@ -1,0 +1,62 @@
+{
+  "question_id": "L4_q001_compare_booths",
+  "level": "L4",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "On 2025-12-08 (UTC), compare the crowd activity at DemoBooth_NVIDIA versus DemoBooth_Intel. Which booth was busier, and approximately what was the ratio of their average head_counts?",
+  "gold_value": {
+    "busier_booth": "DemoBooth_NVIDIA",
+    "average_headcount_ratio_nvidia_over_intel": {
+      "value": 1.4,
+      "tolerance": 0.4
+    }
+  },
+  "answer_text": "On 2025-12-08, DemoBooth_NVIDIA was busier than DemoBooth_Intel. The average head count at DemoBooth_NVIDIA was approximately 15.52, while at DemoBooth_Intel it was about 10.65. The ratio of their average head counts is approximately 1.46:1, with DemoBooth_NVIDIA having the higher count.",
+  "structured_answer": {
+    "columns": [
+      "camera_location",
+      "avg_head_count"
+    ],
+    "rows": [
+      [
+        "DemoBooth_Intel",
+        10.648136574074075
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        15.515462962962962
+      ]
+    ],
+    "total_rows": 2
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH crowd_activity AS (\n    SELECT \n        camera_location,\n        AVG(head_count) AS avg_head_count\n    FROM \n        events\n    WHERE \n        event_type = 'crowd'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z'\n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n        AND (camera_location LIKE '%DemoBooth_NVIDIA%' OR camera_location LIKE '%DemoBooth_Intel%')\n    GROUP BY \n        camera_location\n)\nSELECT \n    camera_location,\n    avg_head_count\nFROM \n    crowd_activity",
+      "row_count": 2
+    }
+  ],
+  "duration_ms": 3551,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 980,
+      "completion_tokens": 132
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 378,
+      "completion_tokens": 83
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_2_facts_satisfied"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "question_id": "L4_q008_keynote_attendance_dropoff",
+  "level": "L4",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Did the keynote stage attendance drop off later in the day, or stay similar across the morning and afternoon keynotes?",
+  "gold_value": {
+    "trend_keyword_a": "morning",
+    "trend_keyword_b": "afternoon"
+  },
+  "answer_text": "There is no data available for keynote stage attendance, so I cannot determine if attendance dropped off later in the day or stayed similar across the morning and afternoon keynotes.",
+  "structured_answer": {
+    "columns": [],
+    "rows": [],
+    "total_rows": 0
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour) WHERE ch.camera_location CONTAINS 'keynote' AND ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN substring(ch.hour_utc, 0, 13) + ':00:00Z' AS hour, ch.avg_hc AS avg_head_count\n}\nWITH hour, avg_head_count\nRETURN hour, avg_head_count ORDER BY hour",
+      "row_count": 0
+    }
+  ],
+  "duration_ms": 7459,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2155,
+      "completion_tokens": 122
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2433,
+      "completion_tokens": 114
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 299,
+      "completion_tokens": 33
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_2_facts_satisfied"
+  }
+}

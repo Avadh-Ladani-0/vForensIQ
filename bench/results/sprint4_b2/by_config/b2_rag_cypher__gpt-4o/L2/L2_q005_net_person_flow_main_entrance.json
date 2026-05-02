@@ -1,0 +1,46 @@
+{
+  "question_id": "L2_q005_net_person_flow_main_entrance",
+  "level": "L2",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What was the net person flow (person_entry events minus person_exit events) at Gate_MainEntrance on 2025-12-08 (UTC)?",
+  "gold_value": 179,
+  "answer_text": null,
+  "structured_answer": {
+    "columns": [],
+    "rows": [],
+    "total_rows": 0
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event {event_type: 'person_entry'})-[:DETECTED_BY]->(:Camera)-[:LOCATED_AT]->(:Location {name: 'Gate_MainEntrance'})\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN count(e) AS count_entries\n  UNION ALL\n  MATCH (e:Event {event_type: 'person_exit'})-[:DETECTED_BY]->(:Camera)-[:LOCATED_AT]->(:Location {name: 'Gate_MainEntrance'})\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN -count(e) AS count_exits\n}\nRETURN sum(count_entries + count_exits) AS net_person_flow",
+      "row_count": 0
+    }
+  ],
+  "duration_ms": 10757,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2524,
+      "completion_tokens": 198
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 2849,
+      "completion_tokens": 202
+    }
+  ],
+  "errors": [
+    "CypherSyntaxError: {neo4j_code: Neo.ClientError.Statement.SyntaxError} {message: All sub queries in an UNION must have the same return column names (line 5, column 3 (offset: 267))\n\"  UNION ALL\"\n   ^} {gql_status: 42001} {gql_status_description: error: syntax error or access rule violation - invalid syntax}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": null,
+    "detail": "error"
+  }
+}

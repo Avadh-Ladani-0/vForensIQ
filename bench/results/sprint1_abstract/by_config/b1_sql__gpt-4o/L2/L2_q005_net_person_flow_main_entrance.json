@@ -1,0 +1,50 @@
+{
+  "question_id": "L2_q005_net_person_flow_main_entrance",
+  "level": "L2",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What was the net person flow (person_entry events minus person_exit events) at Gate_MainEntrance on 2025-12-08 (UTC)?",
+  "gold_value": 179,
+  "answer_text": "The net person flow at Gate_MainEntrance on 2025-12-08 was 179.",
+  "structured_answer": {
+    "columns": [
+      "net_person_flow"
+    ],
+    "rows": [
+      [
+        179
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "SELECT \n    SUM(CASE WHEN event_type = 'person_entry' THEN 1 ELSE 0 END) -\n    SUM(CASE WHEN event_type = 'person_exit' THEN 1 ELSE 0 END) AS net_person_flow\nFROM \n    events\nWHERE \n    camera_location LIKE '%MainEntrance%' AND\n    timestamp_utc >= '2025-12-08T00:00:00Z' AND \n    timestamp_utc < '2025-12-09T00:00:00Z' AND\n    (event_type = 'person_entry' OR event_type = 'person_exit')",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 4294,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 867,
+      "completion_tokens": 130
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 322,
+      "completion_tokens": 20
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": true,
+    "detail": "within_1pct (expected=179.0 got=179.0)"
+  }
+}

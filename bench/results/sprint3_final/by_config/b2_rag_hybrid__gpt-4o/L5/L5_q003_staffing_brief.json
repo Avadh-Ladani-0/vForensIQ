@@ -1,0 +1,123 @@
+{
+  "question_id": "L5_q003_staffing_brief",
+  "level": "L5",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a staffing recommendation brief for the AI Hardware Summit on 2025-12-08 (UTC). Identify (a) the busiest hours of the day requiring extra staff at the gates and on the expo floor, and (b) the quiet hours where minimal coverage is sufficient. Cite specific hour ranges and supporting metrics. Keep it to 4-6 bullet points.",
+  "gold_value": {
+    "rubric": [
+      "Morning gate rush around 08:00-10:00 UTC needs extra staffing",
+      "Evening gate rush around 17:00-19:00 UTC needs extra staffing",
+      "Lunch hours 12:00-14:00 UTC are busy at FoodCourt and need extra coverage",
+      "Late-night and early-morning hours (roughly 22:00-06:00 UTC) are quiet and need minimal coverage",
+      "Keynote hours (09:00-10:00 and 14:00-15:00 UTC) require crowd management at KeynoteHall_Stage"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "- **Busiest Hours Requiring Extra Staff:**\n  - **08:00 to 09:00 UTC**: High activity at gates and expo floors with 19,292 events recorded, marking a significant influx likely due to initial conference registrations and attendees entering the venue.\n  - **09:00 to 15:00 UTC**: Sustained foot traffic, particularly at KeynoteHall_DoorA, with 2,209 events; a peak period for keynote sessions necessitating additional staffing to manage crowd movement and safety.\n\n- **Additional Busy Times:**\n  - **17:00 to 18:00 UTC**: Higher than average with 18,807 to 18,792 events, indicating end-of-day keynote exits and networking sessions.\n\n- **Quiet Hours with Minimal Staff Needs:**\n  - **13:00 UTC**: With 18,397 events, this period has relatively lower activity levels, allowing for minimal staffing as attendees are likely settled in ongoing sessions.\n  - **15:00 UTC**: With a decrease to 18,440 events, activity stabilizes, and the focus is more on monitoring rather than active crowd management.",
+  "structured_answer": {
+    "cypher_columns": [
+      "hour",
+      "total_events"
+    ],
+    "cypher_rows": [
+      [
+        "2025-12-08T08:00:00Z",
+        19292
+      ],
+      [
+        "2025-12-08T09:00:00Z",
+        19003
+      ],
+      [
+        "2025-12-08T17:00:00Z",
+        18807
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        18792
+      ],
+      [
+        "2025-12-08T15:00:00Z",
+        18440
+      ],
+      [
+        "2025-12-08T13:00:00Z",
+        18397
+      ]
+    ],
+    "cypher_total_rows": 6,
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and an average head count of approximately 31.2.",
+        "distance": 0.5108164548873901
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.6044568419456482
+      },
+      {
+        "community_id": "community_17",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 20:00 and 20:58 UTC recorded a total of 33 events. The dominant event types were person exits (13) and person entries (8), with car entries (7) and exits (5) also noted. The peak head count reached 13, and the average head count was approximately 5.05 during this period.",
+        "distance": 0.6296461820602417
+      },
+      {
+        "community_id": "community_6",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 11:01:47 and 11:59:48, recorded a total of 44 events. The dominant event types were person exits (17) and person entries (12), with car entries (9) and exits (6) also noted. The peak head count reached 12, and the average head count was 5.05 during this period.",
+        "distance": 0.6304481029510498
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event) \n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  WITH substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, count(*) AS n\n  RETURN hour, n\n  UNION ALL\n  MATCH (ch:CrowdHour) \n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.hour_utc AS hour, ch.event_count AS n\n}\nRETURN hour, sum(n) AS total_events\nORDER BY total_events DESC, hour\nLIMIT 6",
+      "row_count": 6
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.5108164548873901
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.6044568419456482
+    },
+    {
+      "type": "community",
+      "community_id": "community_17",
+      "distance": 0.6296461820602417
+    },
+    {
+      "type": "community",
+      "community_id": "community_6",
+      "distance": 0.6304481029510498
+    }
+  ],
+  "duration_ms": 7287,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2206,
+      "completion_tokens": 182
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 858,
+      "completion_tokens": 238
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=2/5=0.40 (threshold=0.5)"
+  }
+}

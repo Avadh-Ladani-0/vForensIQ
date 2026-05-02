@@ -1,0 +1,135 @@
+{
+  "question_id": "L4_q001_compare_booths",
+  "level": "L4",
+  "approach": "b2_rag_community",
+  "model": "gpt-5-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "On 2025-12-08 (UTC), compare the crowd activity at DemoBooth_NVIDIA versus DemoBooth_Intel. Which booth was busier, and approximately what was the ratio of their average head_counts?",
+  "gold_value": {
+    "busier_booth": "DemoBooth_NVIDIA",
+    "average_headcount_ratio_nvidia_over_intel": {
+      "value": 1.4,
+      "tolerance": 0.4
+    }
+  },
+  "answer_text": "Community_9 includes DemoBooth_Intel (CAM_04) and DemoBooth_NVIDIA (CAM_05) and covers 2025-12-08 with total events \"449\". It reports an overall average head_count \"(mean of means) \u2248 31.1974\" and a peak head_count \"500\". The summaries do not provide separate average head_counts for DemoBooth_NVIDIA versus DemoBooth_Intel, so you cannot determine which booth was busier or compute a ratio from the provided data.",
+  "structured_answer": {
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "Cameras involved: DemoBooth_Intel (CAM_04), DemoBooth_NVIDIA (CAM_05), ExpoFloor_MainAisle (CAM_06), FoodCourt_North (CAM_07), KeynoteHall_Stage (CAM_08). Events are dominated by person movements (person_entry 206, person_exit 181, total 387) versus vehicle events (car_entry 29, car_exit 33). The dataset covers the UTC hour range 2025-12-08T00:00:00Z\u20132025-12-08T23:00:00Z with events from 2025-12-08T00:02:26Z to 2025-12-08T23:59:14Z; total events 449, peak head_count 500, average head_count (mean of means) \u2248 31.1974. Peak event count per hour is not provided in the supplied data.",
+        "distance": 0.2962181568145752,
+        "metadata": {
+          "camera_locations": "DemoBooth_Intel,DemoBooth_NVIDIA,ExpoFloor_MainAisle,FoodCourt_North,KeynoteHall_Stage",
+          "community_id": 9,
+          "node_count": 588,
+          "total_events": 449
+        }
+      },
+      {
+        "community_id": "community_7",
+        "summary": "All activity was recorded on Platform_1 between 2025-12-01T12:00:23Z and 2025-12-01T12:59:53Z (hour block 2025-12-01T12:00:00Z). There were 25 events in the hour, dominated by person movements (10 person_entry, 8 person_exit) versus 4 car_entry and 3 car_exit. Average head count (mean of means) was 4.96, peak head_count was 13.0, and node_count is 27.",
+        "distance": 0.5192188024520874,
+        "metadata": {
+          "total_events": 25,
+          "node_count": 27,
+          "community_id": 7,
+          "camera_locations": "Platform_1"
+        }
+      },
+      {
+        "community_id": "community_14",
+        "summary": "All activity was recorded at Platform_1 between 2025-12-01T19:00:22Z and 2025-12-01T19:58:59Z (UTC). A total of 53 events were detected in that hour, dominated by person movements (21 person_entry, 20 person_exit) with car events less frequent (6 car_entry, 6 car_exit); peak event count for the hour was 53. Average head count (mean of means) was 34.98 and the peak head count observed was 42. Node count: 55.",
+        "distance": 0.5220048427581787,
+        "metadata": {
+          "total_events": 53,
+          "community_id": 14,
+          "camera_locations": "Platform_1",
+          "node_count": 55
+        }
+      },
+      {
+        "community_id": "community_6",
+        "summary": "All activity was on Platform_1 between 2025-12-01T11:01:47Z and 2025-12-01T11:59:48Z (hour window 2025-12-01T11:00:00Z UTC). There were 44 events total: 29 person events (12 person_entry, 17 person_exit) and 15 car events (9 car_entry, 6 car_exit), so person movements dominated. Peak head_count was 12.0, average head_count (mean of means) 5.05, and the hour\u2019s peak event count was 44; node_count = 46.",
+        "distance": 0.5221058130264282,
+        "metadata": {
+          "camera_locations": "Platform_1",
+          "total_events": 44,
+          "node_count": 46,
+          "community_id": 6
+        }
+      },
+      {
+        "community_id": "community_17",
+        "summary": "All activity was on Platform_1 between 2025-12-01T20:00:47Z and 2025-12-01T20:58:33Z (hour 2025-12-01T20:00:00Z UTC). There were 33 events total in that hour\u201421 person events (8 person_entry, 13 person_exit) and 12 car events (7 car_entry, 5 car_exit)\u2014so person movement dominated. Peak head_count was 13, the average head count (mean of means) was 5.05, and the peak (and total) event count for the hour was 33; node_count = 35.",
+        "distance": 0.5239109992980957,
+        "metadata": {
+          "total_events": 33,
+          "camera_locations": "Platform_1",
+          "community_id": 17,
+          "node_count": 35
+        }
+      },
+      {
+        "community_id": "community_18",
+        "summary": "All activity was recorded on Platform_1 between 2025-12-01T21:00:18Z and 2025-12-01T21:59:11Z (hour 2025-12-01T21:00:00Z UTC). A total of 41 events were logged: 31 person events (14 person_entry, 17 person_exit) and 10 car events (7 car_entry, 3 car_exit), so person movement dominated. Peak head_count was 14 with an average head_count mean-of-means of 4.95; the peak event count for the hour was 41 and node_count was 43.",
+        "distance": 0.5263558030128479,
+        "metadata": {
+          "node_count": 43,
+          "camera_locations": "Platform_1",
+          "total_events": 41,
+          "community_id": 18
+        }
+      }
+    ],
+    "top_k": 6
+  },
+  "citations": [
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.2962181568145752
+    },
+    {
+      "type": "community",
+      "community_id": "community_7",
+      "distance": 0.5192188024520874
+    },
+    {
+      "type": "community",
+      "community_id": "community_14",
+      "distance": 0.5220048427581787
+    },
+    {
+      "type": "community",
+      "community_id": "community_6",
+      "distance": 0.5221058130264282
+    },
+    {
+      "type": "community",
+      "community_id": "community_17",
+      "distance": 0.5239109992980957
+    },
+    {
+      "type": "community",
+      "community_id": "community_18",
+      "distance": 0.5263558030128479
+    }
+  ],
+  "duration_ms": 8858,
+  "llm_calls": [
+    {
+      "stage": "answer_synth",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 1125,
+      "completion_tokens": 565
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": false,
+    "detail": "missing=['average_headcount_ratio_nvidia_over_intel=1.4+-0.4_no_match (numbers_seen=[449.0, 31.1974, 500.0])']"
+  }
+}

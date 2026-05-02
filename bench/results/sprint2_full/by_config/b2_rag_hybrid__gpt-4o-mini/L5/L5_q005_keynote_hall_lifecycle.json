@@ -1,0 +1,91 @@
+{
+  "question_id": "L5_q005_keynote_hall_lifecycle",
+  "level": "L5",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Describe the full lifecycle of activity at the keynote hall on 2025-12-08 (UTC). Cover: (a) door entry patterns at KeynoteHall_DoorA throughout the day, (b) the in-hall crowd density at KeynoteHall_Stage during keynote sessions, and (c) how the post-keynote dispersal compares to pre-keynote build-up. Use specific hours and numbers from the data. 4-6 sentences.",
+  "gold_value": {
+    "rubric": [
+      "KeynoteHall_DoorA shows entry peaks aligned with keynote start times (around 08:00-10:00, 13:00-14:00, or 15:00-16:00 UTC)",
+      "KeynoteHall_Stage crowd peaks during the keynote sessions, reaching head_counts in the hundreds",
+      "Outside of keynote hours the in-hall head_count drops to a low baseline (single digits)",
+      "Pre-keynote door entry traffic precedes the in-hall crowd surge"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "On December 8, 2025, at KeynoteHall_DoorA, there were 1,117 person entries and 1,072 exits recorded between 09:00 and 15:00 UTC, resulting in a total of 2,209 events, indicating a busy day. During the keynote sessions at KeynoteHall_Stage, the peak crowd density reached 500 individuals, reflecting significant engagement. In terms of dispersal, the post-keynote period saw a notable outflow of attendees, contrasting with the gradual build-up observed prior to the keynote, highlighting the dynamic flow of participants throughout the day.",
+  "structured_answer": {
+    "cypher_columns": [],
+    "cypher_rows": [],
+    "cypher_total_rows": 0,
+    "retrieved_communities": [
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.29105865955352783
+      },
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and a total of 588 node counts.",
+        "distance": 0.385297954082489
+      },
+      {
+        "community_id": "community_0",
+        "summary": "The CCTV activity involves the camera locations at Gate_MainEntrance and Platform_1, covering the time range from December 1, 2025, at 01:00 UTC to December 8, 2025, at 12:59 UTC. The dominant event types are person entries (788) and exits (773), along with car entries (112) and exits (102). The total volume of events recorded is 1,775, with a peak head count of 47 and an average head count of approximately 10.42.",
+        "distance": 0.49612337350845337
+      },
+      {
+        "community_id": "community_8",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 00:02:02 and 00:57:29, recorded a total of 36 events. The dominant event types were person exits (16) and person entries (8), with car entries (7) and exits (5) also noted. The peak head count reached 13, and the average head count was 5.02 during this period.",
+        "distance": 0.49819332361221313
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.29105865955352783
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.385297954082489
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.49612337350845337
+    },
+    {
+      "type": "community",
+      "community_id": "community_8",
+      "distance": 0.49819332361221313
+    }
+  ],
+  "duration_ms": 11350,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1052,
+      "completion_tokens": 375
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 727,
+      "completion_tokens": 125
+    }
+  ],
+  "errors": [
+    "cypher_stream: ValueError: Multiple statements not allowed"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=2/4=0.50 (threshold=0.5)"
+  }
+}

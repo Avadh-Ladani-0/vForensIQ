@@ -1,0 +1,50 @@
+{
+  "question_id": "L2_q008_lunch_crowd_food_court",
+  "level": "L2",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How busy was the food court during lunch hours on average?",
+  "gold_value": 120.01,
+  "answer_text": "The average head count at the food court during lunch hours was approximately 81.87.",
+  "structured_answer": {
+    "columns": [
+      "average_head_count_during_lunch"
+    ],
+    "rows": [
+      [
+        81.86999999999999
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour)\nWHERE ch.camera_location CONTAINS 'FoodCourt' \n  AND ch.hour_utc >= '2025-12-08T11:00:00Z' \n  AND ch.hour_utc < '2025-12-08T14:00:00Z'\nRETURN avg(ch.avg_hc) AS average_head_count_during_lunch",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 4147,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2506,
+      "completion_tokens": 80
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 272,
+      "completion_tokens": 18
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": false,
+    "detail": "exceeds_1pct (expected=120.01 got=81.87)"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "question_id": "L1_q007_cars_into_parking_lot",
+  "level": "L1",
+  "approach": "b1_sql",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many cars came into the parking lot during the day?",
+  "gold_value": 381,
+  "answer_text": "There were 642 car_entry events during the day.",
+  "structured_answer": {
+    "columns": [
+      "car_entry_count"
+    ],
+    "rows": [
+      [
+        642
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH date_bounds AS (\n    SELECT MIN(timestamp_epoch_s) AS min_epoch, MAX(timestamp_epoch_s) AS max_epoch FROM events\n)\nSELECT COUNT(*) AS car_entry_count\nFROM events\nWHERE event_type = 'car_entry' AND timestamp_epoch_s >= (SELECT min_epoch FROM date_bounds) AND timestamp_epoch_s < (SELECT max_epoch FROM date_bounds)",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 3666,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 849,
+      "completion_tokens": 73
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 251,
+      "completion_tokens": 11
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": false,
+    "detail": "expected=381.0 got=642.0"
+  }
+}

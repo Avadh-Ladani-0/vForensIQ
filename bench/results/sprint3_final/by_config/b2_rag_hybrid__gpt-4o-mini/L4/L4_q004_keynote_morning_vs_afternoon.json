@@ -1,0 +1,106 @@
+{
+  "question_id": "L4_q004_keynote_morning_vs_afternoon",
+  "level": "L4",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Compare the average head_count at KeynoteHall_Stage between the morning keynote window 09:00-10:00 UTC and the afternoon keynote window 14:00-15:00 UTC on 2025-12-08. Which keynote had higher attendance and what were the approximate average head_counts?",
+  "gold_value": {
+    "higher_attendance_window": "morning",
+    "morning_keynote_avg_approx": {
+      "value": 450,
+      "tolerance": 80
+    },
+    "afternoon_keynote_avg_approx": {
+      "value": 400,
+      "tolerance": 80
+    }
+  },
+  "answer_text": "On December 8, 2025, the average head count at KeynoteHall_Stage was 450.19 during the morning keynote from 09:00 to 10:00 UTC and 399.51 during the afternoon keynote from 14:00 to 15:00 UTC. The morning keynote had higher attendance. The total activity recorded during the day indicated significant foot traffic, with notable event counts related to person entries and exits around the venue.",
+  "structured_answer": {
+    "cypher_columns": [
+      "morning_avg",
+      "afternoon_avg",
+      "comparison"
+    ],
+    "cypher_rows": [
+      [
+        450.19,
+        399.51,
+        "Morning Keynote had higher attendance"
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.4082428216934204
+      },
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and an average head count of approximately 31.2.",
+        "distance": 0.47737836837768555
+      },
+      {
+        "community_id": "community_14",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 19:00 and 19:58 UTC recorded a total of 53 events, with a peak head count of 42. The dominant event types were person entries (21) and exits (20), alongside 6 car entries and 6 exits. The average head count was approximately 35, with a total of 55 nodes monitored during this period.",
+        "distance": 0.5419098734855652
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity at Platform_1 from 02:00 to 02:55 UTC on December 1, 2025, recorded a total of 37 events, with person entries (16) and exits (14) dominating the activity. There were also 4 car entries and 3 car exits. The peak head count reached 13, with an average head count of 5.05 during this time.",
+        "distance": 0.5498552322387695
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour {camera_location: 'KeynoteHall_Stage'})\n  WHERE ch.hour_utc >= '2025-12-08T09:00:00Z' AND ch.hour_utc < '2025-12-08T10:00:00Z'\n  RETURN avg(ch.avg_hc) AS morning_avg\n}\nCALL {\n  MATCH (ch:CrowdHour {camera_location: 'KeynoteHall_Stage'})\n  WHERE ch.hour_utc >= '2025-12-08T14:00:00Z' AND ch.hour_utc < '2025-12-08T15:00:00Z'\n  RETURN avg(ch.avg_hc) AS afternoon_avg\n}\nRETURN morning_avg, afternoon_avg, \n       CASE \n         WHEN morning_avg > afternoon_avg THEN 'Morning Keynote had higher attendance'\n         WHEN afternoon_avg > morning_avg THEN 'Afternoon Keynote had higher attendance'\n         ELSE 'Both keynotes had equal attendance'\n       END AS comparison",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.4082428216934204
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.47737836837768555
+    },
+    {
+      "type": "community",
+      "community_id": "community_14",
+      "distance": 0.5419098734855652
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.5498552322387695
+    }
+  ],
+  "duration_ms": 7166,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2194,
+      "completion_tokens": 212
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 753,
+      "completion_tokens": 93
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_3_facts_satisfied"
+  }
+}

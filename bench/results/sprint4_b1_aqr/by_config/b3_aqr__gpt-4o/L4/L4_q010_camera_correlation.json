@@ -1,0 +1,67 @@
+{
+  "question_id": "L4_q010_camera_correlation",
+  "level": "L4",
+  "approach": "b3_aqr",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which two crowd camera locations had the most similar hourly activity patterns on 2025-12-08? Compare all pairs of crowd cameras by how closely their hourly average head_counts track each other.",
+  "gold_value": {
+    "most_similar_pair_includes": "DemoBooth"
+  },
+  "answer_text": "The crowd camera locations 'DemoBooth_NVIDIA' and 'DemoBooth_Intel' had the most similar hourly activity patterns on 2025-12-08, with a total difference in average headcounts of 116.8.",
+  "structured_answer": {
+    "columns": [
+      "loc1",
+      "loc2",
+      "total_difference"
+    ],
+    "rows": [
+      [
+        "DemoBooth_NVIDIA",
+        "DemoBooth_Intel",
+        116.8
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch1:CrowdHour)-[:AT_CAMERA]->(c1:Camera)\n  WHERE ch1.hour_utc >= '2025-12-08T00:00:00Z' AND ch1.hour_utc < '2025-12-09T00:00:00Z'\n  MATCH (ch2:CrowdHour)-[:AT_CAMERA]->(c2:Camera)\n  WHERE ch2.hour_utc >= '2025-12-08T00:00:00Z' AND ch2.hour_utc < '2025-12-09T00:00:00Z'\n    AND c1.camera_id < c2.camera_id\n    AND ch1.hour_utc = ch2.hour_utc\n  WITH c1.camera_location AS loc1, c2.camera_location AS loc2, ch1.avg_hc AS hc1, ch2.avg_hc AS hc2\n  RETURN loc1, loc2, sum(abs(hc1 - hc2)) AS total_difference\n  ORDER BY total_difference ASC\n  LIMIT 1\n}\nRETURN loc1, loc2, total_difference",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 11876,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2533,
+      "completion_tokens": 237
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 469,
+      "completion_tokens": 49
+    }
+  ],
+  "errors": [],
+  "routing": {
+    "classified_level": "L4",
+    "routed_to": "b2_rag_cypher",
+    "routing_method": "llm_zero_shot",
+    "routing_duration_ms": 6755,
+    "classifier_metadata": {
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 370,
+      "completion_tokens": 2
+    }
+  },
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_1_facts_satisfied"
+  }
+}

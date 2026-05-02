@@ -1,0 +1,129 @@
+{
+  "question_id": "L1_q008_people_through_main_gate",
+  "level": "L1",
+  "approach": "b2_rag_community",
+  "model": "gpt-5-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many people in total went through the main entrance gate, counting both people arriving and people leaving?",
+  "gold_value": 2883,
+  "answer_text": "CAM_01 at Gate_MainEntrance (events recorded between 2025-12-01T01:04:10Z and 2025-12-08T12:59:57Z) logged \"788 person_entry\" and \"773 person_exit\", for a total of \"1,561\" people.",
+  "structured_answer": {
+    "retrieved_communities": [
+      {
+        "community_id": "community_0",
+        "summary": "Cameras CAM_01 covered Gate_MainEntrance and Platform_1 from 2025-12-01T01:00:00Z to 2025-12-08T12:00:00Z (events recorded between 2025-12-01T01:04:10Z and 2025-12-08T12:59:57Z). Total volume was 1,775 events: person activity dominated (788 person_entry and 773 person_exit = 1,561 person events) versus 112 car_entry and 102 car_exit. Average head count (mean-of-means) was 10.42 with a peak head count of 47.0; node_count is 1,802 and average events/hour \u2248 9.9 (1775 events over ~179 hours); peak per-hour event count is not specified in the provided profile.",
+        "distance": 0.42134374380111694,
+        "metadata": {
+          "camera_locations": "Gate_MainEntrance,Platform_1",
+          "total_events": 1775,
+          "community_id": 0,
+          "node_count": 1802
+        }
+      },
+      {
+        "community_id": "community_2",
+        "summary": "All activity was captured at KeynoteHall_DoorA, with events occurring between 2025-12-08T08:00:13Z and 2025-12-08T15:59:56Z (hour-range summary 2025-12-08T09:00:00Z\u20132025-12-08T15:00:00Z). A total of 2,209 events were recorded (node_count 2,213); person movements dominated with 1,117 person_entry and 1,072 person_exit (2,189 person events) versus 15 car_entry and 5 car_exit (20 car events). No peak head_count was reported and peak events per hour were not provided.",
+        "distance": 0.4831804037094116,
+        "metadata": {
+          "camera_locations": "KeynoteHall_DoorA",
+          "node_count": 2213,
+          "total_events": 2209,
+          "community_id": 2
+        }
+      },
+      {
+        "community_id": "community_1",
+        "summary": "All events were recorded by CAM_02 at Gate_ParkingLot, covering activity from 2025-12-08T07:00:01Z to 2025-12-08T18:59:57Z with hourly aggregation reported for 07:00\u201317:00 UTC. Total volume was 1,529 events (node_count 1,532); person events dominated with 463 person_entry and 466 person_exit (929 total) versus 283 car_entry and 317 car_exit (600 total). Peak head_count is not available (null), and a peak events-per-hour value is not provided.",
+        "distance": 0.4897156357765198,
+        "metadata": {
+          "total_events": 1529,
+          "node_count": 1532,
+          "community_id": 1,
+          "camera_locations": "Gate_ParkingLot"
+        }
+      },
+      {
+        "community_id": "community_13",
+        "summary": "Across the 17:00 UTC hour (events from 2025-12-01T17:00:17Z to 2025-12-01T17:59:36Z) on Platform_1, 194 events were recorded. Events were dominated by pedestrian movements: 92 person_entry and 89 person_exit (181 total), versus 5 car_entry and 8 car_exit. Average head count (mean-of-means) was 5.04 with a peak head_count of 13.0; peak event count for the hour was 194.",
+        "distance": 0.4943898320198059,
+        "metadata": {
+          "node_count": 196,
+          "community_id": 13,
+          "camera_locations": "Platform_1",
+          "total_events": 194
+        }
+      },
+      {
+        "community_id": "community_7",
+        "summary": "All activity was recorded on Platform_1 between 2025-12-01T12:00:23Z and 2025-12-01T12:59:53Z (hour block 2025-12-01T12:00:00Z). There were 25 events in the hour, dominated by person movements (10 person_entry, 8 person_exit) versus 4 car_entry and 3 car_exit. Average head count (mean of means) was 4.96, peak head_count was 13.0, and node_count is 27.",
+        "distance": 0.5016555786132812,
+        "metadata": {
+          "total_events": 25,
+          "camera_locations": "Platform_1",
+          "community_id": 7,
+          "node_count": 27
+        }
+      },
+      {
+        "community_id": "community_12",
+        "summary": "All activity was recorded on Platform_1. Events were dominated by person movements (19 person_entry, 14 person_exit = 33 person events) versus 7 car_entry and 7 car_exit (14 car events). The events occurred between 2025-12-01T04:01:34Z and 2025-12-01T04:59:16Z (within the 2025-12-01T04:00:00Z hour), with a total of 47 events (peak hourly event count 47). Average head count (mean of means) was 5.02 and peak head_count was 12.0; node_count is 49.",
+        "distance": 0.5056948661804199,
+        "metadata": {
+          "community_id": 12,
+          "node_count": 49,
+          "camera_locations": "Platform_1",
+          "total_events": 47
+        }
+      }
+    ],
+    "top_k": 6
+  },
+  "citations": [
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.42134374380111694
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.4831804037094116
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.4897156357765198
+    },
+    {
+      "type": "community",
+      "community_id": "community_13",
+      "distance": 0.4943898320198059
+    },
+    {
+      "type": "community",
+      "community_id": "community_7",
+      "distance": 0.5016555786132812
+    },
+    {
+      "type": "community",
+      "community_id": "community_12",
+      "distance": 0.5056948661804199
+    }
+  ],
+  "duration_ms": 8395,
+  "llm_calls": [
+    {
+      "stage": "answer_synth",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 1084,
+      "completion_tokens": 585
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": false,
+    "detail": "expected=2883.0 got=788.0"
+  }
+}

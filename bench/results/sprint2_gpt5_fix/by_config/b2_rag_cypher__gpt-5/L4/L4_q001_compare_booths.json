@@ -1,0 +1,68 @@
+{
+  "question_id": "L4_q001_compare_booths",
+  "level": "L4",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "On 2025-12-08 (UTC), compare the crowd activity at DemoBooth_NVIDIA versus DemoBooth_Intel. Which booth was busier, and approximately what was the ratio of their average head_counts?",
+  "gold_value": {
+    "busier_booth": "DemoBooth_NVIDIA",
+    "average_headcount_ratio_nvidia_over_intel": {
+      "value": 1.4,
+      "tolerance": 0.4
+    }
+  },
+  "answer_text": "DemoBooth_NVIDIA was busier. Over 2025-12-08 (UTC window 2025-12-08T00:00:00Z\u20132025-12-09T00:00:00Z), DemoBooth_NVIDIA averaged 15.515 head_count vs 10.648333333333333 at DemoBooth_Intel (camera_location), a ratio of 1.46 (NVIDIA-to-Intel).",
+  "structured_answer": {
+    "columns": [
+      "busier_location",
+      "nvidia_avg_hc",
+      "intel_avg_hc",
+      "ratio_nvidia_to_intel",
+      "ratio_intel_to_nvidia",
+      "window_start_utc",
+      "window_end_utc"
+    ],
+    "rows": [
+      [
+        "DemoBooth_NVIDIA",
+        15.515,
+        10.648333333333333,
+        1.46,
+        0.69,
+        "2025-12-08T00:00:00Z",
+        "2025-12-09T00:00:00Z"
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour)\nWHERE ch.camera_location IN ['DemoBooth_NVIDIA','DemoBooth_Intel']\n  AND ch.hour_utc >= '2025-12-08T00:00:00Z'\n  AND ch.hour_utc < '2025-12-09T00:00:00Z'\nWITH ch.camera_location AS location, sum(ch.avg_hc * ch.event_count) AS hc_sum, sum(ch.event_count) AS samples\nWITH location, CASE WHEN samples > 0 THEN toFloat(hc_sum) / samples ELSE 0.0 END AS avg_hc\nWITH\n  max(CASE WHEN location = 'DemoBooth_NVIDIA' THEN avg_hc END) AS nvidia_avg_hc,\n  max(CASE WHEN location = 'DemoBooth_Intel' THEN avg_hc END) AS intel_avg_hc\nRETURN\n  CASE WHEN coalesce(nvidia_avg_hc, 0) >= coalesce(intel_avg_hc, 0) THEN 'DemoBooth_NVIDIA' ELSE 'DemoBooth_Intel' END AS busier_location,\n  nvidia_avg_hc,\n  intel_avg_hc,\n  CASE WHEN intel_avg_hc IS NULL OR intel_avg_hc = 0 THEN NULL ELSE round((nvidia_avg_hc / intel_avg_hc) * 100.0) / 100.0 END AS ratio_nvidia_to_intel,\n  CASE WHEN nvidia_avg_hc IS NULL OR nvidia_avg_hc = 0 THEN NULL ELSE round((intel_avg_hc / nvidia_avg_hc) * 100.0) / 100.0 END AS ratio_intel_to_nvidia,\n  '2025-12-08T00:00:00Z' AS window_start_utc,\n  '2025-12-09T00:00:00Z' AS window_end_utc",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 85454,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5",
+      "prompt_tokens": 1900,
+      "completion_tokens": 2902
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-5",
+      "prompt_tokens": 711,
+      "completion_tokens": 679
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_2_facts_satisfied"
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "question_id": "L3_q007_crowd_hotspots",
+  "level": "L3",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which areas of the venue had the most crowd activity? Rank them by their average crowd size.",
+  "gold_value": [
+    [
+      "KeynoteHall_Stage",
+      57.4
+    ],
+    [
+      "ExpoFloor_MainAisle",
+      49.36
+    ],
+    [
+      "FoodCourt_North",
+      23.07
+    ],
+    [
+      "DemoBooth_NVIDIA",
+      15.52
+    ],
+    [
+      "DemoBooth_Intel",
+      10.65
+    ]
+  ],
+  "answer_text": "The Keynote Hall Stage had the most crowd activity with an average crowd size of 57.3975. It is followed by the Expo Floor Main Aisle with an average of 49.3567. The Food Court North ranked third with 23.0696, followed by Demo Booth NVIDIA with 15.5150 and Demo Booth Intel with 10.6483.",
+  "structured_answer": {
+    "columns": [
+      "location",
+      "avg_crowd_size"
+    ],
+    "rows": [
+      [
+        "KeynoteHall_Stage",
+        57.3975
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        49.35666666666666
+      ],
+      [
+        "FoodCourt_North",
+        23.069583333333334
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        15.515000000000002
+      ],
+      [
+        "DemoBooth_Intel",
+        10.64833333333333
+      ]
+    ],
+    "total_rows": 5
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.camera_location AS location, avg(ch.avg_hc) AS avg_crowd_size\n}\nRETURN location, avg_crowd_size\nORDER BY avg_crowd_size DESC",
+      "row_count": 5
+    }
+  ],
+  "duration_ms": 3541,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2513,
+      "completion_tokens": 93
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 365,
+      "completion_tokens": 78
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": false,
+    "detail": "missing_keys=['KeynoteHall_Stage', 'ExpoFloor_MainAisle', 'FoodCourt_North', 'DemoBooth_NVIDIA', 'DemoBooth_Intel']"
+  }
+}

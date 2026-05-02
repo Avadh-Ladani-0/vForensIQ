@@ -1,0 +1,54 @@
+{
+  "question_id": "L4_q005_highest_peak_to_baseline_ratio",
+  "level": "L4",
+  "approach": "b1_sql",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Across all crowd-mode cameras (ExpoFloor_MainAisle, DemoBooth_NVIDIA, DemoBooth_Intel, KeynoteHall_Stage, FoodCourt_North) on 2025-12-08 (UTC), which location showed the most extreme peak-to-baseline contrast \u2014 meaning the largest ratio of its peak head_count to its overnight quiet-hour average head_count? Identify the camera_location and explain the ratio order of magnitude.",
+  "gold_value": {
+    "most_extreme_location": "KeynoteHall_Stage"
+  },
+  "answer_text": "The location with the most extreme peak-to-baseline contrast is the KeynoteHall_Stage, with a peak-to-baseline ratio of approximately 70.99. This indicates that the peak head count was about 71 times higher than the overnight quiet-hour average head count.",
+  "structured_answer": {
+    "columns": [
+      "camera_location",
+      "peak_to_baseline_ratio"
+    ],
+    "rows": [
+      [
+        "KeynoteHall_Stage",
+        70.99271479521983
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH crowd_data AS (\n    SELECT camera_location, \n           MAX(head_count) AS peak_head_count,\n           AVG(head_count) AS overnight_average_head_count\n    FROM events\n    WHERE camera_location IN ('ExpoFloor_MainAisle', 'DemoBooth_NVIDIA', 'DemoBooth_Intel', 'KeynoteHall_Stage', 'FoodCourt_North')\n      AND timestamp_utc >= '2025-12-08T00:00:00Z' \n      AND timestamp_utc < '2025-12-09T00:00:00Z'\n      AND event_type = 'crowd'\n    GROUP BY camera_location\n),\nquiet_hours AS (\n    SELECT camera_location, \n           AVG(head_count) AS quiet_hour_average\n    FROM events\n    WHERE camera_location IN ('ExpoFloor_MainAisle', 'DemoBooth_NVIDIA', 'DemoBooth_Intel', 'KeynoteHall_Stage', 'FoodCourt_North')\n      AND timestamp_utc >= '2025-12-08T00:00:00Z' \n      AND timestamp_utc < '2025-12-09T00:00:00Z'\n      AND event_type = 'crowd'\n      AND strftime('%H', timestamp_epoch_s, 'unixepoch') BETWEEN '00' AND '06'\n    GROUP BY camera_location\n)\nSELECT cd.camera_location, \n       cd.peak_head_count / qh.quiet_hour_average AS peak_to_baseline_ratio\nFROM crowd_data cd\nJOIN quiet_hours qh ON cd.camera_location = qh.camera_location\nORDER BY peak_to_baseline_ratio DESC\nLIMIT 1",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 10241,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1023,
+      "completion_tokens": 339
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 614,
+      "completion_tokens": 55
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_1_facts_satisfied"
+  }
+}

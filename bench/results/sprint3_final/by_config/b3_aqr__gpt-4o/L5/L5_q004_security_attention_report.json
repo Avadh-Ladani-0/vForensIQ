@@ -1,0 +1,113 @@
+{
+  "question_id": "L5_q004_security_attention_report",
+  "level": "L5",
+  "approach": "b3_aqr",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Produce a security-attention report for 2025-12-08 (UTC) at the AI Hardware Summit. Identify the locations and time windows that warrant the most security focus based on volume of activity. Specifically highlight (1) the gate that handles the largest volume of person traffic, (2) the gate with the most car traffic, and (3) the public area with the highest crowd density spikes. Quantify each with approximate numbers and times.",
+  "gold_value": {
+    "rubric": [
+      "Gate_MainEntrance handles the largest person traffic volume",
+      "Gate_ParkingLot handles the most car traffic",
+      "KeynoteHall_Stage shows the highest crowd density spikes (head_counts in the hundreds)",
+      "Peak hours for these hotspots fall within the working-day window (08:00-19:00 UTC)"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "On December 8, 2025, at the AI Hardware Summit, the following areas require heightened security attention based on activity levels:\n\n1. **Main Entrance Gate**: This gate handles the largest volume of person traffic, with a substantial number of entries and exits contributing to the total event count of 1,775. Activity is distributed throughout, but peaks can be noted in the late morning to early afternoon.\n\n2. **Parking Lot Gate**: This location experiences the highest volume of car traffic, recording 283 car entries and 317 exits between 07:00 and 17:00 UTC. This suggests significant vehicular movement coinciding with peak arrival and departure times of the summit.\n\n3. **Keynote Hall Area**: Experience the highest spikes in crowd density, with 2,209 events occurring between 09:00 and 15:00 UTC. The significant foot traffic during this period underscores the importance of security presence to manage crowd surges effectively.\n\nThese observations suggest optimum staff placement at these strategic points to ensure smooth operations and maintain security during the summit.",
+  "structured_answer": {
+    "cypher_columns": [],
+    "cypher_rows": [],
+    "cypher_total_rows": 0,
+    "retrieved_communities": [
+      {
+        "community_id": "community_0",
+        "summary": "The CCTV activity involves the camera locations at Gate_MainEntrance and Platform_1, covering the time range from December 1, 2025, at 01:00 UTC to December 8, 2025, at 12:59 UTC. The dominant event types are person entries (788) and exits (773), along with car entries (112) and exits (102). The total volume of events recorded is 1,775, with a peak head count of 47 and an average head count of approximately 10.42.",
+        "distance": 0.39628827571868896
+      },
+      {
+        "community_id": "community_1",
+        "summary": "The CCTV activity at the Gate_ParkingLot camera from December 8, 2025, between 07:00 and 17:00 UTC recorded a total of 1,529 events. The dominant event types were person entries (463) and exits (466), along with car entries (283) and exits (317). Notably, the total volume of events reached 1,532, indicating a high level of activity during this time.",
+        "distance": 0.4128544330596924
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.42328178882598877
+      },
+      {
+        "community_id": "community_14",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 19:00 and 19:58 UTC recorded a total of 53 events, with a peak head count of 42. The dominant event types were person entries (21) and exits (20), alongside 6 car entries and 6 exits. The average head count was approximately 35, with a total of 55 nodes monitored during this period.",
+        "distance": 0.423839271068573
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  // (1) Gate with the largest volume of person traffic\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE e.event_type IN ['person_entry', 'person_exit']\n    AND e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN l.name AS location, count(e) AS volume, 'Person Traffic' AS category\n  ORDER BY volume DESC\n  LIMIT 1\n}\nUNION\nCALL {\n  // (2) Gate with the most car traffic\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE e.event_type IN ['car_entry', 'car_exit']\n    AND e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN l.name AS location, count(e) AS volume, 'Car Traffic' AS category\n  ORDER BY volume DESC\n  LIMIT 1\n}\nUNION\nCALL {\n  // (3) Public area with the highest crowd density spikes\n  MATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN l.name AS location, max(ch.peak_hc) AS volume, 'Crowd Density' AS category\n  ORDER BY volume DESC\n  LIMIT 1\n}\nRETURN category, location, volume",
+      "row_count": 0
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.39628827571868896
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.4128544330596924
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.42328178882598877
+    },
+    {
+      "type": "community",
+      "community_id": "community_14",
+      "distance": 0.423839271068573
+    }
+  ],
+  "duration_ms": 13502,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2223,
+      "completion_tokens": 442
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 2785,
+      "completion_tokens": 398
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 734,
+      "completion_tokens": 217
+    }
+  ],
+  "errors": [
+    "cypher_stream: CypherSyntaxError: {neo4j_code: Neo.ClientError.Statement.SyntaxError} {message: Query cannot conclude with CALL (must be a RETURN clause, a FINISH clause, an update clause, a unit subquery call, or a procedure call with no YIELD). (line 1, column 1 (offset: 0))\n\"CALL {\"\n ^} {gql_status: 42001} {gql_status_description: error: syntax error or access rule violation - invalid syntax}"
+  ],
+  "routing": {
+    "classified_level": "L5",
+    "routed_to": "b2_rag_hybrid",
+    "routing_method": "llm_zero_shot",
+    "routing_duration_ms": 1230,
+    "classifier_metadata": {
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 422,
+      "completion_tokens": 2
+    }
+  },
+  "invocation_status": "error",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=3/4=0.75 (threshold=0.5)"
+  }
+}

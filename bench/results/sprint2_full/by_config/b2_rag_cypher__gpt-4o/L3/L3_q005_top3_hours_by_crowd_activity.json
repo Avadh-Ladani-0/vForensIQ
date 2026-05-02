@@ -1,0 +1,73 @@
+{
+  "question_id": "L3_q005_top3_hours_by_crowd_activity",
+  "level": "L3",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What were the top 3 UTC hours on 2025-12-08 by total head_count summed across all crowd cameras? List the hour and its total head_count for each of the top 3.",
+  "gold_value": [
+    [
+      "16",
+      2365493
+    ],
+    [
+      "14",
+      2059433
+    ],
+    [
+      "09",
+      1685871
+    ]
+  ],
+  "answer_text": "The top 3 UTC hours on 2025-12-08 by total head_count were:\n1. 16:00 UTC with a total head_count of 657.08.\n2. 14:00 UTC with a total head_count of 572.07.\n3. 09:00 UTC with a total head_count of 468.29.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "total_head_count"
+    ],
+    "rows": [
+      [
+        "2025-12-08T16:00:00Z",
+        657.08
+      ],
+      [
+        "2025-12-08T14:00:00Z",
+        572.07
+      ],
+      [
+        "2025-12-08T09:00:00Z",
+        468.29
+      ]
+    ],
+    "total_rows": 3
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour)\nWHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\nWITH ch.hour_utc AS hour, SUM(ch.avg_hc) AS total_head_count\nRETURN hour, total_head_count\nORDER BY total_head_count DESC\nLIMIT 3",
+      "row_count": 3
+    }
+  ],
+  "duration_ms": 3497,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 1001,
+      "completion_tokens": 86
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 360,
+      "completion_tokens": 74
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": false,
+    "detail": "missing_numbers=[2365493.0, 2059433.0, 1685871.0]"
+  }
+}

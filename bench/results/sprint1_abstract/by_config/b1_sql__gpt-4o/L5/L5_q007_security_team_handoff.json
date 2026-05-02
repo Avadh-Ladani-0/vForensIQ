@@ -1,0 +1,64 @@
+{
+  "question_id": "L5_q007_security_team_handoff",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "If you were running security here, what would you tell your team based on the day's activity? Where should we keep the most eyes, and when do we need extra hands?",
+  "gold_value": {
+    "rubric": [
+      "Main entrance is the highest-traffic location and needs constant attention",
+      "Crowd-management focus on keynote area during keynote hours",
+      "Extra coverage needed during morning arrival window and evening departure window",
+      "Demo booth area requires monitoring during expo hours when crowds gather"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "Based on today's activity, the Keynote Hall Stage at 09:00 had the highest level of activity with 3,600 events and a total head count of 1,620,671. This indicates that this location and time require the most attention, and you should consider deploying extra security personnel there during this peak hour.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "camera_location",
+      "event_count",
+      "total_head_count"
+    ],
+    "rows": [
+      [
+        "09",
+        "KeynoteHall_Stage",
+        3600,
+        1620671
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH time_bounds AS (\n    SELECT MIN(timestamp_epoch_s) AS min_time, MAX(timestamp_epoch_s) AS max_time FROM events\n),\nhourly_activity AS (\n    SELECT \n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        camera_location,\n        COUNT(*) AS event_count,\n        SUM(CASE WHEN event_type = 'crowd' THEN head_count ELSE 0 END) AS total_head_count\n    FROM events\n    GROUP BY hour, camera_location\n),\npeak_hours AS (\n    SELECT \n        hour,\n        camera_location,\n        event_count,\n        total_head_count,\n        RANK() OVER (ORDER BY event_count DESC, total_head_count DESC) AS rank_event,\n        RANK() OVER (ORDER BY total_head_count DESC, event_count DESC) AS rank_head_count\n    FROM hourly_activity\n)\nSELECT \n    hour,\n    camera_location,\n    event_count,\n    total_head_count\nFROM peak_hours\nWHERE rank_event = 1 OR rank_head_count = 1\nORDER BY hour, camera_location",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 5463,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 872,
+      "completion_tokens": 217
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 445,
+      "completion_tokens": 66
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=1/4=0.25 (threshold=0.5)"
+  }
+}

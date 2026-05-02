@@ -1,0 +1,69 @@
+{
+  "question_id": "L2_q006_busiest_moment_nvidia",
+  "level": "L2",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How packed did the NVIDIA booth get at its busiest moment?",
+  "gold_value": 86,
+  "answer_text": "The NVIDIA booth had its busiest moment at 16:48:47 UTC on December 8, 2025, with a headcount of 86 people, as recorded by camera CAM_05 at the 'DemoBooth_NVIDIA' location.",
+  "structured_answer": {
+    "columns": [
+      "event_id",
+      "timestamp_utc",
+      "timestamp_epoch_s",
+      "camera_id",
+      "event_type",
+      "object_id",
+      "confidence",
+      "camera_location",
+      "head_count",
+      "ingested_at_utc"
+    ],
+    "rows": [
+      [
+        "7eadedd02e808198",
+        "2025-12-08T16:48:47Z",
+        1765212527,
+        "CAM_05",
+        "crowd",
+        null,
+        0.9,
+        "DemoBooth_NVIDIA",
+        86,
+        "2026-04-14T18:45:05Z"
+      ]
+    ],
+    "total_rows": 1,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH event_window AS (\n    SELECT *\n    FROM events\n    WHERE timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n      AND camera_location LIKE '%NVIDIA%'\n      AND event_type = 'crowd'\n),\npeak_moment AS (\n    SELECT MAX(head_count) AS max_head_count\n    FROM event_window\n)\nSELECT *\nFROM event_window\nWHERE head_count = (SELECT max_head_count FROM peak_moment)",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 5886,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 946,
+      "completion_tokens": 114
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 399,
+      "completion_tokens": 51
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": false,
+    "detail": "exceeds_1pct (expected=86.0 got=8.0)"
+  }
+}

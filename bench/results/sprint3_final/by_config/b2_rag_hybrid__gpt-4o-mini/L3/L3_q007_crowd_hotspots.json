@@ -1,0 +1,115 @@
+{
+  "question_id": "L3_q007_crowd_hotspots",
+  "level": "L3",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which areas of the venue had the most crowd activity? Rank them by their average crowd size.",
+  "gold_value": [
+    [
+      "KeynoteHall_Stage",
+      57.4
+    ],
+    [
+      "ExpoFloor_MainAisle",
+      49.36
+    ],
+    [
+      "FoodCourt_North",
+      23.07
+    ],
+    [
+      "DemoBooth_NVIDIA",
+      15.52
+    ],
+    [
+      "DemoBooth_Intel",
+      10.65
+    ]
+  ],
+  "answer_text": "Based on the available community summaries, the areas with the most crowd activity ranked by their average crowd size are:\n\n1. **KeynoteHall_DoorA** - Average head count approximately 1,104 (based on high event counts and foot traffic).\n2. **Platform_1** - Average head count approximately 35 (notable activity in two different time slots).\n3. **DemoBooth_Intel** and **DemoBooth_NVIDIA** - Average head counts implied but less specific data; they contribute to overall crowd activity.\n\nThe ExpoFloor_MainAisle and FoodCourt_North were also active but specifics on average crowd size are less defined.",
+  "structured_answer": {
+    "cypher_columns": [],
+    "cypher_rows": [],
+    "cypher_total_rows": 0,
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and an average head count of approximately 31.2.",
+        "distance": 0.5590095520019531
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.6296577453613281
+      },
+      {
+        "community_id": "community_14",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 19:00 and 19:58 UTC recorded a total of 53 events, with a peak head count of 42. The dominant event types were person entries (21) and exits (20), alongside 6 car entries and 6 exits. The average head count was approximately 35, with a total of 55 nodes monitored during this period.",
+        "distance": 0.6318724751472473
+      },
+      {
+        "community_id": "community_17",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 20:00 and 20:58 UTC recorded a total of 33 events. The dominant event types were person exits (13) and person entries (8), with car entries (7) and exits (5) also noted. The peak head count reached 13, and the average head count was approximately 5.05 during this period.",
+        "distance": 0.6408997774124146
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.camera_location AS location, AVG(ch.avg_hc) AS avg_crowd_size\n  WITH location, avg_crowd_size\n}\nRETURN location, avg_crowd_size ORDER BY avg_crowd_size DESC",
+      "row_count": 0
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.5590095520019531
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.6296577453613281
+    },
+    {
+      "type": "community",
+      "community_id": "community_14",
+      "distance": 0.6318724751472473
+    },
+    {
+      "type": "community",
+      "community_id": "community_17",
+      "distance": 0.6408997774124146
+    }
+  ],
+  "duration_ms": 8703,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2151,
+      "completion_tokens": 99
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2455,
+      "completion_tokens": 102
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 673,
+      "completion_tokens": 134
+    }
+  ],
+  "errors": [
+    "cypher_stream: CypherSyntaxError: {neo4j_code: Neo.ClientError.Statement.SyntaxError} {message: RETURN can only be used at the end of the query. (line 4, column 3 (offset: 119))\n\"  RETURN ch.camera_location AS location, AVG(ch.avg_hc) AS avg_crowd_size\"\n   ^} {gql_status: 42001} {gql_status_description: error: syntax error or access rule violation - invalid syntax}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": false,
+    "detail": "missing_keys=['KeynoteHall_Stage'] missing_numbers=[57.4, 49.36, 23.07, 15.52, 10.65]"
+  }
+}

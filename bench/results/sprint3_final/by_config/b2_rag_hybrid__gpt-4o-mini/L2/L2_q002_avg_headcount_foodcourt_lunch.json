@@ -1,0 +1,92 @@
+{
+  "question_id": "L2_q002_avg_headcount_foodcourt_lunch",
+  "level": "L2",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What was the average head_count at FoodCourt_North during lunch hours 12:00 to 14:00 UTC on 2025-12-08?",
+  "gold_value": 120.01,
+  "answer_text": "The average head count at FoodCourt_North during lunch hours on December 8, 2025, was approximately 120. This period experienced significant activity, with multiple camera locations monitoring a variety of events throughout the day. The overall environment reflects a high level of engagement, notably highlighted by the peak head count reaching 500 across monitored areas.",
+  "structured_answer": {
+    "cypher_columns": [
+      "average_head_count"
+    ],
+    "cypher_rows": [
+      [
+        120.00999999999999
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and an average head count of approximately 31.2.",
+        "distance": 0.469058096408844
+      },
+      {
+        "community_id": "community_14",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 19:00 and 19:58 UTC recorded a total of 53 events, with a peak head count of 42. The dominant event types were person entries (21) and exits (20), alongside 6 car entries and 6 exits. The average head count was approximately 35, with a total of 55 nodes monitored during this period.",
+        "distance": 0.4718341827392578
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity at Platform_1 from 02:00 to 02:55 UTC on December 1, 2025, recorded a total of 37 events, with person entries (16) and exits (14) dominating the activity. There were also 4 car entries and 3 car exits. The peak head count reached 13, with an average head count of 5.05 during this time.",
+        "distance": 0.4910452365875244
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.49497324228286743
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour) \nWHERE ch.camera_location CONTAINS 'FoodCourt_North' AND ch.hour_utc >= '2025-12-08T12:00:00Z' AND ch.hour_utc < '2025-12-08T14:00:00Z' \nRETURN AVG(ch.avg_hc) AS average_head_count",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.469058096408844
+    },
+    {
+      "type": "community",
+      "community_id": "community_14",
+      "distance": 0.4718341827392578
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.4910452365875244
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.49497324228286743
+    }
+  ],
+  "duration_ms": 6132,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2165,
+      "completion_tokens": 76
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 706,
+      "completion_tokens": 69
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": false,
+    "detail": "exceeds_1pct (expected=120.01 got=8.0)"
+  }
+}

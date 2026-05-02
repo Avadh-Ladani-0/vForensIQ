@@ -1,0 +1,92 @@
+{
+  "question_id": "L1_q003_person_entry_at_keynote_door",
+  "level": "L1",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-5-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many person_entry events were recorded at KeynoteHall_DoorA on 2025-12-08 (UTC)?",
+  "gold_value": 782,
+  "answer_text": "782 person_entry events were recorded at KeynoteHall_DoorA on 2025-12-08 (UTC). A community-level summary for that location/day reported 1,117 person_entry events, which differs from the precise row count above.",
+  "structured_answer": {
+    "cypher_columns": [
+      "person_entry_count"
+    ],
+    "cypher_rows": [
+      [
+        782
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_2",
+        "summary": "All activity was captured at KeynoteHall_DoorA, with events occurring between 2025-12-08T08:00:13Z and 2025-12-08T15:59:56Z (hour-range summary 2025-12-08T09:00:00Z\u20132025-12-08T15:00:00Z). A total of 2,209 events were recorded (node_count 2,213); person movements dominated with 1,117 person_entry and 1,072 person_exit (2,189 person events) versus 15 car_entry and 5 car_exit (20 car events). No peak head_count was reported and peak events per hour were not provided.",
+        "distance": 0.20623266696929932
+      },
+      {
+        "community_id": "community_1",
+        "summary": "All events were recorded by CAM_02 at Gate_ParkingLot, covering activity from 2025-12-08T07:00:01Z to 2025-12-08T18:59:57Z with hourly aggregation reported for 07:00\u201317:00 UTC. Total volume was 1,529 events (node_count 1,532); person events dominated with 463 person_entry and 466 person_exit (929 total) versus 283 car_entry and 317 car_exit (600 total). Peak head_count is not available (null), and a peak events-per-hour value is not provided.",
+        "distance": 0.3655737042427063
+      },
+      {
+        "community_id": "community_0",
+        "summary": "Cameras CAM_01 covered Gate_MainEntrance and Platform_1 from 2025-12-01T01:00:00Z to 2025-12-08T12:00:00Z (events recorded between 2025-12-01T01:04:10Z and 2025-12-08T12:59:57Z). Total volume was 1,775 events: person activity dominated (788 person_entry and 773 person_exit = 1,561 person events) versus 112 car_entry and 102 car_exit. Average head count (mean-of-means) was 10.42 with a peak head count of 47.0; node_count is 1,802 and average events/hour \u2248 9.9 (1775 events over ~179 hours); peak per-hour event count is not specified in the provided profile.",
+        "distance": 0.3737803101539612
+      },
+      {
+        "community_id": "community_12",
+        "summary": "All activity was recorded on Platform_1. Events were dominated by person movements (19 person_entry, 14 person_exit = 33 person events) versus 7 car_entry and 7 car_exit (14 car events). The events occurred between 2025-12-01T04:01:34Z and 2025-12-01T04:59:16Z (within the 2025-12-01T04:00:00Z hour), with a total of 47 events (peak hourly event count 47). Average head count (mean of means) was 5.02 and peak head_count was 12.0; node_count is 49.",
+        "distance": 0.3772505521774292
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)\nWHERE e.event_type = 'person_entry'\n  AND c.camera_location = 'KeynoteHall_DoorA'\n  AND e.timestamp_utc >= '2025-12-08T00:00:00Z'\n  AND e.timestamp_utc <  '2025-12-09T00:00:00Z'\nRETURN count(e) AS person_entry_count",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.20623266696929932
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.3655737042427063
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.3737803101539612
+    },
+    {
+      "type": "community",
+      "community_id": "community_12",
+      "distance": 0.3772505521774292
+    }
+  ],
+  "duration_ms": 17169,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 1879,
+      "completion_tokens": 485
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 845,
+      "completion_tokens": 571
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": true,
+    "detail": "match"
+  }
+}

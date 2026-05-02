@@ -1,0 +1,107 @@
+{
+  "question_id": "L3_q001_peak_per_booth",
+  "level": "L3",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-5-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "For each demo booth (DemoBooth_NVIDIA and DemoBooth_Intel), what was the peak head_count observed on 2025-12-08 (UTC)?",
+  "gold_value": [
+    [
+      "DemoBooth_Intel",
+      53
+    ],
+    [
+      "DemoBooth_NVIDIA",
+      86
+    ]
+  ],
+  "answer_text": "On 2025-12-08 (UTC): DemoBooth_NVIDIA \u2014 peak_head_count = 86; DemoBooth_Intel \u2014 peak_head_count = 53.",
+  "structured_answer": {
+    "cypher_columns": [
+      "booth",
+      "peak_head_count"
+    ],
+    "cypher_rows": [
+      [
+        "DemoBooth_Intel",
+        53
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        86
+      ]
+    ],
+    "cypher_total_rows": 2,
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "Cameras involved: DemoBooth_Intel (CAM_04), DemoBooth_NVIDIA (CAM_05), ExpoFloor_MainAisle (CAM_06), FoodCourt_North (CAM_07), KeynoteHall_Stage (CAM_08). Events are dominated by person movements (person_entry 206, person_exit 181, total 387) versus vehicle events (car_entry 29, car_exit 33). The dataset covers the UTC hour range 2025-12-08T00:00:00Z\u20132025-12-08T23:00:00Z with events from 2025-12-08T00:02:26Z to 2025-12-08T23:59:14Z; total events 449, peak head_count 500, average head_count (mean of means) \u2248 31.1974. Peak event count per hour is not provided in the supplied data.",
+        "distance": 0.265508234500885
+      },
+      {
+        "community_id": "community_8",
+        "summary": "All activity was recorded on Platform_1 during the 00:00 UTC hour of 2025-12-01 (events between 2025-12-01T00:02:02Z and 2025-12-01T00:57:29Z). There were 36 events total: 24 person events (8 person_entry, 16 person_exit) and 12 car events (7 car_entry, 5 car_exit), with person movements dominating. Peak head count observed was 13.0, the average head_count mean-of-means was 5.02, and the peak hourly event count was 36; node_count reported as 38.",
+        "distance": 0.475058376789093
+      },
+      {
+        "community_id": "community_6",
+        "summary": "All activity was on Platform_1 between 2025-12-01T11:01:47Z and 2025-12-01T11:59:48Z (hour window 2025-12-01T11:00:00Z UTC). There were 44 events total: 29 person events (12 person_entry, 17 person_exit) and 15 car events (9 car_entry, 6 car_exit), so person movements dominated. Peak head_count was 12.0, average head_count (mean of means) 5.05, and the hour\u2019s peak event count was 44; node_count = 46.",
+        "distance": 0.4763296842575073
+      },
+      {
+        "community_id": "community_18",
+        "summary": "All activity was recorded on Platform_1 between 2025-12-01T21:00:18Z and 2025-12-01T21:59:11Z (hour 2025-12-01T21:00:00Z UTC). A total of 41 events were logged: 31 person events (14 person_entry, 17 person_exit) and 10 car events (7 car_entry, 3 car_exit), so person movement dominated. Peak head_count was 14 with an average head_count mean-of-means of 4.95; the peak event count for the hour was 41 and node_count was 43.",
+        "distance": 0.4777066707611084
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour)\nWHERE ch.camera_location IN ['DemoBooth_NVIDIA','DemoBooth_Intel']\n  AND ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\nRETURN ch.camera_location AS booth, max(ch.peak_hc) AS peak_head_count\nORDER BY booth",
+      "row_count": 2
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.265508234500885
+    },
+    {
+      "type": "community",
+      "community_id": "community_8",
+      "distance": 0.475058376789093
+    },
+    {
+      "type": "community",
+      "community_id": "community_6",
+      "distance": 0.4763296842575073
+    },
+    {
+      "type": "community",
+      "community_id": "community_18",
+      "distance": 0.4777066707611084
+    }
+  ],
+  "duration_ms": 13512,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 1889,
+      "completion_tokens": 548
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 885,
+      "completion_tokens": 302
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": true,
+    "detail": "all_keys_and_values_matched (rows=2)"
+  }
+}

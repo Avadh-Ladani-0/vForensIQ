@@ -1,0 +1,77 @@
+{
+  "question_id": "L5_q004_security_attention_report",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Produce a security-attention report for 2025-12-08 (UTC) at the AI Hardware Summit. Identify the locations and time windows that warrant the most security focus based on volume of activity. Specifically highlight (1) the gate that handles the largest volume of person traffic, (2) the gate with the most car traffic, and (3) the public area with the highest crowd density spikes. Quantify each with approximate numbers and times.",
+  "gold_value": {
+    "rubric": [
+      "Gate_MainEntrance handles the largest person traffic volume",
+      "Gate_ParkingLot handles the most car traffic",
+      "KeynoteHall_Stage shows the highest crowd density spikes (head_counts in the hundreds)",
+      "Peak hours for these hotspots fall within the working-day window (08:00-19:00 UTC)"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "On December 8, 2025, the gate handling the largest volume of person traffic was the Main Entrance (Gate_MainEntrance) with 599 entries recorded during the hour of 08:00 UTC. The gate with the most car traffic was the Parking Lot (Gate_ParkingLot), recording 204 entries during the hour of 07:00 UTC. The area with the highest crowd density spike was the Keynote Hall Stage, with a maximum head count of 500 at 09:00 UTC.",
+  "structured_answer": {
+    "columns": [
+      "report_type",
+      "camera_location",
+      "hour",
+      "event_count"
+    ],
+    "rows": [
+      [
+        "Person Traffic",
+        "Gate_MainEntrance",
+        "08",
+        599
+      ],
+      [
+        "Car Traffic",
+        "Gate_ParkingLot",
+        "07",
+        204
+      ],
+      [
+        "Crowd Density",
+        "KeynoteHall_Stage",
+        "09",
+        500
+      ]
+    ],
+    "total_rows": 3,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH person_traffic AS (\n    SELECT camera_location, \n           COUNT(*) AS event_count, \n           strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour\n    FROM events\n    WHERE timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n      AND event_type IN ('person_entry', 'person_exit')\n    GROUP BY camera_location, hour\n),\ncar_traffic AS (\n    SELECT camera_location, \n           COUNT(*) AS event_count, \n           strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour\n    FROM events\n    WHERE timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n      AND event_type IN ('car_entry', 'car_exit')\n    GROUP BY camera_location, hour\n),\ncrowd_density AS (\n    SELECT camera_location, \n           MAX(head_count) AS max_head_count, \n           strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour\n    FROM events\n    WHERE timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n      AND event_type = 'crowd'\n    GROUP BY camera_location, hour\n)\nSELECT 'Person Traffic' AS report_type, camera_location, hour, event_count\nFROM person_traffic\nWHERE event_count = (SELECT MAX(event_count) FROM person_traffic)\nUNION ALL\nSELECT 'Car Traffic' AS report_type, camera_location, hour, event_count\nFROM car_traffic\nWHERE event_count = (SELECT MAX(event_count) FROM car_traffic)\nUNION ALL\nSELECT 'Crowd Density' AS report_type, camera_location, hour, max_head_count\nFROM crowd_density\nWHERE max_head_count = (SELECT MAX(max_head_count) FROM crowd_density)",
+      "row_count": 3
+    }
+  ],
+  "duration_ms": 8679,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1025,
+      "completion_tokens": 430
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 745,
+      "completion_tokens": 103
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=3/4=0.75 (threshold=0.5)"
+  }
+}

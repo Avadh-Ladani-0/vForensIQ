@@ -1,0 +1,85 @@
+{
+  "question_id": "L3_q002_event_counts_by_type",
+  "level": "L3",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "For 2025-12-08 (UTC), how many events were recorded for each event_type? List every event_type with its count.",
+  "gold_value": [
+    [
+      "car_entry",
+      419
+    ],
+    [
+      "car_exit",
+      427
+    ],
+    [
+      "crowd",
+      432000
+    ],
+    [
+      "person_entry",
+      2601
+    ],
+    [
+      "person_exit",
+      2493
+    ]
+  ],
+  "answer_text": "On 2025-12-08 (UTC), there were 419 car_entry events, 427 car_exit events, 2601 person_entry events, and 2493 person_exit events recorded.",
+  "structured_answer": {
+    "columns": [
+      "event_type",
+      "event_count"
+    ],
+    "rows": [
+      [
+        "car_entry",
+        419
+      ],
+      [
+        "car_exit",
+        427
+      ],
+      [
+        "person_entry",
+        2601
+      ],
+      [
+        "person_exit",
+        2493
+      ]
+    ],
+    "total_rows": 4
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event)-[:IS_TYPE]->(et:EventType)\nWHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\nRETURN et.name AS event_type, COUNT(e) AS event_count",
+      "row_count": 4
+    }
+  ],
+  "duration_ms": 2595,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 988,
+      "completion_tokens": 71
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 303,
+      "completion_tokens": 41
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": false,
+    "detail": "missing_keys=['crowd'] missing_numbers=[432000.0]"
+  }
+}

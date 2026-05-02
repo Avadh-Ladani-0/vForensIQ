@@ -1,0 +1,64 @@
+{
+  "question_id": "L2_q008_lunch_crowd_food_court",
+  "level": "L2",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-5-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How busy was the food court during lunch hours on average?",
+  "gold_value": 120.01,
+  "answer_text": "For cameras with location containing \"Food\" between hour_utc '2025-12-08T12:00:00Z' and '2025-12-08T14:00:00Z', the weighted average headcount during lunch was 120.01 (1 camera reported across 2 hours with total_samples 7200). The mean hourly average headcount was 120.00999999999999, mean peak was 142.5, max peak was 146, and min hourly average was 119.97.",
+  "structured_answer": {
+    "columns": [
+      "cameras_reporting",
+      "hours_count",
+      "total_samples",
+      "weighted_avg_headcount",
+      "mean_hourly_avg_hc",
+      "mean_peak_hc",
+      "max_peak_hc",
+      "min_hourly_avg_hc"
+    ],
+    "rows": [
+      [
+        1,
+        2,
+        7200,
+        120.01,
+        120.00999999999999,
+        142.5,
+        146,
+        119.97
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour)-[:AT_CAMERA]->(cam:Camera)-[:LOCATED_AT]->(loc:Location)\nWHERE ch.hour_utc >= '2025-12-08T12:00:00Z' AND ch.hour_utc < '2025-12-08T14:00:00Z'\n  AND (\n    (ch.camera_location IS NOT NULL AND ch.camera_location CONTAINS 'Food')\n    OR (cam.camera_location IS NOT NULL AND cam.camera_location CONTAINS 'Food')\n    OR (loc.name IS NOT NULL AND loc.name CONTAINS 'Food')\n  )\nRETURN\n  count(DISTINCT cam.camera_id) AS cameras_reporting,\n  count(ch) AS hours_count,\n  sum(ch.event_count) AS total_samples,\n  CASE WHEN sum(ch.event_count) > 0 THEN toFloat(sum(ch.avg_hc * ch.event_count)) / sum(ch.event_count) ELSE NULL END AS weighted_avg_headcount,\n  avg(ch.avg_hc) AS mean_hourly_avg_hc,\n  avg(ch.peak_hc) AS mean_peak_hc,\n  max(ch.peak_hc) AS max_peak_hc,\n  min(ch.avg_hc) AS min_hourly_avg_hc",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 40963,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 1866,
+      "completion_tokens": 1610
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 514,
+      "completion_tokens": 1335
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": true,
+    "detail": "within_1pct (expected=120.01 got=120.01)"
+  }
+}

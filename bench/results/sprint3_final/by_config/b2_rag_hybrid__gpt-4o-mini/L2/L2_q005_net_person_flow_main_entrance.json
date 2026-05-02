@@ -1,0 +1,98 @@
+{
+  "question_id": "L2_q005_net_person_flow_main_entrance",
+  "level": "L2",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What was the net person flow (person_entry events minus person_exit events) at Gate_MainEntrance on 2025-12-08 (UTC)?",
+  "gold_value": 179,
+  "answer_text": "The net person flow at Gate_MainEntrance on 2025-12-08 (UTC) was 179. This reflects a significant level of activity, with a total of 788 person entries and 773 exits recorded during the time leading up to this date, indicating a healthy flow of movement through this entry point.",
+  "structured_answer": {
+    "cypher_columns": [
+      "net_person_flow"
+    ],
+    "cypher_rows": [
+      [
+        179
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_17",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 20:00 and 20:58 UTC recorded a total of 33 events. The dominant event types were person exits (13) and person entries (8), with car entries (7) and exits (5) also noted. The peak head count reached 13, and the average head count was approximately 5.05 during this period.",
+        "distance": 0.36510348320007324
+      },
+      {
+        "community_id": "community_0",
+        "summary": "The CCTV activity involves the camera locations at Gate_MainEntrance and Platform_1, covering the time range from December 1, 2025, at 01:00 UTC to December 8, 2025, at 12:59 UTC. The dominant event types are person entries (788) and exits (773), along with car entries (112) and exits (102). The total volume of events recorded is 1,775, with a peak head count of 47 and an average head count of approximately 10.42.",
+        "distance": 0.36910438537597656
+      },
+      {
+        "community_id": "community_6",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 11:01:47 and 11:59:48, recorded a total of 44 events. The dominant event types were person exits (17) and person entries (12), with car entries (9) and exits (6) also noted. The peak head count reached 12, and the average head count was 5.05 during this period.",
+        "distance": 0.3802865743637085
+      },
+      {
+        "community_id": "community_8",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 00:02:02 and 00:57:29, recorded a total of 36 events. The dominant event types were person exits (16) and person entries (8), with car entries (7) and exits (5) also noted. The peak head count reached 13, and the average head count was 5.02.",
+        "distance": 0.38245677947998047
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event {event_type: 'person_entry'})-[:DETECTED_BY]->(:Camera {camera_location: 'Gate_MainEntrance'})\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN count(e) AS count, 'entry' AS type\n  UNION ALL\n  MATCH (e:Event {event_type: 'person_exit'})-[:DETECTED_BY]->(:Camera {camera_location: 'Gate_MainEntrance'})\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN count(e) AS count, 'exit' AS type\n}\nWITH SUM(CASE WHEN type = 'entry' THEN count ELSE 0 END) AS entry_count, \n     SUM(CASE WHEN type = 'exit' THEN count ELSE 0 END) AS exit_count\nRETURN entry_count - exit_count AS net_person_flow",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_17",
+      "distance": 0.36510348320007324
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.36910438537597656
+    },
+    {
+      "type": "community",
+      "community_id": "community_6",
+      "distance": 0.3802865743637085
+    },
+    {
+      "type": "community",
+      "community_id": "community_8",
+      "distance": 0.38245677947998047
+    }
+  ],
+  "duration_ms": 9660,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2162,
+      "completion_tokens": 183
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2458,
+      "completion_tokens": 236
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 679,
+      "completion_tokens": 64
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": true,
+    "detail": "within_1pct (expected=179.0 got=179.0)"
+  }
+}

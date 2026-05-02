@@ -1,0 +1,50 @@
+{
+  "question_id": "L2_q002_avg_headcount_foodcourt_lunch",
+  "level": "L2",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What was the average head_count at FoodCourt_North during lunch hours 12:00 to 14:00 UTC on 2025-12-08?",
+  "gold_value": 120.01,
+  "answer_text": "The average head_count at FoodCourt_North during lunch hours (12:00 to 14:00 UTC) on 2025-12-08 was approximately 120.01.",
+  "structured_answer": {
+    "columns": [
+      "average_head_count"
+    ],
+    "rows": [
+      [
+        120.00652777777778
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "SELECT AVG(head_count) AS average_head_count\nFROM events\nWHERE camera_location = 'FoodCourt_North'\n  AND event_type = 'crowd'\n  AND timestamp_utc >= '2025-12-08T12:00:00Z'\n  AND timestamp_utc < '2025-12-08T14:00:00Z'",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 3369,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 669,
+      "completion_tokens": 78
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 279,
+      "completion_tokens": 38
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": true,
+    "detail": "within_1pct (expected=120.01 got=120.01)"
+  }
+}

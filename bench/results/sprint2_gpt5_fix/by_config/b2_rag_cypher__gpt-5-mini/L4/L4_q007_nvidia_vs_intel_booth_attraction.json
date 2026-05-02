@@ -1,0 +1,73 @@
+{
+  "question_id": "L4_q007_nvidia_vs_intel_booth_attraction",
+  "level": "L4",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-5-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which demo booth attracted bigger crowds \u2014 NVIDIA or Intel? Roughly how much more popular was the winner?",
+  "gold_value": {
+    "winner": "NVIDIA",
+    "intel_mentioned": "Intel"
+  },
+  "answer_text": "NVIDIA attracted bigger crowds: weighted average headcount 15.52 vs Intel 10.65 (absolute difference 4.87, 37.2% higher). These figures are for cameras with camera_location containing \"NVIDIA\" and \"Intel\" during 2025-12-08T00:00:00Z\u20132025-12-09T00:00:00Z; peak headcounts were 86 (NVIDIA) and 53 (Intel), with 86400 samples for each.",
+  "structured_answer": {
+    "columns": [
+      "winner",
+      "booth_nvidia",
+      "avg_headcount_nvidia",
+      "peak_nvidia",
+      "samples_nvidia",
+      "booth_intel",
+      "avg_headcount_intel",
+      "peak_intel",
+      "samples_intel",
+      "absolute_avg_difference",
+      "percent_difference"
+    ],
+    "rows": [
+      [
+        "NVIDIA",
+        "NVIDIA",
+        15.52,
+        86,
+        86400,
+        "Intel",
+        10.65,
+        53,
+        86400,
+        4.87,
+        37.2
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour)-[:AT_CAMERA]->(cam:Camera)\n  WHERE cam.camera_location CONTAINS 'NVIDIA'\n    AND ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN 'NVIDIA' AS booth,\n         sum(ch.event_count) AS total_samples,\n         sum(ch.avg_hc * ch.event_count) AS weighted_heads,\n         avg(ch.avg_hc) AS mean_hourly_avg,\n         max(ch.peak_hc) AS peak_hc\n  UNION ALL\n  MATCH (ch:CrowdHour)-[:AT_CAMERA]->(cam:Camera)\n  WHERE cam.camera_location CONTAINS 'Intel'\n    AND ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN 'Intel' AS booth,\n         sum(ch.event_count) AS total_samples,\n         sum(ch.avg_hc * ch.event_count) AS weighted_heads,\n         avg(ch.avg_hc) AS mean_hourly_avg,\n         max(ch.peak_hc) AS peak_hc\n}\nWITH collect({booth: booth, total_samples: total_samples, weighted_heads: weighted_heads, mean_hourly_avg: mean_hourly_avg, peak_hc: peak_hc}) AS rows\nWITH head([x IN rows WHERE x.booth = 'NVIDIA']) AS n, head([x IN rows WHERE x.booth = 'Intel']) AS i\nWITH n, i,\nCASE\n  WHEN n IS NULL AND i IS NULL THEN 'no_data'\n  WHEN n IS NULL THEN i.booth\n  WHEN i IS NULL THEN n.booth\n  WHEN (CASE WHEN n.total_samples IS NULL OR n.total_samples = 0 THEN 0.0 ELSE toFloat(n.weighted_heads) / toFloat(n.total_samples) END) >= (CASE WHEN i.total_samples IS NULL OR i.total_samples = 0 THEN 0.0 ELSE toFloat(i.weighted_heads) / toFloat(i.total_samples) END) THEN n.booth\n  ELSE i.booth\nEND AS winner,\nCASE WHEN n IS NULL THEN 0.0 WHEN n.total_samples IS NULL OR n.total_samples = 0 THEN 0.0 ELSE toFloat(n.weighted_heads) / toFloat(n.total_samples) END AS n_weighted_avg,\nCASE WHEN i IS NULL THEN 0.0 WHEN i.total_samples IS NULL OR i.total_samples = 0 THEN 0.0 ELSE toFloat(i.weighted_heads) / toFloat(i.total_samples) END AS i_weighted_avg,\nn.peak_hc AS n_peak, i.peak_hc AS i_peak, n.total_samples AS n_samples, i.total_samples AS i_samples\nRETURN winner,\n       n.booth AS booth_nvidia, round(n_weighted_avg, 2) AS avg_headcount_nvidia, n_peak AS peak_nvidia, n_samples AS samples_nvidia,\n       i.booth AS booth_intel, round(i_weighted_avg, 2) AS avg_headcount_intel, i_peak AS peak_intel, i_samples AS samples_intel,\n       round(abs(n_weighted_avg - i_weighted_avg), 2) AS absolute_avg_difference,\n       CASE WHEN (n_weighted_avg + i_weighted_avg) = 0.0 THEN 0.0 ELSE round(abs(n_weighted_avg - i_weighted_avg) / ((n_weighted_avg + i_weighted_avg) / 2.0) * 100, 2) END AS percent_difference",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 51203,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 1875,
+      "completion_tokens": 3029
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 1064,
+      "completion_tokens": 947
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_2_facts_satisfied"
+  }
+}

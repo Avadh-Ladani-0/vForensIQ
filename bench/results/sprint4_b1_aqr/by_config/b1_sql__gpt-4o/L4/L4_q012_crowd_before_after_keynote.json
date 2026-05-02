@@ -1,0 +1,68 @@
+{
+  "question_id": "L4_q012_crowd_before_after_keynote",
+  "level": "L4",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Was the expo floor busier before the morning keynote or after it? Compare the average crowd at the expo floor during 07:00-09:00 versus 10:00-12:00.",
+  "gold_value": {
+    "busier_window": "10:00",
+    "after_keynote_higher": "after"
+  },
+  "answer_text": "The expo floor was significantly busier after the morning keynote. The average crowd was about 5.6 people during 07:00-09:00, and about 179.9 people during 10:00-12:00.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "avg_head_count"
+    ],
+    "rows": [
+      [
+        "07",
+        5.605277777777777
+      ],
+      [
+        "08",
+        5.595555555555555
+      ],
+      [
+        "10",
+        179.9063888888889
+      ],
+      [
+        "11",
+        179.97222222222223
+      ]
+    ],
+    "total_rows": 4,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH time_bounds AS (\n    SELECT MIN(timestamp_epoch_s) AS min_time, MAX(timestamp_epoch_s) AS max_time\n    FROM events\n),\ncrowd_data AS (\n    SELECT \n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        AVG(head_count) AS avg_head_count\n    FROM \n        events\n    WHERE \n        event_type = 'crowd'\n        AND camera_location LIKE '%ExpoFloor%'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z'\n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n        AND (\n            (strftime('%H', timestamp_epoch_s, 'unixepoch') BETWEEN '07' AND '08')\n            OR (strftime('%H', timestamp_epoch_s, 'unixepoch') BETWEEN '10' AND '11')\n        )\n    GROUP BY hour\n)\nSELECT \n    hour,\n    avg_head_count\nFROM \n    crowd_data",
+      "row_count": 4
+    }
+  ],
+  "duration_ms": 3700,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 975,
+      "completion_tokens": 205
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 463,
+      "completion_tokens": 49
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_2_facts_satisfied"
+  }
+}

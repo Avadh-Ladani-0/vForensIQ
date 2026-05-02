@@ -1,0 +1,79 @@
+{
+  "question_id": "L5_q015_vip_experience_report",
+  "level": "L5",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a report on the visitor experience at the demo booths today \u2014 were they well-attended, which one drew more interest, and how did the crowd flow between them and the rest of the venue?",
+  "gold_value": {
+    "rubric": [
+      "NVIDIA booth drew larger crowds than Intel",
+      "Peak demo booth hours were during expo hours (10-12, 15-17)",
+      "Crowd at booths was lower than keynote and expo floor \u2014 booths are secondary attractions",
+      "There was flow between expo floor and demo booths during the day"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "The demo booths at the venue were well-attended on December 8, 2025. \"DemoBooth_NVIDIA\" had a higher average head count of approximately 15.52 and a peak head count of 86, indicating more interest compared to \"DemoBooth_Intel\" with an average head count of approximately 10.65 and a peak head count of 53. Both booths experienced a total of 86,400 crowd events. There were no recorded entry or exit events at these booths, suggesting a consistent presence within the demo booth area without significant crowd movement to or from other parts of the venue.",
+  "structured_answer": {
+    "columns": [
+      "location",
+      "avg_head_count",
+      "peak_head_count",
+      "total_crowd_events",
+      "entry_exit_events"
+    ],
+    "rows": [
+      [
+        "DemoBooth_NVIDIA",
+        15.515000000000002,
+        86,
+        86400,
+        0
+      ],
+      [
+        "DemoBooth_Intel",
+        10.64833333333333,
+        53,
+        86400,
+        0
+      ]
+    ],
+    "total_rows": 2
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n    AND ch.camera_location CONTAINS 'DemoBooth'\n  RETURN ch.camera_location AS location, avg(ch.avg_hc) AS avg_head_count, max(ch.peak_hc) AS peak_head_count, sum(ch.event_count) AS total_crowd_events, 0 AS entry_exit_events\n  UNION ALL\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n    AND l.name CONTAINS 'DemoBooth'\n  RETURN l.name AS location, 0 AS avg_head_count, 0 AS peak_head_count, 0 AS total_crowd_events, count(e) AS entry_exit_events\n}\nRETURN location, sum(avg_head_count) AS avg_head_count, sum(peak_head_count) AS peak_head_count, sum(total_crowd_events) AS total_crowd_events, sum(entry_exit_events) AS entry_exit_events\nORDER BY total_crowd_events DESC, entry_exit_events DESC",
+      "row_count": 2
+    }
+  ],
+  "duration_ms": 9420,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2534,
+      "completion_tokens": 296
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 2943,
+      "completion_tokens": 303
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 583,
+      "completion_tokens": 126
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=1/4=0.25 (threshold=0.5)"
+  }
+}

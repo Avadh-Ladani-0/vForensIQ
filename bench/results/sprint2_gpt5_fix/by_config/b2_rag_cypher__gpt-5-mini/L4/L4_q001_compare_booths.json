@@ -1,0 +1,64 @@
+{
+  "question_id": "L4_q001_compare_booths",
+  "level": "L4",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-5-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "On 2025-12-08 (UTC), compare the crowd activity at DemoBooth_NVIDIA versus DemoBooth_Intel. Which booth was busier, and approximately what was the ratio of their average head_counts?",
+  "gold_value": {
+    "busier_booth": "DemoBooth_NVIDIA",
+    "average_headcount_ratio_nvidia_over_intel": {
+      "value": 1.4,
+      "tolerance": 0.4
+    }
+  },
+  "answer_text": "DemoBooth_NVIDIA was busier on 2025-12-08 (UTC): average head_count 15.515000000000002 for camera_location \"DemoBooth_NVIDIA\" (hour_utc range 2025-12-08T00:00:00Z\u20132025-12-09T00:00:00Z) versus 10.64833333333333 for camera_location \"DemoBooth_Intel\" (same hour_utc range).  \nThe NVIDIA/Intel average head_count ratio is 1.4570355298168733 (total_samples_nvidia 86400, total_samples_intel 86400).",
+  "structured_answer": {
+    "columns": [
+      "avg_head_count_nvidia",
+      "avg_head_count_intel",
+      "nvidia_over_intel_avg_hc_ratio",
+      "total_samples_nvidia",
+      "total_samples_intel"
+    ],
+    "rows": [
+      [
+        15.515000000000002,
+        10.64833333333333,
+        1.4570355298168733,
+        86400,
+        86400
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour {camera_location: 'DemoBooth_NVIDIA'})\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN avg(ch.avg_hc) AS avg_nvidia, sum(ch.event_count) AS samples_nvidia\n}\nCALL {\n  MATCH (ch:CrowdHour {camera_location: 'DemoBooth_Intel'})\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN avg(ch.avg_hc) AS avg_intel, sum(ch.event_count) AS samples_intel\n}\nRETURN avg_nvidia AS avg_head_count_nvidia,\n       avg_intel AS avg_head_count_intel,\n       CASE WHEN avg_intel IS NULL OR avg_intel = 0 THEN NULL ELSE avg_nvidia / avg_intel END AS nvidia_over_intel_avg_hc_ratio,\n       samples_nvidia AS total_samples_nvidia,\n       samples_intel AS total_samples_intel",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 32110,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 1900,
+      "completion_tokens": 1351
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 534,
+      "completion_tokens": 849
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_2_facts_satisfied"
+  }
+}

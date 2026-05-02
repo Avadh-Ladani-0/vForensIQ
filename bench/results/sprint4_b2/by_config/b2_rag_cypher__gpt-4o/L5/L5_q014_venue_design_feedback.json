@@ -1,0 +1,121 @@
+{
+  "question_id": "L5_q014_venue_design_feedback",
+  "level": "L5",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "If you were the venue designer looking at this data, what would you change about the layout? Which areas need more space, which need better flow, and where should food or rest areas be added?",
+  "gold_value": {
+    "rubric": [
+      "KeynoteHall needs more capacity or overflow viewing",
+      "ExpoFloor has sustained high traffic \u2014 wider aisles or more space needed",
+      "FoodCourt peaks sharply at lunch \u2014 add satellite food stations",
+      "Gate areas could benefit from more entry lanes during morning rush"
+    ],
+    "threshold": 0.4
+  },
+  "answer_text": "The main entrance gate, with 2,951 entry/exit events, indicates a high traffic area that may benefit from increased space or improved flow. The Keynote Hall Door A is also a significant entry point with 1,596 events, suggesting a need for better access management. The Keynote Hall Stage experienced a peak crowd of 500, indicating it might require more space for better attendee comfort. Adding food or rest areas near the Expo Floor Main Aisle, which had an average headcount of 49.36 and a peak of 209, could enhance attendee experience by providing convenient access to amenities in a bustling area.",
+  "structured_answer": {
+    "columns": [
+      "location",
+      "avg_head_count",
+      "peak_head_count",
+      "event_count",
+      "type"
+    ],
+    "rows": [
+      [
+        "Gate_MainEntrance",
+        null,
+        null,
+        2951,
+        "entry_exit"
+      ],
+      [
+        "KeynoteHall_DoorA",
+        null,
+        null,
+        1596,
+        "entry_exit"
+      ],
+      [
+        "Gate_ParkingLot",
+        null,
+        null,
+        1393,
+        "entry_exit"
+      ],
+      [
+        "KeynoteHall_Stage",
+        57.3975,
+        500,
+        null,
+        "crowd"
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        49.35666666666666,
+        209,
+        null,
+        "crowd"
+      ],
+      [
+        "FoodCourt_North",
+        23.069583333333334,
+        146,
+        null,
+        "crowd"
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        15.515000000000002,
+        86,
+        null,
+        "crowd"
+      ],
+      [
+        "DemoBooth_Intel",
+        10.64833333333333,
+        53,
+        null,
+        "crowd"
+      ]
+    ],
+    "total_rows": 8
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.camera_location AS location, avg(ch.avg_hc) AS avg_head_count, max(ch.peak_hc) AS peak_head_count, null AS event_count, 'crowd' AS type\n  UNION ALL\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN l.name AS location, null AS avg_head_count, null AS peak_head_count, count(e) AS event_count, 'entry_exit' AS type\n}\nRETURN location, avg_head_count, peak_head_count, event_count, type\nORDER BY peak_head_count DESC, event_count DESC, location",
+      "row_count": 8
+    }
+  ],
+  "duration_ms": 7474,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2534,
+      "completion_tokens": 209
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 2856,
+      "completion_tokens": 233
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 639,
+      "completion_tokens": 128
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=1/4=0.25 (threshold=0.4)"
+  }
+}

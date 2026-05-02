@@ -1,0 +1,68 @@
+{
+  "question_id": "L4_q013_food_court_vs_expo_lunch",
+  "level": "L4",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "During lunch hours (12-14), did the food court get more crowded than the expo floor, or did people stay at the booths? Compare the average crowd sizes.",
+  "gold_value": {
+    "food_court_mentioned": "FoodCourt",
+    "expo_mentioned": "Expo"
+  },
+  "answer_text": "During lunch hours, the Food Court North had an average crowd size of approximately 120.01, which is larger than both the Expo Floor Main Aisle with an average of about 82.79, and the booths, with DemoBooth_NVIDIA at roughly 24.28 and DemoBooth_Intel at around 16.63. This indicates that the food court was more crowded than the expo floor and the booths.",
+  "structured_answer": {
+    "columns": [
+      "camera_location",
+      "avg_head_count"
+    ],
+    "rows": [
+      [
+        "DemoBooth_Intel",
+        16.630972222222223
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        24.275277777777777
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        82.78986111111111
+      ],
+      [
+        "FoodCourt_North",
+        120.00652777777778
+      ]
+    ],
+    "total_rows": 4,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH lunch_hours AS (\n    SELECT \n        camera_location,\n        AVG(head_count) AS avg_head_count\n    FROM \n        events\n    WHERE \n        event_type = 'crowd'\n        AND strftime('%H', timestamp_epoch_s, 'unixepoch') BETWEEN '12' AND '13'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z' \n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n        AND (camera_location LIKE '%FoodCourt%' OR camera_location LIKE '%ExpoFloor%' OR camera_location LIKE '%Booth%')\n    GROUP BY \n        camera_location\n)\nSELECT * FROM lunch_hours",
+      "row_count": 4
+    }
+  ],
+  "duration_ms": 4198,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 968,
+      "completion_tokens": 147
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 415,
+      "completion_tokens": 88
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": false,
+    "detail": "missing=[\"food_court_mentioned='FoodCourt'_not_mentioned\"]"
+  }
+}

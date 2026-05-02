@@ -1,0 +1,361 @@
+{
+  "question_id": "L5_q001_summit_day_brief",
+  "level": "L5",
+  "approach": "b3_aqr",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a security and operations brief for the AI Hardware Summit on 2025-12-08 (UTC). Cover: the busiest traffic windows at the main gates, keynote hall attendance peaks, lunchtime dynamics at the food court, and how the demo booths (NVIDIA and Intel) compared in crowd activity. Keep it to 5 bullet points.",
+  "gold_value": {
+    "rubric": [
+      "Gate_MainEntrance shows morning person-entry peak around 08-10 UTC",
+      "Gate_MainEntrance shows evening person-exit peak around 17-19 UTC",
+      "KeynoteHall_Stage crowd peaks during keynote hours (09-10 UTC and 14-15 UTC)",
+      "FoodCourt_North crowd peaks during lunch hours (12-14 UTC)",
+      "DemoBooth_NVIDIA had higher crowd activity than DemoBooth_Intel"
+    ],
+    "threshold": 0.6
+  },
+  "answer_text": "- **Busiest Traffic Windows at Main Gates:** Peak congestion at the main entrance occurred during the morning hours as individuals arrived for the event, with a significant volume of entries reaching a peak head count of 47.\n  \n- **Keynote Hall Attendance Peaks:** The keynote hall saw heavy foot traffic between 09:00 and 15:00 UTC, recording 1,117 person entries and 1,072 exits, reflecting the high-interest sessions predominantly scheduled in this timeframe.\n\n- **Lunchtime Dynamics at the Food Court:** The lunch period was particularly bustling, especially around 12:00 to 13:00 UTC, with the food court experiencing its busiest time at an average crowd size peaking at 120.\n\n- **NVIDIA vs. Intel Demo Booths Crowd Activity:** NVIDIA's booth drew a larger crowd than Intel's, with attendance peaking at 70.11 around 16:00 UTC compared to Intel's 41.95 in the same hour, indicating strong interest in NVIDIA's demonstrations.\n\n- **Overall Event Summary:** With a total of 449 events captured, the venue maintained a consistent flow of traffic throughout December 8, 2025, culminating in a highly active yet orderly summit experience across all monitored areas.",
+  "structured_answer": {
+    "cypher_columns": [
+      "category",
+      "hour",
+      "n"
+    ],
+    "cypher_rows": [
+      [
+        "demo_booth_intel",
+        "2025-12-08T15:00:00Z",
+        41.95
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T16:00:00Z",
+        41.93
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T11:00:00Z",
+        40.01
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T10:00:00Z",
+        39.95
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T13:00:00Z",
+        29.97
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T01:00:00Z",
+        3.31
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T02:00:00Z",
+        3.29
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T12:00:00Z",
+        3.29
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T14:00:00Z",
+        3.29
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T00:00:00Z",
+        3.28
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T09:00:00Z",
+        3.28
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T17:00:00Z",
+        3.28
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T19:00:00Z",
+        3.27
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T03:00:00Z",
+        3.26
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T05:00:00Z",
+        3.25
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T21:00:00Z",
+        3.25
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T23:00:00Z",
+        3.25
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T04:00:00Z",
+        3.24
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T20:00:00Z",
+        3.24
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T07:00:00Z",
+        3.22
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T08:00:00Z",
+        3.21
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T22:00:00Z",
+        3.21
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T18:00:00Z",
+        3.17
+      ],
+      [
+        "demo_booth_intel",
+        "2025-12-08T06:00:00Z",
+        3.16
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T16:00:00Z",
+        70.11
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T15:00:00Z",
+        70.0
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T11:00:00Z",
+        60.2
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T10:00:00Z",
+        60.01
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T13:00:00Z",
+        45.04
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T22:00:00Z",
+        3.7
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T05:00:00Z",
+        3.6
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T04:00:00Z",
+        3.59
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T17:00:00Z",
+        3.56
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T20:00:00Z",
+        3.56
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T08:00:00Z",
+        3.55
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T21:00:00Z",
+        3.55
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T18:00:00Z",
+        3.54
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T01:00:00Z",
+        3.53
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T03:00:00Z",
+        3.52
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T02:00:00Z",
+        3.51
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T09:00:00Z",
+        3.51
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T12:00:00Z",
+        3.51
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T14:00:00Z",
+        3.49
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T23:00:00Z",
+        3.49
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T00:00:00Z",
+        3.47
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T06:00:00Z",
+        3.46
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T07:00:00Z",
+        3.44
+      ],
+      [
+        "demo_booth_nvidia",
+        "2025-12-08T19:00:00Z",
+        3.42
+      ],
+      [
+        "food_court",
+        "2025-12-08T12:00:00Z",
+        120.05
+      ],
+      [
+        "food_court",
+        "2025-12-08T13:00:00Z",
+        119.97
+      ]
+    ],
+    "cypher_total_rows": 120,
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and an average head count of approximately 31.2.",
+        "distance": 0.4042128920555115
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.5134987831115723
+      },
+      {
+        "community_id": "community_0",
+        "summary": "The CCTV activity involves the camera locations at Gate_MainEntrance and Platform_1, covering the time range from December 1, 2025, at 01:00 UTC to December 8, 2025, at 12:59 UTC. The dominant event types are person entries (788) and exits (773), along with car entries (112) and exits (102). The total volume of events recorded is 1,775, with a peak head count of 47 and an average head count of approximately 10.42.",
+        "distance": 0.5543285608291626
+      },
+      {
+        "community_id": "community_14",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 19:00 and 19:58 UTC recorded a total of 53 events, with a peak head count of 42. The dominant event types were person entries (21) and exits (20), alongside 6 car entries and 6 exits. The average head count was approximately 35, with a total of 55 nodes monitored during this period.",
+        "distance": 0.5629756450653076
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  // Busiest traffic windows at the main gates\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n    AND l.name CONTAINS 'MainEntrance'\n  WITH substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, count(e) AS n\n  RETURN 'main_gate_traffic' AS category, hour, n\n  UNION ALL\n  // Keynote hall attendance peaks\n  MATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n    AND l.name CONTAINS 'KeynoteHall'\n  RETURN 'keynote_hall' AS category, ch.hour_utc AS hour, ch.peak_hc AS n\n  UNION ALL\n  // Lunchtime dynamics at the food court\n  MATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n    AND l.name CONTAINS 'FoodCourt'\n  RETURN 'food_court' AS category, ch.hour_utc AS hour, ch.avg_hc AS n\n  UNION ALL\n  // Demo booths comparison: NVIDIA\n  MATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n    AND l.name CONTAINS 'NVIDIA'\n  RETURN 'demo_booth_nvidia' AS category, ch.hour_utc AS hour, ch.avg_hc AS n\n  UNION ALL\n  // Demo booths comparison: Intel\n  MATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n    AND l.name CONTAINS 'Intel'\n  RETURN 'demo_booth_intel' AS category, ch.hour_utc AS hour, ch.avg_hc AS n\n}\nRETURN category, hour, n ORDER BY category, n DESC, hour",
+      "row_count": 120
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.4042128920555115
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.5134987831115723
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.5543285608291626
+    },
+    {
+      "type": "community",
+      "community_id": "community_14",
+      "distance": 0.5629756450653076
+    }
+  ],
+  "duration_ms": 15967,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2201,
+      "completion_tokens": 635
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 2108,
+      "completion_tokens": 253
+    }
+  ],
+  "errors": [],
+  "routing": {
+    "classified_level": "L5",
+    "routed_to": "b2_rag_hybrid",
+    "routing_method": "llm_zero_shot",
+    "routing_duration_ms": 1428,
+    "classifier_metadata": {
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 400,
+      "completion_tokens": 2
+    }
+  },
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=4/5=0.80 (threshold=0.6)"
+  }
+}

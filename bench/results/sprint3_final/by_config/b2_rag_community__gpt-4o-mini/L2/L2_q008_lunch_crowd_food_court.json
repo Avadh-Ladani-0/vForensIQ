@@ -1,0 +1,129 @@
+{
+  "question_id": "L2_q008_lunch_crowd_food_court",
+  "level": "L2",
+  "approach": "b2_rag_community",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How busy was the food court during lunch hours on average?",
+  "gold_value": 120.01,
+  "answer_text": "The summaries do not provide specific information about the food court's busyness during lunch hours. They mention general activity levels, including a peak head count of 500 and an average head count of approximately 31.2 across the five camera locations, but do not detail the food court's activity during lunch specifically.",
+  "structured_answer": {
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and an average head count of approximately 31.2.",
+        "distance": 0.5715296268463135,
+        "metadata": {
+          "node_count": 588,
+          "camera_locations": "DemoBooth_Intel,DemoBooth_NVIDIA,ExpoFloor_MainAisle,FoodCourt_North,KeynoteHall_Stage",
+          "total_events": 449,
+          "community_id": 9
+        }
+      },
+      {
+        "community_id": "community_1",
+        "summary": "The CCTV activity at the Gate_ParkingLot camera from December 8, 2025, between 07:00 and 17:00 UTC recorded a total of 1,529 events. The dominant event types were person entries (463) and exits (466), along with car entries (283) and exits (317). Notably, the total volume of events reached 1,532, indicating a high level of activity during this time.",
+        "distance": 0.6432994604110718,
+        "metadata": {
+          "node_count": 1532,
+          "total_events": 1529,
+          "community_id": 1,
+          "camera_locations": "Gate_ParkingLot"
+        }
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.6463984847068787,
+        "metadata": {
+          "total_events": 2209,
+          "community_id": 2,
+          "camera_locations": "KeynoteHall_DoorA",
+          "node_count": 2213
+        }
+      },
+      {
+        "community_id": "community_6",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 11:01:47 and 11:59:48, recorded a total of 44 events. The dominant event types were person exits (17) and person entries (12), with car entries (9) and exits (6) also noted. The peak head count reached 12, and the average head count was 5.05 during this period.",
+        "distance": 0.6546993255615234,
+        "metadata": {
+          "node_count": 46,
+          "camera_locations": "Platform_1",
+          "community_id": 6,
+          "total_events": 44
+        }
+      },
+      {
+        "community_id": "community_15",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 07:03:55 and 07:59:26, recorded a total of 34 events. The dominant event types were person exits (16) and person entries (9), with car entries totaling 8 and car exits at 1. The peak head count reached 13, and the average head count was 5.03 during this period.",
+        "distance": 0.6637738943099976,
+        "metadata": {
+          "camera_locations": "Platform_1",
+          "node_count": 36,
+          "total_events": 34,
+          "community_id": 15
+        }
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity at Platform_1 from 02:00 to 02:55 UTC on December 1, 2025, recorded a total of 37 events, with person entries (16) and exits (14) dominating the activity. There were also 4 car entries and 3 car exits. The peak head count reached 13, with an average head count of 5.05 during this time.",
+        "distance": 0.6653177738189697,
+        "metadata": {
+          "camera_locations": "Platform_1",
+          "node_count": 39,
+          "total_events": 37,
+          "community_id": 10
+        }
+      }
+    ],
+    "top_k": 6
+  },
+  "citations": [
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.5715296268463135
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.6432994604110718
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.6463984847068787
+    },
+    {
+      "type": "community",
+      "community_id": "community_6",
+      "distance": 0.6546993255615234
+    },
+    {
+      "type": "community",
+      "community_id": "community_15",
+      "distance": 0.6637738943099976
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.6653177738189697
+    }
+  ],
+  "duration_ms": 2971,
+  "llm_calls": [
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 816,
+      "completion_tokens": 62
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": false,
+    "detail": "exceeds_1pct (expected=120.01 got=500.0)"
+  }
+}

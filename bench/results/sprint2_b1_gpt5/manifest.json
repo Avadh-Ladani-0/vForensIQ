@@ -1,0 +1,21 @@
+{
+  "run_id": "sprint2_b1_gpt5",
+  "started_at_utc": "2026-04-14T03:29:59Z",
+  "approaches": [
+    "b1_sql"
+  ],
+  "models": [
+    "gpt-5-mini",
+    "gpt-5"
+  ],
+  "levels": [
+    "L1",
+    "L2",
+    "L3",
+    "L4",
+    "L5"
+  ],
+  "question_count": 41,
+  "total_cells": 82,
+  "finished_at_utc": "2026-04-14T03:47:12Z"
+}

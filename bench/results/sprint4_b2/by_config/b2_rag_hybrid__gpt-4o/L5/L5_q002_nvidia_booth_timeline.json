@@ -1,0 +1,245 @@
+{
+  "question_id": "L5_q002_nvidia_booth_timeline",
+  "level": "L5",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Describe the full-day activity timeline at DemoBooth_NVIDIA on 2025-12-08 (UTC). Identify the busiest time windows, any lulls, and quantify the peak crowd sizes versus the baseline. Write 3-5 sentences.",
+  "gold_value": {
+    "rubric": [
+      "Morning peak between 10-12 UTC",
+      "Afternoon peak between 15-17 UTC",
+      "Lunch-hour dip (around 12-13 or 13-14 UTC)",
+      "Peak head_count values are substantially higher than baseline of ~3",
+      "Overnight / early-morning hours show baseline/quiet activity"
+    ],
+    "threshold": 0.6
+  },
+  "answer_text": "On December 8, 2025, the activity timeline at the DemoBooth_NVIDIA showed distinct variances throughout the day. The busiest periods were between 10:00-11:00 UTC and 15:00-16:00 UTC, with peak head counts reaching 75 and 86 respectively, significantly higher than the baseline activity levels. In contrast, there were lulls in most other hours, with average head counts hovering around 3-4, and peak head counts typically not exceeding 21. The influx during peak times suggests structured events or presentations likely drew significant attention. Overall, the day's activity reflects periodic spikes amidst generally low baseline occupancy, indicating focal events driving traffic.",
+  "structured_answer": {
+    "cypher_columns": [
+      "hour",
+      "avg_head_count",
+      "peak_head_count",
+      "event_count"
+    ],
+    "cypher_rows": [
+      [
+        "2025-12-08T00:00:00Z",
+        3.47,
+        16,
+        3600
+      ],
+      [
+        "2025-12-08T01:00:00Z",
+        3.53,
+        15,
+        3600
+      ],
+      [
+        "2025-12-08T02:00:00Z",
+        3.51,
+        18,
+        3600
+      ],
+      [
+        "2025-12-08T03:00:00Z",
+        3.52,
+        16,
+        3600
+      ],
+      [
+        "2025-12-08T04:00:00Z",
+        3.59,
+        16,
+        3600
+      ],
+      [
+        "2025-12-08T05:00:00Z",
+        3.6,
+        16,
+        3600
+      ],
+      [
+        "2025-12-08T06:00:00Z",
+        3.46,
+        17,
+        3600
+      ],
+      [
+        "2025-12-08T07:00:00Z",
+        3.44,
+        18,
+        3600
+      ],
+      [
+        "2025-12-08T08:00:00Z",
+        3.55,
+        18,
+        3600
+      ],
+      [
+        "2025-12-08T09:00:00Z",
+        3.51,
+        19,
+        3600
+      ],
+      [
+        "2025-12-08T10:00:00Z",
+        60.01,
+        75,
+        3600
+      ],
+      [
+        "2025-12-08T11:00:00Z",
+        60.2,
+        74,
+        3600
+      ],
+      [
+        "2025-12-08T12:00:00Z",
+        3.51,
+        18,
+        3600
+      ],
+      [
+        "2025-12-08T13:00:00Z",
+        45.04,
+        59,
+        3600
+      ],
+      [
+        "2025-12-08T14:00:00Z",
+        3.49,
+        20,
+        3600
+      ],
+      [
+        "2025-12-08T15:00:00Z",
+        70.0,
+        82,
+        3600
+      ],
+      [
+        "2025-12-08T16:00:00Z",
+        70.11,
+        86,
+        3600
+      ],
+      [
+        "2025-12-08T17:00:00Z",
+        3.56,
+        21,
+        3600
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        3.54,
+        17,
+        3600
+      ],
+      [
+        "2025-12-08T19:00:00Z",
+        3.42,
+        17,
+        3600
+      ],
+      [
+        "2025-12-08T20:00:00Z",
+        3.56,
+        19,
+        3600
+      ],
+      [
+        "2025-12-08T21:00:00Z",
+        3.55,
+        17,
+        3600
+      ],
+      [
+        "2025-12-08T22:00:00Z",
+        3.7,
+        18,
+        3600
+      ],
+      [
+        "2025-12-08T23:00:00Z",
+        3.49,
+        19,
+        3600
+      ]
+    ],
+    "cypher_total_rows": 24,
+    "retrieved_communities": [
+      {
+        "community_id": "community_4",
+        "summary": "The CCTV activity involved five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types were person entries (169) and exits (132), with a total of 344 events recorded during the time range from December 8, 2025, 02:03:44 UTC to December 8, 2025, 23:59:14 UTC. The peak head count reached 500, and the average head count was approximately 31.2.",
+        "distance": 0.33318841457366943
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, covered a time range from 08:00:13 to 15:59:56 UTC. The dominant event types were person entries (680) and exits (685), with a total of 1,376 events recorded. The peak event count per hour occurred during the observed period, contributing to a total of 1,379 node counts.",
+        "distance": 0.5007567405700684
+      },
+      {
+        "community_id": "community_5",
+        "summary": "The CCTV activity involved multiple camera locations during the time range from 16:00:57 to 16:58:54 UTC on December 8, 2025. The dominant event types were person entries, with a total of 16, and person exits, totaling 11, alongside 3 car entries and 2 car exits. The total volume of events recorded was 32, with a node count of 33. There are no notable peak head counts or average head counts reported.",
+        "distance": 0.5452492237091064
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity covers the location from 09:00 to 09:59 UTC on December 8, 2025. The dominant event types are person entries, with 437 recorded, and person exits, totaling 387. There were also 5 car entries and 4 car exits, contributing to a total of 833 events. Notably, the peak head count and average head count data are not available.",
+        "distance": 0.5691699385643005
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour {camera_location: 'DemoBooth_NVIDIA'})\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.hour_utc AS hour, ch.avg_hc AS avg_head_count, ch.peak_hc AS peak_head_count, ch.event_count AS event_count\n}\nRETURN hour, avg_head_count, peak_head_count, event_count ORDER BY hour",
+      "row_count": 24
+    },
+    {
+      "type": "community",
+      "community_id": "community_4",
+      "distance": 0.33318841457366943
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.5007567405700684
+    },
+    {
+      "type": "community",
+      "community_id": "community_5",
+      "distance": 0.5452492237091064
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.5691699385643005
+    }
+  ],
+  "duration_ms": 6856,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2544,
+      "completion_tokens": 116
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 1372,
+      "completion_tokens": 140
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=3/5=0.60 (threshold=0.6)"
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "question_id": "L1_q001_car_entry_count_at_gate01",
+  "level": "L1",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-5",
+  "scenario": "base_quiet_day",
+  "question_text": "How many car_entry events were recorded at Gate_01 on 2025-12-01 (UTC)?",
+  "gold_value": 223,
+  "answer_text": "0",
+  "structured_answer": {
+    "cypher_columns": [
+      "car_entry_events"
+    ],
+    "cypher_rows": [
+      [
+        0
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_1",
+        "summary": "All events were recorded by CAM_02 at Gate_ParkingLot, covering activity from 2025-12-08T07:00:01Z to 2025-12-08T18:59:57Z with hourly aggregation reported for 07:00\u201317:00 UTC. Total volume was 1,529 events (node_count 1,532); person events dominated with 463 person_entry and 466 person_exit (929 total) versus 283 car_entry and 317 car_exit (600 total). Peak head_count is not available (null), and a peak events-per-hour value is not provided.",
+        "distance": 0.25564509630203247
+      },
+      {
+        "community_id": "community_0",
+        "summary": "Cameras CAM_01 covered Gate_MainEntrance and Platform_1 from 2025-12-01T01:00:00Z to 2025-12-08T12:00:00Z (events recorded between 2025-12-01T01:04:10Z and 2025-12-08T12:59:57Z). Total volume was 1,775 events: person activity dominated (788 person_entry and 773 person_exit = 1,561 person events) versus 112 car_entry and 102 car_exit. Average head count (mean-of-means) was 10.42 with a peak head count of 47.0; node_count is 1,802 and average events/hour \u2248 9.9 (1775 events over ~179 hours); peak per-hour event count is not specified in the provided profile.",
+        "distance": 0.303577721118927
+      },
+      {
+        "community_id": "community_11",
+        "summary": "All activity was recorded at Platform_1. Events were dominated by people (24 person_entry, 23 person_exit = 47 person events) versus 14 car events (9 car_entry, 5 car_exit). The events span 2025-12-01T16:01:45Z to 2025-12-01T16:59:32Z (hour 2025-12-01T16:00:00Z) with a total of 61 events (peak hourly event count 61). Mean head count was 5.03, peak head_count 12.0, and node_count reported as 63.",
+        "distance": 0.32488155364990234
+      },
+      {
+        "community_id": "community_12",
+        "summary": "All activity was recorded on Platform_1. Events were dominated by person movements (19 person_entry, 14 person_exit = 33 person events) versus 7 car_entry and 7 car_exit (14 car events). The events occurred between 2025-12-01T04:01:34Z and 2025-12-01T04:59:16Z (within the 2025-12-01T04:00:00Z hour), with a total of 47 events (peak hourly event count 47). Average head count (mean of means) was 5.02 and peak head_count was 12.0; node_count is 49.",
+        "distance": 0.3328700065612793
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event {event_type: 'car_entry'})-[:DETECTED_BY]->(c:Camera {camera_location: 'Gate_01'})\nWHERE e.timestamp_utc >= '2025-12-01T00:00:00Z' AND e.timestamp_utc < '2025-12-02T00:00:00Z'\nRETURN count(e) AS car_entry_events",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.25564509630203247
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.303577721118927
+    },
+    {
+      "type": "community",
+      "community_id": "community_11",
+      "distance": 0.32488155364990234
+    },
+    {
+      "type": "community",
+      "community_id": "community_12",
+      "distance": 0.3328700065612793
+    }
+  ],
+  "duration_ms": 10054,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5",
+      "prompt_tokens": 1873,
+      "completion_tokens": 795
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-5",
+      "prompt_tokens": 825,
+      "completion_tokens": 202
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": false,
+    "detail": "expected=223.0 got=0.0"
+  }
+}

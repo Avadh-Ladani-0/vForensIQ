@@ -1,0 +1,92 @@
+{
+  "question_id": "L5_q008_what_should_change",
+  "level": "L5",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Looking at how this conference day played out, what could be improved next time \u2014 staffing, layout, scheduling? Give me your top recommendations grounded in what the data shows.",
+  "gold_value": {
+    "rubric": [
+      "Lunch-hour congestion at the food court suggests adding capacity or staggered breaks",
+      "Concentrated rush hours at the main entrance suggest staggered start times or additional lanes",
+      "Significant peak/baseline contrast at keynote stage suggests dedicated crowd-flow planning around keynote times",
+      "Lower-attended demo booths could be relocated or merged to balance traffic"
+    ],
+    "threshold": 0.4
+  },
+  "answer_text": "To improve the conference day, consider these recommendations: \n\n1. **Staffing**: With 2,601 person entries and 2,493 exits, it may be beneficial to increase staffing during peak entry times to manage the crowd more effectively.\n2. **Layout**: Given the high peak head count of 500, assessing the layout to facilitate smoother movement through entry and exit points could reduce congestion.\n3. **Scheduling**: Review the timing of events to better align with crowd patterns, as there are 5,940 total events and 432,000 total crowd samples indicating potential for crowd saturation at certain times.",
+  "structured_answer": {
+    "columns": [
+      "total_events",
+      "total_crowd_samples",
+      "avg_head_count",
+      "peak_head_count",
+      "event_type",
+      "event_count"
+    ],
+    "rows": [
+      [
+        5940,
+        432000,
+        31.197416666666662,
+        500,
+        "car_entry",
+        419
+      ],
+      [
+        5940,
+        432000,
+        31.197416666666662,
+        500,
+        "car_exit",
+        427
+      ],
+      [
+        5940,
+        432000,
+        31.197416666666662,
+        500,
+        "person_entry",
+        2601
+      ],
+      [
+        5940,
+        432000,
+        31.197416666666662,
+        500,
+        "person_exit",
+        2493
+      ]
+    ],
+    "total_rows": 4
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event) WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  WITH count(e) AS total_events\n  RETURN total_events\n}\nCALL {\n  MATCH (ch:CrowdHour) WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN sum(ch.event_count) AS total_crowd_samples\n}\nCALL {\n  MATCH (ch:CrowdHour) WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN avg(ch.avg_hc) AS avg_head_count, max(ch.peak_hc) AS peak_head_count\n}\nCALL {\n  MATCH (e:Event) WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN e.event_type AS event_type, count(*) AS event_count\n}\nRETURN total_events, total_crowd_samples, avg_head_count, peak_head_count, event_type, event_count ORDER BY event_type",
+      "row_count": 4
+    }
+  ],
+  "duration_ms": 10694,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2166,
+      "completion_tokens": 307
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 645,
+      "completion_tokens": 126
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=0/4=0.00 (threshold=0.4)"
+  }
+}

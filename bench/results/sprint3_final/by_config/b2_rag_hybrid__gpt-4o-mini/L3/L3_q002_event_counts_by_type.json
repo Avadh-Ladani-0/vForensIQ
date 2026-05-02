@@ -1,0 +1,131 @@
+{
+  "question_id": "L3_q002_event_counts_by_type",
+  "level": "L3",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "For 2025-12-08 (UTC), how many events were recorded for each event_type? List every event_type with its count.",
+  "gold_value": [
+    [
+      "car_entry",
+      419
+    ],
+    [
+      "car_exit",
+      427
+    ],
+    [
+      "crowd",
+      432000
+    ],
+    [
+      "person_entry",
+      2601
+    ],
+    [
+      "person_exit",
+      2493
+    ]
+  ],
+  "answer_text": "On December 8, 2025, the recorded events by event type were as follows: car entry - 419, car exit - 427, crowd - 432,000, person entry - 2,601, and person exit - 2,493. This indicates a significant volume of activity, particularly with crowd events dominating the total counts. The monitoring spanned various locations, capturing a bustling environment characterized by numerous person entries and exits, alongside vehicle movements.",
+  "structured_answer": {
+    "cypher_columns": [
+      "event_type",
+      "count"
+    ],
+    "cypher_rows": [
+      [
+        "car_entry",
+        419
+      ],
+      [
+        "car_exit",
+        427
+      ],
+      [
+        "crowd",
+        432000
+      ],
+      [
+        "person_entry",
+        2601
+      ],
+      [
+        "person_exit",
+        2493
+      ]
+    ],
+    "cypher_total_rows": 5,
+    "retrieved_communities": [
+      {
+        "community_id": "community_4",
+        "summary": "The CCTV activity involved multiple camera locations during the time range from 05:00:59 to 05:59:16 UTC on December 8, 2025. The dominant event types were person entries, with a total of 22 recorded, followed by person exits at 14 and car exits at 4. The total volume of events reached 40, with a node count of 41. No peak head count or average head count data is available.",
+        "distance": 0.45574188232421875
+      },
+      {
+        "community_id": "community_14",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 19:00 and 19:58 UTC recorded a total of 53 events, with a peak head count of 42. The dominant event types were person entries (21) and exits (20), alongside 6 car entries and 6 exits. The average head count was approximately 35, with a total of 55 nodes monitored during this period.",
+        "distance": 0.48127448558807373
+      },
+      {
+        "community_id": "community_3",
+        "summary": "The CCTV activity involved monitoring at unspecified camera locations from 01:00 to 01:59 UTC on December 8, 2025. The dominant event types were person entries, with 23 occurrences, and car exits, totaling 4. The total volume of events recorded was 39, with no peak head count reported.",
+        "distance": 0.48298782110214233
+      },
+      {
+        "community_id": "community_7",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 12:00:23 and 12:59:53, recorded a total of 25 events. The dominant event types were person entries (10) and exits (8), along with 4 car entries and 3 car exits. The peak head count reached 13, with an average head count of approximately 5.",
+        "distance": 0.49207770824432373
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event) WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN e.event_type AS event_type, count(*) AS n\n  UNION ALL\n  MATCH (ch:CrowdHour) WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN 'crowd' AS event_type, sum(ch.event_count) AS n\n}\nRETURN event_type, sum(n) AS count ORDER BY event_type",
+      "row_count": 5
+    },
+    {
+      "type": "community",
+      "community_id": "community_4",
+      "distance": 0.45574188232421875
+    },
+    {
+      "type": "community",
+      "community_id": "community_14",
+      "distance": 0.48127448558807373
+    },
+    {
+      "type": "community",
+      "community_id": "community_3",
+      "distance": 0.48298782110214233
+    },
+    {
+      "type": "community",
+      "community_id": "community_7",
+      "distance": 0.49207770824432373
+    }
+  ],
+  "duration_ms": 6765,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2161,
+      "completion_tokens": 152
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 673,
+      "completion_tokens": 95
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": false,
+    "detail": "missing_keys=['car_entry', 'car_exit', 'person_entry', 'person_exit']"
+  }
+}

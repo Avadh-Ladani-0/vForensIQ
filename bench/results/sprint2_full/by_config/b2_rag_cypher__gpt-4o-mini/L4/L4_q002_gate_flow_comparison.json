@@ -1,0 +1,62 @@
+{
+  "question_id": "L4_q002_gate_flow_comparison",
+  "level": "L4",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "On 2025-12-08 (UTC), which gate had higher total person flow (person_entry + person_exit combined) \u2014 Gate_MainEntrance or Gate_ParkingLot? State which gate and their approximate totals.",
+  "gold_value": {
+    "higher_flow_gate": "Gate_MainEntrance",
+    "gate_mainentrance_flow_approx": {
+      "value": 2900,
+      "tolerance": 400
+    },
+    "gate_parkinglot_flow_approx": {
+      "value": 620,
+      "tolerance": 150
+    }
+  },
+  "answer_text": "On 2025-12-08, Gate_MainEntrance had a higher total person flow with approximately 2883 events. Gate_ParkingLot was not mentioned in the results, indicating it had a lower total flow.",
+  "structured_answer": {
+    "columns": [
+      "gate",
+      "total_flow"
+    ],
+    "rows": [
+      [
+        "Gate_MainEntrance",
+        2883
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\nWHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\nAND e.event_type IN ['person_entry', 'person_exit']\nAND l.name IN ['Gate_MainEntrance', 'Gate_ParkingLot']\nWITH l.name AS gate, COUNT(e) AS total_flow\nRETURN gate, total_flow\nORDER BY total_flow DESC\nLIMIT 1",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 3902,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1003,
+      "completion_tokens": 124
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 346,
+      "completion_tokens": 44
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": false,
+    "detail": "missing=['gate_parkinglot_flow_approx=620.0+-150.0_no_match (numbers_seen=[2883.0])']"
+  }
+}

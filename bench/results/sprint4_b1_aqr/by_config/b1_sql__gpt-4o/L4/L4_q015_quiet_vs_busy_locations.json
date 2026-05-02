@@ -1,0 +1,62 @@
+{
+  "question_id": "L4_q015_quiet_vs_busy_locations",
+  "level": "L4",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which location was the quietest and which was the busiest in terms of average crowd? How big is the gap?",
+  "gold_value": {
+    "busiest": "KeynoteHall_Stage",
+    "quietest": "DemoBooth_Intel"
+  },
+  "answer_text": "The quietest location was \"DemoBooth_Intel\" with an average head count of 10.65. The busiest location was \"KeynoteHall_Stage\" with an average head count of 57.40. The gap between the quietest and busiest locations was 46.75.",
+  "structured_answer": {
+    "columns": [
+      "quietest_location",
+      "quietest_avg_head_count",
+      "busiest_location",
+      "busiest_avg_head_count",
+      "head_count_gap"
+    ],
+    "rows": [
+      [
+        "DemoBooth_Intel",
+        10.648136574074075,
+        "KeynoteHall_Stage",
+        57.39643518518518,
+        46.74829861111111
+      ]
+    ],
+    "total_rows": 1,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH crowd_events AS (\n    SELECT \n        camera_location, \n        AVG(head_count) AS avg_head_count\n    FROM \n        events\n    WHERE \n        event_type = 'crowd' \n        AND timestamp_utc >= '2025-12-08T00:00:00Z' \n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        camera_location\n),\nquietest_location AS (\n    SELECT \n        camera_location, \n        avg_head_count\n    FROM \n        crowd_events\n    ORDER BY \n        avg_head_count ASC\n    LIMIT 1\n),\nbusiest_location AS (\n    SELECT \n        camera_location, \n        avg_head_count\n    FROM \n        crowd_events\n    ORDER BY \n        avg_head_count DESC\n    LIMIT 1\n)\nSELECT \n    q.camera_location AS quietest_location,\n    q.avg_head_count AS quietest_avg_head_count,\n    b.camera_location AS busiest_location,\n    b.avg_head_count AS busiest_avg_head_count,\n    b.avg_head_count - q.avg_head_count AS head_count_gap\nFROM \n    quietest_location q, \n    busiest_location b",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 4504,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 957,
+      "completion_tokens": 247
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 500,
+      "completion_tokens": 60
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_2_facts_satisfied"
+  }
+}

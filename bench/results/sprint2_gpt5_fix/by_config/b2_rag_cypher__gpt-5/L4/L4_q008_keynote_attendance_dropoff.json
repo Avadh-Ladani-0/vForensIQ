@@ -1,0 +1,304 @@
+{
+  "question_id": "L4_q008_keynote_attendance_dropoff",
+  "level": "L4",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Did the keynote stage attendance drop off later in the day, or stay similar across the morning and afternoon keynotes?",
+  "gold_value": {
+    "trend_keyword_a": "morning",
+    "trend_keyword_b": "afternoon"
+  },
+  "answer_text": null,
+  "structured_answer": {
+    "columns": [
+      "grain",
+      "camera_location",
+      "period",
+      "hour",
+      "avg_hc",
+      "peak_hc",
+      "samples"
+    ],
+    "rows": [
+      [
+        "period_overall",
+        "ALL_KEYNOTE",
+        "afternoon",
+        null,
+        70.83166666666666,
+        452,
+        43200
+      ],
+      [
+        "period_overall",
+        "ALL_KEYNOTE",
+        "morning",
+        null,
+        43.96333333333333,
+        500,
+        43200
+      ],
+      [
+        "period_camera",
+        "KeynoteHall_Stage",
+        "afternoon",
+        null,
+        70.83166666666666,
+        452,
+        43200
+      ],
+      [
+        "period_camera",
+        "KeynoteHall_Stage",
+        "morning",
+        null,
+        43.96333333333333,
+        500,
+        43200
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "afternoon",
+        "2025-12-08T12:00:00Z",
+        7.16,
+        57,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "afternoon",
+        "2025-12-08T13:00:00Z",
+        7.07,
+        54,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "afternoon",
+        "2025-12-08T14:00:00Z",
+        399.51,
+        452,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "afternoon",
+        "2025-12-08T15:00:00Z",
+        7.23,
+        53,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "afternoon",
+        "2025-12-08T16:00:00Z",
+        379.46,
+        433,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "afternoon",
+        "2025-12-08T17:00:00Z",
+        6.93,
+        51,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "afternoon",
+        "2025-12-08T18:00:00Z",
+        6.83,
+        59,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "afternoon",
+        "2025-12-08T19:00:00Z",
+        7.18,
+        55,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "afternoon",
+        "2025-12-08T20:00:00Z",
+        7.09,
+        57,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "afternoon",
+        "2025-12-08T21:00:00Z",
+        6.96,
+        50,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "afternoon",
+        "2025-12-08T22:00:00Z",
+        7.25,
+        51,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "afternoon",
+        "2025-12-08T23:00:00Z",
+        7.31,
+        57,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "morning",
+        "2025-12-08T00:00:00Z",
+        6.97,
+        51,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "morning",
+        "2025-12-08T01:00:00Z",
+        7.27,
+        52,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "morning",
+        "2025-12-08T02:00:00Z",
+        7.12,
+        50,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "morning",
+        "2025-12-08T03:00:00Z",
+        7.21,
+        59,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "morning",
+        "2025-12-08T04:00:00Z",
+        7.01,
+        52,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "morning",
+        "2025-12-08T05:00:00Z",
+        6.93,
+        51,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "morning",
+        "2025-12-08T06:00:00Z",
+        6.8,
+        62,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "morning",
+        "2025-12-08T07:00:00Z",
+        7.12,
+        74,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "morning",
+        "2025-12-08T08:00:00Z",
+        6.98,
+        68,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "morning",
+        "2025-12-08T09:00:00Z",
+        450.19,
+        500,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "morning",
+        "2025-12-08T10:00:00Z",
+        7.03,
+        56,
+        3600
+      ],
+      [
+        "hourly",
+        "KeynoteHall_Stage",
+        "morning",
+        "2025-12-08T11:00:00Z",
+        6.93,
+        55,
+        3600
+      ]
+    ],
+    "total_rows": 28
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "WITH '2025-12-08T00:00:00Z' AS W_start, '2025-12-09T00:00:00Z' AS W_end\nCALL {\n  WITH W_start, W_end\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= W_start AND ch.hour_utc < W_end\n    AND toLower(ch.camera_location) CONTAINS 'keynote'\n  WITH ch, CASE WHEN toInteger(substring(ch.hour_utc, 11, 2)) < 12 THEN 'morning' ELSE 'afternoon' END AS period\n  RETURN 'hourly' AS grain, ch.camera_location AS camera_location, period, ch.hour_utc AS hour, ch.avg_hc AS avg_hc, ch.peak_hc AS peak_hc, ch.event_count AS samples\n  UNION ALL\n  WITH W_start, W_end\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= W_start AND ch.hour_utc < W_end\n    AND toLower(ch.camera_location) CONTAINS 'keynote'\n  WITH ch, CASE WHEN toInteger(substring(ch.hour_utc, 11, 2)) < 12 THEN 'morning' ELSE 'afternoon' END AS period\n  WITH ch.camera_location AS camera_location, period, sum(ch.avg_hc * ch.event_count) AS wsum, sum(ch.event_count) AS samples, max(ch.peak_hc) AS peak_hc\n  RETURN 'period_camera' AS grain, camera_location, period, null AS hour, (wsum / samples) AS avg_hc, peak_hc AS peak_hc, samples\n  UNION ALL\n  WITH W_start, W_end\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= W_start AND ch.hour_utc < W_end\n    AND toLower(ch.camera_location) CONTAINS 'keynote'\n  WITH ch, CASE WHEN toInteger(substring(ch.hour_utc, 11, 2)) < 12 THEN 'morning' ELSE 'afternoon' END AS period\n  WITH period, sum(ch.avg_hc * ch.event_count) AS wsum, sum(ch.event_count) AS samples, max(ch.peak_hc) AS peak_hc\n  RETURN 'period_overall' AS grain, 'ALL_KEYNOTE' AS camera_location, period, null AS hour, (wsum / samples) AS avg_hc, peak_hc AS peak_hc, samples\n}\nRETURN grain, camera_location, period, hour, avg_hc, peak_hc, samples\nORDER BY CASE grain WHEN 'period_overall' THEN 0 WHEN 'period_camera' THEN 1 ELSE 2 END, camera_location, period, hour",
+      "row_count": 28
+    }
+  ],
+  "duration_ms": 57068,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5",
+      "prompt_tokens": 1877,
+      "completion_tokens": 4241
+    }
+  ],
+  "errors": [
+    "RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": null,
+    "detail": "error"
+  }
+}

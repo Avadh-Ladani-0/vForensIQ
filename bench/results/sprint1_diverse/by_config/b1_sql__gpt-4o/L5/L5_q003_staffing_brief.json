@@ -1,0 +1,71 @@
+{
+  "question_id": "L5_q003_staffing_brief",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a staffing recommendation brief for the AI Hardware Summit on 2025-12-08 (UTC). Identify (a) the busiest hours of the day requiring extra staff at the gates and on the expo floor, and (b) the quiet hours where minimal coverage is sufficient. Cite specific hour ranges and supporting metrics. Keep it to 4-6 bullet points.",
+  "gold_value": {
+    "rubric": [
+      "Morning gate rush around 08:00-10:00 UTC needs extra staffing",
+      "Evening gate rush around 17:00-19:00 UTC needs extra staffing",
+      "Lunch hours 12:00-14:00 UTC are busy at FoodCourt and need extra coverage",
+      "Late-night and early-morning hours (roughly 22:00-06:00 UTC) are quiet and need minimal coverage",
+      "Keynote hours (09:00-10:00 and 14:00-15:00 UTC) require crowd management at KeynoteHall_Stage"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "- **Busiest Hours:**\n  - **9 AM** at the **KeynoteHall_Stage** with a total head count of **1,620,671**. Extra staff is recommended at the gates and on the expo floor during this time.\n\n- **Quiet Hours:**\n  - **6 AM** at the **DemoBooth_Intel** with a total head count of **11,392**. Minimal coverage is sufficient during this hour.",
+  "structured_answer": {
+    "columns": [
+      "period",
+      "hour",
+      "camera_location",
+      "total_head_count"
+    ],
+    "rows": [
+      [
+        "busiest",
+        "09",
+        "KeynoteHall_Stage",
+        1620671
+      ],
+      [
+        "quiet",
+        "06",
+        "DemoBooth_Intel",
+        11392
+      ]
+    ],
+    "total_rows": 2
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH hourly_crowd AS (\n  SELECT \n    strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n    camera_location,\n    SUM(head_count) AS total_head_count\n  FROM \n    events\n  WHERE \n    event_type = 'crowd' AND\n    timestamp_utc >= '2025-12-08T00:00:00Z' AND \n    timestamp_utc < '2025-12-09T00:00:00Z'\n  GROUP BY \n    hour, camera_location\n),\nbusiest_hours AS (\n  SELECT \n    hour,\n    camera_location,\n    total_head_count\n  FROM \n    hourly_crowd\n  WHERE \n    total_head_count = (SELECT MAX(total_head_count) FROM hourly_crowd)\n),\nquiet_hours AS (\n  SELECT \n    hour,\n    camera_location,\n    total_head_count\n  FROM \n    hourly_crowd\n  WHERE \n    total_head_count = (SELECT MIN(total_head_count) FROM hourly_crowd)\n)\nSELECT \n  'busiest' AS period,\n  hour,\n  camera_location,\n  total_head_count\nFROM \n  busiest_hours\nUNION ALL\nSELECT \n  'quiet' AS period,\n  hour,\n  camera_location,\n  total_head_count\nFROM \n  quiet_hours\nORDER BY \n  period, hour, camera_location",
+      "row_count": 2
+    }
+  ],
+  "duration_ms": 6340,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 710,
+      "completion_tokens": 285
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 571,
+      "completion_tokens": 94
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=3/5=0.60 (threshold=0.5)"
+  }
+}

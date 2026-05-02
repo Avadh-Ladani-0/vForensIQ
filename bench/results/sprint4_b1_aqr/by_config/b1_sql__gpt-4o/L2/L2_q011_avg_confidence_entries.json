@@ -1,0 +1,51 @@
+{
+  "question_id": "L2_q011_avg_confidence_entries",
+  "level": "L2",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "On average, how confident were the detections for people entering the main gate?",
+  "gold_value": 0.92,
+  "answer_text": "On average, the confidence level for detections of people entering the main gate was 0.915.",
+  "structured_answer": {
+    "columns": [
+      "average_confidence"
+    ],
+    "rows": [
+      [
+        0.9150881776616591
+      ]
+    ],
+    "total_rows": 1,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "SELECT AVG(confidence) AS average_confidence\nFROM events\nWHERE event_type = 'person_entry'\n  AND camera_location LIKE '%MainEntrance%'\n  AND timestamp_utc >= '2025-12-08T00:00:00Z'\n  AND timestamp_utc < '2025-12-09T00:00:00Z'",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 3272,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 950,
+      "completion_tokens": 76
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 261,
+      "completion_tokens": 21
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "numeric_tolerance_1pct",
+    "passed": true,
+    "detail": "within_1pct (expected=0.92 got=0.915)"
+  }
+}

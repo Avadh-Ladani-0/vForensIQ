@@ -1,0 +1,72 @@
+{
+  "question_id": "L4_q007_nvidia_vs_intel_booth_attraction",
+  "level": "L4",
+  "approach": "b3_aqr",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which demo booth attracted bigger crowds \u2014 NVIDIA or Intel? Roughly how much more popular was the winner?",
+  "gold_value": {
+    "winner": "NVIDIA",
+    "intel_mentioned": "Intel"
+  },
+  "answer_text": "The NVIDIA demo booth attracted bigger crowds. It was roughly 116.8 attendees more popular than the Intel booth.",
+  "structured_answer": {
+    "columns": [
+      "winner",
+      "popularity_difference"
+    ],
+    "rows": [
+      [
+        "NVIDIA",
+        116.79999999999995
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour) WHERE ch.camera_location CONTAINS 'NVIDIA' AND ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN sum(ch.avg_hc) AS avg_hc, 'NVIDIA' AS booth\n  UNION ALL\n  MATCH (ch:CrowdHour) WHERE ch.camera_location CONTAINS 'Intel' AND ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN sum(ch.avg_hc) AS avg_hc, 'Intel' AS booth\n}\nWITH collect(avg_hc) AS avg_hc_values, collect(booth) AS booths\nRETURN \n  CASE \n    WHEN avg_hc_values[0] > avg_hc_values[1] THEN booths[0] \n    ELSE booths[1] \n  END AS winner,\n  abs(avg_hc_values[0] - avg_hc_values[1]) AS popularity_difference",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 12907,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2153,
+      "completion_tokens": 231
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2497,
+      "completion_tokens": 249
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 453,
+      "completion_tokens": 23
+    }
+  ],
+  "errors": [],
+  "routing": {
+    "classified_level": "L4",
+    "routed_to": "b2_rag_cypher",
+    "routing_method": "llm_zero_shot",
+    "routing_duration_ms": 1333,
+    "classifier_metadata": {
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 352,
+      "completion_tokens": 2
+    }
+  },
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_2_facts_satisfied"
+  }
+}

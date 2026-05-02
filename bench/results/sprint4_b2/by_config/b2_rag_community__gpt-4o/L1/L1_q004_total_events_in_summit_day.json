@@ -1,0 +1,129 @@
+{
+  "question_id": "L1_q004_total_events_in_summit_day",
+  "level": "L1",
+  "approach": "b2_rag_community",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many total events of any type were recorded across all cameras during the entire day of 2025-12-08 (UTC)?",
+  "gold_value": 437940,
+  "answer_text": "A total of 917 events were recorded across all cameras during the entire day of December 8, 2025 (UTC).",
+  "structured_answer": {
+    "retrieved_communities": [
+      {
+        "community_id": "community_5",
+        "summary": "The CCTV activity involved multiple camera locations during the time range from 16:00:57 to 16:58:54 UTC on December 8, 2025. The dominant event types were person entries, with a total of 16, and person exits, totaling 11, alongside 3 car entries and 2 car exits. The total volume of events recorded was 32, with a node count of 33. There are no notable peak head counts or average head counts reported.",
+        "distance": 0.30842727422714233,
+        "metadata": {
+          "camera_locations": "",
+          "node_count": 33,
+          "total_events": 32,
+          "community_id": 5
+        }
+      },
+      {
+        "community_id": "community_3",
+        "summary": "The CCTV activity involves monitoring at unspecified camera locations during the time range of December 8, 2025, from 04:01:25 to 04:59:45 UTC. The dominant event types are person entries (12) and exits (18), along with car entries (4) and exits (2). A total of 36 events were recorded, with a peak head count and average head count not specified.",
+        "distance": 0.3168211579322815,
+        "metadata": {
+          "node_count": 37,
+          "camera_locations": "",
+          "total_events": 36,
+          "community_id": 3
+        }
+      },
+      {
+        "community_id": "community_7",
+        "summary": "The CCTV activity covers the time range from December 8, 2025, 17:00 to 17:59 UTC. The events are recorded at unspecified camera locations, with a total of 733 events, dominated by person entries (309) and exits (289), alongside 68 car entries and 67 exits. Notable figures include a total event count of 733, but no peak head count or average head count data is available.",
+        "distance": 0.3294892907142639,
+        "metadata": {
+          "total_events": 733,
+          "camera_locations": "",
+          "community_id": 7,
+          "node_count": 734
+        }
+      },
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity covers the time range from December 8, 2025, 06:00:12 UTC to December 8, 2025, 06:59:23 UTC. The camera locations involved recorded a total of 37 events, with person exits (18) and person entries (14) dominating the activity, alongside 4 car entries and 1 car exit. Notably, there were 38 nodes monitored during this period.",
+        "distance": 0.35286927223205566,
+        "metadata": {
+          "total_events": 37,
+          "camera_locations": "",
+          "community_id": 9,
+          "node_count": 38
+        }
+      },
+      {
+        "community_id": "community_8",
+        "summary": "The CCTV activity covers the time range from 00:02:26 to 00:59:58 on December 8, 2025. The camera locations involved recorded a total of 40 events, with person entries (17) and car exits (5) being the dominant event types. Notably, there were 2 car entries and 16 person exits during this period. The peak head count and average head count data are not available.",
+        "distance": 0.359589159488678,
+        "metadata": {
+          "community_id": 8,
+          "total_events": 40,
+          "camera_locations": "",
+          "node_count": 41
+        }
+      },
+      {
+        "community_id": "community_6",
+        "summary": "The CCTV activity covers the time range from December 8, 2025, 01:00:41 UTC to December 8, 2025, 01:59:48 UTC. The camera locations involved recorded a total of 39 events, with person entries (23) and car exits (4) being the dominant event types. Notably, there were 1 car entry and 11 person exits during this period.",
+        "distance": 0.36057400703430176,
+        "metadata": {
+          "total_events": 39,
+          "camera_locations": "",
+          "node_count": 40,
+          "community_id": 6
+        }
+      }
+    ],
+    "top_k": 6
+  },
+  "citations": [
+    {
+      "type": "community",
+      "community_id": "community_5",
+      "distance": 0.30842727422714233
+    },
+    {
+      "type": "community",
+      "community_id": "community_3",
+      "distance": 0.3168211579322815
+    },
+    {
+      "type": "community",
+      "community_id": "community_7",
+      "distance": 0.3294892907142639
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.35286927223205566
+    },
+    {
+      "type": "community",
+      "community_id": "community_8",
+      "distance": 0.359589159488678
+    },
+    {
+      "type": "community",
+      "community_id": "community_6",
+      "distance": 0.36057400703430176
+    }
+  ],
+  "duration_ms": 2662,
+  "llm_calls": [
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 802,
+      "completion_tokens": 26
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": false,
+    "detail": "expected=437940.0 got=917.0"
+  }
+}

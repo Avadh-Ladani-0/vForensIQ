@@ -1,0 +1,153 @@
+{
+  "question_id": "L5_q006_how_did_the_day_go",
+  "level": "L5",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Tell me how the day went at the conference \u2014 what stood out, when were the big moments, and what does the activity tell us?",
+  "gold_value": {
+    "rubric": [
+      "Significant person traffic at the main entrance, especially in the morning and evening",
+      "Keynote sessions drew large crowds at the keynote stage area",
+      "Demo booths (especially NVIDIA) had notable crowd activity during expo hours",
+      "Food court was busiest around lunchtime",
+      "Overnight hours were quiet across the venue"
+    ],
+    "threshold": 0.4
+  },
+  "answer_text": "The conference on December 8, 2025, saw significant activity throughout the day with the highest attendance at 19,292 from 08:00 to 09:00 UTC. Notable hours included 07:00-08:00 with 18,358 participants and 15:00-16:00 with 18,440 attendees. Overall, the data reflects consistent engagement, indicating a well-attended event with peak moments during the morning and mid-afternoon.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "count"
+    ],
+    "rows": [
+      [
+        "2025-12-08T00:00:00Z",
+        18040
+      ],
+      [
+        "2025-12-08T01:00:00Z",
+        18039
+      ],
+      [
+        "2025-12-08T02:00:00Z",
+        18029
+      ],
+      [
+        "2025-12-08T03:00:00Z",
+        18032
+      ],
+      [
+        "2025-12-08T04:00:00Z",
+        18036
+      ],
+      [
+        "2025-12-08T05:00:00Z",
+        18040
+      ],
+      [
+        "2025-12-08T06:00:00Z",
+        18037
+      ],
+      [
+        "2025-12-08T07:00:00Z",
+        18358
+      ],
+      [
+        "2025-12-08T08:00:00Z",
+        19292
+      ],
+      [
+        "2025-12-08T09:00:00Z",
+        19003
+      ],
+      [
+        "2025-12-08T10:00:00Z",
+        18035
+      ],
+      [
+        "2025-12-08T11:00:00Z",
+        18037
+      ],
+      [
+        "2025-12-08T12:00:00Z",
+        18323
+      ],
+      [
+        "2025-12-08T13:00:00Z",
+        18397
+      ],
+      [
+        "2025-12-08T14:00:00Z",
+        18031
+      ],
+      [
+        "2025-12-08T15:00:00Z",
+        18440
+      ],
+      [
+        "2025-12-08T16:00:00Z",
+        18032
+      ],
+      [
+        "2025-12-08T17:00:00Z",
+        18807
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        18792
+      ],
+      [
+        "2025-12-08T19:00:00Z",
+        18027
+      ],
+      [
+        "2025-12-08T20:00:00Z",
+        18033
+      ],
+      [
+        "2025-12-08T21:00:00Z",
+        18032
+      ],
+      [
+        "2025-12-08T22:00:00Z",
+        18026
+      ],
+      [
+        "2025-12-08T23:00:00Z",
+        18022
+      ]
+    ],
+    "total_rows": 24
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event) WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  WITH substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, count(*) AS n\n  RETURN hour, n\n  UNION ALL\n  MATCH (ch:CrowdHour) WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.hour_utc AS hour, ch.event_count AS n\n}\nRETURN hour, sum(n) AS count ORDER BY hour",
+      "row_count": 24
+    }
+  ],
+  "duration_ms": 6034,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2160,
+      "completion_tokens": 168
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 843,
+      "completion_tokens": 97
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=0/5=0.00 (threshold=0.4)"
+  }
+}

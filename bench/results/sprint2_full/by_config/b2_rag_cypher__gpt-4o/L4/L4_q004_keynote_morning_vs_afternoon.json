@@ -1,0 +1,64 @@
+{
+  "question_id": "L4_q004_keynote_morning_vs_afternoon",
+  "level": "L4",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Compare the average head_count at KeynoteHall_Stage between the morning keynote window 09:00-10:00 UTC and the afternoon keynote window 14:00-15:00 UTC on 2025-12-08. Which keynote had higher attendance and what were the approximate average head_counts?",
+  "gold_value": {
+    "higher_attendance_window": "morning",
+    "morning_keynote_avg_approx": {
+      "value": 450,
+      "tolerance": 80
+    },
+    "afternoon_keynote_avg_approx": {
+      "value": 400,
+      "tolerance": 80
+    }
+  },
+  "answer_text": "The morning keynote at KeynoteHall_Stage had higher attendance with an average head_count of approximately 450.19, compared to the afternoon keynote, which had an average head_count of approximately 399.51.",
+  "structured_answer": {
+    "columns": [
+      "morning_avg_hc",
+      "afternoon_avg_hc",
+      "higher_attendance_keynote"
+    ],
+    "rows": [
+      [
+        450.19,
+        399.51,
+        "Morning"
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour)-[:AT_CAMERA]->(:Camera {camera_location: 'KeynoteHall_Stage'})\nWHERE ch.hour_utc >= '2025-12-08T09:00:00Z' AND ch.hour_utc < '2025-12-08T10:00:00Z'\nWITH ch.avg_hc AS morning_avg_hc\nMATCH (ch:CrowdHour)-[:AT_CAMERA]->(:Camera {camera_location: 'KeynoteHall_Stage'})\nWHERE ch.hour_utc >= '2025-12-08T14:00:00Z' AND ch.hour_utc < '2025-12-08T15:00:00Z'\nRETURN morning_avg_hc, ch.avg_hc AS afternoon_avg_hc, \n       CASE WHEN morning_avg_hc > ch.avg_hc THEN 'Morning' ELSE 'Afternoon' END AS higher_attendance_keynote",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 4093,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 1021,
+      "completion_tokens": 190
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 448,
+      "completion_tokens": 43
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_3_facts_satisfied"
+  }
+}

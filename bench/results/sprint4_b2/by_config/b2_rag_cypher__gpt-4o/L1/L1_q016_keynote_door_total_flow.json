@@ -1,0 +1,50 @@
+{
+  "question_id": "L1_q016_keynote_door_total_flow",
+  "level": "L1",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What was the total number of people going through the keynote hall door, both in and out?",
+  "gold_value": 1596,
+  "answer_text": "A total of 0 people went through the keynote hall door on December 8, 2025.",
+  "structured_answer": {
+    "columns": [
+      "total_people_through_keynote_hall_door"
+    ],
+    "rows": [
+      [
+        0
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event)-[:DETECTED_BY]->(:Camera {camera_location: 'KeynoteHall_Door'})\nWHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\nAND e.event_type IN ['person_entry', 'person_exit']\nRETURN count(e) AS total_people_through_keynote_hall_door",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 4813,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2513,
+      "completion_tokens": 94
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 290,
+      "completion_tokens": 21
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": false,
+    "detail": "expected=1596.0 got=0.0"
+  }
+}

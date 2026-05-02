@@ -1,0 +1,89 @@
+{
+  "question_id": "L3_q002_event_counts_by_type",
+  "level": "L3",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "For 2025-12-08 (UTC), how many events were recorded for each event_type? List every event_type with its count.",
+  "gold_value": [
+    [
+      "car_entry",
+      419
+    ],
+    [
+      "car_exit",
+      427
+    ],
+    [
+      "crowd",
+      432000
+    ],
+    [
+      "person_entry",
+      2601
+    ],
+    [
+      "person_exit",
+      2493
+    ]
+  ],
+  "answer_text": "- car_entry: 419\n- car_exit: 427\n- crowd: 432000\n- person_entry: 2601\n- person_exit: 2493",
+  "structured_answer": {
+    "columns": [
+      "event_type",
+      "count"
+    ],
+    "rows": [
+      [
+        "car_entry",
+        419
+      ],
+      [
+        "car_exit",
+        427
+      ],
+      [
+        "crowd",
+        432000
+      ],
+      [
+        "person_entry",
+        2601
+      ],
+      [
+        "person_exit",
+        2493
+      ]
+    ],
+    "total_rows": 5
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event)\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN e.event_type AS event_type, count(*) AS n\n  UNION ALL\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN 'crowd' AS event_type, sum(ch.event_count) AS n\n}\nRETURN event_type, sum(n) AS count\nORDER BY event_type",
+      "row_count": 5
+    }
+  ],
+  "duration_ms": 30297,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5",
+      "prompt_tokens": 1883,
+      "completion_tokens": 2660
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-5",
+      "prompt_tokens": 394,
+      "completion_tokens": 301
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": true,
+    "detail": "all_keys_and_values_matched (rows=5)"
+  }
+}

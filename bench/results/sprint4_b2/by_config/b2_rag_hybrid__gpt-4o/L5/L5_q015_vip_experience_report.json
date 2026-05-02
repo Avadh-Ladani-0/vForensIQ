@@ -1,0 +1,112 @@
+{
+  "question_id": "L5_q015_vip_experience_report",
+  "level": "L5",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a report on the visitor experience at the demo booths today \u2014 were they well-attended, which one drew more interest, and how did the crowd flow between them and the rest of the venue?",
+  "gold_value": {
+    "rubric": [
+      "NVIDIA booth drew larger crowds than Intel",
+      "Peak demo booth hours were during expo hours (10-12, 15-17)",
+      "Crowd at booths was lower than keynote and expo floor \u2014 booths are secondary attractions",
+      "There was flow between expo floor and demo booths during the day"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "Today at the demo booths, the NVIDIA booth was the standout attraction, drawing more interest than the Intel booth, as evidenced by an average head count of 15.5 and a peak of 86, compared to Intel's average of 10.6 and a peak of 53. The visitor experience at these booths contributed significantly to the event's dynamics, especially given the high activity levels throughout the venue. Community summaries reveal a vibrant setting across multiple locations, characterized by fluid movement among the booths, main aisles, and amenities such as the food court. The sustained and varied attendance patterns indicate that the booths were effectively integrated into the overall flow of the venue, ensuring a consistent stream of visitors. Overall, the visitors' interactions suggest a dynamic and engaging environment, with participants actively exploring and mingling across different sections of the event.",
+  "structured_answer": {
+    "cypher_columns": [
+      "location",
+      "total_events",
+      "average_head_count",
+      "peak_head_count"
+    ],
+    "cypher_rows": [
+      [
+        "DemoBooth_Intel",
+        86400,
+        10.64833333333333,
+        53
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        86400,
+        15.515000000000002,
+        86
+      ]
+    ],
+    "cypher_total_rows": 2,
+    "retrieved_communities": [
+      {
+        "community_id": "community_4",
+        "summary": "The CCTV activity involved five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types were person entries (169) and exits (132), with a total of 344 events recorded during the time range from December 8, 2025, 02:03:44 UTC to December 8, 2025, 23:59:14 UTC. The peak head count reached 500, and the average head count was approximately 31.2.",
+        "distance": 0.46914100646972656
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, covered a time range from 08:00:13 to 15:59:56 UTC. The dominant event types were person entries (680) and exits (685), with a total of 1,376 events recorded. The peak event count per hour occurred during the observed period, contributing to a total of 1,379 node counts.",
+        "distance": 0.6393918991088867
+      },
+      {
+        "community_id": "community_0",
+        "summary": "The CCTV activity at the Gate_MainEntrance from December 8, 2025, between 08:00 and 12:59 UTC recorded a total of 930 events. The dominant event types were person entries (470) and exits (450), with car entries (8) and exits (2) also noted. The total volume of events indicates significant foot traffic, although peak head count and average head count data are not available.",
+        "distance": 0.6586291790008545
+      },
+      {
+        "community_id": "community_1",
+        "summary": "The CCTV activity at the Gate_ParkingLot camera from December 8, 2025, between 07:00 and 18:59 UTC recorded a total of 1,540 events. The dominant event types were person entries (454) and exits (476), along with car entries (298) and exits (312). The total volume of events reached 1,543, with no peak head count reported.",
+        "distance": 0.6951769590377808
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour)\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n    AND ch.camera_location CONTAINS 'DemoBooth'\n  RETURN ch.camera_location AS location, sum(ch.event_count) AS total_crowd_events, avg(ch.avg_hc) AS avg_head_count, max(ch.peak_hc) AS peak_head_count\n  UNION ALL\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n    AND l.name CONTAINS 'DemoBooth'\n  RETURN l.name AS location, count(e) AS total_crowd_events, null AS avg_head_count, null AS peak_head_count\n}\nRETURN location, sum(total_crowd_events) AS total_events, avg(avg_head_count) AS average_head_count, max(peak_head_count) AS peak_head_count\nORDER BY total_events DESC, location",
+      "row_count": 2
+    },
+    {
+      "type": "community",
+      "community_id": "community_4",
+      "distance": 0.46914100646972656
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.6393918991088867
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.6586291790008545
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.6951769590377808
+    }
+  ],
+  "duration_ms": 8498,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2534,
+      "completion_tokens": 268
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 748,
+      "completion_tokens": 167
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=2/4=0.50 (threshold=0.5)"
+  }
+}

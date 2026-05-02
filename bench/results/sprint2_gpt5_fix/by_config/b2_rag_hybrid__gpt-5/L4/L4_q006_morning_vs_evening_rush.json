@@ -1,0 +1,75 @@
+{
+  "question_id": "L4_q006_morning_vs_evening_rush",
+  "level": "L4",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Was the morning rush bigger than the evening rush at the main entrance, in terms of how many people came and went?",
+  "gold_value": {
+    "bigger_rush": "morning",
+    "morning_total_approx": {
+      "value": 1200,
+      "tolerance": 250
+    },
+    "evening_total_approx": {
+      "value": 1000,
+      "tolerance": 250
+    }
+  },
+  "answer_text": "Yes. The morning rush was larger: 662 entries and 574 exits (total 1,236) versus the evening\u2019s 549 entries and 485 exits (total 1,034).",
+  "structured_answer": {
+    "cypher_columns": [
+      "period",
+      "entries",
+      "exits",
+      "total"
+    ],
+    "cypher_rows": [
+      [
+        "evening",
+        549,
+        485,
+        1034
+      ],
+      [
+        "morning",
+        662,
+        574,
+        1236
+      ]
+    ],
+    "cypher_total_rows": 2,
+    "retrieved_communities": []
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  WITH 'morning' AS period\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)\n  WHERE c.camera_location CONTAINS 'MainEntrance'\n    AND e.event_type IN ['person_entry','person_exit']\n    AND e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n    AND toInteger(substring(e.timestamp_utc, 11, 2)) >= 6\n    AND toInteger(substring(e.timestamp_utc, 11, 2)) < 10\n  RETURN period,\n         count(*) AS total,\n         sum(CASE WHEN e.event_type = 'person_entry' THEN 1 ELSE 0 END) AS entries,\n         sum(CASE WHEN e.event_type = 'person_exit' THEN 1 ELSE 0 END) AS exits\n  UNION ALL\n  WITH 'evening' AS period\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)\n  WHERE c.camera_location CONTAINS 'MainEntrance'\n    AND e.event_type IN ['person_entry','person_exit']\n    AND e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n    AND toInteger(substring(e.timestamp_utc, 11, 2)) >= 16\n    AND toInteger(substring(e.timestamp_utc, 11, 2)) < 20\n  RETURN period,\n         count(*) AS total,\n         sum(CASE WHEN e.event_type = 'person_entry' THEN 1 ELSE 0 END) AS entries,\n         sum(CASE WHEN e.event_type = 'person_exit' THEN 1 ELSE 0 END) AS exits\n}\nRETURN period, entries, exits, total\nORDER BY period ASC",
+      "row_count": 2
+    }
+  ],
+  "duration_ms": 48538,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5",
+      "prompt_tokens": 1878,
+      "completion_tokens": 2913
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-5",
+      "prompt_tokens": 258,
+      "completion_tokens": 305
+    }
+  ],
+  "errors": [
+    "community_stream: RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_3_facts_satisfied"
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "question_id": "L3_q005_top3_hours_by_crowd_activity",
+  "level": "L3",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "What were the top 3 UTC hours on 2025-12-08 by total head_count summed across all crowd cameras? List the hour and its total head_count for each of the top 3.",
+  "gold_value": [
+    [
+      "16",
+      2365493
+    ],
+    [
+      "14",
+      2059433
+    ],
+    [
+      "09",
+      1685871
+    ]
+  ],
+  "answer_text": "The top 3 UTC hours on 2025-12-08 by total head_count summed across all crowd cameras are:\n\n1. 16:00 UTC - 657.08\n2. 14:00 UTC - 572.07\n3. 09:00 UTC - 468.29\n\nThese hours reflect significant activity, showcasing an increase in person entries and overall crowd dynamics throughout the day.",
+  "structured_answer": {
+    "cypher_columns": [
+      "hour",
+      "total_head_count"
+    ],
+    "cypher_rows": [
+      [
+        "2025-12-08T16:00:00Z",
+        657.08
+      ],
+      [
+        "2025-12-08T14:00:00Z",
+        572.07
+      ],
+      [
+        "2025-12-08T09:00:00Z",
+        468.29
+      ]
+    ],
+    "cypher_total_rows": 3,
+    "retrieved_communities": [
+      {
+        "community_id": "community_4",
+        "summary": "The CCTV activity involved multiple camera locations during the time range from 05:00:59 to 05:59:16 UTC on December 8, 2025. The dominant event types were person entries, with a total of 22 recorded, followed by person exits at 14 and car exits at 4. The total volume of events reached 40, with a node count of 41. No peak head count or average head count data is available.",
+        "distance": 0.4000711441040039
+      },
+      {
+        "community_id": "community_3",
+        "summary": "The CCTV activity involved monitoring at unspecified camera locations from 01:00 to 01:59 UTC on December 8, 2025. The dominant event types were person entries, with 23 occurrences, and car exits, totaling 4. The total volume of events recorded was 39, with no peak head count reported.",
+        "distance": 0.4253103733062744
+      },
+      {
+        "community_id": "community_5",
+        "summary": "The CCTV activity covers the time range from December 8, 2025, 18:00:01 to 18:59:57 UTC. The camera locations involved recorded a total of 744 events, with person entries (300) and exits (299) dominating the activity, alongside 83 car entries and 62 car exits. Notably, there were 745 nodes counted during this period, but peak head count and average head count data are not available.",
+        "distance": 0.4376150965690613
+      },
+      {
+        "community_id": "community_14",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 19:00 and 19:58 UTC recorded a total of 53 events, with a peak head count of 42. The dominant event types were person entries (21) and exits (20), alongside 6 car entries and 6 exits. The average head count was approximately 35, with a total of 55 nodes monitored during this period.",
+        "distance": 0.4467148184776306
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch:CrowdHour) \n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.hour_utc AS hour, sum(ch.avg_hc) AS total_head_count\n  ORDER BY total_head_count DESC\n  LIMIT 3\n}\nRETURN hour, total_head_count",
+      "row_count": 3
+    },
+    {
+      "type": "community",
+      "community_id": "community_4",
+      "distance": 0.4000711441040039
+    },
+    {
+      "type": "community",
+      "community_id": "community_3",
+      "distance": 0.4253103733062744
+    },
+    {
+      "type": "community",
+      "community_id": "community_5",
+      "distance": 0.4376150965690613
+    },
+    {
+      "type": "community",
+      "community_id": "community_14",
+      "distance": 0.4467148184776306
+    }
+  ],
+  "duration_ms": 13316,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2174,
+      "completion_tokens": 95
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 720,
+      "completion_tokens": 84
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": false,
+    "detail": "missing_numbers=[2365493.0, 2059433.0, 1685871.0]"
+  }
+}

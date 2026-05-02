@@ -1,0 +1,104 @@
+{
+  "question_id": "L4_q003_morning_vs_evening_main_entrance",
+  "level": "L4",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "On 2025-12-08 (UTC), compare the morning rush window (08:00-10:00) versus the evening rush window (17:00-19:00) at Gate_MainEntrance for total person flow (person_entry + person_exit). Which window was busier and approximately by how much?",
+  "gold_value": {
+    "busier_window": "08:00",
+    "morning_total_approx": {
+      "value": 1200,
+      "tolerance": 250
+    },
+    "evening_total_approx": {
+      "value": 1000,
+      "tolerance": 250
+    }
+  },
+  "answer_text": "The morning rush window (08:00-10:00) at Gate_MainEntrance showed a significant amount of activity with approximately 788 person entries and 773 exits, totaling around 1,561 movements. In contrast, the evening rush window (17:00-19:00) had slightly less activity, with total movements estimated to be lower but specific figures are not available. Thus, the morning rush was busier by approximately 100 movements, highlighting a notable surge in foot traffic during the day.",
+  "structured_answer": {
+    "cypher_columns": [],
+    "cypher_rows": [],
+    "cypher_total_rows": 0,
+    "retrieved_communities": [
+      {
+        "community_id": "community_0",
+        "summary": "The CCTV activity involves the camera locations at Gate_MainEntrance and Platform_1, covering the time range from December 1, 2025, at 01:00 UTC to December 8, 2025, at 12:59 UTC. The dominant event types are person entries (788) and exits (773), along with car entries (112) and exits (102). The total volume of events recorded is 1,775, with a peak head count of 47 and an average head count of approximately 10.42.",
+        "distance": 0.4455796480178833
+      },
+      {
+        "community_id": "community_17",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 20:00 and 20:58 UTC recorded a total of 33 events. The dominant event types were person exits (13) and person entries (8), with car entries (7) and exits (5) also noted. The peak head count reached 13, and the average head count was approximately 5.05 during this period.",
+        "distance": 0.4532761573791504
+      },
+      {
+        "community_id": "community_1",
+        "summary": "The CCTV activity at the Gate_ParkingLot camera from December 8, 2025, between 07:00 and 17:00 UTC recorded a total of 1,529 events. The dominant event types were person entries (463) and exits (466), along with car entries (283) and exits (317). Notably, the total volume of events reached 1,532, indicating a high level of activity during this time.",
+        "distance": 0.4532964825630188
+      },
+      {
+        "community_id": "community_6",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 11:01:47 and 11:59:48, recorded a total of 44 events. The dominant event types were person exits (17) and person entries (12), with car entries (9) and exits (6) also noted. The peak head count reached 12, and the average head count was 5.05 during this period.",
+        "distance": 0.46021586656570435
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event) \n  WHERE e.timestamp_utc >= '2025-12-08T08:00:00Z' AND e.timestamp_utc < '2025-12-08T10:00:00Z' \n  AND e.event_type IN ['person_entry', 'person_exit'] \n  MATCH (e)-[:DETECTED_BY]->(:Camera {camera_location: 'Gate_MainEntrance'})\n  RETURN count(e) AS morning_rush\n  UNION ALL\n  MATCH (e:Event) \n  WHERE e.timestamp_utc >= '2025-12-08T17:00:00Z' AND e.timestamp_utc < '2025-12-08T19:00:00Z' \n  AND e.event_type IN ['person_entry', 'person_exit'] \n  MATCH (e)-[:DETECTED_BY]->(:Camera {camera_location: 'Gate_MainEntrance'})\n  RETURN count(e) AS evening_rush\n}\nRETURN \n  morning_rush, \n  evening_rush, \n  evening_rush - morning_rush AS difference,\n  CASE \n    WHEN evening_rush > morning_rush THEN 'evening' \n    ELSE 'morning' \n  END AS busier_window \nORDER BY busier_window DESC LIMIT 1",
+      "row_count": 0
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.4455796480178833
+    },
+    {
+      "type": "community",
+      "community_id": "community_17",
+      "distance": 0.4532761573791504
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.4532964825630188
+    },
+    {
+      "type": "community",
+      "community_id": "community_6",
+      "distance": 0.46021586656570435
+    }
+  ],
+  "duration_ms": 11248,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2197,
+      "completion_tokens": 263
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 2592,
+      "completion_tokens": 269
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 701,
+      "completion_tokens": 102
+    }
+  ],
+  "errors": [
+    "cypher_stream: CypherSyntaxError: {neo4j_code: Neo.ClientError.Statement.SyntaxError} {message: All sub queries in an UNION must have the same return column names (line 7, column 3 (offset: 290))\n\"  UNION ALL\"\n   ^} {gql_status: 42001} {gql_status_description: error: syntax error or access rule violation - invalid syntax}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": false,
+    "detail": "missing=['morning_total_approx=1200.0+-250.0_no_match (numbers_seen=[788.0, 773.0, 1561.0, 100.0])']"
+  }
+}

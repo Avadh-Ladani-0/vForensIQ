@@ -1,0 +1,103 @@
+{
+  "question_id": "L5_q006_how_did_the_day_go",
+  "level": "L5",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Tell me how the day went at the conference \u2014 what stood out, when were the big moments, and what does the activity tell us?",
+  "gold_value": {
+    "rubric": [
+      "Significant person traffic at the main entrance, especially in the morning and evening",
+      "Keynote sessions drew large crowds at the keynote stage area",
+      "Demo booths (especially NVIDIA) had notable crowd activity during expo hours",
+      "Food court was busiest around lunchtime",
+      "Overnight hours were quiet across the venue"
+    ],
+    "threshold": 0.4
+  },
+  "answer_text": "The conference day on December 8, 2025, was marked by significant activity, particularly at the Keynote Hall, where 2,209 events were recorded between 09:00 and 15:00 UTC, indicating a bustling environment with a peak head count of 500. The overall day saw 449 events across five camera locations, with person entries and exits being the most common activities. This high level of foot traffic suggests strong engagement and interest in the conference activities, highlighting its success in attracting attendees.",
+  "structured_answer": {
+    "cypher_columns": [],
+    "cypher_rows": [],
+    "cypher_total_rows": 0,
+    "retrieved_communities": [
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and a total of 588 node counts.",
+        "distance": 0.6229447722434998
+      },
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.6849648952484131
+      },
+      {
+        "community_id": "community_16",
+        "summary": "The CCTV activity at Platform_1 from 08:00 to 08:59 on December 1, 2025, recorded a total of 286 events, with person entries (92) and exits (107) dominating the activity. Car entries (46) and exits (41) were also significant. The peak head count reached 47, and the average head count was approximately 40.02.",
+        "distance": 0.7188088893890381
+      },
+      {
+        "community_id": "community_10",
+        "summary": "The CCTV activity at Platform_1 from 02:00 to 02:55 UTC on December 1, 2025, recorded a total of 37 events, with person entries (16) and exits (14) dominating the activity. There were also 4 car entries and 3 car exits. The peak head count reached 13, with an average head count of 5.05 during this period.",
+        "distance": 0.721294641494751
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "WITH \n  (MATCH (e:Event)-[:DETECTED_BY]->(:Camera)-[:LOCATED_AT]->(:Location) \n   WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z' \n   RETURN COUNT(e) AS total_events, \n          COUNT(CASE WHEN e.event_type = 'person_entry' THEN 1 END) AS people_entries, \n          COUNT(CASE WHEN e.event_type = 'person_exit' THEN 1 END) AS people_exits, \n          COUNT(CASE WHEN e.event_type = 'car_entry' THEN 1 END) AS car_entries, \n          COUNT(CASE WHEN e.event_type = 'car_exit' THEN 1 END) AS car_exits) AS event_counts,\n  (MATCH (ch:CrowdHour)-[:AT_CAMERA]->(:Camera)-[:LOCATED_AT]->(:Location) \n   WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z' \n   RETURN AVG(ch.avg_hc) AS avg_head_count, \n          MAX(ch.peak_hc) AS peak_head_count, \n          SUM(ch.event_count) AS total_crowd_events) AS crowd_stats\nRETURN event_counts.total_events, event_counts.people_entries, event_counts.people_exits, \n       event_counts.car_entries, event_counts.car_exits, \n       crowd_stats.avg_head_count, crowd_stats.peak_head_count, crowd_stats.total_crowd_events",
+      "row_count": 0
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.6229447722434998
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.6849648952484131
+    },
+    {
+      "type": "community",
+      "community_id": "community_16",
+      "distance": 0.7188088893890381
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.721294641494751
+    }
+  ],
+  "duration_ms": 17612,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 987,
+      "completion_tokens": 345
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1469,
+      "completion_tokens": 345
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 629,
+      "completion_tokens": 104
+    }
+  ],
+  "errors": [
+    "cypher_stream: CypherSyntaxError: {neo4j_code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input ':': expected an expression (line 2, column 21 (offset: 26))\n\"  (MATCH (e:Event)-[:DETECTED_BY]->(:Camera)-[:LOCATED_AT]->(:Location)\"\n                     ^} {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=1/5=0.20 (threshold=0.4)"
+  }
+}

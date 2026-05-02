@@ -1,0 +1,347 @@
+{
+  "question_id": "L5_q015_vip_experience_report",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a report on the visitor experience at the demo booths today \u2014 were they well-attended, which one drew more interest, and how did the crowd flow between them and the rest of the venue?",
+  "gold_value": {
+    "rubric": [
+      "NVIDIA booth drew larger crowds than Intel",
+      "Peak demo booth hours were during expo hours (10-12, 15-17)",
+      "Crowd at booths was lower than keynote and expo floor \u2014 booths are secondary attractions",
+      "There was flow between expo floor and demo booths during the day"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "The visitor experience at the demo booths was well-attended, with the NVIDIA booth drawing more interest than the Intel booth. The NVIDIA booth had a higher average headcount, peaking at 70.11 people around 16:00 (camera_location: DemoBooth_NVIDIA), whereas the Intel booth peaked at 41.94 people around 15:00 (camera_location: DemoBooth_Intel). The flow of the crowd was heavier in the NVIDIA area during high-traffic times, indicating that it was the more popular booth throughout the day.",
+  "structured_answer": {
+    "columns": [
+      "aspect",
+      "camera_location",
+      "hour",
+      "avg_head_count"
+    ],
+    "rows": [
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "00",
+        3.2822222222222224
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "01",
+        3.3125
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "02",
+        3.285833333333333
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "03",
+        3.2619444444444445
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "04",
+        3.2352777777777777
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "05",
+        3.2530555555555556
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "06",
+        3.1644444444444444
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "07",
+        3.2172222222222224
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "08",
+        3.210277777777778
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "09",
+        3.281388888888889
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "10",
+        39.950833333333335
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "11",
+        40.007777777777775
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "12",
+        3.2911111111111113
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "13",
+        29.970833333333335
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "14",
+        3.286388888888889
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "15",
+        41.94583333333333
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "16",
+        41.933055555555555
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "17",
+        3.2780555555555555
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "18",
+        3.1725
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "19",
+        3.2672222222222222
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "20",
+        3.238888888888889
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "21",
+        3.2466666666666666
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "22",
+        3.214166666666667
+      ],
+      [
+        "Crowd",
+        "DemoBooth_Intel",
+        "23",
+        3.247777777777778
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "00",
+        3.4702777777777776
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "01",
+        3.5294444444444446
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "02",
+        3.5122222222222224
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "03",
+        3.5208333333333335
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "04",
+        3.5877777777777777
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "05",
+        3.6030555555555557
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "06",
+        3.4580555555555557
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "07",
+        3.4430555555555555
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "08",
+        3.5519444444444446
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "09",
+        3.5141666666666667
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "10",
+        60.00972222222222
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "11",
+        60.1975
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "12",
+        3.5144444444444445
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "13",
+        45.03611111111111
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "14",
+        3.493333333333333
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "15",
+        69.99972222222222
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "16",
+        70.11305555555556
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "17",
+        3.556388888888889
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "18",
+        3.5405555555555557
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "19",
+        3.4202777777777778
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "20",
+        3.5636111111111113
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "21",
+        3.5452777777777778
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "22",
+        3.6955555555555555
+      ],
+      [
+        "Crowd",
+        "DemoBooth_NVIDIA",
+        "23",
+        3.4947222222222223
+      ]
+    ],
+    "total_rows": 48,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH time_bounds AS (\n    SELECT \n        MIN(timestamp_epoch_s) AS start_time,\n        MAX(timestamp_epoch_s) AS end_time\n    FROM events\n    WHERE timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n),\ncrowd_events AS (\n    SELECT \n        camera_location,\n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        AVG(head_count) AS avg_head_count\n    FROM events\n    WHERE event_type = 'crowd'\n      AND timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n      AND camera_location LIKE '%DemoBooth%'\n    GROUP BY camera_location, hour\n),\nentry_exit_events AS (\n    SELECT \n        camera_location,\n        event_type,\n        COUNT(*) AS event_count\n    FROM events\n    WHERE event_type IN ('person_entry', 'person_exit')\n      AND timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n      AND camera_location LIKE '%DemoBooth%'\n    GROUP BY camera_location, event_type\n)\nSELECT \n    'Crowd' AS aspect,\n    camera_location,\n    hour,\n    avg_head_count\nFROM crowd_events\nUNION ALL\nSELECT \n    'Entry/Exit' AS aspect,\n    camera_location,\n    event_type,\n    event_count\nFROM entry_exit_events\nORDER BY camera_location, aspect, hour",
+      "row_count": 48
+    }
+  ],
+  "duration_ms": 6091,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 974,
+      "completion_tokens": 354
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 1736,
+      "completion_tokens": 112
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=1/4=0.25 (threshold=0.5)"
+  }
+}

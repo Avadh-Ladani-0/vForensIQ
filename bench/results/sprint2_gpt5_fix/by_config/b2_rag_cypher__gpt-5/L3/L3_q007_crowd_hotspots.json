@@ -1,0 +1,101 @@
+{
+  "question_id": "L3_q007_crowd_hotspots",
+  "level": "L3",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-5",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which areas of the venue had the most crowd activity? Rank them by their average crowd size.",
+  "gold_value": [
+    [
+      "KeynoteHall_Stage",
+      57.4
+    ],
+    [
+      "ExpoFloor_MainAisle",
+      49.36
+    ],
+    [
+      "FoodCourt_North",
+      23.07
+    ],
+    [
+      "DemoBooth_NVIDIA",
+      15.52
+    ],
+    [
+      "DemoBooth_Intel",
+      10.65
+    ]
+  ],
+  "answer_text": "For hour_utc between 2025-12-08T00:00:00Z and 2025-12-09T00:00:00Z, ranked by average crowd size: \n1) KeynoteHall_Stage \u2014 57.3975; 2) ExpoFloor_MainAisle \u2014 49.35666666666667; 3) FoodCourt_North \u2014 23.069583333333334; 4) DemoBooth_NVIDIA \u2014 15.515; 5) DemoBooth_Intel \u2014 10.648333333333333.",
+  "structured_answer": {
+    "columns": [
+      "location",
+      "average_crowd_size",
+      "peak_crowd_size",
+      "total_crowd_samples"
+    ],
+    "rows": [
+      [
+        "KeynoteHall_Stage",
+        57.3975,
+        500,
+        86400
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        49.35666666666667,
+        209,
+        86400
+      ],
+      [
+        "FoodCourt_North",
+        23.069583333333334,
+        146,
+        86400
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        15.515,
+        86,
+        86400
+      ],
+      [
+        "DemoBooth_Intel",
+        10.648333333333333,
+        53,
+        86400
+      ]
+    ],
+    "total_rows": 5
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (ch:CrowdHour)-[:AT_CAMERA]->(:Camera)-[:LOCATED_AT]->(l:Location)\nWHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\nWITH l.name AS area,\n     sum(toFloat(ch.avg_hc) * coalesce(ch.event_count, 0)) AS weighted_hc,\n     sum(coalesce(ch.event_count, 0)) AS samples,\n     max(ch.peak_hc) AS peak_hc\nWITH area,\n     CASE WHEN samples > 0 THEN weighted_hc / toFloat(samples) ELSE 0.0 END AS average_crowd_size,\n     peak_hc,\n     samples\nRETURN area AS location, average_crowd_size, peak_hc AS peak_crowd_size, samples AS total_crowd_samples\nORDER BY average_crowd_size DESC, location ASC",
+      "row_count": 5
+    }
+  ],
+  "duration_ms": 31439,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5",
+      "prompt_tokens": 1873,
+      "completion_tokens": 1621
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-5",
+      "prompt_tokens": 520,
+      "completion_tokens": 1157
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": true,
+    "detail": "all_keys_and_values_matched (rows=5)"
+  }
+}

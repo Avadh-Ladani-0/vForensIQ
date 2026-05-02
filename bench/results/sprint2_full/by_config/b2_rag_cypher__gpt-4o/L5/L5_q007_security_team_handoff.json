@@ -1,0 +1,226 @@
+{
+  "question_id": "L5_q007_security_team_handoff",
+  "level": "L5",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "If you were running security here, what would you tell your team based on the day's activity? Where should we keep the most eyes, and when do we need extra hands?",
+  "gold_value": {
+    "rubric": [
+      "Main entrance is the highest-traffic location and needs constant attention",
+      "Crowd-management focus on keynote area during keynote hours",
+      "Extra coverage needed during morning arrival window and evening departure window",
+      "Demo booth area requires monitoring during expo hours when crowds gather"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "Based on the day's activity, the KeynoteHall_Stage experienced the highest peak crowd with 500 people, indicating a need for extra monitoring and staff during events there. The ExpoFloor_MainAisle and FoodCourt_North also had significant crowd activity, with peak headcounts of 209 and 146, respectively, suggesting these areas should be closely watched. Additionally, Gate_01 and Gate_MainEntrance had high numbers of person entries and exits, with 1,531 entries and 1,352 exits each, indicating these locations are critical for managing foot traffic efficiently.",
+  "structured_answer": {
+    "columns": [
+      "location",
+      "event_type",
+      "event_count",
+      "avg_head_count",
+      "peak_head_count"
+    ],
+    "rows": [
+      [
+        "Gate_01",
+        "car_entry",
+        38,
+        null,
+        null
+      ],
+      [
+        "Gate_01",
+        "person_exit",
+        1352,
+        null,
+        null
+      ],
+      [
+        "Gate_01",
+        "person_entry",
+        1531,
+        null,
+        null
+      ],
+      [
+        "Gate_01",
+        "car_exit",
+        30,
+        null,
+        null
+      ],
+      [
+        "Gate_MainEntrance",
+        "car_entry",
+        38,
+        null,
+        null
+      ],
+      [
+        "Gate_MainEntrance",
+        "person_exit",
+        1352,
+        null,
+        null
+      ],
+      [
+        "Gate_MainEntrance",
+        "person_entry",
+        1531,
+        null,
+        null
+      ],
+      [
+        "Gate_MainEntrance",
+        "car_exit",
+        30,
+        null,
+        null
+      ],
+      [
+        "Platform_1",
+        "car_entry",
+        381,
+        null,
+        null
+      ],
+      [
+        "Platform_1",
+        "person_exit",
+        327,
+        null,
+        null
+      ],
+      [
+        "Platform_1",
+        "person_entry",
+        288,
+        null,
+        null
+      ],
+      [
+        "Platform_1",
+        "car_exit",
+        397,
+        null,
+        null
+      ],
+      [
+        "Gate_ParkingLot",
+        "car_entry",
+        381,
+        null,
+        null
+      ],
+      [
+        "Gate_ParkingLot",
+        "person_exit",
+        327,
+        null,
+        null
+      ],
+      [
+        "Gate_ParkingLot",
+        "person_entry",
+        288,
+        null,
+        null
+      ],
+      [
+        "Gate_ParkingLot",
+        "car_exit",
+        397,
+        null,
+        null
+      ],
+      [
+        "KeynoteHall_DoorA",
+        "person_entry",
+        782,
+        null,
+        null
+      ],
+      [
+        "KeynoteHall_DoorA",
+        "person_exit",
+        814,
+        null,
+        null
+      ],
+      [
+        "KeynoteHall_Stage",
+        "crowd",
+        86400,
+        57.397499999999994,
+        500
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        "crowd",
+        86400,
+        49.35666666666667,
+        209
+      ],
+      [
+        "FoodCourt_North",
+        "crowd",
+        86400,
+        23.06958333333333,
+        146
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        "crowd",
+        86400,
+        15.515000000000004,
+        86
+      ],
+      [
+        "DemoBooth_Intel",
+        "crowd",
+        86400,
+        10.648333333333335,
+        53
+      ]
+    ],
+    "total_rows": 23
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\nWHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\nRETURN l.name AS location, e.event_type AS event_type, COUNT(e) AS event_count, NULL AS avg_head_count, NULL AS peak_head_count\nUNION\nMATCH (ch:CrowdHour)-[:AT_CAMERA]->(c:Camera)-[:LOCATED_AT]->(l:Location)\nWHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\nRETURN l.name AS location, 'crowd' AS event_type, SUM(ch.event_count) AS event_count, AVG(ch.avg_hc) AS avg_head_count, MAX(ch.peak_hc) AS peak_head_count\nORDER BY event_count DESC, peak_head_count DESC",
+      "row_count": 23
+    }
+  ],
+  "duration_ms": 10040,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 994,
+      "completion_tokens": 216
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 1321,
+      "completion_tokens": 228
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 905,
+      "completion_tokens": 116
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=1/4=0.25 (threshold=0.5)"
+  }
+}

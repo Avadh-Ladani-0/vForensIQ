@@ -1,0 +1,66 @@
+{
+  "question_id": "L4_q002_gate_flow_comparison",
+  "level": "L4",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "On 2025-12-08 (UTC), which gate had higher total person flow (person_entry + person_exit combined) \u2014 Gate_MainEntrance or Gate_ParkingLot? State which gate and their approximate totals.",
+  "gold_value": {
+    "higher_flow_gate": "Gate_MainEntrance",
+    "gate_mainentrance_flow_approx": {
+      "value": 2900,
+      "tolerance": 400
+    },
+    "gate_parkinglot_flow_approx": {
+      "value": 620,
+      "tolerance": 150
+    }
+  },
+  "answer_text": "On 2025-12-08 (UTC), Gate_MainEntrance had a higher total person flow with approximately 2883 combined person_entry and person_exit events, compared to Gate_ParkingLot, which had approximately 615 events.",
+  "structured_answer": {
+    "columns": [
+      "gate",
+      "total_person_flow"
+    ],
+    "rows": [
+      [
+        "Gate_MainEntrance",
+        2883
+      ],
+      [
+        "Gate_ParkingLot",
+        615
+      ]
+    ],
+    "total_rows": 2
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)-[:LOCATED_AT]->(l:Location)\nWHERE (l.name CONTAINS 'MainEntrance' OR l.name CONTAINS 'Parking') \n  AND e.event_type IN ['person_entry', 'person_exit']\n  AND e.timestamp_utc >= '2025-12-08T00:00:00Z' \n  AND e.timestamp_utc < '2025-12-09T00:00:00Z'\nRETURN l.name AS gate, COUNT(e) AS total_person_flow\nORDER BY total_person_flow DESC",
+      "row_count": 2
+    }
+  ],
+  "duration_ms": 3777,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 1003,
+      "completion_tokens": 126
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 359,
+      "completion_tokens": 47
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_3_facts_satisfied"
+  }
+}

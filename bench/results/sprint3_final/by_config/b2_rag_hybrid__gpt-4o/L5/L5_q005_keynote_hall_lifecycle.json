@@ -1,0 +1,275 @@
+{
+  "question_id": "L5_q005_keynote_hall_lifecycle",
+  "level": "L5",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Describe the full lifecycle of activity at the keynote hall on 2025-12-08 (UTC). Cover: (a) door entry patterns at KeynoteHall_DoorA throughout the day, (b) the in-hall crowd density at KeynoteHall_Stage during keynote sessions, and (c) how the post-keynote dispersal compares to pre-keynote build-up. Use specific hours and numbers from the data. 4-6 sentences.",
+  "gold_value": {
+    "rubric": [
+      "KeynoteHall_DoorA shows entry peaks aligned with keynote start times (around 08:00-10:00, 13:00-14:00, or 15:00-16:00 UTC)",
+      "KeynoteHall_Stage crowd peaks during the keynote sessions, reaching head_counts in the hundreds",
+      "Outside of keynote hours the in-hall head_count drops to a low baseline (single digits)",
+      "Pre-keynote door entry traffic precedes the in-hall crowd surge"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "On December 8, 2025, the activity at KeynoteHall_DoorA showed a distinct pattern with early calm and subsequent peaks during the daytime hours. From 09:00 to 15:00 UTC, there was a significant influx and outflux of people, with 181 entering at 09:00 and peaking to 210 entries recorded at 15:00. The keynotes generated a substantial crowd, with density peaking at 500 attendees around 09:00, creating a vibrant atmosphere as expected during such major sessions. Post-keynote dispersal showed a rapid decline in exits to 201 at 15:00, almost mirroring the build-up of 210 entries by that time, suggesting a well-balanced ebb and flow. Overall, the hall transitioned from high occupancy during peak times to a quieter setting as the sessions ended, underlined by a quick, balanced clearing out of attendees.",
+  "structured_answer": {
+    "cypher_columns": [
+      "hour",
+      "entry_count",
+      "avg_crowd_density",
+      "peak_crowd_density",
+      "exit_count"
+    ],
+    "cypher_rows": [
+      [
+        "2025-12-08T00:00:00Z",
+        1,
+        6.97,
+        51,
+        1
+      ],
+      [
+        "2025-12-08T01:00:00Z",
+        3,
+        7.27,
+        52,
+        0
+      ],
+      [
+        "2025-12-08T02:00:00Z",
+        2,
+        7.12,
+        50,
+        0
+      ],
+      [
+        "2025-12-08T03:00:00Z",
+        1,
+        7.21,
+        59,
+        1
+      ],
+      [
+        "2025-12-08T04:00:00Z",
+        3,
+        7.01,
+        52,
+        2
+      ],
+      [
+        "2025-12-08T05:00:00Z",
+        5,
+        6.93,
+        51,
+        0
+      ],
+      [
+        "2025-12-08T06:00:00Z",
+        0,
+        6.8,
+        62,
+        1
+      ],
+      [
+        "2025-12-08T07:00:00Z",
+        0,
+        7.12,
+        74,
+        2
+      ],
+      [
+        "2025-12-08T08:00:00Z",
+        186,
+        6.98,
+        68,
+        192
+      ],
+      [
+        "2025-12-08T09:00:00Z",
+        181,
+        450.19,
+        500,
+        212
+      ],
+      [
+        "2025-12-08T10:00:00Z",
+        2,
+        7.03,
+        56,
+        2
+      ],
+      [
+        "2025-12-08T11:00:00Z",
+        0,
+        6.93,
+        55,
+        5
+      ],
+      [
+        "2025-12-08T12:00:00Z",
+        1,
+        7.16,
+        57,
+        1
+      ],
+      [
+        "2025-12-08T13:00:00Z",
+        172,
+        7.07,
+        54,
+        187
+      ],
+      [
+        "2025-12-08T14:00:00Z",
+        1,
+        399.51,
+        452,
+        2
+      ],
+      [
+        "2025-12-08T15:00:00Z",
+        210,
+        7.23,
+        53,
+        201
+      ],
+      [
+        "2025-12-08T16:00:00Z",
+        2,
+        379.46,
+        433,
+        2
+      ],
+      [
+        "2025-12-08T17:00:00Z",
+        1,
+        6.93,
+        51,
+        0
+      ],
+      [
+        "2025-12-08T18:00:00Z",
+        1,
+        6.83,
+        59,
+        1
+      ],
+      [
+        "2025-12-08T19:00:00Z",
+        2,
+        7.18,
+        55,
+        0
+      ],
+      [
+        "2025-12-08T20:00:00Z",
+        1,
+        7.09,
+        57,
+        0
+      ],
+      [
+        "2025-12-08T21:00:00Z",
+        1,
+        6.96,
+        50,
+        1
+      ],
+      [
+        "2025-12-08T22:00:00Z",
+        1,
+        7.25,
+        51,
+        1
+      ],
+      [
+        "2025-12-08T23:00:00Z",
+        5,
+        7.31,
+        57,
+        0
+      ]
+    ],
+    "cypher_total_rows": 24,
+    "retrieved_communities": [
+      {
+        "community_id": "community_2",
+        "summary": "The CCTV activity at KeynoteHall_DoorA from December 8, 2025, between 09:00 and 15:00 UTC recorded a total of 2,209 events. The dominant event types were person entries, totaling 1,117, and person exits, totaling 1,072, indicating significant foot traffic. Additionally, there were 15 car entries and 5 car exits during this period. The total node count was 2,213.",
+        "distance": 0.29105865955352783
+      },
+      {
+        "community_id": "community_9",
+        "summary": "The CCTV activity involves five camera locations: DemoBooth_Intel, DemoBooth_NVIDIA, ExpoFloor_MainAisle, FoodCourt_North, and KeynoteHall_Stage. The dominant event types are person entries (206) and exits (181), with a total of 449 events recorded throughout the day. The time range covered is from December 8, 2025, 00:02:26 UTC to December 8, 2025, 23:59:14 UTC, with a peak head count of 500 and an average head count of approximately 31.2.",
+        "distance": 0.37704235315322876
+      },
+      {
+        "community_id": "community_0",
+        "summary": "The CCTV activity involves the camera locations at Gate_MainEntrance and Platform_1, covering the time range from December 1, 2025, at 01:00 UTC to December 8, 2025, at 12:59 UTC. The dominant event types are person entries (788) and exits (773), along with car entries (112) and exits (102). The total volume of events recorded is 1,775, with a peak head count of 47 and an average head count of approximately 10.42.",
+        "distance": 0.49612337350845337
+      },
+      {
+        "community_id": "community_6",
+        "summary": "The CCTV activity at Platform_1 from December 1, 2025, between 11:01:47 and 11:59:48, recorded a total of 44 events. The dominant event types were person exits (17) and person entries (12), with car entries (9) and exits (6) also noted. The peak head count reached 12, and the average head count was 5.05 during this period.",
+        "distance": 0.498734712600708
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  // (a) Door entry patterns at KeynoteHall_DoorA throughout the day\n  MATCH (e:Event {event_type: 'person_entry'})-[:DETECTED_BY]->(:Camera {camera_location: 'KeynoteHall_DoorA'})\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  WITH substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, count(*) AS entry_count\n  RETURN hour, entry_count, null AS avg_crowd_density, null AS peak_crowd_density, null AS exit_count\n  UNION ALL\n  // (b) In-hall crowd density at KeynoteHall_Stage during keynote sessions\n  MATCH (ch:CrowdHour {camera_location: 'KeynoteHall_Stage'})\n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN ch.hour_utc AS hour, null AS entry_count, ch.avg_hc AS avg_crowd_density, ch.peak_hc AS peak_crowd_density, null AS exit_count\n  UNION ALL\n  // (c) Post-keynote dispersal vs pre-keynote build-up\n  MATCH (e:Event {event_type: 'person_exit'})-[:DETECTED_BY]->(:Camera {camera_location: 'KeynoteHall_DoorA'})\n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  WITH substring(e.timestamp_utc, 0, 13) + ':00:00Z' AS hour, count(*) AS exit_count\n  RETURN hour, null AS entry_count, null AS avg_crowd_density, null AS peak_crowd_density, exit_count\n}\nRETURN hour, sum(entry_count) AS entry_count, avg(avg_crowd_density) AS avg_crowd_density, max(peak_crowd_density) AS peak_crowd_density, sum(exit_count) AS exit_count ORDER BY hour",
+      "row_count": 24
+    },
+    {
+      "type": "community",
+      "community_id": "community_2",
+      "distance": 0.29105865955352783
+    },
+    {
+      "type": "community",
+      "community_id": "community_9",
+      "distance": 0.37704235315322876
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.49612337350845337
+    },
+    {
+      "type": "community",
+      "community_id": "community_6",
+      "distance": 0.498734712600708
+    }
+  ],
+  "duration_ms": 14532,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2225,
+      "completion_tokens": 414
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 2752,
+      "completion_tokens": 491
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 1499,
+      "completion_tokens": 186
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=2/4=0.50 (threshold=0.5)"
+  }
+}

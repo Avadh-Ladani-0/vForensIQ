@@ -1,0 +1,557 @@
+{
+  "question_id": "L5_q007_security_team_handoff",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "If you were running security here, what would you tell your team based on the day's activity? Where should we keep the most eyes, and when do we need extra hands?",
+  "gold_value": {
+    "rubric": [
+      "Main entrance is the highest-traffic location and needs constant attention",
+      "Crowd-management focus on keynote area during keynote hours",
+      "Extra coverage needed during morning arrival window and evening departure window",
+      "Demo booth area requires monitoring during expo hours when crowds gather"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": "Based on the day's activity, the peak hours for crowd activity were between 10:00 and 16:00, with the highest counts occurring at 10:00 (over 1,000,000 total head counts across various locations). Your team should focus on monitoring these hours closely, especially at 14:00 and 15:00, where significant crowd activity was also recorded. Extra hands will be essential during these times to ensure security and manage the large crowds effectively.",
+  "structured_answer": {
+    "columns": [
+      "report_type",
+      "hour",
+      "total_events"
+    ],
+    "rows": [
+      [
+        "Crowd Activity",
+        "00",
+        11816
+      ],
+      [
+        "Crowd Activity",
+        "00",
+        12493
+      ],
+      [
+        "Crowd Activity",
+        "00",
+        19781
+      ],
+      [
+        "Crowd Activity",
+        "00",
+        20637
+      ],
+      [
+        "Crowd Activity",
+        "00",
+        25091
+      ],
+      [
+        "Crowd Activity",
+        "00",
+        18055
+      ],
+      [
+        "Crowd Activity",
+        "01",
+        11925
+      ],
+      [
+        "Crowd Activity",
+        "01",
+        12706
+      ],
+      [
+        "Crowd Activity",
+        "01",
+        19964
+      ],
+      [
+        "Crowd Activity",
+        "01",
+        20494
+      ],
+      [
+        "Crowd Activity",
+        "01",
+        26169
+      ],
+      [
+        "Crowd Activity",
+        "01",
+        17925
+      ],
+      [
+        "Crowd Activity",
+        "02",
+        11829
+      ],
+      [
+        "Crowd Activity",
+        "02",
+        12644
+      ],
+      [
+        "Crowd Activity",
+        "02",
+        19683
+      ],
+      [
+        "Crowd Activity",
+        "02",
+        20096
+      ],
+      [
+        "Crowd Activity",
+        "02",
+        25633
+      ],
+      [
+        "Crowd Activity",
+        "02",
+        18190
+      ],
+      [
+        "Crowd Activity",
+        "03",
+        11743
+      ],
+      [
+        "Crowd Activity",
+        "03",
+        12675
+      ],
+      [
+        "Crowd Activity",
+        "03",
+        20413
+      ],
+      [
+        "Crowd Activity",
+        "03",
+        20678
+      ],
+      [
+        "Crowd Activity",
+        "03",
+        25948
+      ],
+      [
+        "Crowd Activity",
+        "03",
+        18026
+      ],
+      [
+        "Crowd Activity",
+        "04",
+        11647
+      ],
+      [
+        "Crowd Activity",
+        "04",
+        12916
+      ],
+      [
+        "Crowd Activity",
+        "04",
+        20661
+      ],
+      [
+        "Crowd Activity",
+        "04",
+        20422
+      ],
+      [
+        "Crowd Activity",
+        "04",
+        25238
+      ],
+      [
+        "Crowd Activity",
+        "04",
+        18071
+      ],
+      [
+        "Crowd Activity",
+        "05",
+        11711
+      ],
+      [
+        "Crowd Activity",
+        "05",
+        12971
+      ],
+      [
+        "Crowd Activity",
+        "05",
+        19344
+      ],
+      [
+        "Crowd Activity",
+        "05",
+        20707
+      ],
+      [
+        "Crowd Activity",
+        "05",
+        24932
+      ],
+      [
+        "Crowd Activity",
+        "05",
+        17949
+      ],
+      [
+        "Crowd Activity",
+        "06",
+        11392
+      ],
+      [
+        "Crowd Activity",
+        "06",
+        12449
+      ],
+      [
+        "Crowd Activity",
+        "06",
+        20157
+      ],
+      [
+        "Crowd Activity",
+        "06",
+        20312
+      ],
+      [
+        "Crowd Activity",
+        "06",
+        24472
+      ],
+      [
+        "Crowd Activity",
+        "06",
+        18159
+      ],
+      [
+        "Crowd Activity",
+        "07",
+        11582
+      ],
+      [
+        "Crowd Activity",
+        "07",
+        12395
+      ],
+      [
+        "Crowd Activity",
+        "07",
+        20179
+      ],
+      [
+        "Crowd Activity",
+        "07",
+        20541
+      ],
+      [
+        "Crowd Activity",
+        "07",
+        25618
+      ],
+      [
+        "Crowd Activity",
+        "07",
+        18116
+      ],
+      [
+        "Crowd Activity",
+        "08",
+        11557
+      ],
+      [
+        "Crowd Activity",
+        "08",
+        12787
+      ],
+      [
+        "Crowd Activity",
+        "08",
+        20144
+      ],
+      [
+        "Crowd Activity",
+        "08",
+        20935
+      ],
+      [
+        "Crowd Activity",
+        "08",
+        25114
+      ],
+      [
+        "Crowd Activity",
+        "08",
+        144074
+      ],
+      [
+        "Crowd Activity",
+        "09",
+        11813
+      ],
+      [
+        "Crowd Activity",
+        "09",
+        12651
+      ],
+      [
+        "Crowd Activity",
+        "09",
+        20239
+      ],
+      [
+        "Crowd Activity",
+        "09",
+        20497
+      ],
+      [
+        "Crowd Activity",
+        "09",
+        1620671
+      ],
+      [
+        "Crowd Activity",
+        "09",
+        143987
+      ],
+      [
+        "Crowd Activity",
+        "10",
+        143823
+      ],
+      [
+        "Crowd Activity",
+        "10",
+        216035
+      ],
+      [
+        "Crowd Activity",
+        "10",
+        647663
+      ],
+      [
+        "Crowd Activity",
+        "10",
+        20135
+      ],
+      [
+        "Crowd Activity",
+        "10",
+        25293
+      ],
+      [
+        "Crowd Activity",
+        "10",
+        18001
+      ],
+      [
+        "Crowd Activity",
+        "11",
+        144028
+      ],
+      [
+        "Crowd Activity",
+        "11",
+        216711
+      ],
+      [
+        "Crowd Activity",
+        "11",
+        647900
+      ],
+      [
+        "Crowd Activity",
+        "11",
+        20133
+      ],
+      [
+        "Crowd Activity",
+        "11",
+        24944
+      ],
+      [
+        "Crowd Activity",
+        "11",
+        18165
+      ],
+      [
+        "Crowd Activity",
+        "12",
+        11848
+      ],
+      [
+        "Crowd Activity",
+        "12",
+        12652
+      ],
+      [
+        "Crowd Activity",
+        "12",
+        20253
+      ],
+      [
+        "Crowd Activity",
+        "12",
+        432169
+      ],
+      [
+        "Crowd Activity",
+        "12",
+        25763
+      ],
+      [
+        "Crowd Activity",
+        "12",
+        17848
+      ],
+      [
+        "Crowd Activity",
+        "13",
+        107895
+      ],
+      [
+        "Crowd Activity",
+        "13",
+        162130
+      ],
+      [
+        "Crowd Activity",
+        "13",
+        575834
+      ],
+      [
+        "Crowd Activity",
+        "13",
+        431878
+      ],
+      [
+        "Crowd Activity",
+        "13",
+        25469
+      ],
+      [
+        "Crowd Activity",
+        "13",
+        18151
+      ],
+      [
+        "Crowd Activity",
+        "14",
+        11831
+      ],
+      [
+        "Crowd Activity",
+        "14",
+        12576
+      ],
+      [
+        "Crowd Activity",
+        "14",
+        576276
+      ],
+      [
+        "Crowd Activity",
+        "14",
+        20502
+      ],
+      [
+        "Crowd Activity",
+        "14",
+        1438248
+      ],
+      [
+        "Crowd Activity",
+        "14",
+        17870
+      ],
+      [
+        "Crowd Activity",
+        "15",
+        151005
+      ],
+      [
+        "Crowd Activity",
+        "15",
+        251999
+      ],
+      [
+        "Crowd Activity",
+        "15",
+        576034
+      ],
+      [
+        "Crowd Activity",
+        "15",
+        20626
+      ],
+      [
+        "Crowd Activity",
+        "15",
+        26012
+      ],
+      [
+        "Crowd Activity",
+        "15",
+        18181
+      ],
+      [
+        "Crowd Activity",
+        "16",
+        150959
+      ],
+      [
+        "Crowd Activity",
+        "16",
+        252407
+      ],
+      [
+        "Crowd Activity",
+        "16",
+        575855
+      ],
+      [
+        "Crowd Activity",
+        "16",
+        20219
+      ]
+    ],
+    "total_rows": 147
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH time_bounds AS (\n    SELECT MIN(timestamp_epoch_s) AS min_time, MAX(timestamp_epoch_s) AS max_time FROM events\n),\nhourly_activity AS (\n    SELECT strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n           COUNT(*) AS event_count,\n           SUM(head_count) AS total_head_count,\n           camera_location\n    FROM events\n    GROUP BY hour, camera_location\n),\npeak_hours AS (\n    SELECT hour, SUM(event_count) AS total_events\n    FROM hourly_activity\n    GROUP BY hour\n    ORDER BY total_events DESC\n    LIMIT 3\n)\nSELECT 'Peak Hours' AS report_type, hour, total_events FROM peak_hours\nUNION ALL\nSELECT 'Crowd Activity', hour, total_head_count FROM hourly_activity WHERE total_head_count > 0\nORDER BY report_type, hour",
+      "row_count": 147
+    }
+  ],
+  "duration_ms": 8355,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 872,
+      "completion_tokens": 174
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1679,
+      "completion_tokens": 97
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": false,
+    "detail": "coverage=0/4=0.00 (threshold=0.5)"
+  }
+}

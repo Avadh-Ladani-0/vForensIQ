@@ -1,0 +1,50 @@
+{
+  "question_id": "L1_q009_total_cameras_at_venue",
+  "level": "L1",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many cameras are deployed at this venue?",
+  "gold_value": 8,
+  "answer_text": "There are 8 cameras deployed at this venue.",
+  "structured_answer": {
+    "columns": [
+      "camera_count"
+    ],
+    "rows": [
+      [
+        8
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (c:Camera) RETURN COUNT(c) AS camera_count",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 1736,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 968,
+      "completion_tokens": 13
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 191,
+      "completion_tokens": 10
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": true,
+    "detail": "match"
+  }
+}

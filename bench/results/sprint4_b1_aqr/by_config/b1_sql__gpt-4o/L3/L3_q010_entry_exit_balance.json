@@ -1,0 +1,81 @@
+{
+  "question_id": "L3_q010_entry_exit_balance",
+  "level": "L3",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "For each gate, how many people came in versus how many went out during the day? I want to see if the numbers balance.",
+  "gold_value": [
+    [
+      "Gate_MainEntrance",
+      1569,
+      1382
+    ],
+    [
+      "Gate_ParkingLot",
+      669,
+      724
+    ],
+    [
+      "KeynoteHall_DoorA",
+      782,
+      814
+    ]
+  ],
+  "answer_text": "At 'Gate_MainEntrance', 1,531 people entered and 1,352 exited. At 'Gate_ParkingLot', 288 people entered and 327 exited. At 'KeynoteHall_DoorA', 782 people entered and 814 exited. The numbers do not balance perfectly for any of the gates.",
+  "structured_answer": {
+    "columns": [
+      "camera_location",
+      "people_in",
+      "people_out"
+    ],
+    "rows": [
+      [
+        "Gate_MainEntrance",
+        1531,
+        1352
+      ],
+      [
+        "Gate_ParkingLot",
+        288,
+        327
+      ],
+      [
+        "KeynoteHall_DoorA",
+        782,
+        814
+      ]
+    ],
+    "total_rows": 3,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH entry_exit_counts AS (\n    SELECT\n        camera_location,\n        event_type,\n        COUNT(*) AS count\n    FROM\n        events\n    WHERE\n        timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n        AND (event_type = 'person_entry' OR event_type = 'person_exit')\n    GROUP BY\n        camera_location,\n        event_type\n)\nSELECT\n    camera_location,\n    COALESCE(SUM(CASE WHEN event_type = 'person_entry' THEN count END), 0) AS people_in,\n    COALESCE(SUM(CASE WHEN event_type = 'person_exit' THEN count END), 0) AS people_out\nFROM\n    entry_exit_counts\nGROUP BY\n    camera_location",
+      "row_count": 3
+    }
+  ],
+  "duration_ms": 3672,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 961,
+      "completion_tokens": 177
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 415,
+      "completion_tokens": 65
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": false,
+    "detail": "missing_numbers=[1569.0, 1382.0, 669.0, 724.0]"
+  }
+}

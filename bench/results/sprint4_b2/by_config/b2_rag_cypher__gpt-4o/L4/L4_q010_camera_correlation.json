@@ -1,0 +1,60 @@
+{
+  "question_id": "L4_q010_camera_correlation",
+  "level": "L4",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which two crowd camera locations had the most similar hourly activity patterns on 2025-12-08? Compare all pairs of crowd cameras by how closely their hourly average head_counts track each other.",
+  "gold_value": {
+    "most_similar_pair_includes": "DemoBooth"
+  },
+  "answer_text": "The two crowd camera locations with the most similar hourly activity patterns on 2025-12-08 were \"DemoBooth_Intel\" and \"DemoBooth_NVIDIA\".",
+  "structured_answer": {
+    "columns": [
+      "location1",
+      "location2"
+    ],
+    "rows": [
+      [
+        "DemoBooth_Intel",
+        "DemoBooth_NVIDIA"
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (ch1:CrowdHour)-[:AT_CAMERA]->(c1:Camera)\n  WHERE ch1.hour_utc >= '2025-12-08T00:00:00Z' AND ch1.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN c1.camera_location AS location1, ch1.hour_utc AS hour1, ch1.avg_hc AS avg_hc1\n}\nWITH location1, hour1, avg_hc1\nCALL {\n  MATCH (ch2:CrowdHour)-[:AT_CAMERA]->(c2:Camera)\n  WHERE ch2.hour_utc >= '2025-12-08T00:00:00Z' AND ch2.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN c2.camera_location AS location2, ch2.hour_utc AS hour2, ch2.avg_hc AS avg_hc2\n}\nWITH location1, location2, hour1, hour2, avg_hc1, avg_hc2\nWHERE location1 < location2 AND hour1 = hour2\nWITH location1, location2, sum(abs(avg_hc1 - avg_hc2)) AS similarity_score\nRETURN location1, location2\nORDER BY similarity_score ASC\nLIMIT 1",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 8910,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2533,
+      "completion_tokens": 270
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 2937,
+      "completion_tokens": 283
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 506,
+      "completion_tokens": 36
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_1_facts_satisfied"
+  }
+}

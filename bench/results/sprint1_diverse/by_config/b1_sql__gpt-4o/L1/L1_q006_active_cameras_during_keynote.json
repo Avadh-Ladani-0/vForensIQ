@@ -1,0 +1,50 @@
+{
+  "question_id": "L1_q006_active_cameras_during_keynote",
+  "level": "L1",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many distinct cameras produced at least one event between 09:00 and 10:00 UTC on 2025-12-08 (the morning keynote hour)?",
+  "gold_value": 8,
+  "answer_text": "Eight distinct cameras produced at least one event between 09:00 and 10:00 UTC on 2025-12-08.",
+  "structured_answer": {
+    "columns": [
+      "distinct_camera_count"
+    ],
+    "rows": [
+      [
+        8
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "SELECT COUNT(DISTINCT camera_id) AS distinct_camera_count\nFROM events\nWHERE timestamp_utc >= '2025-12-08T09:00:00Z' \n  AND timestamp_utc < '2025-12-08T10:00:00Z'",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 2651,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 670,
+      "completion_tokens": 62
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 258,
+      "completion_tokens": 28
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": false,
+    "detail": "no_number_in_answer"
+  }
+}

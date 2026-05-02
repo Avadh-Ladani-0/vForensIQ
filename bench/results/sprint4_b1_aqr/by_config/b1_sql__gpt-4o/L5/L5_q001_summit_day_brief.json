@@ -1,0 +1,429 @@
+{
+  "question_id": "L5_q001_summit_day_brief",
+  "level": "L5",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Write a security and operations brief for the AI Hardware Summit on 2025-12-08 (UTC). Cover: the busiest traffic windows at the main gates, keynote hall attendance peaks, lunchtime dynamics at the food court, and how the demo booths (NVIDIA and Intel) compared in crowd activity. Keep it to 5 bullet points.",
+  "gold_value": {
+    "rubric": [
+      "Gate_MainEntrance shows morning person-entry peak around 08-10 UTC",
+      "Gate_MainEntrance shows evening person-exit peak around 17-19 UTC",
+      "KeynoteHall_Stage crowd peaks during keynote hours (09-10 UTC and 14-15 UTC)",
+      "FoodCourt_North crowd peaks during lunch hours (12-14 UTC)",
+      "DemoBooth_NVIDIA had higher crowd activity than DemoBooth_Intel"
+    ],
+    "threshold": 0.6
+  },
+  "answer_text": "- The busiest traffic windows at the main gates occurred from 08:00 to 09:00 UTC with 607 and 601 events, respectively, and again from 17:00 to 18:00 UTC with 517 and 498 events.\n- Keynote hall attendance peaked at 09:00 UTC with 500 attendees and at 14:00 UTC with 452 attendees.\n- Lunchtime at the food court showed higher dynamics at 12:00 UTC with an average head count of 120.05 and at 17:00 UTC with 100.10.\n- NVIDIA's demo booth experienced more crowd activity with a total head count of 1,340,536 compared to Intel's 919,999.\n- Peak foot traffic suggests strategic crowd management is essential during early morning, lunchtime, and late afternoon periods.",
+  "structured_answer": {
+    "columns": [
+      "category",
+      "hour",
+      "metric"
+    ],
+    "rows": [
+      [
+        "Main Gate Traffic",
+        "00",
+        26
+      ],
+      [
+        "Main Gate Traffic",
+        "01",
+        27
+      ],
+      [
+        "Main Gate Traffic",
+        "02",
+        19
+      ],
+      [
+        "Main Gate Traffic",
+        "03",
+        20
+      ],
+      [
+        "Main Gate Traffic",
+        "04",
+        20
+      ],
+      [
+        "Main Gate Traffic",
+        "05",
+        29
+      ],
+      [
+        "Main Gate Traffic",
+        "06",
+        25
+      ],
+      [
+        "Main Gate Traffic",
+        "07",
+        23
+      ],
+      [
+        "Main Gate Traffic",
+        "08",
+        607
+      ],
+      [
+        "Main Gate Traffic",
+        "09",
+        601
+      ],
+      [
+        "Main Gate Traffic",
+        "10",
+        21
+      ],
+      [
+        "Main Gate Traffic",
+        "11",
+        22
+      ],
+      [
+        "Main Gate Traffic",
+        "12",
+        312
+      ],
+      [
+        "Main Gate Traffic",
+        "13",
+        30
+      ],
+      [
+        "Main Gate Traffic",
+        "14",
+        19
+      ],
+      [
+        "Main Gate Traffic",
+        "15",
+        20
+      ],
+      [
+        "Main Gate Traffic",
+        "16",
+        21
+      ],
+      [
+        "Main Gate Traffic",
+        "17",
+        517
+      ],
+      [
+        "Main Gate Traffic",
+        "18",
+        498
+      ],
+      [
+        "Main Gate Traffic",
+        "19",
+        19
+      ],
+      [
+        "Main Gate Traffic",
+        "20",
+        21
+      ],
+      [
+        "Main Gate Traffic",
+        "21",
+        22
+      ],
+      [
+        "Main Gate Traffic",
+        "22",
+        19
+      ],
+      [
+        "Main Gate Traffic",
+        "23",
+        13
+      ],
+      [
+        "Keynote Hall Peaks",
+        "00",
+        51
+      ],
+      [
+        "Keynote Hall Peaks",
+        "01",
+        52
+      ],
+      [
+        "Keynote Hall Peaks",
+        "02",
+        50
+      ],
+      [
+        "Keynote Hall Peaks",
+        "03",
+        59
+      ],
+      [
+        "Keynote Hall Peaks",
+        "04",
+        52
+      ],
+      [
+        "Keynote Hall Peaks",
+        "05",
+        51
+      ],
+      [
+        "Keynote Hall Peaks",
+        "06",
+        62
+      ],
+      [
+        "Keynote Hall Peaks",
+        "07",
+        74
+      ],
+      [
+        "Keynote Hall Peaks",
+        "08",
+        68
+      ],
+      [
+        "Keynote Hall Peaks",
+        "09",
+        500
+      ],
+      [
+        "Keynote Hall Peaks",
+        "10",
+        56
+      ],
+      [
+        "Keynote Hall Peaks",
+        "11",
+        55
+      ],
+      [
+        "Keynote Hall Peaks",
+        "12",
+        57
+      ],
+      [
+        "Keynote Hall Peaks",
+        "13",
+        54
+      ],
+      [
+        "Keynote Hall Peaks",
+        "14",
+        452
+      ],
+      [
+        "Keynote Hall Peaks",
+        "15",
+        53
+      ],
+      [
+        "Keynote Hall Peaks",
+        "16",
+        433
+      ],
+      [
+        "Keynote Hall Peaks",
+        "17",
+        51
+      ],
+      [
+        "Keynote Hall Peaks",
+        "18",
+        59
+      ],
+      [
+        "Keynote Hall Peaks",
+        "19",
+        55
+      ],
+      [
+        "Keynote Hall Peaks",
+        "20",
+        57
+      ],
+      [
+        "Keynote Hall Peaks",
+        "21",
+        50
+      ],
+      [
+        "Keynote Hall Peaks",
+        "22",
+        51
+      ],
+      [
+        "Keynote Hall Peaks",
+        "23",
+        57
+      ],
+      [
+        "Lunchtime Dynamics",
+        "00",
+        5.7325
+      ],
+      [
+        "Lunchtime Dynamics",
+        "01",
+        5.692777777777778
+      ],
+      [
+        "Lunchtime Dynamics",
+        "02",
+        5.582222222222223
+      ],
+      [
+        "Lunchtime Dynamics",
+        "03",
+        5.743888888888889
+      ],
+      [
+        "Lunchtime Dynamics",
+        "04",
+        5.672777777777778
+      ],
+      [
+        "Lunchtime Dynamics",
+        "05",
+        5.751944444444445
+      ],
+      [
+        "Lunchtime Dynamics",
+        "06",
+        5.642222222222222
+      ],
+      [
+        "Lunchtime Dynamics",
+        "07",
+        5.7058333333333335
+      ],
+      [
+        "Lunchtime Dynamics",
+        "08",
+        5.815277777777778
+      ],
+      [
+        "Lunchtime Dynamics",
+        "09",
+        5.693611111111111
+      ],
+      [
+        "Lunchtime Dynamics",
+        "10",
+        5.593055555555556
+      ],
+      [
+        "Lunchtime Dynamics",
+        "11",
+        5.5925
+      ],
+      [
+        "Lunchtime Dynamics",
+        "12",
+        120.04694444444445
+      ],
+      [
+        "Lunchtime Dynamics",
+        "13",
+        119.9661111111111
+      ],
+      [
+        "Lunchtime Dynamics",
+        "14",
+        5.695
+      ],
+      [
+        "Lunchtime Dynamics",
+        "15",
+        5.729444444444445
+      ],
+      [
+        "Lunchtime Dynamics",
+        "16",
+        5.616388888888889
+      ],
+      [
+        "Lunchtime Dynamics",
+        "17",
+        100.09722222222223
+      ],
+      [
+        "Lunchtime Dynamics",
+        "18",
+        99.82861111111112
+      ],
+      [
+        "Lunchtime Dynamics",
+        "19",
+        5.648333333333333
+      ],
+      [
+        "Lunchtime Dynamics",
+        "20",
+        5.823333333333333
+      ],
+      [
+        "Lunchtime Dynamics",
+        "21",
+        5.6775
+      ],
+      [
+        "Lunchtime Dynamics",
+        "22",
+        5.535
+      ],
+      [
+        "Lunchtime Dynamics",
+        "23",
+        5.776111111111111
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_Intel",
+        919999
+      ],
+      [
+        "Demo Booth Comparison",
+        "DemoBooth_NVIDIA",
+        1340536
+      ]
+    ],
+    "total_rows": 74,
+    "verification_warnings": []
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH time_bounds AS (\n    SELECT \n        MIN(timestamp_epoch_s) AS min_time,\n        MAX(timestamp_epoch_s) AS max_time\n    FROM \n        events\n    WHERE \n        timestamp_utc >= '2025-12-08T00:00:00Z' AND timestamp_utc < '2025-12-09T00:00:00Z'\n),\nmain_gate_traffic AS (\n    SELECT \n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        COUNT(*) AS event_count\n    FROM \n        events\n    WHERE \n        camera_location LIKE '%MainEntrance%' \n        AND timestamp_utc >= '2025-12-08T00:00:00Z' \n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        hour\n),\nkeynote_hall_peaks AS (\n    SELECT \n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        MAX(head_count) AS max_head_count\n    FROM \n        events\n    WHERE \n        camera_location LIKE '%KeynoteHall%' \n        AND event_type = 'crowd'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z' \n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        hour\n),\nlunchtime_dynamics AS (\n    SELECT \n        strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n        AVG(head_count) AS avg_head_count\n    FROM \n        events\n    WHERE \n        camera_location LIKE '%FoodCourt%' \n        AND event_type = 'crowd'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z' \n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        hour\n),\ndemo_booth_comparison AS (\n    SELECT \n        camera_location,\n        SUM(head_count) AS total_head_count\n    FROM \n        events\n    WHERE \n        camera_location LIKE '%NVIDIA%' OR camera_location LIKE '%Intel%'\n        AND event_type = 'crowd'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z' \n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        camera_location\n)\nSELECT \n    'Main Gate Traffic' AS category, hour, event_count AS metric\nFROM \n    main_gate_traffic\nUNION ALL\nSELECT \n    'Keynote Hall Peaks' AS category, hour, max_head_count AS metric\nFROM \n    keynote_hall_peaks\nUNION ALL\nSELECT \n    'Lunchtime Dynamics' AS category, hour, avg_head_count AS metric\nFROM \n    lunchtime_dynamics\nUNION ALL\nSELECT \n    'Demo Booth Comparison' AS category, camera_location AS hour, total_head_count AS metric\nFROM \n    demo_booth_comparison",
+      "row_count": 74
+    }
+  ],
+  "duration_ms": 7503,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 1003,
+      "completion_tokens": 645
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 1955,
+      "completion_tokens": 170
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": true,
+    "detail": "coverage=4/5=0.80 (threshold=0.6)"
+  }
+}

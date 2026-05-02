@@ -1,0 +1,72 @@
+{
+  "question_id": "L4_q006_morning_vs_evening_rush",
+  "level": "L4",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Was the morning rush bigger than the evening rush at the main entrance, in terms of how many people came and went?",
+  "gold_value": {
+    "bigger_rush": "morning",
+    "morning_total_approx": {
+      "value": 1200,
+      "tolerance": 250
+    },
+    "evening_total_approx": {
+      "value": 1000,
+      "tolerance": 250
+    }
+  },
+  "answer_text": "Yes, the morning rush was bigger than the evening rush at the main entrance. There were 1,277 people entries and exits in the morning and 1,035 in the evening on 2025-12-08.",
+  "structured_answer": {
+    "columns": [
+      "period",
+      "total_flow"
+    ],
+    "rows": [
+      [
+        "evening",
+        1035
+      ],
+      [
+        "morning",
+        1277
+      ]
+    ],
+    "total_rows": 2
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event)-[:DETECTED_BY]->(:Camera {camera_location: 'Gate_MainEntrance'})\n  WHERE e.event_type IN ['person_entry', 'person_exit'] AND e.timestamp_utc >= '2025-12-08T06:00:00Z' AND e.timestamp_utc < '2025-12-08T12:00:00Z'\n  RETURN 'morning' AS period, count(e) AS total_flow\n  UNION ALL\n  MATCH (e:Event)-[:DETECTED_BY]->(:Camera {camera_location: 'Gate_MainEntrance'})\n  WHERE e.event_type IN ['person_entry', 'person_exit'] AND e.timestamp_utc >= '2025-12-08T17:00:00Z' AND e.timestamp_utc < '2025-12-08T21:00:00Z'\n  RETURN 'evening' AS period, count(e) AS total_flow\n}\nRETURN period, total_flow\nORDER BY period",
+      "row_count": 2
+    }
+  ],
+  "duration_ms": 9829,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2518,
+      "completion_tokens": 405
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o",
+      "prompt_tokens": 3036,
+      "completion_tokens": 206
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 416,
+      "completion_tokens": 46
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_3_facts_satisfied"
+  }
+}

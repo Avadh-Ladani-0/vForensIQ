@@ -1,0 +1,241 @@
+{
+  "question_id": "L3_q006_arrival_pattern_main_gate",
+  "level": "L3",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Show me when people were arriving at the main entrance throughout the day, broken down hour by hour.",
+  "gold_value": [
+    [
+      "00",
+      13
+    ],
+    [
+      "01",
+      18
+    ],
+    [
+      "02",
+      8
+    ],
+    [
+      "03",
+      12
+    ],
+    [
+      "04",
+      8
+    ],
+    [
+      "05",
+      15
+    ],
+    [
+      "06",
+      10
+    ],
+    [
+      "07",
+      7
+    ],
+    [
+      "08",
+      311
+    ],
+    [
+      "09",
+      334
+    ],
+    [
+      "10",
+      9
+    ],
+    [
+      "11",
+      12
+    ],
+    [
+      "12",
+      154
+    ],
+    [
+      "13",
+      14
+    ],
+    [
+      "14",
+      8
+    ],
+    [
+      "15",
+      13
+    ],
+    [
+      "16",
+      12
+    ],
+    [
+      "17",
+      268
+    ],
+    [
+      "18",
+      255
+    ],
+    [
+      "19",
+      14
+    ],
+    [
+      "20",
+      12
+    ],
+    [
+      "21",
+      11
+    ],
+    [
+      "22",
+      7
+    ],
+    [
+      "23",
+      6
+    ]
+  ],
+  "answer_text": "Here is the hourly breakdown of people arriving at the main entrance: \n\n- Midnight to 1 AM: 13 arrivals\n- 1 AM to 2 AM: 18 arrivals\n- 2 AM to 3 AM: 8 arrivals\n- 3 AM to 4 AM: 12 arrivals\n- 4 AM to 5 AM: 8 arrivals\n- 5 AM to 6 AM: 15 arrivals\n- 6 AM to 7 AM: 10 arrivals\n- 7 AM to 8 AM: 7 arrivals\n- 8 AM to 9 AM: 311 arrivals\n- 9 AM to 10 AM: 334 arrivals\n- 10 AM to 11 AM: 9 arrivals\n- 11 AM to 12 PM: 12 arrivals\n- 12 PM to 1 PM: 154 arrivals\n- 1 PM to 2 PM: 14 arrivals\n- 2 PM to 3 PM: 8 arrivals\n- 3 PM to 4 PM: 13 arrivals\n- 4 PM to 5 PM: 12 arrivals\n- 5 PM to 6 PM: 268 arrivals\n- 6 PM to 7 PM: 255 arrivals\n- 7 PM to 8 PM: 14 arrivals\n- 8 PM to 9 PM: 12 arrivals\n- 9 PM to 10 PM: 11 arrivals\n- 10 PM to 11 PM: 7 arrivals\n- 11 PM to Midnight: 6 arrivals\n\nThe busiest hours were between 8 AM and 10 AM, and again between 5 PM and 7 PM.",
+  "structured_answer": {
+    "columns": [
+      "hour",
+      "arrival_count"
+    ],
+    "rows": [
+      [
+        "00",
+        13
+      ],
+      [
+        "01",
+        18
+      ],
+      [
+        "02",
+        8
+      ],
+      [
+        "03",
+        12
+      ],
+      [
+        "04",
+        8
+      ],
+      [
+        "05",
+        15
+      ],
+      [
+        "06",
+        10
+      ],
+      [
+        "07",
+        7
+      ],
+      [
+        "08",
+        311
+      ],
+      [
+        "09",
+        334
+      ],
+      [
+        "10",
+        9
+      ],
+      [
+        "11",
+        12
+      ],
+      [
+        "12",
+        154
+      ],
+      [
+        "13",
+        14
+      ],
+      [
+        "14",
+        8
+      ],
+      [
+        "15",
+        13
+      ],
+      [
+        "16",
+        12
+      ],
+      [
+        "17",
+        268
+      ],
+      [
+        "18",
+        255
+      ],
+      [
+        "19",
+        14
+      ],
+      [
+        "20",
+        12
+      ],
+      [
+        "21",
+        11
+      ],
+      [
+        "22",
+        7
+      ],
+      [
+        "23",
+        6
+      ]
+    ],
+    "total_rows": 24
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "SELECT \n    strftime('%H', timestamp_epoch_s, 'unixepoch') AS hour,\n    COUNT(*) AS arrival_count\nFROM \n    events\nWHERE \n    event_type = 'person_entry'\n    AND camera_location LIKE '%MainEntrance%'\nGROUP BY \n    hour\nORDER BY \n    hour",
+      "row_count": 24
+    }
+  ],
+  "duration_ms": 5424,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 857,
+      "completion_tokens": 66
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 414,
+      "completion_tokens": 346
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": false,
+    "detail": "missing_keys=['00', '01', '02', '03', '04']"
+  }
+}

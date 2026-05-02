@@ -1,0 +1,50 @@
+{
+  "question_id": "L1_q004_total_events_in_summit_day",
+  "level": "L1",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many total events of any type were recorded across all cameras during the entire day of 2025-12-08 (UTC)?",
+  "gold_value": 437940,
+  "answer_text": "There were a total of 437,940 events recorded across all cameras on 2025-12-08 (UTC).",
+  "structured_answer": {
+    "columns": [
+      "total_events"
+    ],
+    "rows": [
+      [
+        437940
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event) \n  WHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\n  RETURN count(e) AS n\n  UNION ALL\n  MATCH (ch:CrowdHour) \n  WHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z'\n  RETURN sum(ch.event_count) AS n\n}\nRETURN sum(n) AS total_events",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 3473,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2159,
+      "completion_tokens": 136
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 333,
+      "completion_tokens": 25
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": true,
+    "detail": "match"
+  }
+}

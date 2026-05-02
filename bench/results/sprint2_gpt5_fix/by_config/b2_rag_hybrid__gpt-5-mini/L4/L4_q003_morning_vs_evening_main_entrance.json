@@ -1,0 +1,110 @@
+{
+  "question_id": "L4_q003_morning_vs_evening_main_entrance",
+  "level": "L4",
+  "approach": "b2_rag_hybrid",
+  "model": "gpt-5-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "On 2025-12-08 (UTC), compare the morning rush window (08:00-10:00) versus the evening rush window (17:00-19:00) at Gate_MainEntrance for total person flow (person_entry + person_exit). Which window was busier and approximately by how much?",
+  "gold_value": {
+    "busier_window": "08:00",
+    "morning_total_approx": {
+      "value": 1200,
+      "tolerance": 250
+    },
+    "evening_total_approx": {
+      "value": 1000,
+      "tolerance": 250
+    }
+  },
+  "answer_text": "On 2025-12-08 at Gate_MainEntrance the 08:00\u201310:00 window had 1,191 total persons versus 997 in 17:00\u201319:00; the morning was busier by 194 people, about 16.3% higher.",
+  "structured_answer": {
+    "cypher_columns": [
+      "morning_count",
+      "evening_count",
+      "abs_diff",
+      "pct_of_busier",
+      "busier_window"
+    ],
+    "cypher_rows": [
+      [
+        1191,
+        997,
+        194,
+        16.3,
+        "morning"
+      ]
+    ],
+    "cypher_total_rows": 1,
+    "retrieved_communities": [
+      {
+        "community_id": "community_13",
+        "summary": "Across the 17:00 UTC hour (events from 2025-12-01T17:00:17Z to 2025-12-01T17:59:36Z) on Platform_1, 194 events were recorded. Events were dominated by pedestrian movements: 92 person_entry and 89 person_exit (181 total), versus 5 car_entry and 8 car_exit. Average head count (mean-of-means) was 5.04 with a peak head_count of 13.0; peak event count for the hour was 194.",
+        "distance": 0.37619835138320923
+      },
+      {
+        "community_id": "community_0",
+        "summary": "Cameras CAM_01 covered Gate_MainEntrance and Platform_1 from 2025-12-01T01:00:00Z to 2025-12-08T12:00:00Z (events recorded between 2025-12-01T01:04:10Z and 2025-12-08T12:59:57Z). Total volume was 1,775 events: person activity dominated (788 person_entry and 773 person_exit = 1,561 person events) versus 112 car_entry and 102 car_exit. Average head count (mean-of-means) was 10.42 with a peak head count of 47.0; node_count is 1,802 and average events/hour \u2248 9.9 (1775 events over ~179 hours); peak per-hour event count is not specified in the provided profile.",
+        "distance": 0.3936040997505188
+      },
+      {
+        "community_id": "community_1",
+        "summary": "All events were recorded by CAM_02 at Gate_ParkingLot, covering activity from 2025-12-08T07:00:01Z to 2025-12-08T18:59:57Z with hourly aggregation reported for 07:00\u201317:00 UTC. Total volume was 1,529 events (node_count 1,532); person events dominated with 463 person_entry and 466 person_exit (929 total) versus 283 car_entry and 317 car_exit (600 total). Peak head_count is not available (null), and a peak events-per-hour value is not provided.",
+        "distance": 0.4174874424934387
+      },
+      {
+        "community_id": "community_10",
+        "summary": "All activity was recorded on Platform_1 between 2025-12-01T02:00:27Z and 2025-12-01T02:55:55Z (hour window 2025-12-01T02:00:00Z UTC). Events were dominated by people movements (16 person_entry, 14 person_exit = 30 person events) with fewer vehicle movements (4 car_entry, 3 car_exit = 7 car events); total events = 37 and peak events per hour = 37. Peak head_count was 13, average head_count (mean of means) 5.05, node_count 39.",
+        "distance": 0.4282008409500122
+      }
+    ]
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "CALL {\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)\n  WHERE c.camera_location = 'Gate_MainEntrance'\n    AND e.event_type IN ['person_entry','person_exit']\n    AND e.timestamp_utc >= '2025-12-08T08:00:00Z' AND e.timestamp_utc < '2025-12-08T10:00:00Z'\n  RETURN count(e) AS morning_count\n}\nCALL {\n  MATCH (e:Event)-[:DETECTED_BY]->(c:Camera)\n  WHERE c.camera_location = 'Gate_MainEntrance'\n    AND e.event_type IN ['person_entry','person_exit']\n    AND e.timestamp_utc >= '2025-12-08T17:00:00Z' AND e.timestamp_utc < '2025-12-08T19:00:00Z'\n  RETURN count(e) AS evening_count\n}\nRETURN morning_count,\n       evening_count,\n       CASE WHEN evening_count >= morning_count THEN evening_count - morning_count ELSE morning_count - evening_count END AS abs_diff,\n       CASE\n         WHEN morning_count = 0 AND evening_count = 0 THEN 0\n         WHEN morning_count >= evening_count THEN round((toFloat(morning_count - evening_count) / morning_count) * 100 * 10) / 10\n         ELSE round((toFloat(evening_count - morning_count) / evening_count) * 100 * 10) / 10\n       END AS pct_of_busier,\n       CASE WHEN morning_count > evening_count THEN 'morning' WHEN evening_count > morning_count THEN 'evening' ELSE 'equal' END AS busier_window",
+      "row_count": 1
+    },
+    {
+      "type": "community",
+      "community_id": "community_13",
+      "distance": 0.37619835138320923
+    },
+    {
+      "type": "community",
+      "community_id": "community_0",
+      "distance": 0.3936040997505188
+    },
+    {
+      "type": "community",
+      "community_id": "community_1",
+      "distance": 0.4174874424934387
+    },
+    {
+      "type": "community",
+      "community_id": "community_10",
+      "distance": 0.4282008409500122
+    }
+  ],
+  "duration_ms": 33380,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 1919,
+      "completion_tokens": 2342
+    },
+    {
+      "stage": "hybrid_synth",
+      "model": "gpt-5-mini",
+      "prompt_tokens": 885,
+      "completion_tokens": 325
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "structured_facts",
+    "passed": true,
+    "detail": "all_3_facts_satisfied"
+  }
+}

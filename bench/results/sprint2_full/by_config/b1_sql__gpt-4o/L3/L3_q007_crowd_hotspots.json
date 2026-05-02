@@ -1,0 +1,89 @@
+{
+  "question_id": "L3_q007_crowd_hotspots",
+  "level": "L3",
+  "approach": "b1_sql",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Which areas of the venue had the most crowd activity? Rank them by their average crowd size.",
+  "gold_value": [
+    [
+      "KeynoteHall_Stage",
+      57.4
+    ],
+    [
+      "ExpoFloor_MainAisle",
+      49.36
+    ],
+    [
+      "FoodCourt_North",
+      23.07
+    ],
+    [
+      "DemoBooth_NVIDIA",
+      15.52
+    ],
+    [
+      "DemoBooth_Intel",
+      10.65
+    ]
+  ],
+  "answer_text": "The areas of the venue ranked by average crowd size are as follows: KeynoteHall_Stage with an average crowd size of 57.40, ExpoFloor_MainAisle with 49.36, FoodCourt_North with 23.07, DemoBooth_NVIDIA with 15.52, and DemoBooth_Intel with 10.65.",
+  "structured_answer": {
+    "columns": [
+      "camera_location",
+      "average_crowd_size"
+    ],
+    "rows": [
+      [
+        "KeynoteHall_Stage",
+        57.39643518518518
+      ],
+      [
+        "ExpoFloor_MainAisle",
+        49.3565625
+      ],
+      [
+        "FoodCourt_North",
+        23.069108796296295
+      ],
+      [
+        "DemoBooth_NVIDIA",
+        15.515462962962962
+      ],
+      [
+        "DemoBooth_Intel",
+        10.648136574074075
+      ]
+    ],
+    "total_rows": 5
+  },
+  "citations": [
+    {
+      "type": "sql_query",
+      "sql": "WITH crowd_activity AS (\n    SELECT \n        camera_location,\n        AVG(head_count) AS average_crowd_size\n    FROM \n        events\n    WHERE \n        event_type = 'crowd'\n        AND timestamp_utc >= '2025-12-08T00:00:00Z'\n        AND timestamp_utc < '2025-12-09T00:00:00Z'\n    GROUP BY \n        camera_location\n)\nSELECT \n    camera_location,\n    average_crowd_size\nFROM \n    crowd_activity\nORDER BY \n    average_crowd_size DESC",
+      "row_count": 5
+    }
+  ],
+  "duration_ms": 3688,
+  "llm_calls": [
+    {
+      "stage": "sql_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 953,
+      "completion_tokens": 121
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 392,
+      "completion_tokens": 75
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "set_match_with_tolerance",
+    "passed": true,
+    "detail": "all_keys_and_values_matched (rows=5)"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "question_id": "L5_q005_keynote_hall_lifecycle",
+  "level": "L5",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o-mini",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "Describe the full lifecycle of activity at the keynote hall on 2025-12-08 (UTC). Cover: (a) door entry patterns at KeynoteHall_DoorA throughout the day, (b) the in-hall crowd density at KeynoteHall_Stage during keynote sessions, and (c) how the post-keynote dispersal compares to pre-keynote build-up. Use specific hours and numbers from the data. 4-6 sentences.",
+  "gold_value": {
+    "rubric": [
+      "KeynoteHall_DoorA shows entry peaks aligned with keynote start times (around 08:00-10:00, 13:00-14:00, or 15:00-16:00 UTC)",
+      "KeynoteHall_Stage crowd peaks during the keynote sessions, reaching head_counts in the hundreds",
+      "Outside of keynote hours the in-hall head_count drops to a low baseline (single digits)",
+      "Pre-keynote door entry traffic precedes the in-hall crowd surge"
+    ],
+    "threshold": 0.5
+  },
+  "answer_text": null,
+  "structured_answer": {
+    "columns": [],
+    "rows": [],
+    "total_rows": 0
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event)-[:DETECTED_BY]->(:Camera {camera_location: 'KeynoteHall_DoorA'})-[:LOCATED_AT]->(:Location {name: 'KeynoteHall'}) \nWHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z' \nRETURN 'door_entry' AS metric, e.event_type, COUNT(e) AS count \nUNION \nMATCH (ch:CrowdHour)-[:AT_CAMERA]->(:Camera {camera_location: 'KeynoteHall_Stage'}) \nWHERE ch.hour_utc >= '2025-12-08T00:00:00Z' AND ch.hour_utc < '2025-12-09T00:00:00Z' \nRETURN 'crowd_density' AS metric, 'average_head_count' AS event_type, AVG(ch.avg_hc) AS count \nUNION \nMATCH (e:Event)-[:DETECTED_BY]->(:Camera {camera_location: 'KeynoteHall_DoorA'}) \nWHERE e.timestamp_utc >= '2025-12-08T15:00:00Z' AND e.timestamp_utc < '2025-12-08T16:00:00Z' \nRETURN 'post_keynote_dispersal' AS metric, 'exit_count' AS event_type, COUNT(e) AS count \nUNION \nMATCH (e:Event)-[:DETECTED_BY]->(:Camera {camera_location: 'KeynoteHall_DoorA'}) \nWHERE e.timestamp_utc >= '2025-12-08T14:00:00Z' AND e.timestamp_utc < '2025-12-08T15:00:00Z' \nRETURN 'pre_keynote_build_up' AS metric, 'entry_count' AS event_type, COUNT(e) AS count",
+      "row_count": 0
+    }
+  ],
+  "duration_ms": 14184,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1052,
+      "completion_tokens": 382
+    },
+    {
+      "stage": "cypher_repair",
+      "model": "gpt-4o-mini",
+      "prompt_tokens": 1544,
+      "completion_tokens": 396
+    }
+  ],
+  "errors": [
+    "CypherSyntaxError: {neo4j_code: Neo.ClientError.Statement.SyntaxError} {message: All sub queries in an UNION must have the same return column names (line 4, column 1 (offset: 289))\n\"UNION\"\n ^} {gql_status: 42001} {gql_status_description: error: syntax error or access rule violation - invalid syntax}"
+  ],
+  "invocation_status": "error",
+  "scoring": {
+    "key": "rubric_coverage",
+    "passed": null,
+    "detail": "error"
+  }
+}

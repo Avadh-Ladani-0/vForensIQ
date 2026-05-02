@@ -1,0 +1,50 @@
+{
+  "question_id": "L1_q007_cars_into_parking_lot",
+  "level": "L1",
+  "approach": "b2_rag_cypher",
+  "model": "gpt-4o",
+  "scenario": "ai_hw_summit_day1",
+  "question_text": "How many cars came into the parking lot during the day?",
+  "gold_value": 381,
+  "answer_text": "There were 0 car_entry events into the parking lot on December 8, 2025.",
+  "structured_answer": {
+    "columns": [
+      "car_entries_parking_lot"
+    ],
+    "rows": [
+      [
+        0
+      ]
+    ],
+    "total_rows": 1
+  },
+  "citations": [
+    {
+      "type": "cypher_query",
+      "cypher": "MATCH (e:Event {event_type: 'car_entry'})-[:DETECTED_BY]->(:Camera)\nWHERE e.timestamp_utc >= '2025-12-08T00:00:00Z' AND e.timestamp_utc < '2025-12-09T00:00:00Z'\nAND e.camera_location CONTAINS 'Parking'\nRETURN count(e) AS car_entries_parking_lot",
+      "row_count": 1
+    }
+  ],
+  "duration_ms": 2554,
+  "llm_calls": [
+    {
+      "stage": "cypher_gen",
+      "model": "gpt-4o",
+      "prompt_tokens": 2506,
+      "completion_tokens": 85
+    },
+    {
+      "stage": "answer_synth",
+      "model": "gpt-4o",
+      "prompt_tokens": 270,
+      "completion_tokens": 20
+    }
+  ],
+  "errors": [],
+  "invocation_status": "ok",
+  "scoring": {
+    "key": "exact_numeric",
+    "passed": false,
+    "detail": "expected=381.0 got=0.0"
+  }
+}
